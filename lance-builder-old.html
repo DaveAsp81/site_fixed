@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lance Command Console | BattleTech Hub</title>
+	<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background-color: #0b0b0b; color: #eeeeee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; min-height: 100vh; }
+        #faction-bg-layer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70vh; height: 70vh; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.18; z-index: -1; pointer-events: none; }
+        .control-panel { background: rgba(20,20,20,0.96); padding: 20px; border-radius: 4px; border: 1px solid #333; margin-bottom: 20px; backdrop-filter: blur(10px); }
+        select, input { background: #1a1a1a !important; color: #fff !important; border: 1px solid #444 !important; padding: 12px; border-radius: 4px; width: 100%; }
+        .deploy-btn { background: #ff8c00; color: #000; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; text-transform: uppercase; margin-top: 10px; }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.92); }
+        .modal-content { background-color: #1a1a1a; margin: 5% auto; padding: 35px; border: 1px solid #ff8c00; width: 90%; max-width: 500px; border-radius: 8px; max-height: 80vh; overflow-y: auto; }
+        .roster-item { background: rgba(45,45,45,0.85); margin-bottom: 12px; padding: 15px; display: flex; align-items: center; border-left: 5px solid #ff8c00; border-radius: 4px; }
+        .preview-container { width: 100%; height: 250px; background: #000; border: 1px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px 4px 0 0; }
+
+        .main-grid { display: grid; gap: 30px; }
+        @media (min-width: 1024px) { .main-grid { grid-template-columns: 1fr 1.5fr; } }
+        @media (max-width: 1023px) { .main-grid { grid-template-columns: 1fr; } .preview-container { height: 200px; } }
+        
+        .pilot-edit { font-size: 0.9em; margin-top: 8px; }
+        .pilot-edit input, .pilot-edit select { width: auto; padding: 2px 6px; font-size: 0.85em; }
+#classic-btn.active, #alpha-btn.active {
+    background: #ff8c00 !important;
+    color: #000 !important;
+}
+
+#chassis-search {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+    padding: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.sort-arrow { margin-left: 4px; }
+.active-sort {
+    background: #ff8c00 !important;
+    color: #000 !important;
+    font-weight: bold;
+}
+.active-sort .sort-arrow::after {
+    content: " ▼";
+}
+    </style>
+    <link rel="canonical" href="https://battletechhq.com/lance-builder-old.html">
+</head>
+<body>
+
+<div id="faction-bg-layer"></div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal()" style="float:right; cursor:pointer; font-size:28px; color:#ff8c00;">×</span>
+        <h2 id="modal-title" style="margin-top:0; color:#ff8c00;"></h2>
+        <ul id="modal-body" style="list-style:none; padding:0; line-height:1.8;"></ul>
+    </div>
+</div>
+
+<header>
+    <div class="header-content">
+        <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#Getting-started">Getting Started</a></li>
+                <li><a href="index.html#painting">Painting & Hobby</a></li>
+                <li><a href="index.html#gameplay">Gameplay</a></li>
+                <li><a href="index.html#lore">Lore</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<header style="background:#111; padding:25px; text-align:center; border-bottom:4px solid #ff8c00;">
+    <h1>BATTLETECH HUB COMMAND</h1>
+</header>
+
+<main style="max-width:1200px; margin:30px auto; padding:0 20px;">
+    <a href="index.html" style="color:#ff8c00; text-decoration:underline; margin-bottom:15px; display:inline-block;">← Back to Home</a>
+
+    <section class="control-panel" style="display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:20px;">
+    <div>
+        <label style="font-size:0.75em; color:#888;">FACTION DOCTRINE</label>
+        <select id="faction-filter" onchange="filterChassis()">
+            <option value="ALL">All Inner Sphere</option>
+            <option value="Davion">House Davion</option>
+            <option value="Steiner">House Steiner</option>
+            <option value="Kurita">House Kurita</option>
+            <option value="Marik">House Marik</option>
+            <option value="Liao">House Liao</option>
+            <option value="ComStar">ComStar</option>
+            <option value="Mercenaries">Mercenaries</option>
+        </select>
+    </div>
+
+    <!-- NEW: ERA FILTER -->
+    <div>
+        <label style="font-size:0.75em; color:#888;">ERA</label>
+        <select id="era-filter" onchange="filterChassis()">
+            <!-- Populated automatically by JavaScript -->
+        </select>
+    </div>
+
+    <div><label style="font-size:0.75em; color:#888;">MAX TONS</label><input type="number" id="max-ton" value="200" onchange="updateDisplay()"></div>
+    <div><label style="font-size:0.75em; color:#888;">MAX BV2 / PV</label><input type="number" id="max-bv" value="6000" onchange="updateDisplay()"></div>
+</section>
+<!-- ALPHA STRIKE / CLASSIC TOGGLE -->
+<div style="margin: 20px 0 15px 0; display: flex; background: #1a1a1a; border: 1px solid #444; border-radius: 6px; padding: 4px; width: fit-content;">
+    <div id="classic-btn" onclick="switchMode('classic')" class="active"
+     style="padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 4px;">CLASSIC (BV)</div>
+    <div id="alpha-btn" onclick="switchMode('alpha')" 
+         style="padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 4px;">ALPHA STRIKE (PV)</div>
+</div>
+    <div class="main-grid">
+        <div class="control-panel">
+    <div class="preview-container">
+        <img id="mech-preview-img" style="max-width:100%; max-height:100%;" src="assets/images/mechs/fff?text=SELECT+MECH">
+    </div>
+    <div id="preview-label" style="background:#222; padding:10px; text-align:center; color:#ff8c00; font-weight:bold;">TARGET DATA LINKED</div>
+
+    <!-- NEW: Search + Sort -->
+    <input type="text" id="chassis-search" placeholder="🔍 Search chassis..." 
+           style="margin:15px 0 8px 0; padding:12px;" onkeyup="filterChassis()">
+    
+    <div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85em; color:#888;">
+    <span id="sort-ton" onclick="sortChassis('tons')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">TONS <span class="sort-arrow"></span></span>
+    <span id="sort-value" onclick="sortChassis('value')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">VALUE <span class="sort-arrow"></span></span>
+    <span id="sort-role" onclick="sortChassis('role')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">ROLE <span class="sort-arrow"></span></span>
+</div>
+
+    <select id="chassis-select" onchange="updateVariants()" style="margin-bottom:10px;"></select>
+    
+    <div style="display:flex; gap:10px; margin-bottom:15px;">
+        <select id="variant-select" onchange="syncPreview()" style="flex:1;"></select>
+        <button onclick="openModal()" style="background:#222; color:#ff8c00; border:1px solid #ff8c00; width:50px; font-weight:bold;">i</button>
+    </div>
+    
+    <button onclick="addSelectedVariant()" class="deploy-btn">DEPLOY UNIT</button>
+    <button onclick="randomizeThemedLance()" style="background:#333; color:#fff; border:1px solid #444; width:100%; padding:12px; margin-top:8px;">🎲 QUICK-GEN LANCE</button>
+    
+    <!-- NEW: Undo button -->
+    <button onclick="undoLastAction()" style="margin-top:8px; width:100%; background:#444; color:#fff; border:1px solid #666; padding:10px;">↩️ UNDO LAST UNIT</button>
+</div>
+
+        <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h2 style="margin:0; color:#ff8c00;">ACTIVE ROSTER</h2>
+                <div id="stats-summary" style="font-weight:bold; color:#ff8c00;">0t | 0 BV</div>
+            </div>
+            <ul id="lance-roster" style="list-style:none; padding:0; min-height:400px;"></ul>
+			<!-- LANCE FEEDBACK PANEL -->
+<div id="lance-feedback" style="margin-top:15px; padding:12px; background:rgba(30,30,30,0.95); border:1px solid #444; border-radius:4px; font-size:0.9em; min-height:60px;"></div>
+            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+    <button onclick="printTextSheet()" style="flex:1; background:#28a745; color:white; border:none; padding:15px;">🖨️ PRINT TEXT SHEET</button>
+    <button onclick="saveLance()" style="flex:1; background:#0066cc; color:white; border:none; padding:15px;">💾 SAVE LANCE</button>
+    
+    <button onclick="copyLanceToClipboard()" style="flex:1; background:#00aaff; color:white; border:none; padding:15px;">📋 COPY TO CLIPBOARD</button>
+    <button onclick="exportLanceToCSV()" style="flex:1; background:#ff8800; color:white; border:none; padding:15px;">📤 EXPORT CSV</button>
+    
+    <button onclick="clearLance()" style="background:transparent; color:#cc0000; border:1px solid #cc0000; padding:15px;">WIPE LANCE</button>
+</div>
+
+<!-- SAVED LANCES PANEL -->
+<div id="saved-lances-panel" style="margin-top:25px; background:rgba(20,20,20,0.9); padding:15px; border-radius:4px; border:1px solid #444;">
+    <strong style="color:#ff8c00;">💾 SAVED LANCES</strong>
+    <div id="saved-list" style="margin-top:10px; max-height:200px; overflow-y:auto;"></div>
+</div>
+        </div>
+    </div>
+</main>
+<script>
+// ==================== COMPLETE SUCCESSION WARS DATABASE ====================
+const mechDatabase = [
+    {"chassis": "Hornet", "tons": 20, "era": "Late Succession Wars", "img": "assets/images/mechs/hornet.jpg", "factions": ["ALL"], "variants": [
+        {"id": "hnt-151", "name": "HNT-151", "bv": 488, "pv": 13, "role": "Striker / urban scout", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "10 single", "weapons": ["1× LRM-5 (1 ton ammo)", "1× Medium Laser", "1× Small Laser"]},
+        {"id": "hnt-152", "name": "HNT-152", "bv": 475, "pv": 13, "role": "Striker / urban scout", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "10 single", "weapons": ["1× SRM-4 (1 ton ammo)", "1× Medium Laser", "1× Small Laser"]}
+    ]},
+    {"chassis": "Locust", "tons": 20, "era": "Succession Wars", "img": "assets/images/mechs/locust.jpg", "factions": ["ALL"], "variants": [
+        {"id": "lct-1v", "name": "LCT-1V", "bv": 432, "pv": 12, "role": "Scout / harasser", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["2× Medium Laser", "2× Machine Gun"]},
+        {"id": "lct-1m", "name": "LCT-1M", "bv": 424, "pv": 12, "role": "Missile scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["1× SRM-4", "2× Medium Laser"]},
+        {"id": "lct-1s", "name": "LCT-1S", "bv": 440, "pv": 12, "role": "Scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["1× SRM-2", "2× Medium Laser"]},
+        {"id": "lct-1e", "name": "LCT-1E", "bv": 553, "pv": 14, "role": "Scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["2× Medium Laser", "2× SRM-2"]},
+        {"id": "lct-3v", "name": "LCT-3V", "bv": 490, "pv": 13, "role": "Scout / harasser", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["2× Medium Laser", "2× Machine Gun"]}
+    ]},
+    {"chassis": "Stinger", "tons": 25, "era": "Succession Wars", "img": "assets/images/mechs/stinger.jpg", "factions": ["ALL"], "variants": [
+        {"id": "stg-3g", "name": "STG-3G", "bv": 497, "pv": 14, "role": "Scout / jumper", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["2× Medium Laser", "2× Machine Gun"]},
+        {"id": "stg-3r", "name": "STG-3R", "bv": 359, "pv": 11, "role": "Scout", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Medium Laser", "2× Machine Gun"]}
+    ]},
+    {"chassis": "Wasp", "tons": 20, "era": "Succession Wars", "img": "assets/images/mechs/wasp.jpg", "factions": ["ALL"], "variants": [
+        {"id": "wsp-1a", "name": "WSP-1A", "bv": 384, "pv": 11, "role": "Scout / jumper", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Medium Laser", "1× SRM-2"]},
+        {"id": "wsp-1d", "name": "WSP-1D", "bv": 403, "pv": 10, "role": "Scout", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Medium Laser", "1× SRM-4"]},
+        {"id": "wsp-1k", "name": "WSP-1K", "bv": 376, "pv": 9, "role": "Scout", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Medium Laser", "1× SRM-2"]},
+        {"id": "wsp-1l", "name": "WSP-1L", "bv": 335, "pv": 8, "role": "Scout / raider", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× SRM-4"]},
+        {"id": "wsp-1w", "name": "WSP-1W", "bv": 373, "pv": 9, "role": "Close-range brawler", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["6× Small Laser"]}
+    ]},
+    {"chassis": "Commando", "tons": 25, "era": "Succession Wars", "img": "assets/images/mechs/commando.jpg", "factions": ["ALL"], "variants": [
+        {"id": "com-2d", "name": "COM-2D", "bv": 541, "pv": 14, "role": "SRM striker / scout", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× SRM-6", "1× SRM-4"]},
+        {"id": "com-1b", "name": "COM-1B", "bv": 616, "pv": 15, "role": "Striker", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× SRM-6", "2× Medium Laser"]},
+        {"id": "com-1d", "name": "COM-1D", "bv": 558, "pv": 13, "role": "Striker", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× SRM-6", "1× Medium Laser"]}
+    ]},
+    {"chassis": "Mongoose", "tons": 25, "era": "Star League / Lostech", "img": "assets/images/mechs/mongoose.jpg", "factions": ["ALL"], "variants": [
+        {"id": "mon-67", "name": "MON-67", "bv": 741, "pv": 18, "role": "Fast scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "10 single", "weapons": ["1× Medium Laser", "1× Small Laser"]}
+    ]},
+    {"chassis": "Falcon", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/falcon.jpg", "factions": ["ALL"], "variants": [
+        {"id": "flc-4n", "name": "FLC-4N", "bv": 610, "pv": 15, "role": "Scout / striker", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Firefly", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/firefly.jpg", "factions": ["ALL"], "variants": [
+        {"id": "ffl-4a", "name": "FFL-4A", "bv": 831, "pv": 20, "role": "Striker", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["3× Medium Laser", "4× Small Laser", "1× LRM-5"]}
+    ]},
+    {"chassis": "Hermes", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/hermes.jpg", "factions": ["ALL"], "variants": [
+        {"id": "her-1a", "name": "HER-1A", "bv": 601, "pv": 14, "role": "Scout / raider", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× Large Laser", "1× Medium Laser", "1× Small Laser", "1× Flamer"]},
+        {"id": "her-1b", "name": "HER-1B", "bv": 687, "pv": 16, "role": "Scout / raider", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Javelin", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/javelin.jpg", "factions": ["ALL"], "variants": [
+        {"id": "jvn-10n", "name": "JVN-10N", "bv": 594, "pv": 14, "role": "Striker / jumper", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["2× SRM-6"]},
+        {"id": "jvn-10a", "name": "JVN-10A", "bv": 653, "pv": 16, "role": "Striker", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["2× SRM-6", "1× Medium Laser"]},
+        {"id": "jvn-10f", "name": "JVN-10F", "bv": 835, "pv": 20, "role": "Striker", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["2× SRM-6", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Spider", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/spider.jpg", "factions": ["ALL"], "variants": [
+        {"id": "sdr-5v", "name": "SDR-5V", "bv": 622, "pv": 15, "role": "Ultra-fast scout", "movement": "Walk 8 / Run 12 / Jump 8", "heatsinks": "10 single", "weapons": ["2× Medium Laser"]},
+        {"id": "sdr-5d", "name": "SDR-5D", "bv": 524, "pv": 12, "role": "Scout", "movement": "Walk 8 / Run 12 / Jump 8", "heatsinks": "10 single", "weapons": ["2× Medium Laser"]},
+        {"id": "sdr-5k", "name": "SDR-5K", "bv": 503, "pv": 12, "role": "Scout", "movement": "Walk 8 / Run 12 / Jump 8", "heatsinks": "10 single", "weapons": ["2× Medium Laser"]}
+    ]},
+    {"chassis": "UrbanMech", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/urbanmech.jpg", "factions": ["ALL"], "variants": [
+        {"id": "um-r60", "name": "UM-R60", "bv": 504, "pv": 12, "role": "Urban ambusher", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/10", "1× Medium Laser"]},
+        {"id": "um-r60l", "name": "UM-R60L", "bv": 470, "pv": 11, "role": "Urban sniper", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "10 single", "weapons": ["1× Large Laser", "1× Medium Laser"]}
+    ]},
+    {"chassis": "Valkyrie", "tons": 30, "era": "Succession Wars", "img": "assets/images/mechs/valkyrie.jpg", "factions": ["ALL"], "variants": [
+        {"id": "vlk-qa", "name": "VLK-QA", "bv": 723, "pv": 17, "role": "Missile support", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "10 single", "weapons": ["1× LRM-10", "1× Medium Laser"]},
+        {"id": "vlk-qf", "name": "VLK-QF", "bv": 653, "pv": 16, "role": "Missile support", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "10 single", "weapons": ["1× LRM-10", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Firestarter", "tons": 35, "era": "Succession Wars", "img": "assets/images/mechs/firestarter.jpg", "factions": ["ALL"], "variants": [
+        {"id": "fs9-h", "name": "FS9-H", "bv": 694, "pv": 17, "role": "Incendiary raider", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["2× Flamer", "2× Medium Laser", "2× Machine Gun"]},
+        {"id": "fs9-m", "name": "FS9-M", "bv": 798, "pv": 19, "role": "Raider", "movement": "Walk 6 / Run 9 / Jump 6", "heatsinks": "10 single", "weapons": ["1× Large Laser", "2× Medium Laser", "2× Flamer"]}
+    ]},
+    {"chassis": "Jenner", "tons": 35, "era": "Succession Wars", "img": "assets/images/mechs/jenner.jpg", "factions": ["ALL"], "variants": [
+        {"id": "jr7-d", "name": "JR7-D", "bv": 875, "pv": 21, "role": "Aggressive striker", "movement": "Walk 7 / Run 11 / Jump 5", "heatsinks": "10 single", "weapons": ["4× Medium Laser", "1× SRM-4"]},
+        {"id": "jr7-f", "name": "JR7-F", "bv": 1011, "pv": 24, "role": "Aggressive striker", "movement": "Walk 7 / Run 11 / Jump 5", "heatsinks": "10 single", "weapons": ["4× Medium Laser", "1× SRM-4 (more ammo)"]}
+    ]},
+    {"chassis": "Ostscout", "tons": 35, "era": "Succession Wars", "img": "assets/images/mechs/ostscout.jpg", "factions": ["ALL"], "variants": [
+        {"id": "ott-7j", "name": "OTT-7J", "bv": 596, "pv": 14, "role": "Pure recon", "movement": "Walk 8 / Run 12 / Jump 8", "heatsinks": "10 single", "weapons": ["1× Medium Laser"]}
+    ]},
+    {"chassis": "Panther", "tons": 35, "era": "Succession Wars", "img": "assets/images/mechs/panther.jpg", "factions": ["ALL"], "variants": [
+        {"id": "pnt-9r", "name": "PNT-9R", "bv": 769, "pv": 18, "role": "PPC sniper / jumper", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "10 single", "weapons": ["1× PPC", "1× Medium Laser"]},
+        {"id": "pnt-9alag", "name": "PNT-9ALAG", "bv": 804, "pv": 19, "role": "PPC sniper / jumper", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "10 single", "weapons": ["1× PPC", "1× Medium Laser (minor refit)"]}
+    ]},
+    {"chassis": "Assassin", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/assassin.jpg", "factions": ["ALL"], "variants": [
+        {"id": "asn-21", "name": "ASN-21", "bv": 749, "pv": 18, "role": "Scout / missile striker", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "12 single", "weapons": ["1× LRM-5", "1× SRM-2", "2× Medium Laser"]},
+        {"id": "asn-101", "name": "ASN-101", "bv": 757, "pv": 18, "role": "Scout / missile striker", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "12 single", "weapons": ["1× LRM-5", "1× SRM-2", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Cicada", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/cicada.jpg", "factions": ["ALL"], "variants": [
+        {"id": "cda-2a", "name": "CDA-2A", "bv": 659, "pv": 16, "role": "Fast scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "12 single", "weapons": ["1× Large Laser", "2× Medium Laser"]},
+        {"id": "cda-2b", "name": "CDA-2B", "bv": 626, "pv": 15, "role": "Fast scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "12 single", "weapons": ["1× Large Laser", "2× Medium Laser"]},
+        {"id": "cda-3c", "name": "CDA-3C", "bv": 771, "pv": 18, "role": "Fast scout", "movement": "Walk 8 / Run 12 / Jump 0", "heatsinks": "12 single", "weapons": ["1× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Clint", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/clint.jpg", "factions": ["ALL"], "variants": [
+        {"id": "clnt-2-3t", "name": "CLNT-2-3T", "bv": 770, "pv": 18, "role": "Sniper / skirmisher", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/5", "1× Medium Laser", "1× Small Laser"]},
+        {"id": "clnt-1-2r", "name": "CLNT-1-2R", "bv": 707, "pv": 17, "role": "Sniper / skirmisher", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/5", "1× Medium Laser"]}
+    ]},
+    {"chassis": "Hermes II", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/hermesii.jpg", "factions": ["ALL"], "variants": [
+        {"id": "her-2s", "name": "HER-2S", "bv": 784, "pv": 19, "role": "Scout / raider", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "12 single", "weapons": ["1× Large Laser", "1× Medium Laser", "1× Small Laser", "1× Flamer"]},
+        {"id": "her-2m", "name": "HER-2M", "bv": 910, "pv": 22, "role": "Fast scout / raider", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "13 single", "weapons": ["3× Medium Laser", "1× Flamer", "2× Machine Gun"]},
+        {"id": "her-4k", "name": "HER-4K", "bv": 976, "pv": 23, "role": "Energy raider", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "13 single", "weapons": ["2× Large Laser"]}
+    ]},
+    {"chassis": "Icarus II", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/icarusii.jpg", "factions": ["ALL"], "variants": [
+        {"id": "icr-1s", "name": "ICR-1S", "bv": 869, "pv": 21, "role": "Brawler", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/10", "2× Medium Laser", "1× Small Laser"]}
+    ]},
+    {"chassis": "Sentinel", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/sentinel.jpg", "factions": ["ALL"], "variants": [
+        {"id": "stn-1s", "name": "STN-1S", "bv": 632, "pv": 15, "role": "Scout / skirmisher", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/5", "2× Medium Laser"]},
+        {"id": "stn-3k", "name": "STN-3K", "bv": 652, "pv": 16, "role": "Scout / skirmisher", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/5", "2× Medium Laser"]},
+        {"id": "stn-3ka", "name": "STN-3KA", "bv": 847, "pv": 20, "role": "Scout / skirmisher", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/5", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Vulcan", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/vulcan.jpg", "factions": ["ALL"], "variants": [
+        {"id": "vl-2t", "name": "VL-2T", "bv": 642, "pv": 15, "role": "Anti-infantry / scout", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "12 single", "weapons": ["1× AC/5", "2× Medium Laser", "1× Small Laser", "1× Flamer"]},
+        {"id": "vl-5t", "name": "VL-5T", "bv": 942, "pv": 22, "role": "Anti-infantry / scout", "movement": "Walk 6 / Run 9 / Jump 0", "heatsinks": "12 single", "weapons": ["1× AC/5", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Whitworth", "tons": 40, "era": "Succession Wars", "img": "assets/images/mechs/whitworth.jpg", "factions": ["ALL"], "variants": [
+        {"id": "wth-1", "name": "WTH-1", "bv": 982, "pv": 23, "role": "Missile support", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "14 single", "weapons": ["2× LRM-10", "2× Medium Laser"]},
+        {"id": "wth-0", "name": "WTH-0", "bv": 863, "pv": 21, "role": "Missile support", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "14 single", "weapons": ["2× LRM-10", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Blackjack", "tons": 45, "era": "Succession Wars", "img": "assets/images/mechs/blackjack.jpg", "factions": ["ALL"], "variants": [
+        {"id": "bj-1", "name": "BJ-1", "bv": 949, "pv": 23, "role": "Sniper / fire support", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["2× AC/2", "4× Medium Laser"]},
+        {"id": "bj-1db", "name": "BJ-1DB", "bv": 1015, "pv": 24, "role": "Sniper / fire support", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["2× AC/2", "4× Medium Laser"]},
+        {"id": "bj-1dc", "name": "BJ-1DC", "bv": 917, "pv": 22, "role": "Sniper / fire support", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["2× AC/2", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Hatchetman", "tons": 45, "era": "Succession Wars", "img": "assets/images/mechs/hatchetman.jpg", "factions": ["ALL"], "variants": [
+        {"id": "hct-3f", "name": "HCT-3F", "bv": 854, "pv": 20, "role": "Melee brawler", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "12 single", "weapons": ["1× AC/10", "3× Medium Laser", "Hatchet"]}
+    ]},
+    {"chassis": "Vindicator", "tons": 45, "era": "Succession Wars", "img": "assets/images/mechs/vindicator.jpg", "factions": ["ALL"], "variants": [
+        {"id": "vnd-1r", "name": "VND-1R", "bv": 1024, "pv": 24, "role": "Versatile skirmisher", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["1× PPC", "1× LRM-5", "2× Medium Laser"]},
+        {"id": "vnd-1sic", "name": "VND-1SIC", "bv": 1020, "pv": 24, "role": "Versatile skirmisher", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["1× PPC", "1× LRM-5", "2× Medium Laser"]},
+        {"id": "vnd-1aa", "name": "VND-1AA", "bv": 966, "pv": 23, "role": "Versatile skirmisher", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "13 single", "weapons": ["1× PPC", "1× LRM-5", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Centurion", "tons": 50, "era": "Succession Wars", "img": "assets/images/mechs/centurion.jpg", "factions": ["ALL"], "variants": [
+        {"id": "cn9-a", "name": "CN9-A", "bv": 945, "pv": 22, "role": "Brawler / support", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/10", "1× LRM-10", "2× Medium Laser"]},
+        {"id": "cn9-al", "name": "CN9-AL", "bv": 1057, "pv": 25, "role": "Brawler / support", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "10 single", "weapons": ["1× AC/10", "1× LRM-10", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Crab", "tons": 50, "era": "Star League / Lostech", "img": "assets/images/mechs/crab.jpg", "factions": ["ALL"], "variants": [
+        {"id": "crb-20", "name": "CRB-20", "bv": 1143, "pv": 27, "role": "Energy boat", "movement": "Walk 5 / Run 8 / Jump 0", "heatsinks": "16 single", "weapons": ["2× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Enforcer", "tons": 50, "era": "Succession Wars", "img": "assets/images/mechs/enforcer.jpg", "factions": ["ALL"], "variants": [
+        {"id": "enf-4r", "name": "ENF-4R", "bv": 1032, "pv": 25, "role": "Skirmisher / brawler", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "12 single", "weapons": ["1× AC/10", "1× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Hunchback", "tons": 50, "era": "Succession Wars", "img": "assets/images/mechs/hunchback.jpg", "factions": ["ALL"], "variants": [
+        {"id": "hbk-4g", "name": "HBK-4G", "bv": 1041, "pv": 25, "role": "Close-range juggernaut", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "13 single", "weapons": ["1× AC/20", "2× Medium Laser", "1× Small Laser"]},
+        {"id": "hbk-4h", "name": "HBK-4H", "bv": 1067, "pv": 25, "role": "Close assault", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "13 single", "weapons": ["1× AC/20 + extra ammo", "Medium Lasers"]},
+        {"id": "hbk-4p", "name": "HBK-4P", "bv": 1138, "pv": 27, "role": "Energy brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "23 single", "weapons": ["8× Medium Laser", "1× Small Laser"]}
+    ]},
+    {"chassis": "Trebuchet", "tons": 50, "era": "Succession Wars", "img": "assets/images/mechs/trebuchet.jpg", "factions": ["ALL"], "variants": [
+        {"id": "tbt-5n", "name": "TBT-5N", "bv": 1191, "pv": 28, "role": "Missile boat", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "14 single", "weapons": ["2× LRM-15", "2× Medium Laser"]},
+        {"id": "tbt-5j", "name": "TBT-5J", "bv": 1191, "pv": 28, "role": "Missile boat", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "14 single", "weapons": ["2× LRM-15", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Dervish", "tons": 55, "era": "Succession Wars", "img": "assets/images/mechs/dervish.jpg", "factions": ["ALL"], "variants": [
+        {"id": "dv-6m", "name": "DV-6M", "bv": 1050, "pv": 0, "role": "Fire support", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "14 single", "weapons": ["2× LRM-10", "2× SRM-2", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Griffin", "tons": 55, "era": "Succession Wars", "img": "assets/images/mechs/griffin.jpg", "factions": ["ALL"], "variants": [
+        {"id": "grf-1n", "name": "GRF-1N", "bv": 1272, "pv": 27, "role": "Mobile fire support", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "12 single", "weapons": ["1× PPC", "1× LRM-10"]}
+    ]},
+    {"chassis": "Shadow Hawk", "tons": 55, "era": "Succession Wars", "img": "assets/images/mechs/shadowhawk.jpg", "factions": ["ALL"], "variants": [
+        {"id": "shd-2h", "name": "SHD-2H", "bv": 1050, "pv": 23, "role": "Jack-of-all-trades", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "12 single", "weapons": ["1× AC/5", "1× LRM-5", "1× SRM-2", "1× Medium Laser"]}
+    ]},
+    {"chassis": "Wolverine", "tons": 55, "era": "Succession Wars", "img": "assets/images/mechs/wolverine.jpg", "factions": ["ALL"], "variants": [
+        {"id": "wvr-6r", "name": "WVR-6R", "bv": 1100, "pv": 26, "role": "Versatile skirmisher", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "14 single", "weapons": ["1× AC/5", "1× SRM-6", "1× Large Laser", "1× Medium Laser"]}
+    ]},
+    {"chassis": "Dragon", "tons": 60, "era": "Succession Wars", "img": "assets/images/mechs/dragon.jpg", "factions": ["ALL"], "variants": [
+        {"id": "drg-1n", "name": "DRG-1N", "bv": 1125, "pv": 27, "role": "Fast skirmisher", "movement": "Walk 5 / Run 8 / Jump 0", "heatsinks": "10 single", "weapons": ["1× LRM-10", "1× AC/5", "2× Medium Laser"]},
+        {"id": "drg-1c", "name": "DRG-1C", "bv": 1215, "pv": 29, "role": "Fast skirmisher", "movement": "Walk 5 / Run 8 / Jump 0", "heatsinks": "10 single", "weapons": ["1× LRM-10", "1× AC/5", "2× Medium Laser"]},
+        {"id": "drg-2y", "name": "DRG-2Y", "bv": 1257, "pv": 30, "role": "Fast skirmisher", "movement": "Walk 5 / Run 8 / Jump 0", "heatsinks": "10 single", "weapons": ["1× LRM-10", "1× AC/5", "2× Medium Laser"]},
+        {"id": "drg-5n", "name": "DRG-5N", "bv": 1223, "pv": 29, "role": "Fast skirmisher", "movement": "Walk 5 / Run 8 / Jump 0", "heatsinks": "10 single", "weapons": ["1× LRM-10", "1× AC/5", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Quickdraw", "tons": 60, "era": "Succession Wars", "img": "assets/images/mechs/quickdraw.jpg", "factions": ["ALL"], "variants": [
+        {"id": "qkd-4g", "name": "QKD-4G", "bv": 1150, "pv": 0, "role": "Mobile flanker", "movement": "Walk 5 / Run 8 / Jump 5", "heatsinks": "14 single", "weapons": ["1× LRM-10", "4× Medium Laser", "1× SRM-4"]}
+    ]},
+    {"chassis": "Catapult", "tons": 65, "era": "Succession Wars", "img": "assets/images/mechs/catapult.jpg", "factions": ["ALL"], "variants": [
+        {"id": "cplt-c1", "name": "CPLT-C1", "bv": 1399, "pv": 33, "role": "Missile boat", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "15 single", "weapons": ["2× LRM-15", "4× Medium Laser"]},
+        {"id": "cplt-a1", "name": "CPLT-A1", "bv": 1285, "pv": 31, "role": "Missile boat", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "15 single", "weapons": ["2× LRM-15", "4× Medium Laser"]},
+        {"id": "cplt-k2", "name": "CPLT-K2", "bv": 1319, "pv": 31, "role": "Energy sniper", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "15 single", "weapons": ["2× PPC", "2× Medium Laser", "2× Machine Gun"]},
+        {"id": "cplt-c1b", "name": "CPLT-C1b", "bv": 1570, "pv": 37, "role": "Missile boat", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "15 single", "weapons": ["2× LRM-15", "4× Medium Laser"]},
+        {"id": "cplt-c4", "name": "CPLT-C4", "bv": 1358, "pv": 32, "role": "Missile boat", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "15 single", "weapons": ["2× LRM-15", "4× Medium Laser"]}
+    ]},
+    {"chassis": "JagerMech", "tons": 65, "era": "Succession Wars", "img": "assets/images/mechs/jagermech.jpg", "factions": ["ALL"], "variants": [
+        {"id": "jm6-s", "name": "JM6-S", "bv": 901, "pv": 21, "role": "Autocannon sniper", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "12 single", "weapons": ["2× AC/5", "2× AC/2", "2× Medium Laser"]},
+        {"id": "jm6-a", "name": "JM6-A", "bv": 1122, "pv": 27, "role": "Autocannon sniper", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "12 single", "weapons": ["2× AC/5", "2× AC/2", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Thunderbolt", "tons": 65, "era": "Succession Wars", "img": "assets/images/mechs/thunderbolt.jpg", "factions": ["ALL"], "variants": [
+        {"id": "tdr-5s", "name": "TDR-5S", "bv": 1335, "pv": 34, "role": "Durable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "15 single", "weapons": ["1× LRM-15", "1× Large Laser", "3× Medium Laser", "1× SRM-2", "Machine Guns"]},
+        {"id": "tdr-5d", "name": "TDR-5D", "bv": 1231, "pv": 29, "role": "Durable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "15 single", "weapons": ["1× LRM-15", "1× Large Laser", "3× Medium Laser", "1× SRM-2", "Machine Guns"]},
+        {"id": "tdr-5se", "name": "TDR-5SE", "bv": 1414, "pv": 34, "role": "Long-range support", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "17 single", "weapons": ["1× LRM-15", "1× Large Laser", "3× Medium Laser"]},
+        {"id": "tdr-5ss", "name": "TDR-5SS", "bv": 1337, "pv": 32, "role": "Durable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "15 single", "weapons": ["1× LRM-15", "1× Large Laser", "3× Medium Laser", "1× SRM-2", "Machine Guns"]},
+        {"id": "tdr-5s-t", "name": "TDR-5S-T", "bv": 1447, "pv": 34, "role": "Durable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "15 single", "weapons": ["1× LRM-15", "1× Large Laser", "3× Medium Laser", "1× SRM-2", "Machine Guns"]}
+    ]},
+    {"chassis": "Grasshopper", "tons": 70, "era": "Succession Wars", "img": "assets/images/mechs/grasshopper.jpg", "factions": ["ALL"], "variants": [
+        {"id": "ghr-5h", "name": "GHR-5H", "bv": 1450, "pv": 0, "role": "Close assault / jumper", "movement": "Walk 4 / Run 6 / Jump 4", "heatsinks": "15 single", "weapons": ["1× LRM-5", "1× Large Laser", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Orion", "tons": 70, "era": "Succession Wars", "img": "assets/images/mechs/orion.jpg", "factions": ["ALL"], "variants": [
+        {"id": "on1-k", "name": "ON1-K", "bv": 1429, "pv": 34, "role": "Reliable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "14 single", "weapons": ["1× AC/10", "1× LRM-15", "2× Medium Laser", "1× SRM-4"]},
+        {"id": "on1-k-kerensky", "name": "ON1-K (Kerensky)", "bv": 1821, "pv": 43, "role": "Reliable brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "14 single", "weapons": ["1× AC/10", "1× LRM-15", "2× Medium Laser", "1× SRM-4"]}
+    ]},
+    {"chassis": "Black Knight", "tons": 75, "era": "Star League / Lostech", "img": "assets/images/mechs/blackknight.jpg", "factions": ["ALL"], "variants": [
+        {"id": "bl-6-knt", "name": "BL-6-KNT", "bv": 1450, "pv": 0, "role": "Energy sniper", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "20 single", "weapons": ["1× PPC", "1× Large Laser", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Awesome", "tons": 80, "era": "Succession Wars", "img": "assets/images/mechs/awesome.jpg", "factions": ["ALL"], "variants": [
+        {"id": "aws-8q", "name": "AWS-8Q", "bv": 1605, "pv": 39, "role": "PPC sniper", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "28 single", "weapons": ["3× PPC", "1× Small Laser"]}
+    ]},
+    {"chassis": "Charger", "tons": 80, "era": "Succession Wars", "img": "assets/images/mechs/charger.jpg", "factions": ["ALL"], "variants": [
+        {"id": "cgr-1a1", "name": "CGR-1A1", "bv": 1200, "pv": 0, "role": "Fast brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "12-16 single", "weapons": ["1× AC/20", "2× Medium Laser", "2× Small Laser"]}
+    ]},
+    {"chassis": "Victor", "tons": 80, "era": "Succession Wars", "img": "assets/images/mechs/victor.jpg", "factions": ["ALL"], "variants": [
+        {"id": "vtr-9b", "name": "VTR-9B", "bv": 1500, "pv": 0, "role": "Jumping striker", "movement": "Walk 3 / Run 5 / Jump 5", "heatsinks": "14-16 single", "weapons": ["1× AC/20", "2× Medium Laser", "1× SRM-4/6"]}
+    ]},
+    {"chassis": "Zeus", "tons": 80, "era": "Succession Wars", "img": "assets/images/mechs/zeus.jpg", "factions": ["ALL"], "variants": [
+        {"id": "zeu-6s", "name": "ZEU-6S", "bv": 1348, "pv": 32, "role": "Missile boat / sniper", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "18-20 single", "weapons": ["1× LRM-15", "1× AC/5 or PPC", "2× Medium Laser"]}
+    ]},
+    {"chassis": "BattleMaster", "tons": 85, "era": "Succession Wars", "img": "assets/images/mechs/battlemaster.jpg", "factions": ["ALL"], "variants": [
+        {"id": "blr-1g", "name": "BLR-1G", "bv": 1519, "pv": 36, "role": "Versatile command brawler", "movement": "Walk 4 / Run 6 / Jump 0", "heatsinks": "18 single", "weapons": ["1× PPC", "6× Medium Laser", "1× SRM-6", "2× Machine Gun"]}
+    ]},
+    {"chassis": "Stalker", "tons": 85, "era": "Succession Wars", "img": "assets/images/mechs/stalker.jpg", "factions": ["ALL"], "variants": [
+        {"id": "stk-3f", "name": "STK-3F", "bv": 1559, "pv": 37, "role": "Missile boat", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20 single", "weapons": ["2× LRM-10", "2× SRM-6", "2× Large Laser", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Emperor", "tons": 90, "era": "Star League / Lostech", "img": "assets/images/mechs/emperor.jpg", "factions": ["ALL"], "variants": [
+        {"id": "emp-5a", "name": "EMP-5A", "bv": 1830, "pv": 44, "role": "Juggernaut / command", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20-24 single", "weapons": ["2× PPC", "2× Large Laser + LRM/AC variants"]},
+        {"id": "emp-6a", "name": "EMP-6A", "bv": 1969, "pv": 47, "role": "Juggernaut", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20-24 single", "weapons": ["Similar to 5A with refinements"]}
+    ]},
+    {"chassis": "Highlander", "tons": 90, "era": "Star League / Lostech", "img": "assets/images/mechs/highlander.jpg", "factions": ["ALL"], "variants": [
+        {"id": "hgn-732", "name": "HGN-732", "bv": 2227, "pv": 53, "role": "Mobile sniper", "movement": "Walk 3 / Run 5 / Jump 3-5", "heatsinks": "20-24 single", "weapons": ["1× Gauss Rifle (or AC/20)", "1× LRM-20", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Nightstar", "tons": 95, "era": "Star League / Lostech", "img": "assets/images/mechs/nightstar.jpg", "factions": ["ALL"], "variants": [
+        {"id": "nsr-9j", "name": "NSR-9J", "bv": 2399, "pv": 57, "role": "Advanced juggernaut", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20+ single", "weapons": ["2× Gauss Rifle", "2× ER PPC (downgraded)", "Medium Lasers"]}
+    ]},
+    {"chassis": "Banshee", "tons": 95, "era": "Succession Wars", "img": "assets/images/mechs/banshee.jpg", "factions": ["ALL"], "variants": [
+        {"id": "bnc-3e", "name": "BNC-3E", "bv": 1300, "pv": 0, "role": "Fast assault", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "14-18 single", "weapons": ["1× AC/20 or PPC", "Multiple Medium Lasers"]}
+    ]},
+    {"chassis": "Atlas", "tons": 100, "era": "Succession Wars", "img": "assets/images/mechs/atlas.jpg", "factions": ["ALL"], "variants": [
+        {"id": "as7-d", "name": "AS7-D", "bv": 1897, "pv": 52, "role": "Terror / juggernaut", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20 single", "weapons": ["1× AC/20", "1× LRM-20", "2× SRM-6", "4× Medium Laser"]}
+    ]},
+    {"chassis": "King Crab", "tons": 100, "era": "Star League / Lostech", "img": "assets/images/mechs/king_crab.jpg", "factions": ["ALL"], "variants": [
+        {"id": "kgc-0000", "name": "KGC-0000", "bv": 1810, "pv": 43, "role": "Close-range monster", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "15-20 single", "weapons": ["2× AC/20", "1× LRM-15", "1× Large Laser"]},
+        {"id": "kgc-000", "name": "KGC-000", "bv": 1906, "pv": 45, "role": "Close-range monster", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "15-20 single", "weapons": ["2× AC/20", "1× LRM-15", "1× Large Laser"]},
+        {"id": "kgc-000b", "name": "KGC-000b", "bv": 2039, "pv": 49, "role": "Close-range monster", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "15-20 single", "weapons": ["2× AC/20", "1× LRM-15", "1× Large Laser"]}
+    ]},
+    {"chassis": "Devastator", "tons": 100, "era": "Star League / Lostech", "img": "assets/images/mechs/devestator.jpg", "factions": ["ALL"], "variants": [
+        {"id": "dvs-1d", "name": "DVS-1D", "bv": 1858, "pv": 44, "role": "Firepower juggernaut", "movement": "Walk 3 / Run 5 / Jump 0", "heatsinks": "20 single", "weapons": ["2× AC/10", "2× Large Laser", "4× Medium Laser"]}
+    ]},
+    {"chassis": "Phoenix Hawk", "tons": 45, "era": "Succession Wars", "img": "assets/images/mechs/phoenixhawk.jpg", "factions": ["ALL"], "variants": [
+        {"id": "pxh-1d", "name": "PXH-1D", "bv": 1083, "pv": 24, "role": "Skirmisher", "movement": "6/9/6", "heatsinks": "12 single", "weapons": ["1× Large Laser", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Rifleman", "tons": 60, "era": "Succession Wars", "img": "assets/images/mechs/rifleman.jpg", "factions": ["ALL"], "variants": [
+        {"id": "rfl-3n", "name": "RFL-3N", "bv": 1039, "pv": 25, "role": "Sniper", "movement": "4/6/0", "heatsinks": "10 single", "weapons": ["2× Large Laser", "2× AC/5", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Warhammer", "tons": 70, "era": "Succession Wars", "img": "assets/images/mechs/warhammer.jpg", "factions": ["ALL"], "variants": [
+        {"id": "whm-6r", "name": "WHM-6R", "bv": 1299, "pv": 32, "role": "Brawler", "movement": "4/6/0", "heatsinks": "18 single", "weapons": ["2× PPC", "2× Medium Laser", "2× Small Laser", "2× Machine Gun", "1× SRM-6"]}
+    ]},
+    {"chassis": "Marauder", "tons": 75, "era": "Succession Wars", "img": "assets/images/mechs/marauder.jpg", "factions": ["ALL"], "variants": [
+        {"id": "mad-3r", "name": "MAD-3R", "bv": 1363, "pv": 33, "role": "Brawler", "movement": "4/6/0", "heatsinks": "16 single", "weapons": ["2× PPC", "1× AC/5", "2× Medium Laser"]}
+    ]},
+    {"chassis": "Archer", "tons": 70, "era": "Succession Wars", "img": "assets/images/mechs/archer.jpg", "factions": ["ALL"], "variants": [
+        {"id": "arc-2r", "name": "ARC-2R", "bv": 1477, "pv": 33, "role": "Missile Boat", "movement": "4/6/0", "heatsinks": "10 single", "weapons": ["2× LRM-20", "4× Medium Laser"]}
+    ]}
+];
+
+// ==================== SETTINGS ====================
+let currentMode = "classic";   // "classic" or "alpha"
+let currentLance = [];
+
+// ==================== PILOT BACKGROUNDS ====================
+const pilotBackgrounds = {
+    "Former House Regular": "A loyal soldier who served in one of the Great Houses for many years. Experienced in standard military doctrine and large-scale operations, but often disillusioned by the endless Succession Wars politics and betrayals.",
+    "Mercenary Veteran": "Hardened fighter who has battled across the Inner Sphere for the highest bidder. Knows every dirty trick in the book, values loyalty only to the contract, and has survived more drops than most pilots see in a lifetime.",
+    "Dispossessed Noble": "A fallen aristocrat whose family 'Mech was lost in the wars. Now fights to reclaim honor and fortune, bringing refined tactics and a burning sense of entitlement to every battlefield.",
+    "ComStar Adept": "Mysterious tech-priest trained in the hidden ways of ComStar. Possesses advanced technical knowledge and a calm, almost spiritual approach to combat, often quoting the Word of Blake or old Star League doctrines.",
+    "Periphery Raider": "Ruthless bandit from the lawless outer reaches. Lives by speed, surprise, and raw aggression — a survivor who learned to fight dirty in pirate bands and backwater conflicts.",
+    "Bounty Hunter": "Relentless tracker who hunts high-value targets for credits. Cold, professional, and always one step ahead, with a reputation for never letting a quarry escape once the contract is signed.",
+    "Federated Suns Loyalist": "Dedicated Davion patriot fighting for the glory of the Suns. Fiercely loyal to House Davion, believes in the ideals of the Federated Suns, and fights with chivalric honor and tactical precision.",
+    "Draconis Combine Samurai": "Honor-bound warrior sworn to the Dragon. Follows the ancient code of bushido, values duty above all else, and would rather die than bring shame to their lord or family.",
+    "Lyran Corporate Pilot": "Skilled mercenary pilot on the payroll of a Lyran corporation. Combines military training with sharp business instincts — always calculating the cost-to-benefit ratio of every engagement.",
+    "Free Worlds League Renegade": "Independent captain who broke away from League command. Charismatic and fiercely independent, often operates with a small loyal crew and a deep distrust of central authority.",
+    "Wolf's Dragoons Survivor": "Veteran of the legendary mercenary unit. Carries the elite training and discipline of the Dragoons, with stories of battles against the Clans and a quiet pride in their heritage.",
+    "Star League Remnant": "Old soldier who still believes in the fallen Star League. Clings to the ideals of unity and technological superiority, often quoting lost SLDF doctrine and mourning the fall of the old order.",
+    "Young Hotshot": "Cocky new ace eager to prove themselves in battle. Full of raw talent and bravado, but still learning the brutal realities of war — a dangerous mix of skill and overconfidence.",
+    "Grizzled Veteran": "Battle-scarred survivor of countless campaigns. Seen more death and destruction than most soldiers twice their age, carries deep emotional scars, and fights with cold, calculated efficiency.",
+    "Test Pilot": "Daring experimental 'Mech tester for a major manufacturer. Has pushed countless prototype designs to their limits and survived to tell the tale — possesses unmatched knowledge of 'Mech performance.",
+    "Inner Sphere Defector": "Turncoat who abandoned their original house. Carries the weight of betrayal and the constant fear of being hunted, but brings valuable insider knowledge of their former faction.",
+    "Ex-Pirate": "Reformed (or not) pirate looking for legitimate work. Thrives on chaos and opportunism, knows every smuggling route and weak point in defenses, and still has a dangerous reputation.",
+    "Solaris Gladiator": "Famous arena champion from the Game World of Solaris VII. Lives for the roar of the crowd and the thrill of one-on-one combat, bringing showmanship and deadly precision to the battlefield."
+};
+
+// ==================== ALPHA STRIKE / CLASSIC TOGGLE ====================
+function switchMode(mode) {
+    currentMode = mode;
+
+    // Force clear both first (this fixes the "both highlighted" bug)
+    const classicBtn = document.getElementById('classic-btn');
+    const alphaBtn = document.getElementById('alpha-btn');
+    
+    classicBtn.classList.remove('active');
+    alphaBtn.classList.remove('active');
+
+    // Add active only to the selected one
+    if (mode === 'classic') {
+        classicBtn.classList.add('active');
+    } else {
+        alphaBtn.classList.add('active');
+    }
+
+    updateDisplay();
+}
+
+// Official BV2 pilot skill multiplier (also used lightly for PV)
+function getPilotMultiplier(gunnery, piloting) {
+    const gMult = [2.42, 1.82, 1.42, 1.22, 1.00, 0.82, 0.62, 0.42]; // Gunnery 0–7
+    const pMult = [1.80, 1.40, 1.10, 1.00, 0.85, 0.70, 0.55];       // Piloting 0–6
+    const g = Math.min(Math.max(gunnery || 4, 0), 7);
+    const p = Math.min(Math.max(piloting || 5, 0), 6);
+    return gMult[g] * pMult[p];
+}
+
+// ==================== SMART LANCE FEEDBACK ====================
+function getLanceFeedback() {
+    if (currentLance.length === 0) return '<span style="color:#888;">Build a lance to see composition feedback...</span>';
+
+    let totalTons = currentLance.reduce((sum, u) => sum + u.tons, 0);
+    let totalValue = currentLance.reduce((sum, u) => {
+        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+    }, 0);
+
+    const maxTons = parseInt(document.getElementById('max-ton').value) || 200;
+    const maxValue = parseInt(document.getElementById('max-bv').value) || 6000;
+
+    let feedback = [];
+    let color = '#0f0';
+
+    // Tonnage check
+    if (totalTons > maxTons) {
+        feedback.push(`<span style="color:#f66;">⚠️ OVER TONNAGE LIMIT (${totalTons}t / ${maxTons}t)</span>`);
+        color = '#f66';
+    } else if (totalTons > maxTons * 0.9) {
+        feedback.push(`<span style="color:#ff0;">⚠️ Close to tonnage limit</span>`);
+    }
+
+    // Value check
+    if (totalValue > maxValue) {
+        feedback.push(`<span style="color:#f66;">⚠️ OVER ${currentMode.toUpperCase()} LIMIT</span>`);
+        color = '#f66';
+    } else if (totalValue > maxValue * 0.9) {
+        feedback.push(`<span style="color:#ff0;">⚠️ Close to ${currentMode.toUpperCase()} limit</span>`);
+    }
+
+    // Role balance
+    const roles = currentLance.map(u => u.role || '').join(' ').toLowerCase();
+    let scoutCount = (roles.match(/scout|harasser|recon/g) || []).length;
+    let brawlerCount = (roles.match(/brawler|striker|juggernaut|melee/g) || []).length;
+    let supportCount = (roles.match(/missile|support|boat|sniper/g) || []).length;
+
+    if (scoutCount >= 3) feedback.push(`<span style="color:#ff0;">🕵️ Heavy on scouts – may lack firepower</span>`);
+    else if (brawlerCount >= 3) feedback.push(`<span style="color:#0f0;">🥊 Strong close-range brawlers</span>`);
+    else if (supportCount >= 3) feedback.push(`<span style="color:#0f0;">🚀 Excellent fire support</span>`);
+    else if (currentLance.length === 4) feedback.push(`<span style="color:#0f0;">✅ Balanced 4-'Mech lance</span>`);
+
+    // Final message
+    if (feedback.length === 0) feedback.push(`<span style="color:#0f0;">✅ Solid lance composition</span>`);
+
+    return feedback.join('<br>');
+}
+
+// ==================== PILOT UPDATE ====================
+function updatePilot(index, field, value) {
+    if (!currentLance[index]) return;
+    if (field === 'background') {
+        currentLance[index].background = value;
+        if (value !== 'Custom') delete currentLance[index].customBackground;
+    } else {
+        currentLance[index][field] = parseInt(value) || 4;
+    }
+    updateDisplay();
+}
+
+// ==================== PRINT TEXT SHEET ====================
+function printTextSheet() {
+    if (currentLance.length === 0) {
+        alert("No 'Mechs in the lance to print!");
+        return;
+    }
+
+    const faction = document.getElementById('faction-filter').options[document.getElementById('faction-filter').selectedIndex].text;
+    const maxTons = document.getElementById('max-ton').value;
+    const maxValue = document.getElementById('max-bv').value;
+
+    let text = `BATTLETECH LANCE SHEET\n`;
+    text += `Generated: ${new Date().toLocaleString()}\n`;
+    text += `Faction: ${faction}\n`;
+    text += `Max Tonnage: ${maxTons}t   |   Max ${currentMode.toUpperCase()}: ${maxValue}\n\n`;
+    text += `ACTIVE ROSTER (${currentLance.length} / 4)\n`;
+    text += `====================================\n\n`;
+
+    currentLance.forEach((unit, i) => {
+        const value = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const bgDesc = pilotBackgrounds[unit.background] || unit.customBackground || '—';
+
+        text += `${i+1}. ${unit.name}\n`;
+        text += `    Tonnage:     ${unit.tons}t\n`;
+        text += `    ${currentMode.toUpperCase()}:     ${value}\n`;
+        text += `    Role:        ${unit.role || '—'}\n`;
+        text += `    Movement:    ${unit.movement || '—'}\n`;
+        text += `    Heat Sinks:  ${unit.heatsinks || '—'}\n`;
+        text += `    Weapons:     ${Array.isArray(unit.weapons) ? unit.weapons.join(', ') : (unit.weapons || '—')}\n`;
+        text += `    Pilot:       Gunnery ${unit.gunnery} / Piloting ${unit.piloting}\n`;
+        text += `    Background:  ${unit.background} — ${bgDesc}\n\n`;
+    });
+
+    const totalValue = currentLance.reduce((sum, u) => sum + (currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40))), 0);
+
+    text += `====================================\n`;
+    text += `TOTAL TONNAGE: ${currentLance.reduce((sum, u) => sum + u.tons, 0)}t\n`;
+    text += `TOTAL ${currentMode.toUpperCase()}: ${totalValue}\n\n`;
+    text += `Built with BattleTech Hub Lance Builder\n`;
+    text += `https://battletechhq.com\n`;
+
+    const printWin = window.open('', '_blank');
+    printWin.document.write(`
+        <html><head><title>Lance Print Sheet</title>
+        <style>body { font-family: monospace; font-size: 13px; line-height: 1.4; margin: 40px; white-space: pre-wrap; } h1 { text-align: center; margin-bottom: 10px; }</style>
+        </head><body>
+        <h1>BATTLETECH LANCE SHEET</h1>
+        ${text.replace(/\n/g, '<br>')}
+        </body></html>
+    `);
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+}
+
+// ==================== ADD & RANDOMIZE ====================
+function addSelectedVariant() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    if (!v || currentLance.length >= 4) return;
+
+    const bgKeys = Object.keys(pilotBackgrounds);
+    const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
+
+    currentLance.push({
+        name: `${c.chassis} ${v.name}`,
+        tons: c.tons,
+        bv: v.bv,
+        pv: v.pv || Math.round(v.bv / 40),
+        role: v.role,
+        movement: v.movement,
+        heatsinks: v.heatsinks,
+        weapons: v.weapons,
+        gunnery: 4,
+        piloting: 5,
+        background: randomBackground,
+        img: c.img
+    });
+    updateDisplay();
+}
+
+// ==================== IMPROVED RANDOM GENERATOR (Phase 4) ====================
+function randomizeThemedLance() {
+    currentLance = [];
+    const f = document.getElementById('faction-filter').value;
+    const eraFilter = document.getElementById('era-filter').value;
+
+    let pool = mechDatabase;
+
+    // Apply filters
+    if (eraFilter !== "ALL") pool = pool.filter(m => m.era === eraFilter);
+    if (f !== "ALL") pool = pool.filter(m => m.factions.includes("ALL") || m.factions.includes(f));
+
+    if (pool.length === 0) {
+        alert("⚠️ No 'Mechs available in the selected era/faction.");
+        return;
+    }
+
+    const maxTons = parseInt(document.getElementById('max-ton').value) || 200;
+    const maxValue = parseInt(document.getElementById('max-bv').value) || 6000;
+
+    let currentTons = 0;
+    let currentValue = 0;
+
+    // Role priority for balanced lances
+    const rolePriority = ["Scout", "Striker", "Brawler", "Support", "Sniper", "Missile", "Juggernaut"];
+
+    function getRoleCategory(roleStr) {
+        const r = (roleStr || "").toLowerCase();
+        if (r.includes("scout") || r.includes("recon") || r.includes("harasser")) return "Scout";
+        if (r.includes("striker")) return "Striker";
+        if (r.includes("brawler") || r.includes("melee") || r.includes("juggernaut")) return "Brawler";
+        if (r.includes("missile") || r.includes("boat") || r.includes("support")) return "Support";
+        if (r.includes("sniper")) return "Sniper";
+        return "Flexible";
+    }
+
+    // Try to build a balanced lance
+    let usedCategories = new Set();
+
+    for (let attempt = 0; attempt < 30 && currentLance.length < 4; attempt++) {  // max 30 tries
+        // Shuffle pool each attempt for variety
+        let shuffled = [...pool].sort(() => Math.random() - 0.5);
+
+        for (let mech of shuffled) {
+            if (currentLance.length >= 4) break;
+
+            const variant = mech.variants[Math.floor(Math.random() * mech.variants.length)];
+            const newTons = currentTons + mech.tons;
+            const baseVal = currentMode === 'classic' ? variant.bv : (variant.pv || Math.round(variant.bv / 40));
+            const newValue = currentValue + baseVal;
+
+            if (newTons > maxTons || newValue > maxValue) continue;
+
+            const category = getRoleCategory(variant.role);
+
+            // Prefer unused role categories first
+            if (!usedCategories.has(category) || currentLance.length >= 3) {
+                const bgKeys = Object.keys(pilotBackgrounds);
+                const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
+
+                currentLance.push({
+                    name: `${mech.chassis} ${variant.name}`,
+                    tons: mech.tons,
+                    bv: variant.bv,
+                    pv: variant.pv || Math.round(variant.bv / 40),
+                    role: variant.role,
+                    movement: variant.movement,
+                    heatsinks: variant.heatsinks,
+                    weapons: variant.weapons,
+                    gunnery: 4,
+                    piloting: 5,
+                    background: randomBackground,
+                    img: mech.img
+                });
+
+                currentTons = newTons;
+                currentValue = newValue;
+                usedCategories.add(category);
+                break;
+            }
+        }
+    }
+
+    if (currentLance.length === 0) {
+        alert("⚠️ No 'Mechs fit within your current limits.");
+    } else if (currentLance.length < 4) {
+        alert(`✅ Generated ${currentLance.length}-'Mech lance (couldn't fill 4 while staying under limits)`);
+    }
+
+    updateDisplay();
+}
+// ==================== DISPLAY ====================
+function updateDisplay() {
+    const roster = document.getElementById('lance-roster');
+    roster.innerHTML = '';
+    let totalT = 0;
+    let totalValue = 0;
+
+    currentLance.forEach((unit, i) => {
+        totalT += unit.tons;
+
+        // Calculate adjusted value using pilot skills
+        const baseValue = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const multiplier = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adjustedValue = Math.round(baseValue * multiplier);
+
+        totalValue += adjustedValue;
+
+        const valueLabel = currentMode === 'classic' ? 'BV' : 'PV';
+
+        roster.innerHTML += `
+            <li class="roster-item">
+                <img src="${unit.img}" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
+                <div style="flex-grow:1;">
+                    <strong>${unit.name}</strong><br>
+                    <small>${unit.tons}t | ${adjustedValue} ${valueLabel} <span style="font-size:0.75em;color:#888;">(${baseValue} base × ${multiplier.toFixed(2)})</span></small>
+                    
+                    <div class="pilot-edit">
+                        Pilot: 
+                        Gunnery <input type="number" value="${unit.gunnery}" min="0" max="8" style="width:40px" onchange="updatePilot(${i}, 'gunnery', this.value)">
+                        / 
+                        Piloting <input type="number" value="${unit.piloting}" min="0" max="8" style="width:40px" onchange="updatePilot(${i}, 'piloting', this.value)">
+                        <br>
+                        Background: 
+                        <select onchange="updatePilot(${i}, 'background', this.value)" style="width:auto">
+                            ${Object.keys(pilotBackgrounds).map(bg => `<option value="${bg}" ${unit.background === bg ? 'selected' : ''}>${bg}</option>`).join('')}
+                            <option value="Custom" ${unit.background === 'Custom' ? 'selected' : ''}>Custom</option>
+                        </select>
+                        ${unit.background === 'Custom' ? `<input type="text" value="${unit.customBackground || ''}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
+                    </div>
+                </div>
+                <button onclick="removeUnit(${i})" style="background:none;color:#ff4c4c;border:none;cursor:pointer;font-size:1.2em;">×</button>
+            </li>`;
+    });
+
+    const valueLabel = currentMode === 'classic' ? 'BV' : 'PV';
+    document.getElementById('stats-summary').innerText = `${totalT}t | ${totalValue} ${valueLabel}`;
+	    // Update feedback panel
+    document.getElementById('lance-feedback').innerHTML = getLanceFeedback();
+}
+
+// ==================== REST OF THE FUNCTIONS ====================
+function updateVariants() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const varSelect = document.getElementById('variant-select');
+    varSelect.innerHTML = '';
+
+    if (c) {
+        document.getElementById('mech-preview-img').src = c.img;
+        c.variants.forEach(v => {
+            let opt = document.createElement('option');
+            opt.value = v.id;
+            opt.textContent = `${v.name} | ${v.bv} BV`;
+            varSelect.appendChild(opt);
+        });
+    }
+    syncPreview();
+}
+
+function syncPreview() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    document.getElementById('preview-label').innerText = v ? `${c.chassis} ${v.name} | ${c.tons}t | ${v.bv} BV` : "AWAITING TARGET DATA";
+}
+
+function openModal() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    if (!v) return;
+
+    document.getElementById('modal-title').innerText = `${c.chassis} ${v.name}`;
+    document.getElementById('modal-body').innerHTML = `
+        <li><strong>Role:</strong> ${v.role}</li>
+        <li><strong>Movement:</strong> ${v.movement}</li>
+        <li><strong>Heat Sinks:</strong> ${v.heatsinks}</li>
+        <li><strong>Weapons:</strong> ${v.weapons.join(', ')}</li>
+        <li><strong>BV:</strong> ${v.bv}</li>
+    `;
+    document.getElementById('infoModal').style.display = "block";
+}
+
+function closeModal() { document.getElementById('infoModal').style.display = "none"; }
+
+function removeUnit(i) {
+    currentLance.splice(i, 1);
+    updateDisplay();
+}
+
+function clearLance() {
+    currentLance = [];
+    updateDisplay();
+}
+
+window.onload = () => {
+    // Populate era dropdown from database
+    const eraSelect = document.getElementById('era-filter');
+    const uniqueEras = [...new Set(mechDatabase.map(m => m.era))].sort();
+    eraSelect.innerHTML = '<option value="ALL">All Eras</option>';
+    uniqueEras.forEach(era => {
+        const opt = document.createElement('option');
+        opt.value = era;
+        opt.textContent = era;
+        eraSelect.appendChild(opt);
+    });
+    filterChassis();
+    refreshSavedList();   // ← NEW LINE
+};
+
+// ==================== SAVE / LOAD SYSTEM ====================
+function saveLance() {
+    if (currentLance.length === 0) {
+        alert("Nothing to save – add some 'Mechs first!");
+        return;
+    }
+    const name = prompt("Enter a name for this lance:", "Lance " + new Date().toLocaleDateString());
+    if (!name) return;
+
+    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    saved[name] = JSON.parse(JSON.stringify(currentLance)); // deep copy
+    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    refreshSavedList();
+    alert(`✅ Lance saved as "${name}"`);
+}
+
+function loadLance(name) {
+    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    if (saved[name]) {
+        currentLance = JSON.parse(JSON.stringify(saved[name]));
+        updateDisplay();
+        alert(`✅ Loaded "${name}"`);
+    }
+}
+
+function deleteSavedLance(name) {
+    if (!confirm(`Delete "${name}" permanently?`)) return;
+    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    delete saved[name];
+    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    refreshSavedList();
+}
+
+function refreshSavedList() {
+    const container = document.getElementById('saved-list');
+    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    let html = '';
+
+    Object.keys(saved).sort().forEach(name => {
+        html += `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #333;">
+                <span onclick="loadLance('${name}')" style="cursor:pointer; flex-grow:1;">📋 ${name} (${saved[name].length} mechs)</span>
+                <button onclick="deleteSavedLance('${name}'); event.stopImmediatePropagation();" style="background:none; border:none; color:#ff4c4c; font-size:1.1em; cursor:pointer;">×</button>
+            </div>`;
+    });
+
+    container.innerHTML = html || '<small style="color:#666;">No saved lances yet. Save one above!</small>';
+}
+
+// ==================== EXPORT OPTIONS (Phase 5) ====================
+function copyLanceToClipboard() {
+    if (currentLance.length === 0) {
+        alert("No lance to copy!");
+        return;
+    }
+
+    let text = `**BATTLETECH LANCE – ${currentMode.toUpperCase()}**\n`;
+    text += `Generated: ${new Date().toLocaleString()}\n\n`;
+
+    currentLance.forEach((unit, i) => {
+        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adj = Math.round(base * mult);
+
+        text += `${i+1}. **${unit.name}** (${unit.tons}t)\n`;
+        text += `   ${currentMode.toUpperCase()}: ${adj} (${base} base × ${mult.toFixed(2)})\n`;
+        text += `   Pilot: Gunnery ${unit.gunnery} / Piloting ${unit.piloting}\n`;
+        text += `   Background: ${unit.background}\n`;
+        text += `   Role: ${unit.role || '—'}\n\n`;
+    });
+
+    const totalTons = currentLance.reduce((sum, u) => sum + u.tons, 0);
+    const totalValue = currentLance.reduce((sum, u) => {
+        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+    }, 0);
+
+    text += `**TOTAL:** ${totalTons}t | ${totalValue} ${currentMode.toUpperCase()}\n`;
+    text += `Built with BattleTech Hub Lance Builder → https://battletechhq.com`;
+
+    navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Lance copied to clipboard! Ready to paste into Reddit/Discord/forums.");
+    });
+}
+
+function exportLanceToCSV() {
+    if (currentLance.length === 0) {
+        alert("No lance to export!");
+        return;
+    }
+
+    let csv = "Name,Tonnage,Role,Base Value,Adjusted Value,Gunnery,Piloting,Background\n";
+
+    currentLance.forEach(unit => {
+        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adj = Math.round(base * mult);
+
+        csv += `"${unit.name}",${unit.tons},"${unit.role || ''}",${base},${adj},${unit.gunnery},${unit.piloting},"${unit.background}"\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `lance_${currentMode}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert("✅ CSV exported! Open it in Excel or Google Sheets.");
+}
+
+// ==================== UPDATED FILTER + SORTING ====================
+let currentSort = 'tons';
+
+function filterChassis() {
+    const searchTerm = (document.getElementById('chassis-search').value || "").toLowerCase().trim();
+    const faction = document.getElementById('faction-filter').value;
+    const eraFilter = document.getElementById('era-filter').value;
+
+    let filtered = mechDatabase;
+
+    if (eraFilter !== "ALL") filtered = filtered.filter(m => m.era === eraFilter);
+    if (faction !== "ALL") filtered = filtered.filter(m => m.factions.includes("ALL") || m.factions.includes(faction));
+    if (searchTerm) filtered = filtered.filter(m => m.chassis.toLowerCase().includes(searchTerm));
+
+    // Apply sort
+    if (currentSort === 'tons') filtered.sort((a,b) => a.tons - b.tons);
+    else if (currentSort === 'value') {
+        filtered.sort((a,b) => {
+            const va = a.variants[0][currentMode === 'classic' ? 'bv' : 'pv'] || 0;
+            const vb = b.variants[0][currentMode === 'classic' ? 'bv' : 'pv'] || 0;
+            return va - vb;
+        });
+    }
+    else if (currentSort === 'role') {
+        filtered.sort((a,b) => (a.variants[0].role || "").localeCompare(b.variants[0].role || ""));
+    }
+
+    const select = document.getElementById('chassis-select');
+    select.innerHTML = '<option value="">-- Select Chassis --</option>';
+
+    filtered.forEach(m => {
+        let opt = document.createElement('option');
+        opt.value = m.chassis;
+        opt.textContent = `${m.chassis} (${m.tons}t)`;
+        select.appendChild(opt);
+    });
+
+    updateVariants();
+    updateSortUI();   // visual feedback
+}
+
+function sortChassis(type) {
+    currentSort = type;
+    filterChassis();
+}
+
+function updateSortUI() {
+    document.querySelectorAll('.active-sort').forEach(el => el.classList.remove('active-sort'));
+    const activeEl = document.getElementById('sort-' + currentSort);
+    if (activeEl) activeEl.classList.add('active-sort');
+}
+
+</script>
+</body>
+</html>

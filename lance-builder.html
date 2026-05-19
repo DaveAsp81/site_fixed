@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lance Command Console | BattleTech Hub</title>
+	<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background-color: #0b0b0b; color: #eeeeee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; min-height: 100vh; }
+        #faction-bg-layer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70vh; height: 70vh; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.18; z-index: -1; pointer-events: none; }
+        .control-panel { background: rgba(20,20,20,0.96); padding: 20px; border-radius: 4px; border: 1px solid #333; margin-bottom: 20px; backdrop-filter: blur(10px); }
+        select, input { background: #1a1a1a !important; color: #fff !important; border: 1px solid #444 !important; padding: 12px; border-radius: 4px; width: 100%; }
+        .deploy-btn { background: #ff8c00; color: #000; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; text-transform: uppercase; margin-top: 10px; }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.92); }
+        .modal-content { background-color: #1a1a1a; margin: 5% auto; padding: 35px; border: 1px solid #ff8c00; width: 90%; max-width: 820px; border-radius: 8px; max-height: 80vh; overflow-y: auto; }
+        .roster-item { background: rgba(45,45,45,0.85); margin-bottom: 12px; padding: 15px; display: flex; align-items: center; border-left: 5px solid #ff8c00; border-radius: 4px; }
+        .preview-container { width: 100%; height: 250px; background: #000; border: 1px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px 4px 0 0; }
+
+        .main-grid { display: grid; gap: 30px; }
+        @media (min-width: 1024px) { .main-grid { grid-template-columns: 1fr 1.5fr; } }
+        @media (max-width: 1023px) { .main-grid { grid-template-columns: 1fr; } .preview-container { height: 200px; } }
+        
+        .pilot-edit { font-size: 0.9em; margin-top: 8px; }
+        .pilot-edit input, .pilot-edit select { width: auto; padding: 2px 6px; font-size: 0.85em; }
+#classic-btn.active, #alpha-btn.active {
+    background: #ff8c00 !important;
+    color: #000 !important;
+}
+
+#chassis-search {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+    padding: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.sort-arrow { margin-left: 4px; }
+.active-sort {
+    background: #ff8c00 !important;
+    color: #000 !important;
+    font-weight: bold;
+}
+.active-sort .sort-arrow::after {
+    content: " ▼";
+}
+    </style>
+<meta name="description" content="BattleTech Lance Builder — 620 chassis, 3700+ variants, faction filters, BV tracking and print-ready roster sheets.">
+    <link rel="canonical" href="https://battletechhq.com/lance-builder.html">
+</head>
+<body>
+
+<div id="faction-bg-layer"></div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal()" style="float:right; cursor:pointer; font-size:28px; color:#ff8c00;">×</span>
+        <h2 id="modal-title" style="margin-top:0; color:#ff8c00;"></h2>
+        <ul id="modal-body" style="list-style:none; padding:0; line-height:1.8;"></ul>
+    </div>
+</div>
+
+<header>
+    <div class="header-content">
+        <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#Getting-started">Getting Started</a></li>
+                <li><a href="index.html#painting">Painting & Hobby</a></li>
+                <li><a href="index.html#gameplay">Gameplay</a></li>
+                <li><a href="index.html#lore">Lore</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<header style="background:#111; padding:25px; text-align:center; border-bottom:4px solid #ff8c00;">
+    <h1>BATTLETECH HUB COMMAND</h1>
+</header>
+
+<main style="max-width:1200px; margin:30px auto; padding:0 20px;">
+    <a href="index.html" style="color:#ff8c00; text-decoration:underline; margin-bottom:15px; display:inline-block;">← Back to Home</a>
+
+    
+    <!-- Data Disclaimer -->
+    <div style="background: rgba(255,140,0,0.06); border: 1px solid rgba(255,140,0,0.2); border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.78rem; color: #888; line-height: 1.5;">
+        <strong style="color: #ff8c00;">Data Notice:</strong> 
+        Unit stats and faction availability sourced from the 
+        <a href="https://www.masterunitlist.info" target="_blank" style="color: #ff8c00;">Master Unit List</a> 
+        and MegaMek MTF files. Data is accurate to the best of our knowledge but may contain gaps or errors — 
+        the MUL is the authoritative reference. 
+        Found something wrong? <a href="mailto:DaveAsp81@gmail.com?subject=Lance Builder Data Error" style="color: #ff8c00;">Report it here</a>.
+    </div>
+<section class="control-panel" style="display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:20px;">
+    <div>
+        <label style="font-size:0.75em; color:#888;">FACTION</label>
+        <select id="faction-filter" onchange="filterChassis()">
+            <option value="ALL">All Factions</option>
+            <optgroup label="── Great Houses ──────────">
+                <option value="Davion">House Davion (Federated Suns)</option>
+                <option value="Steiner">House Steiner (Lyran Commonwealth)</option>
+                <option value="Kurita">House Kurita (Draconis Combine)</option>
+                <option value="Marik">House Marik (Free Worlds League)</option>
+                <option value="Liao">House Liao (Capellan Confederation)</option>
+            </optgroup>
+            <optgroup label="── Clans ─────────────────">
+                <option value="ClanWolf">Clan Wolf</option>
+                <option value="ClanJadeFalcon">Clan Jade Falcon</option>
+                <option value="ClanGhostBear">Clan Ghost Bear</option>
+                <option value="ClanSmokeJaguar">Clan Smoke Jaguar</option>
+                <option value="ClanNovacat">Clan Nova Cat</option>
+                <option value="ClanDiamondShark">Clan Diamond Shark</option>
+                <option value="ClanSteelViper">Clan Steel Viper</option>
+                <option value="ClanBloodSpirit">Clan Blood Spirit</option>
+                <option value="ClanCoyote">Clan Coyote</option>
+                <option value="ClanFireMandrill">Clan Fire Mandrill</option>
+                <option value="ClanGoliathScorpion">Clan Goliath Scorpion</option>
+                <option value="ClanHellsHorses">Clan Hell's Horses</option>
+                <option value="ClanIceHellion">Clan Ice Hellion</option>
+                <option value="ClanStarAdder">Clan Star Adder</option>
+                <option value="ClanWildCat">Clan Widowmaker</option>
+                <option value="ClanWolverine">Clan Wolverine</option>
+            </optgroup>
+            <optgroup label="── Inner Sphere States ───">
+                <option value="ComStar">ComStar</option>
+                <option value="WordOfBlake">Word of Blake</option>
+                <option value="StarLeague">Star League (SLDF)</option>
+                <option value="FedCom">Federated Commonwealth</option>
+                <option value="FedSuns">Federated Suns</option>
+                <option value="LyranAlliance">Lyran Alliance</option>
+                <option value="FreeRasalhague">Free Rasalhague Republic</option>
+                <option value="StIvesCompact">St. Ives Compact</option>
+                <option value="TrinityAlliance">Trinity Alliance</option>
+            </optgroup>
+            <optgroup label="── Periphery ─────────────">
+                <option value="Taurian">Taurian Concordat</option>
+                <option value="Canopus">Magistracy of Canopus</option>
+                <option value="Outworlds">Outworlds Alliance</option>
+                <option value="Marian">Marian Hegemony</option>
+                <option value="Illyrian">Illyrian Palatinate</option>
+                <option value="Circinus">Circinus Federation</option>
+                <option value="Tortuga">Tortuga Dominions</option>
+            </optgroup>
+            <optgroup label="── Other ─────────────────">
+                <option value="Mercenaries">Mercenaries</option>
+                <option value="Pirates">Pirates</option>
+                <option value="Independent">Independent</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <!-- NEW: ERA FILTER -->
+    <div>
+        <label style="font-size:0.75em; color:#888;">ERA</label>
+        <select id="era-filter" onchange="filterChassis()">
+            <!-- Populated automatically by JavaScript -->
+        </select>
+    </div>
+
+    <div><label style="font-size:0.75em; color:#888;">MAX TONS</label><input type="number" id="max-ton" value="200" onchange="updateDisplay()"></div>
+    <div><label style="font-size:0.75em; color:#888;">MAX BV2 / PV</label><input type="number" id="max-bv" value="6000" onchange="updateDisplay()"></div>
+</section>
+<!-- ALPHA STRIKE / CLASSIC TOGGLE -->
+<div style="margin: 20px 0 15px 0; display: flex; background: #1a1a1a; border: 1px solid #444; border-radius: 6px; padding: 4px; width: fit-content;">
+    <div id="classic-btn" onclick="switchMode('classic')" class="active"
+     style="padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 4px;">CLASSIC (BV)</div>
+    <div id="alpha-btn" onclick="switchMode('alpha')" 
+         style="padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 4px;">ALPHA STRIKE (PV)</div>
+</div>
+    <div class="main-grid">
+        <div class="control-panel">
+    <div class="preview-container">
+        <img id="mech-preview-img" style="max-width:100%; max-height:100%; display:none;" src="">
+    </div>
+    <div id="preview-label" style="background:#222; padding:10px; text-align:center; color:#ff8c00; font-weight:bold;">TARGET DATA LINKED</div>
+
+    <!-- NEW: Search + Sort -->
+    <input type="text" id="chassis-search" placeholder="🔍 Search chassis..." 
+           style="margin:15px 0 8px 0; padding:12px;" onkeyup="filterChassis()">
+    
+    <div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85em; color:#888;">
+    <span id="sort-ton" onclick="sortChassis('tons')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">TONS <span class="sort-arrow"></span></span>
+    <span id="sort-value" onclick="sortChassis('value')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">VALUE <span class="sort-arrow"></span></span>
+    <span id="sort-role" onclick="sortChassis('role')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">ROLE <span class="sort-arrow"></span></span>
+</div>
+
+    <select id="chassis-select" onchange="updateVariants()" style="margin-bottom:10px;"></select>
+    
+    <div style="display:flex; gap:10px; margin-bottom:15px;">
+        <select id="variant-select" onchange="syncPreview()" style="flex:1;"></select>
+        <button onclick="openModal()" style="background:#222; color:#ff8c00; border:1px solid #ff8c00; width:50px; font-weight:bold;">i</button>
+    </div>
+    
+    <button onclick="addSelectedVariant()" class="deploy-btn">DEPLOY UNIT</button>
+    <button onclick="randomizeThemedLance()" id="quickgen-btn" style="background:#333; color:#fff; border:1px solid #444; width:100%; padding:12px; margin-top:8px;">🎲 QUICK-GEN LANCE</button>
+    
+    <!-- NEW: Undo button -->
+    <button onclick="undoLastAction()" style="margin-top:8px; width:100%; background:#444; color:#fff; border:1px solid #666; padding:10px;">↩️ UNDO LAST UNIT</button>
+</div>
+
+        <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h2 style="margin:0; color:#ff8c00;">ACTIVE ROSTER</h2>
+                <div id="stats-summary" style="font-weight:bold; color:#ff8c00;">0t | 0 BV</div>
+            </div>
+            <ul id="lance-roster" style="list-style:none; padding:0; min-height:400px;"></ul>
+			<!-- LANCE FEEDBACK PANEL -->
+<div id="lance-feedback" style="margin-top:15px; padding:12px; background:rgba(30,30,30,0.95); border:1px solid #444; border-radius:4px; font-size:0.9em; min-height:60px;"></div>
+            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+    <button onclick="printTextSheet()" style="flex:1; background:#28a745; color:white; border:none; padding:15px;">🖨️ PRINT TEXT SHEET</button>
+    <button onclick="saveLance()" style="flex:1; background:#0066cc; color:white; border:none; padding:15px;">💾 SAVE LANCE</button>
+    
+    <button onclick="copyLanceToClipboard()" style="flex:1; background:#00aaff; color:white; border:none; padding:15px;">📋 COPY TO CLIPBOARD</button>
+    <button onclick="exportToMegaMek()" style="flex:1; background:#1a3a5c; color:#7eb8e8; border:1px solid #2a5a8c; padding:15px; font-weight:bold; cursor:pointer; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em;" title="Export as MegaMek .mul file for online/solo play">🎮 EXPORT TO MEGAMEK</button>
+    <button onclick="exportLanceToCSV()" style="flex:1; background:#ff8800; color:white; border:none; padding:15px;">📤 EXPORT CSV</button>
+    
+    <button onclick="clearLance()" style="background:transparent; color:#cc0000; border:1px solid #cc0000; padding:15px;">WIPE LANCE</button>
+</div>
+
+<!-- SAVED LANCES PANEL -->
+<div id="saved-lances-panel" style="margin-top:25px; background:rgba(20,20,20,0.9); padding:15px; border-radius:4px; border:1px solid #444;">
+    <strong style="color:#ff8c00;">💾 SAVED LANCES</strong>
+    <div id="saved-list" style="margin-top:10px; max-height:200px; overflow-y:auto;"></div>
+</div>
+        </div>
+    </div>
+</main>
+<script>
+// ==================== COMPLETE SUCCESSION WARS DATABASE ====================
+let mechDatabase = [];
+
+// ==================== SETTINGS ====================
+let currentMode = "classic";   // "classic" or "alpha"
+let currentLance = [];
+
+// ── Clan Star support ─────────────────────────────────────────────────────────
+function isClanFaction() {
+    const faction = document.getElementById('faction-filter')?.value || 'ALL';
+    return faction.startsWith('Clan');
+}
+
+function getMaxUnits()  { return isClanFaction() ? 5 : 4; }
+function getUnitLabel() { return isClanFaction() ? 'Star' : 'Lance'; }
+function getMechLabel() { return isClanFaction() ? "'Mech Star" : "'Mech lance"; }
+
+// Update UI labels when faction changes
+function updateFormationUI() {
+    const isClan = isClanFaction();
+    const label  = isClan ? 'Star' : 'Lance';
+
+    // Page title area
+    const titleEl = document.getElementById('formation-title');
+    if (titleEl) titleEl.textContent = isClan ? 'STAR COMMAND CONSOLE' : 'LANCE COMMAND CONSOLE';
+
+    // Active roster header
+    const rosterHeader = document.getElementById('roster-header-label');
+    if (rosterHeader) rosterHeader.textContent = 'ACTIVE ' + label.toUpperCase();
+
+    // Deploy button
+    const deployBtn = document.querySelector('.deploy-btn');
+    if (deployBtn) deployBtn.textContent = isClan ? 'DEPLOY TO STAR' : 'DEPLOY UNIT';
+
+    // Quick-gen button
+    const genBtn = document.getElementById('quickgen-btn');
+    if (genBtn) genBtn.textContent = isClan ? '🎲 QUICK-GEN STAR' : '🎲 QUICK-GEN LANCE';
+
+    // Save button
+    const saveBtn = document.getElementById('save-btn');
+    if (saveBtn) saveBtn.textContent = isClan ? '💾 SAVE STAR' : '💾 SAVE LANCE';
+
+    // Wipe button
+    const wipeBtn = document.getElementById('wipe-btn');
+    if (wipeBtn) wipeBtn.textContent = isClan ? 'WIPE STAR' : 'WIPE LANCE';
+
+    // Formation indicator badge
+    const badge = document.getElementById('formation-badge');
+    if (badge) {
+        badge.textContent = isClan ? `⭐ CLAN STAR (5 'MECHS)` : `⚔ LANCE (4 'MECHS)`;
+        badge.style.color = isClan ? '#00ccff' : '#ff8c00';
+    }
+
+    // Brief transition message in feedback panel
+    const feedbackEl = document.getElementById('lance-feedback');
+    if (feedbackEl) {
+        if (isClan) {
+            feedbackEl.innerHTML = '<span style="color:#00ccff; font-style:italic;">Seyla. Technician standing by. Awaiting your bid, MechWarrior.</span>';
+        } else {
+            feedbackEl.innerHTML = '<span style="color:#888; font-style:italic;">Back in IS space. Standard lance protocols active.</span>';
+        }
+        // Let the normal feedback function take over after a moment
+        setTimeout(() => {
+            if (feedbackEl) feedbackEl.innerHTML = getLanceFeedback();
+        }, 2500);
+    }
+}
+
+// ==================== PILOT BACKGROUNDS ====================
+const pilotBackgrounds = {
+    "Former House Regular": "A loyal soldier who served in one of the Great Houses for many years. Experienced in standard military doctrine and large-scale operations, but often disillusioned by the endless Succession Wars politics and betrayals.",
+    "Mercenary Veteran": "Hardened fighter who has battled across the Inner Sphere for the highest bidder. Knows every dirty trick in the book, values loyalty only to the contract, and has survived more drops than most pilots see in a lifetime.",
+    "Dispossessed Noble": "A fallen aristocrat whose family 'Mech was lost in the wars. Now fights to reclaim honor and fortune, bringing refined tactics and a burning sense of entitlement to every battlefield.",
+    "ComStar Adept": "Mysterious tech-priest trained in the hidden ways of ComStar. Possesses advanced technical knowledge and a calm, almost spiritual approach to combat, often quoting the Word of Blake or old Star League doctrines.",
+    "Periphery Raider": "Ruthless bandit from the lawless outer reaches. Lives by speed, surprise, and raw aggression — a survivor who learned to fight dirty in pirate bands and backwater conflicts.",
+    "Bounty Hunter": "Relentless tracker who hunts high-value targets for credits. Cold, professional, and always one step ahead, with a reputation for never letting a quarry escape once the contract is signed.",
+    "Federated Suns Loyalist": "Dedicated Davion patriot fighting for the glory of the Suns. Fiercely loyal to House Davion, believes in the ideals of the Federated Suns, and fights with chivalric honor and tactical precision.",
+    "Draconis Combine Samurai": "Honor-bound warrior sworn to the Dragon. Follows the ancient code of bushido, values duty above all else, and would rather die than bring shame to their lord or family.",
+    "Lyran Corporate Pilot": "Skilled mercenary pilot on the payroll of a Lyran corporation. Combines military training with sharp business instincts — always calculating the cost-to-benefit ratio of every engagement.",
+    "Free Worlds League Renegade": "Independent captain who broke away from League command. Charismatic and fiercely independent, often operates with a small loyal crew and a deep distrust of central authority.",
+    "Wolf's Dragoons Survivor": "Veteran of the legendary mercenary unit. Carries the elite training and discipline of the Dragoons, with stories of battles against the Clans and a quiet pride in their heritage.",
+    "Star League Remnant": "Old soldier who still believes in the fallen Star League. Clings to the ideals of unity and technological superiority, often quoting lost SLDF doctrine and mourning the fall of the old order.",
+    "Young Hotshot": "Cocky new ace eager to prove themselves in battle. Full of raw talent and bravado, but still learning the brutal realities of war — a dangerous mix of skill and overconfidence.",
+    "Grizzled Veteran": "Battle-scarred survivor of countless campaigns. Seen more death and destruction than most soldiers twice their age, carries deep emotional scars, and fights with cold, calculated efficiency.",
+    "Test Pilot": "Daring experimental 'Mech tester for a major manufacturer. Has pushed countless prototype designs to their limits and survived to tell the tale — possesses unmatched knowledge of 'Mech performance.",
+    "Inner Sphere Defector": "Turncoat who abandoned their original house. Carries the weight of betrayal and the constant fear of being hunted, but brings valuable insider knowledge of their former faction.",
+    "Ex-Pirate": "Reformed (or not) pirate looking for legitimate work. Thrives on chaos and opportunism, knows every smuggling route and weak point in defenses, and still has a dangerous reputation.",
+    "Solaris Gladiator": "Famous arena champion from the Game World of Solaris VII. Lives for the roar of the crowd and the thrill of one-on-one combat, bringing showmanship and deadly precision to the battlefield."
+};
+
+// ==================== ALPHA STRIKE / CLASSIC TOGGLE ====================
+function switchMode(mode) {
+    currentMode = mode;
+
+    // Force clear both first (this fixes the "both highlighted" bug)
+    const classicBtn = document.getElementById('classic-btn');
+    const alphaBtn = document.getElementById('alpha-btn');
+    
+    classicBtn.classList.remove('active');
+    alphaBtn.classList.remove('active');
+
+    // Add active only to the selected one
+    if (mode === 'classic') {
+        classicBtn.classList.add('active');
+    } else {
+        alphaBtn.classList.add('active');
+    }
+
+    updateDisplay();
+}
+
+// Official BV2 pilot skill multiplier (also used lightly for PV)
+function getPilotMultiplier(gunnery, piloting) {
+    const gMult = [2.42, 1.82, 1.42, 1.22, 1.00, 0.82, 0.62, 0.42]; // Gunnery 0–7
+    const pMult = [1.80, 1.40, 1.10, 1.00, 0.85, 0.70, 0.55];       // Piloting 0–6
+    const g = Math.min(Math.max(gunnery || 4, 0), 7);
+    const p = Math.min(Math.max(piloting || 5, 0), 6);
+    return gMult[g] * pMult[p];
+}
+
+// ==================== SMART LANCE FEEDBACK ====================
+function getLanceFeedback() {
+    const clan = isClanFaction();
+
+    // ── Empty state ───────────────────────────────────────────────────────────
+    if (currentLance.length === 0) {
+        return clan
+            ? '<span style="color:#888;">Awaiting unit assignments, Technician. Bid your Star.</span>'
+            : '<span style="color:#888;">Bay is empty. Start building your lance, tech.</span>';
+    }
+
+    let totalTons  = currentLance.reduce((sum, u) => sum + u.tons, 0);
+    let totalValue = currentLance.reduce((sum, u) => {
+        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+    }, 0);
+
+    const maxTons  = parseInt(document.getElementById('max-ton').value) || 200;
+    const maxValue = parseInt(document.getElementById('max-bv').value) || 6000;
+
+    let feedback = [];
+
+    // ── Tonnage checks ────────────────────────────────────────────────────────
+    if (totalTons > maxTons) {
+        feedback.push(clan
+            ? `<span style="color:#f66;">Neg. This Star exceeds authorised tonnage (${totalTons}t / ${maxTons}t). Reassign, Technician.</span>`
+            : `<span style="color:#f66;">⚠️ Over tonnage limit (${totalTons}t / ${maxTons}t) — something has to come out.</span>`
+        );
+    } else if (totalTons > maxTons * 0.9) {
+        feedback.push(clan
+            ? `<span style="color:#ff0;">Tonnage allocation is near limit. Bid carefully, MechWarrior.</span>`
+            : `<span style="color:#ff0;">Close to tonnage limit — not much room left on the dropship.</span>`
+        );
+    }
+
+    // ── BV / PV checks ────────────────────────────────────────────────────────
+    if (totalValue > maxValue) {
+        feedback.push(clan
+            ? `<span style="color:#f66;">This Star exceeds the agreed engagement value. Dezgra bidding, Technician — correct it.</span>`
+            : `<span style="color:#f66;">⚠️ Over ${currentMode.toUpperCase()} limit — dial it back or raise the ceiling.</span>`
+        );
+    } else if (totalValue > maxValue * 0.9) {
+        feedback.push(clan
+            ? `<span style="color:#ff0;">Star value is near ceiling. Aff — tight but within honour.</span>`
+            : `<span style="color:#ff0;">Getting close to the ${currentMode.toUpperCase()} limit.</span>`
+        );
+    }
+
+    // ── Role balance ──────────────────────────────────────────────────────────
+    const roles       = currentLance.map(u => u.role || '').join(' ').toLowerCase();
+    const scoutCount  = (roles.match(/scout|harasser|recon/g)          || []).length;
+    const brawlerCount= (roles.match(/brawler|striker|juggernaut|melee/g)||[]).length;
+    const supportCount= (roles.match(/missile|support|boat|sniper/g)   || []).length;
+    const max         = getMaxUnits();
+
+    if (scoutCount >= (clan ? 4 : 3)) {
+        feedback.push(clan
+            ? `<span style="color:#ff0;">Star is heavy on fast scouts. Aff for reconnaissance, but firepower is lacking — a poor bid for front-line combat.</span>`
+            : `<span style="color:#ff0;">Too many scouts. You'll outrun your own firepower. Swap one for a brawler or fire support.</span>`
+        );
+    } else if (brawlerCount >= (clan ? 4 : 3)) {
+        feedback.push(clan
+            ? `<span style="color:#0f0;">Aff. This Star will close and destroy. Honour in the assault. Watch your flanks — no scouts to screen.</span>`
+            : `<span style="color:#0f0;">Strong brawling lance. Just make sure you can actually reach engagement range before they strip your armour from a distance.</span>`
+        );
+    } else if (supportCount >= (clan ? 4 : 3)) {
+        feedback.push(clan
+            ? `<span style="color:#0f0;">Long-range fire Star. Aff — let the freebirth come to you. They will not enjoy it.</span>`
+            : `<span style="color:#0f0;">Heavy fire support. Effective if you've got something screening for you. Vulnerable if they close fast.</span>`
+        );
+    } else if (currentLance.length === max) {
+        feedback.push(clan
+            ? `<span style="color:#0f0;">Aff. Star is balanced and combat-worthy. The MechWarriors will acquit themselves with honour.</span>`
+            : `<span style="color:#0f0;">Solid composition. Good mix of roles — this lance should handle most engagement types without being caught out.</span>`
+        );
+    }
+
+    // ── Incomplete formation ──────────────────────────────────────────────────
+    if (currentLance.length < max && feedback.length === 0) {
+        feedback.push(clan
+            ? `<span style="color:#ff0;">Star is incomplete (${currentLance.length}/${max}). Assign remaining units, Technician.</span>`
+            : `<span style="color:#ff0;">Lance is short (${currentLance.length}/${max}). Keep adding — or fight with what you've got.</span>`
+        );
+    }
+
+    // ── Fallback ──────────────────────────────────────────────────────────────
+    if (feedback.length === 0) {
+        feedback.push(clan
+            ? `<span style="color:#0f0;">Star composition is acceptable. By your will, MechWarrior.</span>`
+            : `<span style="color:#0f0;">Looks reasonable. Nothing jumping out as a problem.</span>`
+        );
+    }
+
+    return feedback.join('<br>');
+}
+
+// ==================== PILOT UPDATE ====================
+function updatePilot(index, field, value) {
+    if (!currentLance[index]) return;
+    if (field === 'background') {
+        currentLance[index].background = value;
+        if (value !== 'Custom') delete currentLance[index].customBackground;
+    } else {
+        currentLance[index][field] = parseInt(value) || 4;
+    }
+    updateDisplay();
+}
+
+
+// ==================== PILOT NAME GENERATOR ====================
+
+const IS_FIRST_NAMES = [
+    'Aiden','Alexei','Brynn','Callum','Cassandra','Cole','Dana','Derek',
+    'Elena','Fiona','Galen','Hank','Ingrid','James','Kira','Lars','Mara',
+    'Nathan','Nessa','Owen','Pavel','Quinn','Regan','Seth','Tara','Victor',
+    'Wade','Yuki','Zara','Marcus','Lena','Donal','Petra','Rafe','Suki',
+    'Tobias','Valeria','Wyatt','Xander','Yolanda','Zeke','Anton','Britta',
+    'Carlos','Diana','Ethan','Freya','Grant','Hana','Ivan','Jade'
+];
+
+const IS_LAST_NAMES = [
+    'Acheson','Bauer','Calloway','Decker','Eriksson','Fontaine','Greene',
+    'Harlow','Innis','Jarvis','Kessler','Lawson','Malone','Navarro',
+    'Ortega','Parrish','Quinn','Rashid','Sterling','Thorne','Ueda',
+    'Vasquez','Wren','Xiao','Yates','Zimmer','Albright','Brennan',
+    'Castillo','Dubois','Espinoza','Frost','Gallagher','Holt','Ingram',
+    'Johansson','Kwan','Lindqvist','MacLeod','Nakamura','Okafor','Petrov'
+];
+
+const IS_CALLSIGNS = [
+    'Ace','Anvil','Banshee','Blackout','Blaze','Blindside','Bloodhound',
+    'Boomer','Breach','Brimstone','Bulldog','Burnout','Buzzsaw','Cipher',
+    'Cobalt','Colt','Crash','Crusher','Dagger','Deadshot','Deuce',
+    'Dice','Diesel','Dispatch','Dreadnought','Drifter','Drumroll',
+    'Eclipse','Eight-Ball','Ember','Enforcer','Exile','Falcon','Fang',
+    'Firebrand','Firestorm','Flash','Flint','Foxhound','Frostbite',
+    'Ghost','Glacier','Gravel','Grimm','Grinder','Gunslinger','Hammer',
+    'Hardcase','Havoc','Hazard','Highball','Hotshot','Hound','Hurricane',
+    'Icepick','Ignite','Impactor','Ironside','Jackknife','Jinx',
+    'Joker','Jolt','Judge','Juggernaut','Killswitch','Kingpin','Knuckle',
+    'Lancer','Leadfoot','Leadsinger','Lockjaw','Lucky','Magnum','Maverick',
+    'Mayhem','Mirage','Mongoose','Nailgun','Nightfall','Nomad','Oddball',
+    'Onyx','Outlaw','Overload','Padlock','Pariah','Patchwork','Payback',
+    'Pilgrim','Piston','Pitfall','Plague','Predator','Prophet','Quickdraw',
+    'Railgun','Rampage','Rattler','Reaper','Reckless','Redline','Ricochet',
+    'Riddler','Riptide','Roughneck','Roundhouse','Rubble','Runaway',
+    'Rusty','Sabre','Sandstorm','Savage','Scorch','Scrambler','Scrapyard',
+    'Shockwave','Shrapnel','Sidewinder','Siege','Sixgun','Slammer',
+    'Slapshot','Sledge','Slipstream','Slowburn','Smokescreen','Snakebite',
+    'Specter','Spike','Spitfire','Stalker','Static','Steelhorse',
+    'Stonewall','Stormfront','Striker','Tailspin','Tempest','Throttle',
+    'Thunder','Tombstone','Torque','Tracer','Triage','Trigger','Tripwire',
+    'Tumbler','Typhoon','Undertaker','Venom','Vertigo','Viking','Viper',
+    'Voltage','Vortex','Warpath','Warthog','Widowmaker','Wildcard',
+    'Wildfire','Wipeout','Wraith','Wrecker','Zero','Zipline'
+];
+
+// Clan warrior names - single name only, no surname unless Bloodnamed
+const CLAN_FIRST_NAMES = [
+    'Aidan','Aleksandr','Alaric','Anastasia','Bjorn','Brett','Caden',
+    'Callandre','Chandra','Conal','Dagmar','Damon','Dante','Diana',
+    'Dirk','Drake','Eleyna','Erik','Ethan','Falko','Freya','Galen',
+    'Garth','Gerd','Gideon','Gunnar','Hanse','Helga','Henrik','Ingrid',
+    'Ivan','Jal','Jana','Jarek','Jasmine','Jez','Jonas','Kael','Karyn',
+    'Kerensky','Kira','Klaus','Kristoff','Lars','Lena','Lexa','Liam',
+    'Loremaster','Lucien','Maddox','Marit','Mira','Morgan','Naomi',
+    'Natasha','Nicolai','Niels','Nina','Niko','Odin','Olga','Oskar',
+    'Pavel','Petr','Petra','Pilar','Ranna','Raven','Rex','Rhys',
+    'Rolf','Romulus','Rosalind','Ruark','Sable','Sacha','Samira',
+    'Sanne','Sara','Selene','Seth','Sigrid','Soren','Strana','Sven',
+    'Tasha','Tomas','Torren','Ulric','Unn','Valdis','Valten','Viktor',
+    'Vivi','Wulfgar','Xander','Yael','Ymir','Zane','Zara','Zeta'
+];
+
+// Clan Bloodnames - only earned through Trial of Bloodright
+const CLAN_BLOODNAMES = [
+    'Amirault','Bekker','Carns','Crichell','Danforth','Devereaux',
+    'Drummond','Fetladral','Folkner','Furey','Gabrowski','Hazen',
+    'Heller','Icaza','Jewel','Jorgensson','Kerensky','Koga','Labov',
+    'Laren','Malthus','Mattlov','McKibben','Mehta','Nishoko','Osis',
+    'Phan','Pryde','Radick','Showers','Snuka','Taney','Tcherenkoff',
+    'Truscott','Uhl','Ulric','Vickers','Ward','Winson','Yeh','Zalman'
+];
+
+// Clan callsigns are rarer and more battle-focused
+const CLAN_CALLSIGNS = [
+    'Bane','Bloodfang','Bowman','Burrock','Carew','Claw','Deathstrike',
+    'Desolator','Dire Wolf','Doomseeker','Dusk','Embattled','Executioner',
+    'Fastpaw','Firehawk','Gatekeeper','Ghostbear','Grimclaw','Huntmaster',
+    'Iceprowl','Ironjaw','Jadewing','Jaguar','Killfury','Kinslayer',
+    'Kraken','Lair','Mastiff','Nightstrike','Northwind','Novaprowl',
+    'Overlord','Packmaster','Prowl','Razorclaw','Reaver','Sandpiper',
+    'Seeker','Shadowbane','Skullsplitter','Smokejag','Stalker','Starfang',
+    'Stormcrow','Sunhawk','Swiftkill','Talon','Timberwolf','Trothkin',
+    'Turkina','Viper','Warbird','Widowfang','Windclaw','Wolfhound',
+    'Wolvesfire','Zellbrigen'
+];
+
+function randomFrom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generatePilotName(index) {
+    const clan = isClanFaction();
+    let name, callsign;
+
+    if (clan) {
+        // Clan: firstname only, 15% chance of Bloodname, always has a callsign
+        const firstName = randomFrom(CLAN_FIRST_NAMES);
+        const hasBloodname = Math.random() < 0.15;
+        name = hasBloodname
+            ? `${firstName} ${randomFrom(CLAN_BLOODNAMES)}`
+            : firstName;
+        callsign = randomFrom(CLAN_CALLSIGNS);
+    } else {
+        // IS: full name + callsign
+        name = `${randomFrom(IS_FIRST_NAMES)} ${randomFrom(IS_LAST_NAMES)}`;
+        callsign = randomFrom(IS_CALLSIGNS);
+    }
+
+    const full = `${name} "${callsign}"`;
+
+    // Update the unit data
+    if (currentLance[index]) {
+        currentLance[index].pilotName = full;
+    }
+
+    // Update the input field
+    const input = document.getElementById(`pilot-name-${index}`);
+    if (input) input.value = full;
+}
+
+function updatePilotName(index, value) {
+    if (currentLance[index]) {
+        currentLance[index].pilotName = value;
+    }
+}
+
+
+// ==================== MEGAMEK MUL EXPORT ====================
+
+function exportToMegaMek() {
+    if (currentLance.length === 0) {
+        alert(isClanFaction()
+            ? "Star is empty, Technician. Assign units first."
+            : "No 'Mechs in the lance to export.");
+        return;
+    }
+
+    const faction   = document.getElementById('faction-filter').value || 'Unknown';
+    const formation = isClanFaction() ? 'Star' : 'Lance';
+    const date      = new Date().toISOString().split('T')[0];
+
+    let xml = `<?xml version="1.0" encoding="utf-8"?>\n`;
+    xml += `<!-- Generated by BattleTech Hub Lance Builder -->\n`;
+    xml += `<!-- battletechhq.com | ${date} -->\n`;
+    xml += `<!-- Formation: ${formation} | Faction: ${faction} -->\n`;
+    xml += `<unit>\n`;
+
+    currentLance.forEach((unit, i) => {
+        // Split chassis and variant from unit.name (e.g. "Atlas AS7-D" → chassis="Atlas" model="AS7-D")
+        const parts   = unit.name.trim().split(/\s+/);
+        const model   = parts[parts.length - 1]; // last token is variant
+        const chassis = parts.slice(0, -1).join(' ') || unit.name;
+
+        // Pilot name — strip callsign quotes for MegaMek name field
+        // Keep full string including callsign for nickname field
+        const fullName   = unit.pilotName || `MechWarrior ${i + 1}`;
+        const callsignMatch = fullName.match(/"([^"]+)"/);
+        const callsign   = callsignMatch ? callsignMatch[1] : '';
+        const pilotName  = fullName.replace(/\s*"[^"]*"\s*/, ' ').trim() || fullName;
+
+        xml += `  <entity chassis="${escapeXml(chassis)}" model="${escapeXml(model)}" type="Mek">\n`;
+        xml += `    <pilot name="${escapeXml(pilotName)}" nick="${escapeXml(callsign)}" `;
+        xml += `gunnery="${unit.gunnery}" piloting="${unit.piloting}"/>\n`;
+        xml += `  </entity>\n`;
+    });
+
+    xml += `</unit>\n`;
+
+    // Download the file
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `battletech-${formation.toLowerCase()}-${date}.mul`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    // Feedback
+    const feedbackEl = document.getElementById('lance-feedback');
+    if (feedbackEl) {
+        feedbackEl.innerHTML = isClanFaction()
+            ? '<span style="color:#00ccff;">Aff. Star exported for MegaMek. The bid is made, MechWarrior.</span>'
+            : '<span style="color:#0f0;">Lance exported. Load the .mul file in MegaMek via File → Load Unit List.</span>';
+        setTimeout(() => { feedbackEl.innerHTML = getLanceFeedback(); }, 4000);
+    }
+}
+
+function escapeXml(str) {
+    return String(str)
+        .replace(/&/g,  '&amp;')
+        .replace(/</g,  '&lt;')
+        .replace(/>/g,  '&gt;')
+        .replace(/"/g,  '&quot;')
+        .replace(/'/g,  '&apos;');
+}
+
+// ==================== PRINT TEXT SHEET ====================
+function printTextSheet() {
+    if (currentLance.length === 0) {
+        alert(`No 'Mechs in the ${getUnitLabel().toLowerCase()} to print!`);
+        return;
+    }
+
+    const faction = document.getElementById('faction-filter').options[document.getElementById('faction-filter').selectedIndex].text;
+    const maxTons = document.getElementById('max-ton').value;
+    const maxValue = document.getElementById('max-bv').value;
+
+    let text = `BATTLETECH LANCE SHEET\n`;
+    text += `Generated: ${new Date().toLocaleString()}\n`;
+    text += `Faction: ${faction}\n`;
+    text += `Max Tonnage: ${maxTons}t   |   Max ${currentMode.toUpperCase()}: ${maxValue}\n\n`;
+    text += `ACTIVE ${getUnitLabel().toUpperCase()} (${currentLance.length} / ${getMaxUnits()})\n`;
+    text += `====================================\n\n`;
+
+    currentLance.forEach((unit, i) => {
+        const value = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const bgDesc = pilotBackgrounds[unit.background] || unit.customBackground || '—';
+
+        text += `${i+1}. ${unit.name}\n`;
+        text += `    Tonnage:     ${unit.tons}t\n`;
+        text += `    ${currentMode.toUpperCase()}:     ${value}\n`;
+        text += `    Role:        ${unit.role || '—'}\n`;
+        text += `    Movement:    ${unit.movement || '—'}\n`;
+        text += `    Heat Sinks:  ${unit.heatsinks || '—'}\n`;
+        text += `    Weapons:     ${Array.isArray(unit.weapons) ? unit.weapons.join(', ') : (unit.weapons || '—')}\n`;
+        text += `    Pilot:       Gunnery ${unit.gunnery} / Piloting ${unit.piloting}\n`;
+        text += `    Background:  ${unit.background} — ${bgDesc}\n\n`;
+    });
+
+    const totalValue = currentLance.reduce((sum, u) => sum + (currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40))), 0);
+
+    text += `====================================\n`;
+    text += `TOTAL TONNAGE: ${currentLance.reduce((sum, u) => sum + u.tons, 0)}t\n`;
+    text += `TOTAL ${currentMode.toUpperCase()}: ${totalValue}\n\n`;
+    text += `Built with BattleTech Hub Lance Builder\n`;
+    text += `https://battletechhq.com\n`;
+
+    const printWin = window.open('', '_blank');
+    const safeText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    printWin.document.write(
+        '<html><head><title>Lance Print Sheet</title>' +
+        '<style>body { font-family: monospace; font-size: 13px; line-height: 1.4; margin: 40px; white-space: pre-wrap; } h1 { text-align: center; margin-bottom: 10px; }</style>' +
+        '</head><body>' +
+        '<h1>BATTLETECH LANCE SHEET</h1>' +
+        safeText +
+        '</body></html>'
+    );
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+}
+
+// ==================== ADD & RANDOMIZE ====================
+function addSelectedVariant() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    if (!v || currentLance.length >= getMaxUnits()) return;
+
+    const bgKeys = Object.keys(pilotBackgrounds);
+    const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
+
+    currentLance.push({
+        name: `${c.chassis} ${v.name}`,
+        tons: c.tons,
+        bv: v.bv,
+        pv: v.pv || Math.round(v.bv / 40),
+        role: v.role,
+        movement: v.movement,
+        heatsinks: v.heatsinks,
+        weapons: v.weapons,
+        gunnery: 4,
+        piloting: 5,
+        background: randomBackground,
+        img: c.img
+    });
+    updateDisplay();
+}
+
+// ==================== IMPROVED RANDOM GENERATOR (Phase 4) ====================
+function randomizeThemedLance() {
+    currentLance = [];
+    const f = document.getElementById('faction-filter').value;
+    const eraFilter = document.getElementById('era-filter').value;
+    const maxTons = parseInt(document.getElementById('max-ton').value) || 200;
+    const maxValue = parseInt(document.getElementById('max-bv').value) || 6000;
+
+    // ── Build candidate pool ──────────────────────────────────────────────────
+
+    // Check whether faction data has been enriched
+    const hasEnrichedFactions = mechDatabase.some(m =>
+        m.factions && m.factions.length > 0 &&
+        !m.factions.includes('ALL')
+    );
+
+    let pool = mechDatabase;
+    let usingFactionFilter = false;
+    let usedFallback = false;
+
+    // Era filter always applies
+    if (eraFilter !== 'ALL') {
+        pool = pool.filter(m => m.era === eraFilter);
+    }
+
+    if (f !== 'ALL') {
+        if (hasEnrichedFactions) {
+            // Hard filter: only mechs this faction can actually field
+            const factionPool = pool.filter(m =>
+                m.factions && m.factions.includes(f)
+            );
+
+            if (factionPool.length >= 4) {
+                pool = factionPool;
+                usingFactionFilter = true;
+            } else {
+                // Faction pool too small — fall back to tech-based filter
+                usedFallback = true;
+                const clanFactions = ['ClanWolf','ClanJadeFalcon','ClanGhostBear','ClanSmokeJaguar',
+                    'ClanNovacat','ClanDiamondShark','ClanSteelViper','ClanBloodSpirit','ClanCoyote',
+                    'ClanFireMandrill','ClanGoliathScorpion','ClanHellsHorses','ClanIceHellion',
+                    'ClanStarAdder','ClanWildCat','ClanWolverine'];
+                const isClan = clanFactions.includes(f);
+                pool = pool.filter(m =>
+                    isClan ? m.technology === 'Clan' || m.technology === 'Mixed'
+                           : m.technology === 'Inner Sphere' || m.technology === 'Mixed'
+                );
+            }
+        } else {
+            // No enriched data — use tech-based soft filter
+            usedFallback = true;
+            const clanFactions = ['ClanWolf','ClanJadeFalcon','ClanGhostBear','ClanSmokeJaguar',
+                'ClanNovacat','ClanDiamondShark','ClanSteelViper','ClanBloodSpirit','ClanCoyote',
+                'ClanFireMandrill','ClanGoliathScorpion','ClanHellsHorses','ClanIceHellion',
+                'ClanStarAdder','ClanWildCat','ClanWolverine'];
+            const isClan = clanFactions.includes(f);
+            pool = pool.filter(m =>
+                isClan ? m.technology === 'Clan' || m.technology === 'Mixed'
+                       : m.technology === 'Inner Sphere' || m.technology === 'Mixed'
+            );
+        }
+    }
+
+    if (pool.length === 0) {
+        alert("⚠️ No 'Mechs available with the selected filters. Try relaxing the era or tonnage limits.");
+        return;
+    }
+
+    // ── Role categorisation ───────────────────────────────────────────────────
+    function getRoleCategory(roleStr) {
+        const r = (roleStr || '').toLowerCase();
+        if (r.includes('scout') || r.includes('recon') || r.includes('harasser')) return 'Scout';
+        if (r.includes('striker')) return 'Striker';
+        if (r.includes('brawler') || r.includes('melee') || r.includes('juggernaut')) return 'Brawler';
+        if (r.includes('missile') || r.includes('boat') || r.includes('support')) return 'Support';
+        if (r.includes('sniper')) return 'Sniper';
+        return 'Flexible';
+    }
+
+    // ── Build balanced lance ──────────────────────────────────────────────────
+    let currentTons = 0;
+    let currentValue = 0;
+    let usedCategories = new Set();
+    let usedChassis = new Set();
+
+    for (let attempt = 0; attempt < 50 && currentLance.length < getMaxUnits(); attempt++) {
+        const shuffled = [...pool].sort(() => Math.random() - 0.5);
+
+        for (let mech of shuffled) {
+            if (currentLance.length >= getMaxUnits()) break;
+
+            // Avoid duplicate chassis in the same lance
+            if (usedChassis.has(mech.chassis)) continue;
+
+            // Pick a random variant from this chassis
+            // For faction-filtered pools, prefer variants the faction can field
+            let eligibleVariants = mech.variants;
+            if (usingFactionFilter) {
+                const factionVariants = mech.variants.filter(v =>
+                    v.factions && v.factions.includes(f)
+                );
+                if (factionVariants.length > 0) eligibleVariants = factionVariants;
+            }
+
+            const variant = eligibleVariants[Math.floor(Math.random() * eligibleVariants.length)];
+            const baseVal = currentMode === 'classic'
+                ? variant.bv
+                : (variant.pv || Math.round(variant.bv / 40));
+
+            const newTons = currentTons + mech.tons;
+            const newValue = currentValue + baseVal;
+
+            if (newTons > maxTons || newValue > maxValue) continue;
+
+            const category = getRoleCategory(variant.role);
+
+            // Prefer role variety, but don't get stuck — loosen after attempt 20
+            if (usedCategories.has(category) && currentLance.length < (getMaxUnits() - 1) && attempt < 20) continue;
+
+            const bgKeys = Object.keys(pilotBackgrounds);
+            currentLance.push({
+                name: `${mech.chassis} ${variant.name}`,
+                tons: mech.tons,
+                bv: variant.bv,
+                pv: variant.pv || Math.round(variant.bv / 40),
+                role: variant.role,
+                movement: variant.movement,
+                heatsinks: variant.heatsinks,
+                weapons: variant.weapons,
+                gunnery: 4,
+                piloting: 5,
+                background: bgKeys[Math.floor(Math.random() * bgKeys.length)],
+                img: mech.img,
+                factionCanonical: usingFactionFilter   // flag for display
+            });
+
+            currentTons = newTons;
+            currentValue = newValue;
+            usedCategories.add(category);
+            usedChassis.add(mech.chassis);
+            break;
+        }
+    }
+
+    // ── Result feedback ───────────────────────────────────────────────────────
+    if (currentLance.length === 0) {
+        alert("⚠️ No 'Mechs fit within your tonnage and BV limits. Try raising the limits.");
+        return;
+    }
+
+    if (currentLance.length < getMaxUnits()) {
+        console.warn(`Generated only ${currentLance.length}-mech ${getUnitLabel().toLowerCase()} — pool may be too small for limits.`);
+    }
+
+    if (usedFallback && f !== 'ALL') {
+        console.info('Faction availability data not yet enriched — used technology filter as fallback. Run enrich_factions.py for accurate results.');
+    }
+
+    updateDisplay();
+}
+// ==================== DISPLAY ====================
+function updateDisplay() {
+    const roster = document.getElementById('lance-roster');
+    roster.innerHTML = '';
+    let totalT = 0;
+    let totalValue = 0;
+
+    currentLance.forEach((unit, i) => {
+        totalT += unit.tons;
+
+        // Calculate adjusted value using pilot skills
+        const baseValue = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const multiplier = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adjustedValue = Math.round(baseValue * multiplier);
+
+        totalValue += adjustedValue;
+
+        const valueLabel = currentMode === 'classic' ? 'BV' : 'PV';
+
+        roster.innerHTML += `
+            <li class="roster-item">
+                <img src="${unit.img}" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
+                <div style="flex-grow:1;">
+                    <strong>${unit.name}</strong><br>
+                    <small>${unit.tons}t | ${adjustedValue} ${valueLabel} <span style="font-size:0.75em;color:#888;">(${baseValue} base × ${multiplier.toFixed(2)})</span></small>
+                    
+                    <div class="pilot-edit">
+                        <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                            <input type="text" id="pilot-name-${i}"
+                                value="${unit.pilotName || ''}"
+                                placeholder="${isClanFaction() ? 'Warrior name...' : 'Pilot name...'}"
+                                style="flex:1; background:#111; border:1px solid #2a2a2a; color:#ddd; padding:5px 8px; border-radius:4px; font-size:0.8rem; font-family:inherit;"
+                                onchange="updatePilotName(${i}, this.value)">
+                            <button onclick="generatePilotName(${i})"
+                                title="${isClanFaction() ? 'Generate Clan warrior name' : 'Generate random pilot name'}"
+                                style="background:#222; border:1px solid #444; color:#ff8c00; padding:5px 8px; border-radius:4px; cursor:pointer; font-size:0.8rem; white-space:nowrap;">
+                                🎲 ${isClanFaction() ? 'Warrior' : 'Pilot'}
+                            </button>
+                        </div>
+                        Pilot: 
+                        Gunnery <input type="number" value="${unit.gunnery}" min="0" max="8" style="width:40px" onchange="updatePilot(${i}, 'gunnery', this.value)">
+                        / 
+                        Piloting <input type="number" value="${unit.piloting}" min="0" max="8" style="width:40px" onchange="updatePilot(${i}, 'piloting', this.value)">
+                        <br>
+                        Background: 
+                        <select onchange="updatePilot(${i}, 'background', this.value)" style="width:auto">
+                            ${Object.keys(pilotBackgrounds).map(bg => `<option value="${bg}" ${unit.background === bg ? 'selected' : ''}>${bg}</option>`).join('')}
+                            <option value="Custom" ${unit.background === 'Custom' ? 'selected' : ''}>Custom</option>
+                        </select>
+                        ${unit.background === 'Custom' ? `<input type="text" value="${unit.customBackground || ''}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
+                    </div>
+                </div>
+                <button onclick="removeUnit(${i})" style="background:none;color:#ff4c4c;border:none;cursor:pointer;font-size:1.2em;">×</button>
+            </li>`;
+    });
+
+    const valueLabel = currentMode === 'classic' ? 'BV' : 'PV';
+    document.getElementById('stats-summary').innerText = `${totalT}t | ${totalValue} ${valueLabel}`;
+	    // Update feedback panel
+    document.getElementById('lance-feedback').innerHTML = getLanceFeedback();
+}
+
+// ==================== REST OF THE FUNCTIONS ====================
+function updateVariants() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const varSelect = document.getElementById('variant-select');
+    varSelect.innerHTML = '';
+
+    if (c) {
+        const previewImg = document.getElementById('mech-preview-img'); previewImg.src = c.img; previewImg.style.display = c.img ? 'block' : 'none';
+        c.variants.forEach(v => {
+            let opt = document.createElement('option');
+            opt.value = v.id;
+            opt.textContent = `${v.name} | ${v.bv} BV`;
+            varSelect.appendChild(opt);
+        });
+    }
+    syncPreview();
+}
+
+function syncPreview() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    document.getElementById('preview-label').innerText = v ? `${c.chassis} ${v.name} | ${c.tons}t | ${v.bv} BV` : "AWAITING TARGET DATA";
+}
+
+function openModal() {
+    const chassis = document.getElementById('chassis-select').value;
+    const c = mechDatabase.find(m => m.chassis === chassis);
+    const vId = document.getElementById('variant-select').value;
+    const v = c ? c.variants.find(x => x.id === vId) : null;
+    if (!v) return;
+
+    document.getElementById('modal-title').innerText = `${c.chassis} ${v.name}`;
+
+    const factionBadges = (v.factions && v.factions.length > 0)
+        ? v.factions.map(f => `<span style="display:inline-block;background:#1a1a1a;border:1px solid #444;
+            border-radius:3px;padding:2px 7px;margin:2px;font-size:0.75em;color:#aaa;">${f}</span>`).join('')
+        : '<span style="color:#555;font-size:0.8em;">No faction data</span>';
+
+    const statRow = (label, value) => value
+        ? `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;">
+            <span style="color:#888;font-size:0.85em;">${label}</span>
+            <span style="color:#eee;font-size:0.85em;text-align:right;max-width:60%;">${value}</span>
+           </div>`
+        : '';
+
+    const textBlock = (label, text) => text
+        ? `<div style="margin-top:16px;">
+            <div style="color:#ff8c00;font-size:0.7em;letter-spacing:0.1em;text-transform:uppercase;
+                margin-bottom:6px;">${label}</div>
+            <p style="color:#bbb;font-size:0.83em;line-height:1.6;margin:0;">${text}</p>
+           </div>`
+        : '';
+
+    document.getElementById('modal-body').innerHTML = `
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+
+            <!-- Left: stats -->
+            <div style="flex:1;min-width:220px;">
+                <div style="color:#ff8c00;font-size:0.7em;letter-spacing:0.1em;
+                    text-transform:uppercase;margin-bottom:8px;">SPECIFICATIONS</div>
+                ${statRow('Tonnage',    c.tons + 't')}
+                ${statRow('Technology', v.technology || c.technology)}
+                ${statRow('Era',        v.era || c.era)}
+                ${statRow('Introduced', v.date_introduced || '—')}
+                ${statRow('Source',     v.source || '—')}
+                ${statRow('Config',     v.config || '—')}
+                ${statRow('Engine',     v.engine || '—')}
+                ${statRow('Role',       v.role)}
+                ${statRow('Movement',   v.movement)}
+                ${statRow('Heat Sinks', v.heatsinks)}
+                ${statRow('BV',         v.bv)}
+                ${statRow('PV',         v.pv || '—')}
+            </div>
+
+            <!-- Right: weapons + factions -->
+            <div style="flex:1;min-width:220px;">
+                <div style="color:#ff8c00;font-size:0.7em;letter-spacing:0.1em;
+                    text-transform:uppercase;margin-bottom:8px;">WEAPONS</div>
+                ${v.weapons && v.weapons.length
+                    ? v.weapons.map(w =>
+                        `<div style="padding:4px 0;border-bottom:1px solid #222;color:#eee;font-size:0.85em;">${w}</div>`
+                      ).join('')
+                    : '<div style="color:#555;font-size:0.85em;">No weapon data</div>'
+                }
+
+                <div style="color:#ff8c00;font-size:0.7em;letter-spacing:0.1em;
+                    text-transform:uppercase;margin:14px 0 6px;">FACTION AVAILABILITY</div>
+                <div>${factionBadges}</div>
+            </div>
+        </div>
+
+        <!-- Fluff text -->
+        ${textBlock('OVERVIEW',      v.overview)}
+        ${textBlock('CAPABILITIES',  v.capabilities)}
+        ${textBlock('DEPLOYMENT NOTES', v.deployment)}
+
+        <div style="margin-top:20px; padding-top:12px; border-top:1px solid #1a1a1a; text-align:center;">
+            <a href="mailto:DaveAsp81@gmail.com?subject=Lance Builder Data Error&body=Chassis: ${c.chassis}%0AVariant: ${v.name}%0AIssue: [describe the problem here]"
+               style="font-size:0.78rem; color:#444; text-decoration:none;"
+               onmouseover="this.style.color='#ff8c00'" onmouseout="this.style.color='#444'">
+               ⚑ Report incorrect data for this 'Mech
+            </a>
+        </div>
+    `;
+
+    document.getElementById('infoModal').style.display = "block";
+}
+
+function closeModal() { document.getElementById('infoModal').style.display = "none"; }
+
+function removeUnit(i) {
+    currentLance.splice(i, 1);
+    updateDisplay();
+}
+
+function clearLance() {
+    currentLance = [];
+    updateDisplay();
+}
+
+window.onload = () => {
+    updateFormationUI();
+    const chassisGrid = document.getElementById('chassis-grid');
+    if (chassisGrid) {
+        chassisGrid.innerHTML = '<p style="color:#aaa;padding:2rem;text-align:center;">Loading mech database...</p>';
+    }
+
+    fetch('mechs.json')
+        .then(r => {
+            if (!r.ok) throw new Error('Failed to load mechs.json (' + r.status + ')');
+            return r.json();
+        })
+        .then(data => {
+            mechDatabase = data;
+
+            // Populate era dropdown from database
+            const eraSelect = document.getElementById('era-filter');
+            const uniqueEras = [...new Set(mechDatabase.map(m => m.era))].sort();
+            eraSelect.innerHTML = '<option value="ALL">All Eras</option>';
+            uniqueEras.forEach(era => {
+                const opt = document.createElement('option');
+                opt.value = era;
+                opt.textContent = era;
+                eraSelect.appendChild(opt);
+            });
+            filterChassis();
+            refreshSavedList();
+        })
+        .catch(err => {
+            console.error('Could not load mech database:', err);
+            if (chassisGrid) {
+                chassisGrid.innerHTML =
+                    '<div style="color:#f88;padding:2rem;line-height:1.8">' +
+                    '<strong>&#9888; Could not load mech database</strong><br>' +
+                    err.message + '<br><br>' +
+                    'Make sure <code>mechs.json</code> is in the same folder as this HTML file ' +
+                    'and you are serving via a web server, not opening the file directly.' +
+                    '</div>';
+            }
+        });
+};
+
+// ==================== SAVE / LOAD SYSTEM ====================
+function saveLance() {
+    if (currentLance.length === 0) {
+        alert(isClanFaction() ? "Star is empty, Technician. Assign units first." : "Nothing to save – add some 'Mechs first!");
+        return;
+    }
+    const name = prompt("Enter a name for this lance:", "Lance " + new Date().toLocaleDateString());
+    if (!name) return;
+
+    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    saved[name] = JSON.parse(JSON.stringify(currentLance)); // deep copy
+    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    refreshSavedList();
+    alert(`✅ Lance saved as "${name}"`);
+}
+
+function loadLance(name) {
+    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    if (saved[name]) {
+        currentLance = JSON.parse(JSON.stringify(saved[name]));
+        updateDisplay();
+        alert(`✅ Loaded "${name}"`);
+    }
+}
+
+function deleteSavedLance(name) {
+    if (!confirm(`Delete "${name}" permanently?`)) return;
+    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    delete saved[name];
+    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    refreshSavedList();
+}
+
+function refreshSavedList() {
+    const container = document.getElementById('saved-list');
+    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    let html = '';
+
+    Object.keys(saved).sort().forEach(name => {
+        html += `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #333;">
+                <span onclick="loadLance('${name}')" style="cursor:pointer; flex-grow:1;">📋 ${name} (${saved[name].length} mechs)</span>
+                <button onclick="deleteSavedLance('${name}'); event.stopImmediatePropagation();" style="background:none; border:none; color:#ff4c4c; font-size:1.1em; cursor:pointer;">×</button>
+            </div>`;
+    });
+
+    container.innerHTML = html || '<small style="color:#666;">No saved lances yet. Save one above!</small>';
+}
+
+// ==================== EXPORT OPTIONS (Phase 5) ====================
+function copyLanceToClipboard() {
+    if (currentLance.length === 0) {
+        alert(`No ${getUnitLabel().toLowerCase()} to copy!`);
+        return;
+    }
+
+    let text = `**BATTLETECH LANCE – ${currentMode.toUpperCase()}**\n`;
+    text += `Generated: ${new Date().toLocaleString()}\n\n`;
+
+    currentLance.forEach((unit, i) => {
+        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adj = Math.round(base * mult);
+
+        text += `${i+1}. **${unit.name}** (${unit.tons}t)\n`;
+        text += `   ${currentMode.toUpperCase()}: ${adj} (${base} base × ${mult.toFixed(2)})\n`;
+        text += `   Pilot: ${unit.pilotName ? unit.pilotName + ' | ' : ''}Gunnery ${unit.gunnery} / Piloting ${unit.piloting}\n`;
+        text += `   Background: ${unit.background}\n`;
+        text += `   Role: ${unit.role || '—'}\n\n`;
+    });
+
+    const totalTons = currentLance.reduce((sum, u) => sum + u.tons, 0);
+    const totalValue = currentLance.reduce((sum, u) => {
+        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+    }, 0);
+
+    text += `**TOTAL:** ${totalTons}t | ${totalValue} ${currentMode.toUpperCase()}\n`;
+    text += `Built with BattleTech Hub Lance Builder → https://battletechhq.com`;
+
+    navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Lance copied to clipboard! Ready to paste into Reddit/Discord/forums.");
+    });
+}
+
+function exportLanceToCSV() {
+    if (currentLance.length === 0) {
+        alert(`No ${getUnitLabel().toLowerCase()} to export!`);
+        return;
+    }
+
+    let csv = "Name,Tonnage,Role,Base Value,Adjusted Value,Gunnery,Piloting,Background\n";
+
+    currentLance.forEach(unit => {
+        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
+        const adj = Math.round(base * mult);
+
+        csv += `"${unit.name}",${unit.tons},"${unit.role || ''}",${base},${adj},${unit.gunnery},${unit.piloting},"${unit.background}"\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `lance_${currentMode}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert("✅ CSV exported! Open it in Excel or Google Sheets.");
+}
+
+// ==================== UPDATED FILTER + SORTING ====================
+let currentSort = 'tons';
+
+// ==================== FACTION LOGOS ====================
+const factionLogos = {
+    // Great Houses
+    'Davion':               'assets/images/factions/davion.jpg',
+    'FedSuns':              'assets/images/factions/davion.jpg',
+    'FedCom':               'assets/images/factions/davion.jpg',
+    'Steiner':              'assets/images/factions/steiner.jpg',
+    'LyranAlliance':        'assets/images/factions/steiner.jpg',
+    'Kurita':               'assets/images/factions/kurita.jpg',
+    'Marik':                'assets/images/factions/marik.jpg',
+    'Liao':                 'assets/images/factions/liao.jpg',
+    'StIvesCompact':        'assets/images/factions/liao.jpg',
+    // Inner Sphere States
+    'ComStar':              'assets/images/factions/comstar.jpg',
+    'WordOfBlake':          'assets/images/factions/comstar.jpg',
+    'StarLeague':           'assets/images/factions/starleague.jpg',
+    'FreeRasalhague':       'assets/images/factions/rasalhague.jpg',
+    'TrinityAlliance':      'assets/images/factions/trinityalliance.jpg',
+    // Periphery
+    'Taurian':              'assets/images/factions/taurian.jpg',
+    'Canopus':              'assets/images/factions/cannopus.jpg',
+    'Outworlds':            'assets/images/factions/outworlds.jpg',
+    'Marian':               'assets/images/factions/marian.jpg',
+    'Illyrian':             'assets/images/factions/illyrian.jpg',
+    'Circinus':             'assets/images/factions/circinus.jpg',
+    'Tortuga':              'assets/images/factions/tortuga.jpg',
+    // Other
+    'Mercenaries':          'assets/images/factions/mercenary.jpg',
+    'Pirates':              'assets/images/factions/pirates.jpg',
+    'Independent':          'assets/images/factions/independent.jpg',
+    // Clans
+    'ClanWolf':             'assets/images/factions/clanwolf.jpg',
+    'ClanJadeFalcon':       'assets/images/factions/clanjadefalcon.jpg',
+    'ClanGhostBear':        'assets/images/factions/clanghostbear.jpg',
+    'ClanSmokeJaguar':      'assets/images/factions/clansmokejaguar.jpg',
+    'ClanNovacat':          'assets/images/factions/clannovacat.jpg',
+    'ClanDiamondShark':     'assets/images/factions/clandiamondshark.jpg',
+    'ClanSteelViper':       'assets/images/factions/clansteelviper.jpg',
+    'ClanBloodSpirit':      'assets/images/factions/clanbloodspirit.jpg',
+    'ClanCoyote':           'assets/images/factions/clancoyote.jpg',
+    'ClanFireMandrill':     'assets/images/factions/clanfiremandrill.jpg',
+    'ClanGoliathScorpion':  'assets/images/factions/clangoliathscorpion.jpg',
+    'ClanHellsHorses':      'assets/images/factions/clanhellshorses.jpg',
+    'ClanIceHellion':       'assets/images/factions/clanicehellion.jpg',
+    'ClanStarAdder':        'assets/images/factions/clanstaradder.jpg',
+    'ClanWildCat':          'assets/images/factions/clanwidowmaker.jpg',
+    'ClanWolverine':        'assets/images/factions/clanwolverine.jpg',
+};
+
+function updateFactionLogo(faction) {
+    const layer = document.getElementById('faction-bg-layer');
+    if (!layer) return;
+    const logo = factionLogos[faction];
+    if (logo) {
+        layer.style.backgroundImage = 'url(' + logo + ')';
+        layer.style.opacity = '0.18';
+    } else {
+        layer.style.backgroundImage = 'none';
+        layer.style.opacity = '0';
+    }
+}
+
+function filterChassis() {
+    const searchTerm = (document.getElementById('chassis-search').value || "").toLowerCase().trim();
+    const faction = document.getElementById('faction-filter').value;
+    const eraFilter = document.getElementById('era-filter').value;
+
+    // Update faction background logo
+    updateFactionLogo(faction);
+    updateFormationUI();
+
+    let filtered = mechDatabase;
+
+    // Era and Faction filtering
+    // Note: 'era' in the database reflects when a chassis was introduced,
+    // not when every faction fielded it. Era filtering alone is most useful
+    // when browsing all factions. When a specific faction is selected,
+    // faction availability is the primary filter.
+
+    if (faction !== "ALL") {
+        const isClanFaction = faction.startsWith("Clan");
+        filtered = filtered.filter(m => {
+            const factions = m.factions || [];
+            // Must list this faction
+            if (!factions.includes("ALL") && !factions.includes(faction)) return false;
+            // Exclude Clan-majority designs when an IS faction is selected
+            // (prevents Clan OmniMechs appearing in IS faction lists)
+            if (!isClanFaction) {
+                const clanCount = factions.filter(f => f.startsWith("Clan")).length;
+                const isCount  = factions.filter(f => !f.startsWith("Clan") && f !== "ALL").length;
+                if (clanCount > isCount) return false;
+            }
+            // Exclude IS-only designs when a Clan faction is selected
+            if (isClanFaction) {
+                const clanCount = factions.filter(f => f.startsWith("Clan")).length;
+                if (clanCount === 0) return false;
+            }
+            return true;
+        });
+    } else if (eraFilter !== "ALL") {
+        // Era filter only applies when no specific faction is selected
+        filtered = filtered.filter(m => m.era === eraFilter);
+    }
+    if (searchTerm) filtered = filtered.filter(m => m.chassis.toLowerCase().includes(searchTerm));
+
+    // Apply sort
+    if (currentSort === 'tons') filtered.sort((a,b) => a.tons - b.tons);
+    else if (currentSort === 'value') {
+        filtered.sort((a,b) => {
+            const va = a.variants[0][currentMode === 'classic' ? 'bv' : 'pv'] || 0;
+            const vb = b.variants[0][currentMode === 'classic' ? 'bv' : 'pv'] || 0;
+            return va - vb;
+        });
+    }
+    else if (currentSort === 'role') {
+        filtered.sort((a,b) => (a.variants[0].role || "").localeCompare(b.variants[0].role || ""));
+    }
+
+    const select = document.getElementById('chassis-select');
+    select.innerHTML = '<option value="">-- Select Chassis --</option>';
+
+    filtered.forEach(m => {
+        let opt = document.createElement('option');
+        opt.value = m.chassis;
+        opt.textContent = `${m.chassis} (${m.tons}t)`;
+        select.appendChild(opt);
+    });
+
+    updateVariants();
+    updateSortUI();   // visual feedback
+}
+
+function sortChassis(type) {
+    currentSort = type;
+    filterChassis();
+}
+
+function updateSortUI() {
+    document.querySelectorAll('.active-sort').forEach(el => el.classList.remove('active-sort'));
+    const activeEl = document.getElementById('sort-' + currentSort);
+    if (activeEl) activeEl.classList.add('active-sort');
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plan your BattleTech 'Mech paint scheme. Pick faction presets or build your own, get matching Citadel and Vallejo paint names.">
+    <meta name="keywords" content="BattleTech beginner guide, how to start BattleTech, BattleTech for beginners, BattleTech getting started">
+    <title>Paint Scheme Planner | BattleTech Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+<link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+
+    <link rel="canonical" href="https://battletechhq.com/paint-tool.html">
+</head>
+<style>
+.pt-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 24px;
+}
+@media (max-width: 780px) { .pt-wrap { grid-template-columns: 1fr; } }
+.pt-panel {
+    background: #0e0e0e;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 18px;
+}
+.pt-label {
+    font-size: 0.68rem; color: #555; letter-spacing: 0.12em;
+    text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
+    margin: 14px 0 7px;
+}
+.pt-label:first-child { margin-top: 0; }
+.zone-btn {
+    display: flex; align-items: center; gap: 9px; width: 100%;
+    background: #141414; border: 1px solid #222; color: #bbb;
+    padding: 8px 12px; border-radius: 4px; cursor: pointer;
+    margin-bottom: 5px; font-size: 0.82rem; font-family: inherit;
+    transition: border-color 0.12s; text-align: left;
+}
+.zone-btn:hover { border-color: #555; }
+.zone-btn.active { border-color: #ff8c00; border-width: 2px; color: #fff; }
+.zone-swatch { width: 20px; height: 20px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
+.wheel-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 12px; background: #141414; border: 1px solid #222; border-radius: 8px;
+}
+.brightness-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+.brightness-row label { font-size: 0.7rem; color: #555; width: 18px; flex-shrink: 0; }
+#brightness-slider { flex: 1; accent-color: #ff8c00; }
+.hex-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+#current-swatch { width: 36px; height: 36px; border-radius: 4px; border: 1px solid #333; flex-shrink: 0; }
+#hex-input {
+    flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd;
+    padding: 7px 9px; border-radius: 4px; font-family: monospace; font-size: 0.85rem;
+}
+.paint-match {
+    background: #141414; border: 1px solid #222; border-radius: 6px;
+    padding: 10px 12px; font-size: 0.78rem; line-height: 1.7;
+}
+.paint-brand { color: #ff8c00; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.08em; }
+.faction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.faction-btn {
+    padding: 7px 8px; border-radius: 4px; cursor: pointer;
+    font-size: 0.72rem; font-family: 'Rajdhani', sans-serif; font-weight: 700;
+    letter-spacing: 0.04em; border: 1px solid transparent; text-align: center;
+    transition: opacity 0.12s;
+}
+.faction-btn:hover { opacity: 0.82; }
+.scheme-display {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.scheme-swatch-large {
+    display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+    background: #141414; border: 1px solid #222; border-radius: 6px;
+    cursor: pointer; transition: border-color 0.12s;
+}
+.scheme-swatch-large:hover { border-color: #444; }
+.scheme-swatch-large.active { border-color: #ff8c00; }
+.swatch-block {
+    width: 48px; height: 48px; border-radius: 5px; border: 1px solid #333; flex-shrink: 0;
+}
+.swatch-info { flex: 1; }
+.swatch-zone { font-size: 0.7rem; color: #555; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; }
+.swatch-hex { font-family: monospace; font-size: 0.82rem; color: #888; margin-top: 2px; }
+.swatch-paint { font-size: 0.75rem; color: #666; margin-top: 3px; line-height: 1.4; }
+.action-btn {
+    background: #1a1a1a; border: 1px solid #2a2a2a; color: #888;
+    padding: 7px 14px; border-radius: 4px; cursor: pointer;
+    font-size: 0.75rem; font-family: 'Rajdhani', sans-serif;
+    font-weight: 600; letter-spacing: 0.05em; transition: all 0.12s;
+}
+.action-btn:hover { border-color: #ff8c00; color: #ff8c00; }
+</style>
+<body>
+<header>
+        <div class="header-content">
+            <a href="../index.html" class="logo">⚔️ BattleTech Hub</a>
+            <button class="nav-toggle" aria-label="Menu">☰ MENU</button>
+<nav>
+                <ul>
+                    <li><a href="../index.html#getting-started">Getting Started</a></li>
+                    <li><a href="../index.html#painting">Painting & Hobby</a></li>
+                    <li><a href="../index.html#gameplay">Gameplay</a></li>
+                    <li><a href="../index.html#lore">Lore</a></li>
+                    <li><a href="../index.html#buying-guides">Buying Guides</a></li>
+                </ul>
+            </nav>
+        </div>
+    
+
+<div class="pt-wrap">
+
+    <!-- LEFT: Controls -->
+    <div>
+        <div class="pt-panel">
+            <div style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.12em; margin-bottom:4px;">⬡ PAINT SCHEME PLANNER</div>
+            <div style="font-size:0.75rem; color:#555; margin-bottom:14px; line-height:1.5;">Build your colour scheme, get matching paint names</div>
+
+            <div class="pt-label">Colour Zones</div>
+            <div id="zone-buttons"></div>
+
+            <div class="pt-label">Colour Picker</div>
+            <div class="wheel-wrap">
+                <canvas id="colour-wheel-canvas" width="220" height="220"></canvas>
+                <div class="brightness-row">
+                    <label>☀</label>
+                    <input type="range" id="brightness-slider" min="0" max="100" value="50" oninput="brightnessChanged(this.value)">
+                    <label style="text-align:right;">☾</label>
+                </div>
+                <div class="hex-row">
+                    <div id="current-swatch"></div>
+                    <input type="text" id="hex-input" value="#7a7a7a" oninput="hexInputChanged(this.value)" maxlength="7" placeholder="#rrggbb">
+                </div>
+            </div>
+
+            <div class="pt-label">Faction Presets</div>
+            <div class="faction-grid" id="faction-grid"></div>
+
+            <div class="pt-label">Actions</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="action-btn" onclick="copySchemeURL()">🔗 Share Scheme</button>
+                <button class="action-btn" onclick="resetScheme()">↺ Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Scheme display -->
+    <div>
+        <div class="pt-panel">
+            <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:16px;">
+                <div id="scheme-name" style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:0.08em; font-size:1.1rem;">CUSTOM SCHEME</div>
+                <div style="font-size:0.72rem; color:#444;">Click a zone to edit it</div>
+            </div>
+            <div class="scheme-display" id="scheme-display"></div>
+
+            <div style="margin-top:20px; padding:14px 16px; background:#141414; border:1px solid #1a1a1a; border-radius:6px; font-size:0.78rem; color:#555; line-height:1.6;">
+                <strong style="color:#888; font-family:'Rajdhani',sans-serif; letter-spacing:0.06em; font-size:0.7rem;">HOW TO USE</strong><br>
+                Select a zone on the left, pick a colour on the wheel, and your scheme updates in real time.
+                Paint names are suggested automatically. Use faction presets as a starting point, then customise.
+                Hit <strong style="color:#888;">Share Scheme</strong> to copy a link you can send to others.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech Hub</h4>
+                <p>Your trusted source for BattleTech guides, reviews, and strategies.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="../privacy.html">Privacy Policy</a></li>
+                    <li><a href="../affiliate-disclosure.html">Affiliate Disclosure</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://bg.battletech.com" target="_blank">Official BattleTech</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BattleTech Hub. This is an unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p>We are a participant in affiliate advertising programs designed to provide a means for sites to earn advertising fees.</p>
+                    <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+        </div>
+    
+
+<script>
+const ZONES = [
+    { id:'primary',   label:'Primary Armour',   default:'#7a7a7a' },
+    { id:'secondary', label:'Secondary Armour',  default:'#4e4e4e' },
+    { id:'trim',      label:'Trim & Details',    default:'#b89018' },
+    { id:'weapons',   label:'Weapons',           default:'#252525' },
+    { id:'cockpit',   label:'Cockpit',           default:'#0088dd' },
+    { id:'vents',     label:'Heat Vents',        default:'#bb2200' },
+];
+
+const FACTIONS = [
+    { name:'Davion',    bg:'#b89018',fg:'#1a1500',c:{primary:'#b89018',secondary:'#6e5510',trim:'#ffffff',weapons:'#2a2800',cockpit:'#00aaff',vents:'#cc3300'} },
+    { name:'Steiner',   bg:'#3e6ea0',fg:'#ffffff',c:{primary:'#3e6ea0',secondary:'#22406a',trim:'#aaccee',weapons:'#0a1020',cockpit:'#88ddff',vents:'#cc3300'} },
+    { name:'Kurita',    bg:'#7a0e0e',fg:'#ffffff',c:{primary:'#7a0e0e',secondary:'#141414',trim:'#eeeeee',weapons:'#080808',cockpit:'#00aaff',vents:'#cc4400'} },
+    { name:'Liao',      bg:'#245224',fg:'#ffffff',c:{primary:'#245224',secondary:'#141414',trim:'#bb2200',weapons:'#080808',cockpit:'#00cc44',vents:'#cc3300'} },
+    { name:'Marik',     bg:'#4e2270',fg:'#ffffff',c:{primary:'#4e2270',secondary:'#2e1050',trim:'#b89018',weapons:'#180828',cockpit:'#aa88ff',vents:'#cc3300'} },
+    { name:'C. Wolf',   bg:'#4a4a4a',fg:'#ffffff',c:{primary:'#4a4a4a',secondary:'#202020',trim:'#cc2200',weapons:'#101010',cockpit:'#00aaff',vents:'#cc4400'} },
+    { name:'Jade Falcon',bg:'#145214',fg:'#ffffff',c:{primary:'#145214',secondary:'#082208',trim:'#76bb00',weapons:'#060606',cockpit:'#00ddaa',vents:'#cc4400'} },
+    { name:'Ghost Bear',bg:'#1e3e5e',fg:'#ffffff',c:{primary:'#1e3e5e',secondary:'#f0ebe0',trim:'#8899aa',weapons:'#060606',cockpit:'#88ccff',vents:'#cc3300'} },
+    { name:'Smoke Jag', bg:'#111111',fg:'#ee5500',c:{primary:'#111111',secondary:'#080808',trim:'#cc5500',weapons:'#040404',cockpit:'#ff3300',vents:'#ff5500'} },
+    { name:'Nova Cat',  bg:'#082050',fg:'#ffcc00',c:{primary:'#082050',secondary:'#ffcc00',trim:'#ffffff',weapons:'#040410',cockpit:'#00aaff',vents:'#ffcc00'} },
+    { name:'ComStar',   bg:'#c0c0c0',fg:'#1a1a1a',c:{primary:'#c0c0c0',secondary:'#787878',trim:'#cc0000',weapons:'#141414',cockpit:'#00aaff',vents:'#cc3300'} },
+    { name:'Mercenary', bg:'#3c2e1a',fg:'#ccaa55',c:{primary:'#3c2e1a',secondary:'#1e1006',trim:'#ccaa55',weapons:'#080808',cockpit:'#00aaff',vents:'#cc4400'} },
+];
+
+const PAINT_DB = [
+    [340,15,35,5,20,'Khorne Red','Model Color 814 Burnt Red'],
+    [340,15,50,20,45,'Mephiston Red','Game Color 011 Gory Red'],
+    [340,15,60,45,70,'Evil Sunz Scarlet','Game Color 010 Bloody Red'],
+    [310,350,30,25,50,'Screamer Pink','Model Color 812 Violet Red'],
+    [310,350,40,50,80,'Pink Horror','Model Color 812 Violet Red'],
+    [16,35,50,15,35,'Rhinox Hide','Model Color 981 Orange Brown'],
+    [16,35,55,35,58,'Jokaero Orange','Game Color 009 Hot Orange'],
+    [16,35,60,58,78,'Fire Dragon Bright','Game Color 008 Orange Fire'],
+    [36,62,25,15,35,'Zamesi Desert','Model Color 847 Dark Sand'],
+    [36,62,40,35,55,'Averland Sunset','Model Color 916 Sand Yellow'],
+    [36,62,55,55,72,'Yriel Yellow','Game Color 006 Sun Yellow'],
+    [36,62,65,72,90,'Flash Gitz Yellow','Model Color 953 Flat Yellow'],
+    [85,130,30,8,25,'Castellan Green','Model Color 896 German Extra Dark Green'],
+    [85,130,40,25,45,'Caliban Green','Game Color 024 Dark Green'],
+    [85,130,40,45,62,'Warpstone Glow','Game Color 025 Sick Green'],
+    [85,130,45,62,80,'Moot Green','Game Color 026 Escorpena Green'],
+    [160,185,35,25,50,'Sotek Green','Game Color 029 Jade Green'],
+    [200,225,35,10,28,'Kantor Blue','Model Color 925 Blue'],
+    [200,225,40,28,50,'Macragge Blue','Model Color 963 Medium Blue'],
+    [200,225,45,50,72,'Caledor Sky','Model Color 961 Sky Blue'],
+    [225,265,30,15,68,'Thunderhawk Blue','Model Color 870 Medium Blue'],
+    [255,285,30,10,30,'Naggaroth Night','Model Color 960 Violet'],
+    [255,285,35,30,55,'Xereus Purple','Game Color 046 Hexed Lichen'],
+    [285,340,25,18,45,'Genestealer Purple','Model Color 957 Flat Violet'],
+    [16,40,20,8,22,'Rhinox Hide','Model Color 984 Flat Brown'],
+    [20,45,20,22,38,'Mournfang Brown','Model Color 981 Orange Brown'],
+    [25,55,15,38,55,'Balor Brown','Model Color 875 Beige Brown'],
+    [30,60,12,55,72,'Karak Stone','Model Color 921 English Uniform'],
+    [0,360,5,30,55,'Leadbelcher','Model Color 865 Oily Steel'],
+    [30,55,10,50,68,'Retributor Armour','Model Color 996 Gold'],
+    [0,360,0,85,100,'White Scar','Model Color 951 White'],
+    [0,360,0,68,85,'Ulthuan Grey','Model Color 993 White Grey'],
+    [0,360,0,52,68,'Administratum Grey','Model Color 992 Neutral Grey'],
+    [0,360,0,35,52,'Dawnstone','Model Color 989 Sky Grey'],
+    [0,360,0,18,35,'Mechanicus Standard Grey','Model Color 867 Dark Bluegrey'],
+    [0,360,0,8,18,'Eshin Grey','Model Color 863 Gunmetal Grey'],
+    [0,360,0,0,8,'Abaddon Black','Model Color 950 Black'],
+];
+
+function hexToHsl(hex) {
+    let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+    const max=Math.max(r,g,b),min=Math.min(r,g,b);let h,s,l=(max+min)/2;
+    if(max===min){h=s=0;}else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+        switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
+    return[Math.round(h*360),Math.round(s*100),Math.round(l*100)];
+}
+
+function findPaintMatch(hex) {
+    if(!/^#[0-9a-fA-F]{6}$/.test(hex)) return null;
+    const[h,s,l]=hexToHsl(hex);
+    for(const[hmin,hmax,smin,lmin,lmax,citadel,vallejo] of PAINT_DB){
+        const hm=hmax>=hmin?(h>=hmin&&h<=hmax):(h>=hmin||h<=hmax);
+        if(!hm||l<lmin||l>lmax) continue;
+        if(hmin===0&&hmax===360){if(s<=20)return{citadel,vallejo};continue;}
+        if(s>=smin)return{citadel,vallejo};
+    }
+    return null;
+}
+
+// Colour wheel
+let wheelBrightness=50,currentHue=180,currentSat=0,isDragging=false;
+let wheelCanvas,wheelCtx,wheelRadius;
+
+function initWheel(){
+    wheelCanvas=document.getElementById('colour-wheel-canvas');
+    wheelCtx=wheelCanvas.getContext('2d');
+    wheelRadius=wheelCanvas.width/2;
+    drawWheel();
+    wheelCanvas.addEventListener('mousedown',e=>{isDragging=true;wheelPick(e);});
+    wheelCanvas.addEventListener('mousemove',e=>{if(isDragging)wheelPick(e);});
+    document.addEventListener('mouseup',()=>isDragging=false);
+    wheelCanvas.addEventListener('touchstart',e=>{isDragging=true;wheelPick(e.touches[0]);e.preventDefault();},{passive:false});
+    wheelCanvas.addEventListener('touchmove',e=>{if(isDragging)wheelPick(e.touches[0]);e.preventDefault();},{passive:false});
+    document.addEventListener('touchend',()=>isDragging=false);
+}
+
+function drawWheel(){
+    const ctx=wheelCtx,cx=wheelRadius,cy=wheelRadius,r=wheelRadius-2;
+    ctx.clearRect(0,0,wheelCanvas.width,wheelCanvas.height);
+    for(let a=0;a<360;a++){
+        const sa=(a-1)*Math.PI/180,ea=(a+1)*Math.PI/180;
+        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+        g.addColorStop(0,`hsl(${a},0%,${wheelBrightness}%)`);
+        g.addColorStop(1,`hsl(${a},100%,${wheelBrightness}%)`);
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,sa,ea);ctx.closePath();
+        ctx.fillStyle=g;ctx.fill();
+    }
+    ctx.globalCompositeOperation='destination-in';
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+    const a=currentHue*Math.PI/180,dist=(currentSat/100)*(r-4);
+    const px=cx+Math.cos(a)*dist,py=cy+Math.sin(a)*dist;
+    ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.strokeStyle='#000';ctx.lineWidth=1;ctx.stroke();
+}
+
+function wheelPick(e){
+    const rect=wheelCanvas.getBoundingClientRect();
+    const x=e.clientX-rect.left-wheelRadius,y=e.clientY-rect.top-wheelRadius;
+    const dist=Math.sqrt(x*x+y*y),r=wheelRadius-2;
+    if(dist>r)return;
+    currentHue=Math.round(Math.atan2(y,x)*180/Math.PI);if(currentHue<0)currentHue+=360;
+    currentSat=Math.round((dist/r)*100);
+    drawWheel();
+    setActiveColour(hslToHex(currentHue,currentSat,wheelBrightness));
+}
+
+function brightnessChanged(val){
+    wheelBrightness=parseInt(val);drawWheel();
+    setActiveColour(hslToHex(currentHue,currentSat,wheelBrightness));
+}
+
+function hslToHex(h,s,l){
+    s/=100;l/=100;const a=s*Math.min(l,1-l);
+    const f=n=>{const k=(n+h/30)%12,c=l-a*Math.max(Math.min(k-3,9-k,1),-1);
+        return Math.round(255*c).toString(16).padStart(2,'0');};
+    return'#'+f(0)+f(8)+f(4);
+}
+
+function hexInputChanged(val){
+    if(/^#[0-9a-fA-F]{6}$/.test(val)){
+        const[h,s,l]=hexToHsl(val);currentHue=h;currentSat=s;wheelBrightness=l;
+        document.getElementById('brightness-slider').value=l;
+        drawWheel();setActiveColour(val,false);
+    }
+}
+
+// State
+let currentZone='primary',scheme={};
+function defaultScheme(){const s={};ZONES.forEach(z=>s[z.id]=z.default);return s;}
+
+window.addEventListener('DOMContentLoaded',()=>{
+    loadFromURL();
+    buildZoneButtons();
+    buildFactionGrid();
+    buildSchemeDisplay();
+    initWheel();
+    syncPickerToZone();
+});
+
+function buildZoneButtons(){
+    const el=document.getElementById('zone-buttons');el.innerHTML='';
+    ZONES.forEach(z=>{
+        const btn=document.createElement('button');
+        btn.className='zone-btn'+(z.id===currentZone?' active':'');
+        btn.id='zone-btn-'+z.id;
+        btn.innerHTML=`<span class="zone-swatch" id="swatch-${z.id}" style="background:${scheme[z.id]||z.default};"></span>${z.label}`;
+        btn.onclick=()=>selectZone(z.id);
+        el.appendChild(btn);
+    });
+}
+
+function buildFactionGrid(){
+    const el=document.getElementById('faction-grid');
+    FACTIONS.forEach(f=>{
+        const btn=document.createElement('button');
+        btn.className='faction-btn';
+        btn.style.cssText=`background:${f.bg};color:${f.fg};border-color:${f.bg};`;
+        btn.textContent=f.name;
+        btn.onclick=()=>applyFaction(f);
+        el.appendChild(btn);
+    });
+}
+
+function buildSchemeDisplay(){
+    const el=document.getElementById('scheme-display');el.innerHTML='';
+    ZONES.forEach(z=>{
+        const col=scheme[z.id]||z.default;
+        const match=findPaintMatch(col);
+        const div=document.createElement('div');
+        div.className='scheme-swatch-large'+(z.id===currentZone?' active':'');
+        div.id='display-'+z.id;
+        div.onclick=()=>selectZone(z.id);
+        div.innerHTML=`
+            <div class="swatch-block" id="block-${z.id}" style="background:${col};"></div>
+            <div class="swatch-info">
+                <div class="swatch-zone">${z.label}</div>
+                <div class="swatch-hex" id="hex-${z.id}">${col}</div>
+                <div class="swatch-paint" id="paint-${z.id}">${match
+                    ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
+                    : '<span style="color:#444;">—</span>'}</div>
+            </div>`;
+        el.appendChild(div);
+    });
+}
+
+function selectZone(id){
+    currentZone=id;
+    document.querySelectorAll('.zone-btn').forEach(b=>b.classList.toggle('active',b.id==='zone-btn-'+id));
+    document.querySelectorAll('.scheme-swatch-large').forEach(b=>b.classList.toggle('active',b.id==='display-'+id));
+    syncPickerToZone();
+}
+
+function syncPickerToZone(){
+    const col=scheme[currentZone]||ZONES.find(z=>z.id===currentZone)?.default||'#888';
+    const[h,s,l]=hexToHsl(col);
+    currentHue=h;currentSat=s;wheelBrightness=l;
+    document.getElementById('brightness-slider').value=l;
+    document.getElementById('current-swatch').style.background=col;
+    document.getElementById('hex-input').value=col;
+    drawWheel();
+}
+
+function setActiveColour(hex,updateHex=true){
+    scheme[currentZone]=hex;
+    if(updateHex)document.getElementById('hex-input').value=hex;
+    document.getElementById('current-swatch').style.background=hex;
+    // Update zone button swatch
+    const sw=document.getElementById('swatch-'+currentZone);
+    if(sw)sw.style.background=hex;
+    // Update scheme display
+    const block=document.getElementById('block-'+currentZone);
+    if(block)block.style.background=hex;
+    const hexEl=document.getElementById('hex-'+currentZone);
+    if(hexEl)hexEl.textContent=hex;
+    // Update paint match
+    const match=findPaintMatch(hex);
+    const paintEl=document.getElementById('paint-'+currentZone);
+    if(paintEl)paintEl.innerHTML=match
+        ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
+        : '<span style="color:#444;">—</span>';
+    updateSchemeName('Custom Scheme');
+}
+
+function applyFaction(f){
+    Object.assign(scheme,f.c);
+    buildZoneButtons();buildSchemeDisplay();
+    syncPickerToZone();
+    updateSchemeName(f.name+' Scheme');
+}
+
+function updateSchemeName(name){
+    document.getElementById('scheme-name').textContent=name.toUpperCase();
+}
+
+function resetScheme(){
+    scheme=defaultScheme();
+    buildZoneButtons();buildSchemeDisplay();
+    syncPickerToZone();
+    updateSchemeName('Custom Scheme');
+}
+
+function copySchemeURL(){
+    const p=new URLSearchParams();
+    ZONES.forEach(z=>{if(scheme[z.id])p.set(z.id,scheme[z.id].replace('#',''));});
+    const url=location.origin+location.pathname+'?'+p.toString();
+    navigator.clipboard.writeText(url).then(()=>{
+        const btn=event.target;const orig=btn.textContent;
+        btn.textContent='✓ Copied!';btn.style.color='#0f0';
+        setTimeout(()=>{btn.textContent=orig;btn.style.color='';},2000);
+    }).catch(()=>prompt('Share link:',url));
+}
+
+function loadFromURL(){
+    scheme=defaultScheme();
+    const p=new URLSearchParams(location.search);
+    ZONES.forEach(z=>{if(p.has(z.id))scheme[z.id]='#'+p.get(z.id);});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BattleTech Hub Redesign - Visual Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #1976d2;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #d32f2f;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .before, .after {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .before {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+        }
+        .after {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature {
+            padding: 20px;
+            background: #f5f5f5;
+            border-left: 4px solid #d32f2f;
+            border-radius: 4px;
+        }
+        .feature h3 {
+            color: #d32f2f;
+            margin-top: 0;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            border-radius: 8px;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .color-swatch {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: monospace;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .image-item {
+            aspect-ratio: 16/9;
+            background: #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            padding: 10px;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            border-radius: 4px;
+        }
+        .checklist li::before {
+            content: '✅ ';
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="canonical" href="https://battletechhq.com/visual_preview.html">
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 BattleTech Hub Website Redesign</h1>
+        <p><strong>Status:</strong> ✅ Complete | <strong>Date:</strong> May 3, 2026 | <strong>Version:</strong> 2.0</p>
+
+        <h2>📊 Project Statistics</h2>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">23</div>
+                <div class="stat-label">Real Images Downloaded</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">19</div>
+                <div class="stat-label">Articles Updated</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Mobile Responsive</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">1200+</div>
+                <div class="stat-label">Lines of CSS</div>
+            </div>
+        </div>
+
+        <h2>🎨 Design Transformation</h2>
+        <div class="comparison">
+            <div class="before">
+                <h3>❌ Before</h3>
+                <ul>
+                    <li>Plain white background</li>
+                    <li>No images on cards</li>
+                    <li>Basic typography</li>
+                    <li>Minimal visual hierarchy</li>
+                    <li>No hero images</li>
+                    <li>Generic appearance</li>
+                    <li>Low engagement potential</li>
+                </ul>
+            </div>
+            <div class="after">
+                <h3>✅ After</h3>
+                <ul>
+                    <li>Dramatic dark theme (#0a0a0a)</li>
+                    <li>23 professional images</li>
+                    <li>Gaming fonts (Orbitron, Rajdhani)</li>
+                    <li>Clear visual hierarchy</li>
+                    <li>Hero images on all articles</li>
+                    <li>Unique BattleTech aesthetic</li>
+                    <li>High retention design</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🎨 Color Palette</h2>
+        <div class="color-palette">
+            <div class="color-swatch" style="background: #d32f2f;">
+                <strong>Primary Red</strong>
+                <code>#d32f2f</code>
+            </div>
+            <div class="color-swatch" style="background: #1976d2;">
+                <strong>Primary Blue</strong>
+                <code>#1976d2</code>
+            </div>
+            <div class="color-swatch" style="background: #ff1744;">
+                <strong>Accent Red</strong>
+                <code>#ff1744</code>
+            </div>
+            <div class="color-swatch" style="background: #00b0ff;">
+                <strong>Accent Blue</strong>
+                <code>#00b0ff</code>
+            </div>
+            <div class="color-swatch" style="background: #ffc107; color: #000;">
+                <strong>Accent Gold</strong>
+                <code>#ffc107</code>
+            </div>
+            <div class="color-swatch" style="background: #0a0a0a;">
+                <strong>Dark BG</strong>
+                <code>#0a0a0a</code>
+            </div>
+        </div>
+
+        <h2>✨ Key Features Implemented</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Dark Gaming Theme</h3>
+                <p>Bold dark aesthetic with red/blue accents inspired by BattleTech universe</p>
+            </div>
+            <div class="feature">
+                <h3>Real Photography</h3>
+                <p>23 professional images from Unsplash, all properly licensed</p>
+            </div>
+            <div class="feature">
+                <h3>Card Layouts</h3>
+                <p>Modern card design with 240px hero images and hover effects</p>
+            </div>
+            <div class="feature">
+                <h3>Article Heroes</h3>
+                <p>400px full-width hero images on all 19 articles</p>
+            </div>
+            <div class="feature">
+                <h3>Gaming Typography</h3>
+                <p>Orbitron for headers, Rajdhani for subheadings, Inter for body</p>
+            </div>
+            <div class="feature">
+                <h3>Mobile Responsive</h3>
+                <p>Breakpoints at 1024px and 768px, works on all devices</p>
+            </div>
+        </div>
+
+        <h2>📸 Image Inventory (23 Total)</h2>
+        <div class="image-grid">
+            <div class="image-item">mech-robot.jpg</div>
+            <div class="image-item">tabletop-gaming.jpg</div>
+            <div class="image-item">strategy-game.jpg</div>
+            <div class="image-item">dice-boardgame.jpg</div>
+            <div class="image-item">mecha-giant.jpg</div>
+            <div class="image-item">dragon-miniature.jpg</div>
+            <div class="image-item">giant-robot.jpg</div>
+            <div class="image-item">board-game-house.jpg</div>
+            <div class="image-item">boardgame-setup.jpg</div>
+            <div class="image-item">tabletop-setup.jpg</div>
+            <div class="image-item">game-table.jpg</div>
+            <div class="image-item">strategy-pieces.jpg</div>
+            <div class="image-item">+ 11 more images</div>
+        </div>
+
+        <h2>✅ Completed Tasks</h2>
+        <ul class="checklist">
+            <li>Downloaded 23 professional images from Unsplash</li>
+            <li>Created bold gaming-focused CSS design (1200+ lines)</li>
+            <li>Updated homepage with image-rich card layout</li>
+            <li>Added hero images to all 19 article pages</li>
+            <li>Created comprehensive image credits page</li>
+            <li>Ensured full mobile responsiveness</li>
+            <li>Implemented dark theme with red/blue accents</li>
+            <li>Added gaming-appropriate typography</li>
+            <li>Created hover effects and visual polish</li>
+            <li>Documented everything thoroughly</li>
+        </ul>
+
+        <h2>📋 Files Modified & Created</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Modified (22 files)</h3>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li>style.css (redesigned)</li>
+                    <li>index.html (updated)</li>
+                    <li>19 article HTML files</li>
+                </ul>
+            </div>
+            <div class="feature">
+                <h3>Created (27 files)</h3>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li>23 image files (.jpg)</li>
+                    <li>image-credits.html</li>
+                    <li>REDESIGN_README.md</li>
+                    <li>REDESIGN_SUMMARY.md</li>
+                    <li>update_articles_with_heroes.py</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🚀 Ready for Deployment</h2>
+        <p><strong>The website is now production-ready with:</strong></p>
+        <ul class="checklist">
+            <li>All images properly licensed (Unsplash License - free commercial use)</li>
+            <li>Full attribution provided at /image-credits.html</li>
+            <li>Mobile-responsive design tested</li>
+            <li>All 19 articles preserved with enhanced visuals</li>
+            <li>Professional gaming aesthetic throughout</li>
+            <li>Comprehensive documentation created</li>
+        </ul>
+
+        <h2>📚 Documentation Files</h2>
+        <ul>
+            <li><strong>REDESIGN_README.md</strong> - Comprehensive technical documentation</li>
+            <li><strong>REDESIGN_SUMMARY.md</strong> - Executive summary (also as PDF/DOCX)</li>
+            <li><strong>image-credits.html</strong> - Public-facing attribution page</li>
+            <li><strong>VISUAL_PREVIEW.html</strong> - This file (visual overview)</li>
+        </ul>
+
+        <h2>🎯 Impact Summary</h2>
+        <p>The BattleTech Hub website has been transformed from a plain, text-heavy site into a <strong>visually stunning, gaming-focused experience</strong> that:</p>
+        <ul>
+            <li>✨ <strong>Captures attention</strong> with dramatic dark theme and professional imagery</li>
+            <li>✨ <strong>Builds credibility</strong> with real photography (no AI-generated images)</li>
+            <li>✨ <strong>Engages visitors</strong> with modern card layouts and hover effects</li>
+            <li>✨ <strong>Retains users</strong> with improved visual hierarchy and spacing</li>
+            <li>✨ <strong>Works everywhere</strong> with fully responsive mobile design</li>
+            <li>✨ <strong>Respects creators</strong> with proper image attribution</li>
+        </ul>
+
+        <div style="margin-top: 60px; padding: 30px; background: linear-gradient(135deg, #d32f2f, #b71c1c); color: white; border-radius: 12px; text-align: center;">
+            <h2 style="color: white; border: none; margin: 0;">🎮 Project Status: COMPLETE ✅</h2>
+            <p style="margin: 20px 0 0 0; font-size: 1.1rem;">Ready to retain visitors and dominate search results!</p>
+        </div>
+    </div>
+</body>
+</html>

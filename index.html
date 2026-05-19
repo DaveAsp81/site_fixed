@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BattleTech Hub — guides, tools, painting tutorials, and lore for new and veteran players. Home of the Lance Builder and BattleTech Down Under.">
+    <meta name="keywords" content="BattleTech, BattleMech, tabletop wargame, miniature painting, lance builder, Alpha Strike">
+    <title>BattleTech Hub — Guides, Tools & Lore for MechWarriors</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ── Lance Builder hero block ─────────────────── */
+        .tool-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 50px 0;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .tool-hero-text { flex: 1; min-width: 260px; }
+        .tool-hero-text h2 { color: #ff8c00; margin-bottom: 12px; font-size: 1.8rem; }
+        .tool-hero-text p { color: #ccc; line-height: 1.7; margin-bottom: 20px; }
+        .tool-hero-features { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+        .tool-pill {
+            background: rgba(255,140,0,0.15);
+            border: 1px solid rgba(255,140,0,0.4);
+            color: #ff8c00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .tool-hero-cta {
+            background: #ff8c00;
+            color: #000;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(255,140,0,0.4);
+            transition: all 0.2s;
+        }
+        .tool-hero-cta:hover { background: #ffaa33; box-shadow: 0 6px 25px rgba(255,140,0,0.6); }
+        .tool-hero-preview {
+            flex: 0 0 280px;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .tool-hero-preview .ph { color: #ff8c00; font-weight: bold; }
+        .tool-hero-preview .pv { color: #ccc; }
+        .tool-hero-preview .sep { border-top: 1px solid #2a2a2a; margin: 10px 0; }
+
+        /* ── About strip ─────────────────────────────── */
+        .about-strip {
+            background: rgba(255,140,0,0.06);
+            border-left: 4px solid #ff8c00;
+            border-radius: 0 8px 8px 0;
+            padding: 24px 28px;
+            margin: 50px 0;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .about-strip p { color: #bbb; line-height: 1.7; flex: 1; min-width: 220px; margin: 0; }
+        .yt-btn {
+            background: #c00;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+        }
+        .yt-btn:hover { background: #e00; }
+
+        /* ── Section divider ─────────────────────────── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 60px 0 30px;
+        }
+        .section-divider h2 { margin: 0; white-space: nowrap; }
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #333, transparent);
+        }
+
+        /* ── Product cards ───────────────────────────── */
+        .product-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .product-card {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .product-card h4 { color: #eee; margin: 0; font-size: 1rem; }
+        .product-card p { color: #888; font-size: 0.85rem; margin: 0; flex: 1; line-height: 1.5; }
+        .product-card .buy-link {
+            background: #ff8c00;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.05em;
+            text-align: center;
+            display: block;
+        }
+        .affiliate-note {
+            font-size: 0.75rem;
+            color: #555;
+            margin: 8px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-hero { padding: 24px; gap: 24px; }
+            .tool-hero-preview { display: none; }
+            .about-strip { padding: 20px; }
+        }
+    </style>
+<link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="https://battletechhq.com/index.html">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
+            <button class="nav-toggle" aria-label="Menu">☰ MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="paint-tool.html">Paint Tool</a></li>
+                    <li><a href="#painting">Painting</a></li>
+                    <li><a href="#gameplay">Gameplay</a></li>
+                    <li><a href="#lore">Lore</a></li>
+                    <li><a href="#gear">Gear</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── HERO ─────────────────────────────────────────────────── -->
+    <section class="hero">
+        <h1>BattleTech Hub</h1>
+        <p>Guides, tools, and lore for new players and veteran MechWarriors.<br>
+        Built by the BattleTech Down Under community.</p>
+        <div style="margin-top:30px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+            <a href="articles/battletech-beginner-guide.html"
+               style="background:#ff8c00; color:#000; padding:14px 32px; font-size:1.1em; font-weight:bold; border-radius:6px; text-decoration:none;">
+                New to BattleTech? Start Here
+            </a>
+            <a href="lance-builder.html"
+               style="background:transparent; color:#ff8c00; border:2px solid #ff8c00; padding:14px 32px; font-size:1.1em; font-weight:bold; border-radius:6px; text-decoration:none;">
+                ⚙ Open Lance Builder
+            </a>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- ── ABOUT STRIP ───────────────────────────────────────── -->
+        <div class="about-strip">
+            <p>This site is run by David — host of the <strong>BattleTech Down Under</strong> YouTube channel. I've been playing and painting BattleTech for years and built these tools and guides because the ones I wanted didn't exist. If something's wrong or missing, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">let me know</a>.</p>
+            <a href="https://www.youtube.com/@BattleTechDownUnder" target="_blank" class="yt-btn">▶ Watch on YouTube</a>
+        </div>
+
+        <!-- ── LANCE BUILDER ─────────────────────────────────────── -->
+        <div class="tool-hero" id="tools">
+            <div class="tool-hero-text">
+                <h2>⚙ Lance Command Console</h2>
+                <p>The only dedicated BattleTech lance builder on the web. Filter by faction and era, track Battle Value and tonnage in real time, preview 'Mech loadouts, and print your roster sheet. Over 600 chassis and 3,700 variants from the full MUL database.</p>
+                <div class="tool-hero-features">
+                    <span class="tool-pill">620 Chassis</span>
+                    <span class="tool-pill">3,700+ Variants</span>
+                    <span class="tool-pill">Faction Filter</span>
+                    <span class="tool-pill">BV Tracking</span>
+                    <span class="tool-pill">Print Ready</span>
+                    <span class="tool-pill">Alpha Strike Mode</span>
+                </div>
+                <a href="lance-builder.html" class="tool-hero-cta">⚙ Open Lance Builder →</a>
+            </div>
+            <div class="tool-hero-preview" aria-hidden="true">
+                <div class="ph">LANCE COMMAND CONSOLE</div>
+                <div class="sep"></div>
+                <div class="pv">Faction: <span style="color:#ff8c00">House Davion</span></div>
+                <div class="pv">Era: <span style="color:#ff8c00">Clan Invasion</span></div>
+                <div class="sep"></div>
+                <div class="pv">① Atlas AS7-D ........ 1500 BV</div>
+                <div class="pv">② Hatchetman HCT-3F .. 785 BV</div>
+                <div class="pv">③ Griffin GRF-1N ..... 1124 BV</div>
+                <div class="pv">④ Locust LCT-1V ...... 432 BV</div>
+                <div class="sep"></div>
+                <div class="pv">Total: <span style="color:#ff8c00">3,841 BV / 195t</span></div>
+                <div class="sep"></div>
+                <div style="color:#555; font-size:0.75rem;">[ PRINT ROSTER ] [ EXPORT ]</div>
+            </div>
+        </div>
+
+        <!-- ── GETTING STARTED ───────────────────────────────────── -->
+        <div class="section-divider" id="getting-started">
+            <h2>🎯 Getting Started</h2>
+        </div>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/intro.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>So You Want to Play BattleTech</h3>
+                    <p>What to buy, how the rules work, and what to expect from your first game — no padding, just what you need to know.</p>
+                    <a href="articles/battletech-beginner-guide.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/btvs40k.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>BattleTech vs Warhammer 40K</h3>
+                    <p>A genuine comparison from someone who's played both. Cost, gameplay, community, and which one is actually right for you.</p>
+                    <a href="articles/battletech-vs-warhammer.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/list-builder.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Best 'Mechs for Beginners</h3>
+                    <p>Which 'Mechs teach the game well, which ones to avoid early, and how to build a first lance that won't frustrate you.</p>
+                    <a href="articles/best-beginner-mechs.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/starter-set.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Building a Force on a Budget</h3>
+                    <p>How to get a complete, playable BattleTech collection for under $100, with the right priorities in the right order.</p>
+                    <a href="articles/budget-battletech-army.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── GAMEPLAY ──────────────────────────────────────────── -->
+        <div class="section-divider" id="gameplay">
+            <h2>⚔️ Gameplay & Strategy</h2>
+        </div>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/lance-building.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Lance Building Guide</h3>
+                    <p>Roles, synergies, and the thinking behind building a lance that actually works together rather than four individual 'Mechs.</p>
+                    <a href="articles/lance-building-guide.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/BCvsAS.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Alpha Strike vs Classic BattleTech</h3>
+                    <p>Both systems have their place. Here's how to decide which one to learn first and when to switch.</p>
+                    <a href="articles/alpha-strike-vs-classic.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/overheat.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Heat Management Explained</h3>
+                    <p>The mechanic that defines BattleTech. Understanding it is the difference between a good pilot and a great one.</p>
+                    <a href="articles/heat-management-guide.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/locust.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Best Light 'Mechs (3025 Era)</h3>
+                    <p>Which scouts and harassers are worth fielding and why — from the Locust to the Jenner.</p>
+                    <a href="articles/best-light-mechs.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/battlemaster.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Best Heavy 'Mechs (3025 Era)</h3>
+                    <p>The workhorses of any serious lance — which heavies earn their tonnage and which disappoint.</p>
+                    <a href="articles/best-heavy-mechs.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── LORE ──────────────────────────────────────────────── -->
+        <div class="section-divider" id="lore">
+            <h2>📚 Lore & Universe</h2>
+        </div>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/ep1.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Star League: The Golden Age That Wasn't</h3>
+                    <p>Ian Cameron's forced unification, the Reunification War, the Amaris coup, and why Kerensky took the SLDF and left.</p>
+                    <a href="articles/star-league.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/emptythrone.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Succession Wars: How Humanity Burned Its Future</h3>
+                    <p>Three centuries of compounding catastrophe — LosTech, ComStar's rise, and how the Inner Sphere became the place we love to game in.</p>
+                    <a href="articles/succession-wars-deep-dive.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/jihad.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Jihad: The War That Broke Everything Again</h3>
+                    <p>Simultaneous nuclear strikes on every capital, the Manei Domini, Devlin Stone, and twelve years of warfare that made the Succession Wars look restrained.</p>
+                    <a href="articles/jihad-deep-dive.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/lore.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>BattleTech Lore: A Beginner's Guide</h3>
+                    <p>A thousand years of future history explained without requiring you to read a hundred sourcebooks first.</p>
+                    <a href="articles/battletech-lore-explained.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/great-houses.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Five Great Houses</h3>
+                    <p>House Davion, Steiner, Kurita, Liao, Marik — what makes each one distinct and which one you might want to fight for.</p>
+                    <a href="articles/great-houses-guide.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/oprevival.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Clan Invasion: Operation Revival</h3>
+                    <p>The five invading Clans, the shock of first contact, Tukayyid, and the destruction of Clan Smoke Jaguar. The full story.</p>
+                    <a href="articles/clan-invasion.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/emptythrone.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>The Succession Wars Explained</h3>
+                    <p>Three centuries of grinding warfare that shaped the Inner Sphere and destroyed most of what made the Star League great.</p>
+                    <a href="articles/succession-wars-explained.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── PAINTING ──────────────────────────────────────────── -->
+        <div class="section-divider" id="painting">
+            <h2>🎨 Painting & Hobby</h2>
+        </div>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/mw5-mech-paint.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Painting Tutorial for Beginners</h3>
+                    <p>From bare plastic to a presentable 'Mech in an evening. Primer, basecoat, wash, done — how the pros actually do it fast.</p>
+                    <a href="articles/battletech-painting-tutorial.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/speed-painter.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Speed Painting a Full Lance</h3>
+                    <p>Batch painting techniques that get four 'Mechs table-ready in a weekend without cutting corners on quality.</p>
+                    <a href="articles/speed-painting-battletech.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/paints.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Best Paints for BattleTech Miniatures</h3>
+                    <p>Army Painter, Vallejo, Citadel — which brands are worth the money and what you actually need to get started.</p>
+                    <a href="articles/best-battletech-paints.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/factioncolours.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Faction Colour Schemes</h3>
+                    <p>The canonical colours for every major House and Clan, with notes on how to mix and match for your own colour scheme.</p>
+                    <a href="articles/faction-color-schemes.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image" style="background-image: url('assets/images/articles/battletech-terrain.jpg');"></div>
+                <div class="article-card-content">
+                    <h3>Building Terrain on a Budget</h3>
+                    <p>DIY terrain that looks good without costing a fortune. Foamcore, filler, and a few evenings gets you a solid table.</p>
+                    <a href="articles/battletech-terrain-building.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- ── NEWSLETTER ────────────────────────────────────────────── -->
+        <div style="margin: 60px 0; background: linear-gradient(135deg, rgba(255,140,0,0.08), rgba(20,20,20,0.95)); border: 1px solid rgba(255,140,0,0.3); border-radius: 12px; padding: 40px; text-align:center;">
+            <h2 style="color:#ff8c00; margin-bottom:8px;">📬 BattleTech Hub Newsletter</h2>
+            <p style="color:#aaa; max-width:520px; margin:0 auto 24px; line-height:1.6;">New guides, lore deep-dives, painting tips, and lance builder updates. No spam. Unsubscribe any time.</p>
+            <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank"
+                  style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:480px; margin:0 auto;">
+                <input type="text" name="FNAME" placeholder="First name"
+                       style="background:#111; border:1px solid #333; color:#ddd; padding:12px 16px; border-radius:4px; font-size:0.95rem; flex:1; min-width:120px;">
+                <input type="email" name="EMAIL" placeholder="Email address" required
+                       style="background:#111; border:1px solid #333; color:#ddd; padding:12px 16px; border-radius:4px; font-size:0.95rem; flex:2; min-width:200px;">
+                <div style="position:absolute;left:-5000px;" aria-hidden="true">
+                    <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
+                </div>
+                <button type="submit"
+                        style="background:#ff8c00; color:#000; border:none; padding:12px 28px; border-radius:4px; font-weight:700; font-family:'Rajdhani',sans-serif; font-size:1rem; letter-spacing:0.05em; cursor:pointer; text-transform:uppercase; white-space:nowrap;">
+                    Subscribe Free →
+                </button>
+            </form>
+            <p style="margin-top:14px; font-size:0.78rem; color:#444;">
+                <a href="https://mailchimp.com/legal/privacy/" target="_blank" style="color:#444;">Privacy Policy</a> · Powered by Mailchimp
+            </p>
+        </div>
+
+        <!-- ── GEAR / BUYING GUIDE ───────────────────────────────── -->
+        <div class="section-divider" id="gear">
+            <h2>🛒 Recommended Gear</h2>
+        </div>
+        <p style="color:#888; margin-bottom:24px;">These are products I actually use and recommend. Prices are approximate and vary by retailer.</p>
+        <div class="product-strip">
+            <div class="product-card">
+                <h4>A Game of Armored Combat</h4>
+                <p>The best entry point for most new players. Eight 'Mechs, complete rules, maps, everything you need for your first campaign.</p>
+                <a href="https://amzn.to/4w6KaH3" target="_blank" class="buy-link">View on Amazon ~$60</a>
+            </div>
+            <div class="product-card">
+                <h4>The Beginner Box</h4>
+                <p>Two 'Mechs and simplified rules. Good if you want to try before committing. Outgrow it fast, but a solid intro.</p>
+                <a href="https://amzn.to/4eYAuZ6" target="_blank" class="buy-link">View on Amazon ~$25</a>
+            </div>
+            <div class="product-card">
+                <h4>Army Painter Speed Paint 2.0</h4>
+                <p>The fastest way to get 'Mechs painted. One coat over a white primer gives you a solid tabletop result in minutes per model.</p>
+                <a href="https://amzn.to/3R5TpXX" target="_blank" class="buy-link">View on Amazon</a>
+            </div>
+            <div class="product-card">
+                <h4>Vallejo Game Color Set</h4>
+                <p>Better control than speedpaints, more versatile. The starter set covers everything you need for the first year.</p>
+                <a href="https://amzn.to/4neVpJA" target="_blank" class="buy-link">View on Amazon</a>
+            </div>
+            <div class="product-card">
+                <h4>BattleTech Battle Mat</h4>
+                <p>Replaces paper maps with a durable neoprene surface. Makes the table look properly serious.</p>
+                <a href="https://amzn.to/49dIa62" target="_blank" class="buy-link">View on Amazon</a>
+            </div>
+        </div>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases. <a href="affiliate-disclosure.html" style="color:#555;">Full disclosure.</a></p>
+
+    </div><!-- /container -->
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech Hub</h4>
+                <p>Home of the <a href="https://www.youtube.com/@BattleTechDownUnder" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="paint-tool.html">Paint Tool</a></li>
+                    <li><a href="articles/battletech-beginner-guide.html">Beginner Guide</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="affiliate-disclosure.html">Affiliate Disclosure</a></li>
+                    <li><a href="image-credits.html">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net — BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://bg.battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek — Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BattleTech Hub. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

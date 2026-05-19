@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Everything that changed in the BattleTech Hub Lance Builder — 620 chassis, rewritten fluff, faction filters, and more.">
+    <meta name="keywords" content="BattleTech lore explained, BattleTech timeline, BattleTech history, Inner Sphere lore, Clan Invasion explained">
+    <title>Lance Builder Update: What's New | BattleTech Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+<link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="https://battletechhq.com/articles/lance-builder-update.html">
+</head>
+<body>
+<header><div class="header-content"><a href="../index.html" class="logo">⚔️ BattleTech Hub</a><button class="nav-toggle" aria-label="Menu">☰ MENU</button>
+<nav><ul><li><a href="../index.html#getting-started">Getting Started</a></li><li><a href="../index.html#painting">Painting &amp; Hobby</a></li><li><a href="../index.html#gameplay">Gameplay</a></li><li><a href="../index.html#lore">Lore</a></li><li><a href="../index.html#buying-guides">Buying Guides</a></li></ul></nav></div></header>
+<div class="container">
+    <div class="content-layout">
+        <article>
+            <div class="article-hero" style="background-image: url('../assets/images/articles/lance-building.jpg"></div>
+            
+<h1>Lance Builder Update: Here's What Changed</h1>
+
+<p>The Lance Command Console has been through a significant overhaul. If you used the old version, here's what's different and why.</p>
+
+<p>The short version: it went from a proof-of-concept with a hardcoded list of maybe 50 'Mechs to a proper tool covering the full published BattleTech roster. Here's the full breakdown.</p>
+
+<h2>620 Chassis. 3,700+ Variants.</h2>
+
+<p>The old builder had a handful of hardcoded 'Mechs. The new one pulls from a database built by parsing every MegaMek MTF file and cross-referencing it against the Master Unit List API — every chassis, every variant, with accurate Battle Values and Point Values pulled directly from official sources.</p>
+
+<p>That's every canon BattleMech from the Mackie in 2439 through to thirty-second century designs. If it's in MegaMek, it's in the builder.</p>
+
+<h2>Rewritten Fluff for Every 'Mech</h2>
+
+<p>Every chassis now has three fields of descriptive text — overview, capabilities, and deployment notes — written in a consistent MechTech field-report voice. Think a senior technician briefing you before an assignment: practical, opinionated, and specific about what matters for keeping the machine running and using it effectively.</p>
+
+<p>The entries for chassis A through roughly M were rewritten by hand in that voice. The rest were processed through a local AI model (Ollama running on my machine, no cloud costs) and then cleaned and audited for consistency. Hit the info button on any 'Mech to read them.</p>
+
+<h2>Faction Availability Filter</h2>
+
+<p>Select a faction — any of the five Great Houses, all the major Clans, ComStar, Word of Blake, Periphery states, mercenaries — and the chassis list filters to only show 'Mechs available to that faction. The availability data comes from the Master Unit List, so it reflects actual canon availability by era rather than being guessed.</p>
+
+<p>Great Houses. Clans. Inner Sphere States. Periphery. It's all there.</p>
+
+<h2>Era Filter</h2>
+
+<p>Filter by era — Age of War, Star League, Succession Wars, Clan Invasion, Civil War, Jihad, Dark Age, ilClan — and the database filters to era-appropriate 'Mechs. Combine with the faction filter and you can build a historically accurate 3025 Smoke Jaguar raiding force or a proper 3067 ComStar garrison without having to know every chassis by heart.</p>
+
+<h2>Classic BV and Alpha Strike PV</h2>
+
+<p>Toggle between Classic BattleTech Battle Value and Alpha Strike Point Value. The BV calculator applies the standard skill-adjusted formula — base BV modified by your pilot's gunnery and piloting ratings. The total tracks in real time as you build.</p>
+
+<p>Set a BV or PV ceiling and the builder enforces it as you add units.</p>
+
+<h2>Pilot Skill and Background</h2>
+
+<p>Each unit in your roster has adjustable gunnery and piloting ratings that feed into the BV calculation. There's also a pilot background selector — Former House Regular, MechWarrior Dropout, ComStar Adept, Clan Freeborn, and others — that's purely flavour but useful if you're running a campaign or building a narrative force.</p>
+
+<h2>Quick-Gen Lance</h2>
+
+<p>One button generates a complete four-unit lance within your current filters and BV limit. It tries to produce a tactically balanced result — not just four random 'Mechs — with role variety and no duplicate chassis. If you have a faction filter active it respects that. Useful for getting a starting point that you then adjust, or for quickly generating an opponent force.</p>
+
+<h2>'Mech Info Panel</h2>
+
+<p>The info button on any variant opens a panel with the full stats — weapons list, heat sinks, movement, armour — plus the overview, capabilities, and deployment notes. Faction availability badges show which factions can field that specific variant. If you're not sure whether a 'Mech fits your force or how it should be used, this is where to look.</p>
+
+<h2>Save, Export, and Print</h2>
+
+<p>Save lances to your browser's local storage and reload them later. Copy the roster to clipboard for pasting into a document or Discord message. Export to CSV if you're tracking a campaign in a spreadsheet. Print a text roster sheet formatted for the table.</p>
+
+<h2>What's Still On the List</h2>
+
+<p>A few things I want to improve:</p>
+
+<ul>
+    <li><strong>The Ollama fluff voice</strong> — the later alphabet chassis (N through Z) were processed by the local AI and are noticeably more generic than the hand-written entries. A second pass is planned.</li>
+    <li><strong>Vehicle and infantry support</strong> — the current builder is 'Mech-only. Adding vehicles and infantry for proper combined arms lances is the next significant feature.</li>
+    <li><strong>Campaign tracking</strong> — persistent pilot records, salvage tracking, and repair costs between scenarios.</li>
+    <li><strong>Mobile layout</strong> — it works on mobile but the two-column layout is cramped on small screens. A proper mobile layout is overdue.</li>
+</ul>
+
+<p>If something's wrong, missing, or if a specific 'Mech has bad data — <a href="mailto:DaveAsp81@gmail.com">let me know</a>. The database was built programmatically and while I've audited it, there are 3,700 variants. Things get missed.</p>
+
+<div style="margin: 32px 0; padding: 20px 24px; background: rgba(255,140,0,0.06); border-left: 4px solid #ff8c00; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0; color: #ccc; font-size: 0.95rem;">
+        <strong style="color: #ff8c00;">Try it:</strong> 
+        <a href="../lance-builder.html" style="color: #ff8c00; font-weight: 600;">Open the Lance Command Console →</a>
+    </p>
+</div>
+
+        </article>
+        <aside class="sidebar">
+    <div class="sidebar-widget" style="background: linear-gradient(135deg, rgba(255,140,0,0.08), rgba(20,20,20,0.95)); border: 1px solid rgba(255,140,0,0.3); border-radius: 8px; padding: 20px;">
+        <h3 style="color:#ff8c00; margin-bottom:8px;">📬 Stay in the Loop</h3>
+        <p style="color:#999; font-size:0.85rem; margin-bottom:16px; line-height:1.5;">New guides, lore deep-dives, and lance builder updates — straight to your inbox.</p>
+        <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank" style="display:flex; flex-direction:column; gap:8px;">
+            <input type="text" name="FNAME" placeholder="First name (optional)" style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;">
+            <input type="email" name="EMAIL" placeholder="Your email address" required style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;">
+            <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value=""></div>
+            <button type="submit" style="background:#ff8c00; color:#000; border:none; padding:10px; border-radius:4px; font-weight:700; font-family:'Rajdhani',sans-serif; font-size:0.95rem; letter-spacing:0.05em; cursor:pointer; text-transform:uppercase;">Subscribe Free →</button>
+        </form>
+    </div>
+    <div class="sidebar-widget newsletter-box" style="margin-top:16px;">
+        <h3>📺 BattleTech Down Under</h3>
+        <p>Video lore, battle reports, and painting guides.</p>
+        <a href="https://www.youtube.com/@BattleTechDownUnder" target="_blank" style="display:block; background:#c00; color:#fff; text-align:center; padding:10px; border-radius:4px; text-decoration:none; font-weight:bold; margin-top:10px;">▶ Watch on YouTube</a>
+    </div>
+    <div class="sidebar-widget">
+        <h3>⚡ Quick Links</h3>
+        <ul>
+            <li><a href="../lance-builder.html">Lance Builder</a></li>
+                    <li><a href="../paint-tool.html">Paint Tool</a></li>
+            <li><a href="battletech-beginner-guide.html">Beginner Guide</a></li>
+            <li><a href="lance-building-guide.html">Lance Building Guide</a></li>
+            <li><a href="https://www.sarna.net" target="_blank">Sarna.net Wiki</a></li>
+        </ul>
+    </div>
+</aside>
+    </div>
+</div>
+<footer><div class="footer-content"><div class="footer-section"><h4>About BattleTech Hub</h4><p>Your trusted source for BattleTech guides, reviews, and strategies.</p></div><div class="footer-section"><h4>Quick Links</h4><ul><li><a href="../about.html">About Us</a></li><li><a href="../contact.html">Contact</a></li><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../affiliate-disclosure.html">Affiliate Disclosure</a></li></ul></div><div class="footer-section"><h4>Resources</h4><ul><li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li><li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li><li><a href="https://bg.battletech.com" target="_blank">Official BattleTech</a></li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 BattleTech Hub. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>            <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+        </div></footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) { toggle.addEventListener('click', function() { navUl.classList.toggle('open'); }); }
+});
+</script>
+</body>
+</html>
