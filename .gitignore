@@ -1,0 +1,30 @@
+# Local development
+serve.py
+*.py
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp/build files
+*.zip
+*.rar
+*.docx
+*.pdf
+*.xlsx
+*.csv
+
+# Local cache
+.megamek_cache/
+
+# Node (if ever used)
+node_modules/
