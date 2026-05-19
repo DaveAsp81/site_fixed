@@ -26,8 +26,83 @@
 
         .main-grid { display: grid; gap: 30px; }
         @media (min-width: 1024px) { .main-grid { grid-template-columns: 1fr 1.5fr; } }
-        @media (max-width: 1023px) { .main-grid { grid-template-columns: 1fr; } .preview-container { height: 200px; } }
-        
+
+        /* ── Mobile layout ─────────────────────────────────────────── */
+        @media (max-width: 1023px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .preview-container { height: 160px; }
+
+            /* Filters: stack vertically */
+            section.control-panel {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            section.control-panel > div {
+                width: 100% !important;
+            }
+
+            /* Mode toggle: full width */
+            #classic-btn, #alpha-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            /* Roster items: tighter on mobile */
+            .roster-item {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 10px;
+            }
+            .roster-item img {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            /* Pilot name + random button: stack */
+            .pilot-edit > div:first-child {
+                flex-direction: column !important;
+            }
+
+            /* Action buttons: 2 per row */
+            .action-bar {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 6px !important;
+            }
+
+            /* Dropdowns: full width */
+            #chassis-select, #variant-select { width: 100% !important; }
+
+            /* Info button next to variant: stays inline */
+            .variant-row { display: flex; gap: 8px; align-items: center; }
+            .variant-row select { flex: 1; }
+
+            /* Modal: full screen on mobile */
+            .modal-content {
+                margin: 2% auto !important;
+                width: 96% !important;
+                padding: 20px !important;
+                max-height: 92vh !important;
+            }
+
+            /* Saved lances panel: compact */
+            #saved-lances-panel { padding: 10px; }
+            #saved-list { max-height: 150px; }
+
+            /* Sort buttons: wrap */
+            .sort-buttons { flex-wrap: wrap; }
+        }
+
+        @media (max-width: 480px) {
+            /* Very small screens: single column action buttons */
+            .action-bar {
+                grid-template-columns: 1fr !important;
+            }
+            header { padding: 8px 12px; }
+            nav ul { gap: 8px; }
+        }
+
         .pilot-edit { font-size: 0.9em; margin-top: 8px; }
         .pilot-edit input, .pilot-edit select { width: auto; padding: 2px 6px; font-size: 0.85em; }
 #classic-btn.active, #alpha-btn.active {
@@ -217,7 +292,7 @@
             <ul id="lance-roster" style="list-style:none; padding:0; min-height:400px;"></ul>
 			<!-- LANCE FEEDBACK PANEL -->
 <div id="lance-feedback" style="margin-top:15px; padding:12px; background:rgba(30,30,30,0.95); border:1px solid #444; border-radius:4px; font-size:0.9em; min-height:60px;"></div>
-            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+            <div class="action-bar" style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
     <button onclick="printTextSheet()" style="flex:1; background:#28a745; color:white; border:none; padding:15px;">🖨️ PRINT TEXT SHEET</button>
     <button onclick="saveLance()" style="flex:1; background:#0066cc; color:white; border:none; padding:15px;">💾 SAVE LANCE</button>
     
