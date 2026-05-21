@@ -398,26 +398,51 @@ function updateFormationUI() {
 }
 
 // ==================== PILOT BACKGROUNDS ====================
-const pilotBackgrounds = {
+const // ── Inner Sphere pilot backgrounds ──────────────────────────────────────────
+const IS_PILOT_BACKGROUNDS = {
     "Former House Regular": "A loyal soldier who served in one of the Great Houses for many years. Experienced in standard military doctrine and large-scale operations, but often disillusioned by the endless Succession Wars politics and betrayals.",
     "Mercenary Veteran": "Hardened fighter who has battled across the Inner Sphere for the highest bidder. Knows every dirty trick in the book, values loyalty only to the contract, and has survived more drops than most pilots see in a lifetime.",
-    "Dispossessed Noble": "A fallen aristocrat whose family 'Mech was lost in the wars. Now fights to reclaim honor and fortune, bringing refined tactics and a burning sense of entitlement to every battlefield.",
-    "ComStar Adept": "Mysterious tech-priest trained in the hidden ways of ComStar. Possesses advanced technical knowledge and a calm, almost spiritual approach to combat, often quoting the Word of Blake or old Star League doctrines.",
-    "Periphery Raider": "Ruthless bandit from the lawless outer reaches. Lives by speed, surprise, and raw aggression — a survivor who learned to fight dirty in pirate bands and backwater conflicts.",
-    "Bounty Hunter": "Relentless tracker who hunts high-value targets for credits. Cold, professional, and always one step ahead, with a reputation for never letting a quarry escape once the contract is signed.",
-    "Federated Suns Loyalist": "Dedicated Davion patriot fighting for the glory of the Suns. Fiercely loyal to House Davion, believes in the ideals of the Federated Suns, and fights with chivalric honor and tactical precision.",
-    "Draconis Combine Samurai": "Honor-bound warrior sworn to the Dragon. Follows the ancient code of bushido, values duty above all else, and would rather die than bring shame to their lord or family.",
-    "Lyran Corporate Pilot": "Skilled mercenary pilot on the payroll of a Lyran corporation. Combines military training with sharp business instincts — always calculating the cost-to-benefit ratio of every engagement.",
-    "Free Worlds League Renegade": "Independent captain who broke away from League command. Charismatic and fiercely independent, often operates with a small loyal crew and a deep distrust of central authority.",
-    "Wolf's Dragoons Survivor": "Veteran of the legendary mercenary unit. Carries the elite training and discipline of the Dragoons, with stories of battles against the Clans and a quiet pride in their heritage.",
-    "Star League Remnant": "Old soldier who still believes in the fallen Star League. Clings to the ideals of unity and technological superiority, often quoting lost SLDF doctrine and mourning the fall of the old order.",
-    "Young Hotshot": "Cocky new ace eager to prove themselves in battle. Full of raw talent and bravado, but still learning the brutal realities of war — a dangerous mix of skill and overconfidence.",
-    "Grizzled Veteran": "Battle-scarred survivor of countless campaigns. Seen more death and destruction than most soldiers twice their age, carries deep emotional scars, and fights with cold, calculated efficiency.",
-    "Test Pilot": "Daring experimental 'Mech tester for a major manufacturer. Has pushed countless prototype designs to their limits and survived to tell the tale — possesses unmatched knowledge of 'Mech performance.",
-    "Inner Sphere Defector": "Turncoat who abandoned their original house. Carries the weight of betrayal and the constant fear of being hunted, but brings valuable insider knowledge of their former faction.",
-    "Ex-Pirate": "Reformed (or not) pirate looking for legitimate work. Thrives on chaos and opportunism, knows every smuggling route and weak point in defenses, and still has a dangerous reputation.",
-    "Solaris Gladiator": "Famous arena champion from the Game World of Solaris VII. Lives for the roar of the crowd and the thrill of one-on-one combat, bringing showmanship and deadly precision to the battlefield."
+    "Dispossessed Noble": "A fallen aristocrat whose family 'Mech was lost in the wars. Now fights to reclaim honour and fortune, bringing refined tactics and a burning sense of entitlement to every battlefield.",
+    "ComStar Adept": "Mysterious tech-priest trained in the hidden ways of ComStar. Possesses advanced technical knowledge and a calm, almost spiritual approach to combat, often quoting lost Star League doctrine.",
+    "Periphery Raider": "Ruthless fighter from the lawless outer reaches. Lives by speed, surprise, and raw aggression — a survivor who learned to fight dirty in pirate bands and backwater conflicts far from House law.",
+    "Bounty Hunter": "Relentless tracker who hunts high-value targets for credits. Cold, professional, and always one step ahead — with a reputation for never letting a quarry escape once the contract is signed.",
+    "Federated Suns Loyalist": "Dedicated Davion patriot fighting for the glory of the Suns. Fiercely loyal to House Davion and its alliance with the Lyran Commonwealth, fights with chivalric honour and tactical precision.",
+    "Draconis Combine Samurai": "Honour-bound warrior sworn to the Dragon. Follows the ancient code of bushido, values duty above all else, and would rather die than bring shame to their lord or family name.",
+    "Lyran Hauptmann": "Officer from the Lyran Commonwealth Armed Forces, trained in the weight-of-metal doctrine that prizes heavy armour and firepower over finesse. Politically connected and knows it.",
+    "Capellan Warrior House": "Disciplined soldier from one of House Liao's elite Warrior Houses — Imarra, Lu Sann, Ijori, or the others. Bound by ancient oaths, trained since youth, and deeply loyal to the Confederation.",
+    "Free Worlds Irregulars": "Independent captain who broke from League command. Operates with a small loyal crew and a deep distrust of central authority — useful in a House that can never quite agree on anything.",
+    "Wolf's Dragoons Veteran": "Soldier from the legendary mercenary command. Carries the elite training and discipline of the Dragoons alongside quiet knowledge of things about the Clans that most Inner Sphere pilots don't know.",
+    "Star League Remnant": "Old soldier who still believes in the fallen Star League. Clings to SLDF doctrine and technological standards, mourning the fall of the old order and hoping to see it restored.",
+    "Young Hotshot": "Cocky new ace eager to prove themselves. Full of raw talent and bravado, still learning the brutal realities of war — a dangerous mix of genuine skill and dangerous overconfidence.",
+    "Grizzled Veteran": "Battle-scarred survivor of more campaigns than they care to count. Fights with cold, calculated efficiency. Has stopped being surprised by anything the universe throws at them.",
+    "Solaris Gladiator": "Arena champion from Solaris VII who made the jump to real war. Exceptional in one-on-one combat, still adjusting to the fact that the enemy doesn't care about the crowd.",
+    "Ex-Pirate": "Reformed — or not quite reformed — bandit looking for work that's slightly more legitimate. Knows every smuggling route and defensive weak point. The reputation follows them everywhere.",
+    "NAIS Graduate": "Product of the New Avalon Institute of Science, the finest military research institution in the Inner Sphere. Technically brilliant, occasionally more comfortable with data than with people."
 };
+
+// ── Clan warrior backgrounds ─────────────────────────────────────────────────
+const CLAN_PILOT_BACKGROUNDS = {
+    "Decorated Sibko Graduate": "Finished at the top of their sibko cohort, defeating every opponent in the final Trials with decisive victories. Their genetic heritage is considered exceptional — multiple Bloodnamed warriors carry their lineage.",
+    "Trial of Position: Three Kills": "Achieved the highest possible result in their Trial of Position, defeating three opponents. Assigned to an elite Trinary and marked for fast advancement. Carries the weight of high expectations.",
+    "Trial of Position: Two Kills": "Earned warrior status by defeating two opponents in their Trial of Position — a solid result that placed them in a front-line Binary with room to prove further worth.",
+    "Trial of Position: One Kill, Hard Won": "Earned their warrior caste position by the slimmest margin, defeating one opponent after a brutal, extended engagement. Has something to prove and knows it.",
+    "Bloodnamed Warrior": "Has survived the Grand Melee or a direct Challenge to earn a Bloodname — one of the most coveted honours in Clan society. Their genetic legacy is now preserved in the Clan's breeding programme regardless of how they die.",
+    "Freeborn Fighter": "Born outside the sibko system and forced to earn warrior status through sheer ability in a society that considers freeborns second-rate. Has been called freebirth as an insult often enough to have stopped reacting to it. Fights harder for it.",
+    "Elemental Cross-Trained": "Primarily a MechWarrior but cross-trained with Elemental battle armour — an unusual combination that gives them an instinctive understanding of combined-arms tactics that pure MechWarriors lack.",
+    "Veteran of the Invasion": "Fought in Operation Revival from the first wave. Has killed Inner Sphere MechWarriors on a dozen worlds and adapted to fighting opponents who don't follow zellbrigen. Pragmatic about honour in a way that makes some peers uncomfortable.",
+    "Tukayyid Survivor": "One of the warriors who fought on Tukayyid and came back. The experience has left marks — a precise understanding of what the Com Guards are capable of, and no illusions about the Inner Sphere being an easy target.",
+    "Home Cluster Warrior": "Has not yet fought in the Inner Sphere, assigned from the home cluster as a replacement after Tukayyid losses. Technically excellent from constant training Trials but lacks real combat experience against IS opponents.",
+    "Zellbrigen Purist": "Refuses to deviate from the traditional rules of one-on-one engagement regardless of tactical situation. Other warriors in the unit find this either admirable or infuriating depending on how the last battle went.",
+    "Star Captain": "Leads their Star with a record of successful Trials and sound tactical judgement. Ambitious enough to have their eye on a Binary command and disciplined enough to deserve it.",
+    "Galaxy Commander's Protege": "Identified early by their Galaxy Commander as a warrior worth developing. Has been given difficult assignments deliberately — the pressure has produced either an exceptional warrior or a brittle one.",
+    "Trial of Grievance Veteran": "Has fought and won multiple Trials of Grievance within the Clan, settling disputes through combat in the approved manner. Reputation for being someone who follows through on challenges.",
+    "Dezgra Redemption": "Was labelled dezgra — disgraced — for a violation of Clan honour, either their own or their unit's. Has been fighting to expunge that mark ever since. The dishonour may or may not have been deserved."
+};
+
+// Return the correct backgrounds object based on current faction
+function pilotBackgrounds() {
+    return isClanFaction() ? CLAN_PILOT_BACKGROUNDS : IS_PILOT_BACKGROUNDS;
+}
 
 // ==================== ALPHA STRIKE / CLASSIC TOGGLE ====================
 function switchMode(mode) {
@@ -779,7 +804,7 @@ function printTextSheet() {
 
     currentLance.forEach((unit, i) => {
         const value = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
-        const bgDesc = pilotBackgrounds[unit.background] || unit.customBackground || '—';
+        const bgDesc = pilotBackgrounds()[unit.background] || unit.customBackground || '—';
 
         text += `${i+1}. ${unit.name}\n`;
         text += `    Tonnage:     ${unit.tons}t\n`;
@@ -823,7 +848,7 @@ function addSelectedVariant() {
     const v = c ? c.variants.find(x => x.id === vId) : null;
     if (!v || currentLance.length >= getMaxUnits()) return;
 
-    const bgKeys = Object.keys(pilotBackgrounds);
+    const bgKeys = Object.keys(pilotBackgrounds());
     const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
 
     currentLance.push({
@@ -837,6 +862,7 @@ function addSelectedVariant() {
         weapons: v.weapons,
         gunnery: 4,
         piloting: 5,
+        background: Object.keys(pilotBackgrounds())[0],
         background: randomBackground,
         img: c.img
     });
@@ -962,7 +988,7 @@ function randomizeThemedLance() {
             // Prefer role variety, but don't get stuck — loosen after attempt 20
             if (usedCategories.has(category) && currentLance.length < (getMaxUnits() - 1) && attempt < 20) continue;
 
-            const bgKeys = Object.keys(pilotBackgrounds);
+            const bgKeys = Object.keys(pilotBackgrounds());
             currentLance.push({
                 name: `${mech.chassis} ${variant.name}`,
                 tons: mech.tons,
@@ -1047,9 +1073,9 @@ function updateDisplay() {
                         / 
                         Piloting <input type="number" value="${unit.piloting}" min="0" max="8" style="width:40px" onchange="updatePilot(${i}, 'piloting', this.value)">
                         <br>
-                        Background: 
+                        ${isClanFaction() ? 'Service Record' : 'Background'}: 
                         <select onchange="updatePilot(${i}, 'background', this.value)" style="width:auto">
-                            ${Object.keys(pilotBackgrounds).map(bg => `<option value="${bg}" ${unit.background === bg ? 'selected' : ''}>${bg}</option>`).join('')}
+                            ${Object.keys(pilotBackgrounds()).map(bg => `<option value="${bg}" ${unit.background === bg ? 'selected' : ''}>${bg}</option>`).join('')}
                             <option value="Custom" ${unit.background === 'Custom' ? 'selected' : ''}>Custom</option>
                         </select>
                         ${unit.background === 'Custom' ? `<input type="text" value="${unit.customBackground || ''}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
@@ -1411,6 +1437,19 @@ function filterChassis() {
     const searchTerm = (document.getElementById('chassis-search').value || "").toLowerCase().trim();
     const faction = document.getElementById('faction-filter').value;
     const eraFilter = document.getElementById('era-filter').value;
+
+    // When faction changes, reset backgrounds on existing units to appropriate defaults
+    const defaultBg = Object.keys(pilotBackgrounds())[0];
+    const clanBgs = Object.keys(CLAN_PILOT_BACKGROUNDS);
+    const isBgs = Object.keys(IS_PILOT_BACKGROUNDS);
+    currentLance.forEach(unit => {
+        // If the unit has a background that belongs to the wrong faction type, reset it
+        const isClan = isClanFaction();
+        const bgIsClan = clanBgs.includes(unit.background);
+        const bgIsIS = isBgs.includes(unit.background);
+        if (isClan && bgIsIS) unit.background = defaultBg;
+        if (!isClan && bgIsClan) unit.background = defaultBg;
+    });
 
     // Update faction background logo
     updateFactionLogo(faction);
