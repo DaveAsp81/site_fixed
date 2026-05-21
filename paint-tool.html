@@ -217,18 +217,30 @@ const ZONES = [
 ];
 
 const FACTIONS = [
-    { name:'Davion',    bg:'#b89018',fg:'#1a1500',c:{primary:'#b89018',secondary:'#6e5510',trim:'#ffffff',weapons:'#2a2800',cockpit:'#00aaff',vents:'#cc3300'} },
-    { name:'Steiner',   bg:'#3e6ea0',fg:'#ffffff',c:{primary:'#3e6ea0',secondary:'#22406a',trim:'#aaccee',weapons:'#0a1020',cockpit:'#88ddff',vents:'#cc3300'} },
-    { name:'Kurita',    bg:'#7a0e0e',fg:'#ffffff',c:{primary:'#7a0e0e',secondary:'#141414',trim:'#eeeeee',weapons:'#080808',cockpit:'#00aaff',vents:'#cc4400'} },
-    { name:'Liao',      bg:'#245224',fg:'#ffffff',c:{primary:'#245224',secondary:'#141414',trim:'#bb2200',weapons:'#080808',cockpit:'#00cc44',vents:'#cc3300'} },
-    { name:'Marik',     bg:'#4e2270',fg:'#ffffff',c:{primary:'#4e2270',secondary:'#2e1050',trim:'#b89018',weapons:'#180828',cockpit:'#aa88ff',vents:'#cc3300'} },
-    { name:'C. Wolf',   bg:'#4a4a4a',fg:'#ffffff',c:{primary:'#4a4a4a',secondary:'#202020',trim:'#cc2200',weapons:'#101010',cockpit:'#00aaff',vents:'#cc4400'} },
-    { name:'Jade Falcon',bg:'#145214',fg:'#ffffff',c:{primary:'#145214',secondary:'#082208',trim:'#76bb00',weapons:'#060606',cockpit:'#00ddaa',vents:'#cc4400'} },
-    { name:'Ghost Bear',bg:'#1e3e5e',fg:'#ffffff',c:{primary:'#1e3e5e',secondary:'#f0ebe0',trim:'#8899aa',weapons:'#060606',cockpit:'#88ccff',vents:'#cc3300'} },
-    { name:'Smoke Jag', bg:'#111111',fg:'#ee5500',c:{primary:'#111111',secondary:'#080808',trim:'#cc5500',weapons:'#040404',cockpit:'#ff3300',vents:'#ff5500'} },
-    { name:'Nova Cat',  bg:'#082050',fg:'#ffcc00',c:{primary:'#082050',secondary:'#ffcc00',trim:'#ffffff',weapons:'#040410',cockpit:'#00aaff',vents:'#ffcc00'} },
-    { name:'ComStar',   bg:'#c0c0c0',fg:'#1a1a1a',c:{primary:'#c0c0c0',secondary:'#787878',trim:'#cc0000',weapons:'#141414',cockpit:'#00aaff',vents:'#cc3300'} },
-    { name:'Mercenary', bg:'#3c2e1a',fg:'#ccaa55',c:{primary:'#3c2e1a',secondary:'#1e1006',trim:'#ccaa55',weapons:'#080808',cockpit:'#00aaff',vents:'#cc4400'} },
+    // House Davion — Brigade of Guards: blue-grey armour, white secondary, red stripe trim (p.38 Atlas)
+    { name:'Davion',     bg:'#4a6080',fg:'#ffffff',c:{primary:'#4a6080',secondary:'#d0d8e0',trim:'#cc2200',weapons:'#1a1a1a',cockpit:'#00aaff',vents:'#cc3300'} },
+    // House Steiner — Lyran Guard / Royal Guards: ice blue with white and gold (p.22 Wolverine, p.44 Manticore)
+    { name:'Steiner',    bg:'#4488cc',fg:'#ffffff',c:{primary:'#4488cc',secondary:'#ddeeff',trim:'#ccaa00',weapons:'#0a1820',cockpit:'#88ddff',vents:'#cc3300'} },
+    // House Kurita — Sword of Light: bright red, black trim, gold dragon patch (p.6 Wasp)
+    { name:'Kurita',     bg:'#cc1111',fg:'#ffffff',c:{primary:'#cc1111',secondary:'#0a0a0a',trim:'#ccaa00',weapons:'#060606',cockpit:'#00aaff',vents:'#cc4400'} },
+    // House Liao — Capellan Hussars / Northwind Highlanders: deep green, white trim (p.13 Blackjack, p.25 Catapult)
+    { name:'Liao',       bg:'#1a5c1a',fg:'#ffffff',c:{primary:'#1a5c1a',secondary:'#f5f5f5',trim:'#bb2200',weapons:'#080808',cockpit:'#00cc44',vents:'#cc3300'} },
+    // House Marik — Marik Militia / Free Worlds Guards: medium purple, lighter purple secondary (p.7 Stinger, p.28 Thunderbolt)
+    { name:'Marik',      bg:'#6633aa',fg:'#ffffff',c:{primary:'#6633aa',secondary:'#9955cc',trim:'#cc2222',weapons:'#1a0828',cockpit:'#aa88ff',vents:'#cc3300'} },
+    // Clan Wolf — grey with red chevron trim, black weapons (p.30 Natasha's Warhammer — black; standard Wolf grey)
+    { name:'C. Wolf',    bg:'#505050',fg:'#ffffff',c:{primary:'#505050',secondary:'#282828',trim:'#cc2200',weapons:'#101010',cockpit:'#00aaff',vents:'#cc4400'} },
+    // Clan Jade Falcon — dark forest green, bright jade/lime trim (sourcebook illustrations)
+    { name:'Jade Falcon',bg:'#1a5c1a',fg:'#aadd00',c:{primary:'#1a5c1a',secondary:'#0a2a0a',trim:'#aadd00',weapons:'#060606',cockpit:'#00ddaa',vents:'#cc4400'} },
+    // Clan Ghost Bear — dark navy blue with off-white/cream secondary (sourcebook illustrations)
+    { name:'Ghost Bear', bg:'#1e3e5e',fg:'#ffffff',c:{primary:'#1e3e5e',secondary:'#e8e0d0',trim:'#7799bb',weapons:'#060606',cockpit:'#88ccff',vents:'#cc3300'} },
+    // Clan Smoke Jaguar — flat black, orange-red jaguar spot trim (Dave's own Clan — p.30 style)
+    { name:'Smoke Jag',  bg:'#0a0a0a',fg:'#ee5500',c:{primary:'#0a0a0a',secondary:'#1a1a1a',trim:'#dd4400',weapons:'#040404',cockpit:'#ff3300',vents:'#ff5500'} },
+    // Clan Nova Cat — deep navy blue, gold secondary stripe, white trim (sourcebook illustrations)
+    { name:'Nova Cat',   bg:'#0a1a40',fg:'#ffcc00',c:{primary:'#0a1a40',secondary:'#ffcc00',trim:'#ffffff',weapons:'#040410',cockpit:'#00aaff',vents:'#ffcc00'} },
+    // ComStar — white/silver primary, grey secondary, red trim (canonical white & red)
+    { name:'ComStar',    bg:'#d0d0d0',fg:'#1a1a1a',c:{primary:'#d0d0d0',secondary:'#888888',trim:'#cc0000',weapons:'#141414',cockpit:'#00aaff',vents:'#cc3300'} },
+    // Wolf's Dragoons — flat black, red spider trim, bone/off-white secondary (p.30 Natasha's Warhammer)
+    { name:"Wolf's Drg", bg:'#111111',fg:'#cc2200',c:{primary:'#111111',secondary:'#e8e0cc',trim:'#cc2200',weapons:'#040404',cockpit:'#00aaff',vents:'#cc4400'} },
 ];
 
 const PAINT_DB = [
