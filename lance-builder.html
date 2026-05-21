@@ -180,7 +180,7 @@
 <section class="control-panel" style="display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:20px;">
     <div>
         <label style="font-size:0.75em; color:#888;">FACTION</label>
-        <select id="faction-filter" onchange="filterChassis()">
+        <select id="faction-filter">
             <option value="ALL">All Factions</option>
             <optgroup label="── Great Houses ──────────">
                 <option value="Davion">House Davion (Federated Suns)</option>
@@ -238,7 +238,7 @@
     <!-- NEW: ERA FILTER -->
     <div>
         <label style="font-size:0.75em; color:#888;">ERA</label>
-        <select id="era-filter" onchange="filterChassis()">
+        <select id="era-filter">
             <!-- Populated automatically by JavaScript -->
         </select>
     </div>
@@ -262,7 +262,7 @@
 
     <!-- NEW: Search + Sort -->
     <input type="text" id="chassis-search" placeholder="🔍 Search chassis..." 
-           style="margin:15px 0 8px 0; padding:12px;" onkeyup="filterChassis()">
+           style="margin:15px 0 8px 0; padding:12px;">
     
     <div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85em; color:#888;">
     <span id="sort-ton" onclick="sortChassis('tons')" style="cursor:pointer; padding:4px 8px; border-radius:3px;">TONS <span class="sort-arrow"></span></span>
@@ -398,7 +398,7 @@ function updateFormationUI() {
 }
 
 // ==================== PILOT BACKGROUNDS ====================
-const // ── Inner Sphere pilot backgrounds ──────────────────────────────────────────
+// ── Inner Sphere pilot backgrounds ──────────────────────────────────────────
 const IS_PILOT_BACKGROUNDS = {
     "Former House Regular": "A loyal soldier who served in one of the Great Houses for many years. Experienced in standard military doctrine and large-scale operations, but often disillusioned by the endless Succession Wars politics and betrayals.",
     "Mercenary Veteran": "Hardened fighter who has battled across the Inner Sphere for the highest bidder. Knows every dirty trick in the book, values loyalty only to the contract, and has survived more drops than most pilots see in a lifetime.",
@@ -1526,6 +1526,16 @@ function updateSortUI() {
     const activeEl = document.getElementById('sort-' + currentSort);
     if (activeEl) activeEl.classList.add('active-sort');
 }
+
+// ==================== EVENT LISTENERS ====================
+document.addEventListener('DOMContentLoaded', function() {
+    const factionFilter = document.getElementById('faction-filter');
+    const eraFilter = document.getElementById('era-filter');
+    const chassisSearch = document.getElementById('chassis-search');
+    if (factionFilter) factionFilter.addEventListener('change', filterChassis);
+    if (eraFilter) eraFilter.addEventListener('change', filterChassis);
+    if (chassisSearch) chassisSearch.addEventListener('keyup', filterChassis);
+});
 
 </script>
 </body>
