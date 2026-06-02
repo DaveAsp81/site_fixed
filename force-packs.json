@@ -1,0 +1,30 @@
+{
+  "_comment": "BattleTech Hub Force Pack catalog. Contents verified from Catalyst/Sarna/retailer listings (June 2026). 'amazon' is the affiliate product URL - fill from your Associates dashboard. Unmapped chassis fall back to a Salvage Box search in the builder. 'aliases' maps DB chassis spellings to pack spellings.",
+  "aliases": { "Axman": "Axeman" },
+  "packs": [
+    { "name": "Inner Sphere Command Lance",      "faction": "Inner Sphere", "size": 4, "mechs": ["Marauder", "Archer", "Valkyrie", "Stinger"], "amazon": "" },
+    { "name": "Inner Sphere Battle Lance",       "faction": "Inner Sphere", "size": 4, "mechs": ["Warhammer", "Rifleman", "Phoenix Hawk", "Wasp"], "amazon": "" },
+    { "name": "Inner Sphere Direct Fire Lance",  "faction": "Inner Sphere", "size": 4, "mechs": ["Atlas", "Marauder II", "Orion", "Crusader"], "amazon": "" },
+    { "name": "Inner Sphere Heavy Lance",        "faction": "Inner Sphere", "size": 4, "mechs": ["Banshee", "Grasshopper", "Centurion", "Hatchetman"], "amazon": "" },
+    { "name": "Inner Sphere Striker Lance",      "faction": "Inner Sphere", "size": 4, "mechs": ["Blackjack", "Jenner", "Panther", "Wolfhound"], "amazon": "" },
+    { "name": "Inner Sphere Fire Lance",         "faction": "Inner Sphere", "size": 4, "mechs": ["Longbow", "Stalker", "Zeus", "Trebuchet"], "amazon": "" },
+    { "name": "Inner Sphere Heavy Battle Lance", "faction": "Inner Sphere", "size": 4, "mechs": ["Nightstar", "Cataphract", "Axeman", "Bushwacker"], "amazon": "" },
+    { "name": "Inner Sphere Urban Lance",        "faction": "Inner Sphere", "size": 4, "mechs": ["Victor", "Enforcer", "Hunchback", "Raven"], "amazon": "" },
+    { "name": "Inner Sphere Support Lance",      "faction": "Inner Sphere", "size": 4, "mechs": ["Cyclops", "Thug", "Dragon", "Spider"], "amazon": "" },
+    { "name": "Inner Sphere Assault Lance",      "faction": "Inner Sphere", "size": 4, "mechs": ["Pillager", "Goliath", "Shogun", "Hoplite"], "amazon": "" },
+    { "name": "Inner Sphere Recon Lance",        "faction": "Inner Sphere", "size": 4, "mechs": ["Firestarter", "Ostscout", "Spector", "Javelin"], "amazon": "" },
+    { "name": "UrbanMech Lance",                 "faction": "Inner Sphere", "size": 4, "mechs": ["UrbanMech"], "amazon": "" },
+    { "name": "Clan Command Star",       "faction": "Clan", "size": 5, "mechs": ["Dire Wolf", "Stormcrow", "Shadow Cat", "Mist Lynx", "Summoner"], "amazon": "" },
+    { "name": "Clan Heavy Striker Star", "faction": "Clan", "size": 5, "mechs": ["Gargoyle", "Hellbringer", "Mad Dog", "Ice Ferret", "Viper"], "amazon": "" },
+    { "name": "Clan Fire Star",          "faction": "Clan", "size": 5, "mechs": ["Warhawk", "Nova Cat", "Cougar", "Kit Fox", "Fire Moth"], "amazon": "" },
+    { "name": "Clan Heavy Star",         "faction": "Clan", "size": 5, "mechs": ["Stone Rhino", "Supernova", "Marauder IIC", "Warhammer IIC", "Hunchback IIC"], "amazon": "" },
+    { "name": "Clan Support Star",       "faction": "Clan", "size": 5, "mechs": ["Night Gyr", "Arctic Cheetah", "Linebacker", "Battle Cobra", "Black Lanner"], "amazon": "" },
+    { "name": "Clan Heavy Battle Star",  "faction": "Clan", "size": 5, "mechs": ["Turkina", "Kingfisher", "Ebony Jaguar", "Crossbow", "Huntsman"], "amazon": "" },
+    { "name": "Clan Striker Star",       "faction": "Clan", "size": 5, "mechs": ["Vapor Eagle", "Conjurer", "Horned Owl", "Incubus", "Piranha"], "amazon": "" },
+    { "name": "Clan Ad Hoc Star",        "faction": "Clan", "size": 5, "mechs": ["Kodiak", "Pack Hunter", "Hellion", "Fire Falcon", "Howler"], "amazon": "" },
+    { "name": "Wolf's Dragoons Assault Star",       "faction": "Mercenary", "size": 5, "mechs": ["Annihilator", "Timber Wolf", "Rifleman", "Archer", "Blackjack"], "amazon": "" },
+    { "name": "Eridani Light Horse Hunter Lance",   "faction": "Mercenary", "size": 4, "mechs": ["Sagittaire", "Banshee", "Cyclops", "Thunderbolt"], "amazon": "" },
+    { "name": "Hansen's Roughriders Battle Lance",  "faction": "Mercenary", "size": 4, "mechs": ["Penetrator", "Atlas", "Enforcer", "Hatchetman"], "amazon": "" },
+    { "name": "Northwind Highlanders Command Lance","faction": "Mercenary", "size": 4, "mechs": ["Gunslinger", "Highlander", "Grasshopper", "Warhammer"], "amazon": "" }
+  ]
+}

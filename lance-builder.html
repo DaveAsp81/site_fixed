@@ -303,6 +303,13 @@
     <button onclick="clearLance()" style="background:transparent; color:#cc0000; border:1px solid #cc0000; padding:15px;">WIPE LANCE</button>
 </div>
 
+<!-- ==================== FORCE BUILDER PANEL ==================== -->
+<div style="margin-top:14px;">
+    <button onclick="addLanceToForce()" style="width:100%; background:#ff8c00; color:#000; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">➕ Add This Lance to Force</button>
+</div>
+<div id="force-panel" style="margin-top:18px;"></div>
+<!-- ================== END FORCE BUILDER PANEL ================= -->
+
 
 <!-- NEWSLETTER PANEL -->
 <div style="margin-top:20px; background:linear-gradient(135deg, rgba(255,140,0,0.05), rgba(20,20,20,0.95)); padding:15px; border-radius:4px; border:1px solid rgba(255,140,0,0.3);">
@@ -853,6 +860,7 @@ function addSelectedVariant() {
 
     currentLance.push({
         name: `${c.chassis} ${v.name}`,
+        chassis: c.chassis,
         tons: c.tons,
         bv: v.bv,
         pv: v.pv || Math.round(v.bv / 40),
@@ -991,6 +999,7 @@ function randomizeThemedLance() {
             const bgKeys = Object.keys(pilotBackgrounds());
             currentLance.push({
                 name: `${mech.chassis} ${variant.name}`,
+                chassis: mech.chassis,
                 tons: mech.tons,
                 bv: variant.bv,
                 pv: variant.pv || Math.round(variant.bv / 40),
@@ -1536,6 +1545,189 @@ document.addEventListener('DOMContentLoaded', function() {
     if (eraFilter) eraFilter.addEventListener('change', filterChassis);
     if (chassisSearch) chassisSearch.addEventListener('keyup', filterChassis);
 });
+// ==================== FORCE BUILDER ====================
+// Force = array of saved lances, persisted in localStorage. Reuses roster unit fields.
+
+const AMAZON_TAG = "battletechhq-20";   // Amazon Associates tag
+const AMAZON_DOMAIN = "www.amazon.com";
+
+let currentForce = JSON.parse(localStorage.getItem('battletechForce') || '[]');
+
+// Verified Force Pack contents (Catalyst ForcePacks + Mercenary line).
+// Add `amazon` product URL to turn a search link into a direct Buy button.
+const FORCE_PACKS = [
+    {name:"Inner Sphere Command Lance",     mechs:["Marauder","Archer","Valkyrie","Stinger"], amazon:""},
+    {name:"Inner Sphere Battle Lance",      mechs:["Warhammer","Rifleman","Phoenix Hawk","Wasp"], amazon:""},
+    {name:"Inner Sphere Direct Fire Lance", mechs:["Atlas","Marauder II","Orion","Crusader"], amazon:""},
+    {name:"Inner Sphere Heavy Lance",       mechs:["Banshee","Grasshopper","Centurion","Hatchetman"], amazon:""},
+    {name:"Inner Sphere Striker Lance",     mechs:["Blackjack","Jenner","Panther","Wolfhound"], amazon:""},
+    {name:"Inner Sphere Fire Lance",        mechs:["Longbow","Stalker","Zeus","Trebuchet"], amazon:""},
+    {name:"Inner Sphere Heavy Battle Lance",mechs:["Nightstar","Cataphract","Axeman","Bushwacker"], amazon:""},
+    {name:"Inner Sphere Urban Lance",       mechs:["Victor","Enforcer","Hunchback","Raven"], amazon:""},
+    {name:"Inner Sphere Support Lance",     mechs:["Cyclops","Thug","Dragon","Spider"], amazon:""},
+    {name:"Inner Sphere Assault Lance",     mechs:["Pillager","Goliath","Shogun","Hoplite"], amazon:""},
+    {name:"Inner Sphere Recon Lance",       mechs:["Firestarter","Ostscout","Spector","Javelin"], amazon:""},
+    {name:"UrbanMech Lance",                mechs:["UrbanMech"], amazon:""},
+    {name:"Clan Command Star",       mechs:["Dire Wolf","Stormcrow","Shadow Cat","Mist Lynx","Summoner"], amazon:""},
+    {name:"Clan Heavy Striker Star", mechs:["Gargoyle","Hellbringer","Mad Dog","Ice Ferret","Viper"], amazon:""},
+    {name:"Clan Fire Star",          mechs:["Warhawk","Nova Cat","Cougar","Kit Fox","Fire Moth"], amazon:""},
+    {name:"Clan Heavy Star",         mechs:["Stone Rhino","Supernova","Marauder IIC","Warhammer IIC","Hunchback IIC"], amazon:""},
+    {name:"Clan Support Star",       mechs:["Night Gyr","Arctic Cheetah","Linebacker","Battle Cobra","Black Lanner"], amazon:""},
+    {name:"Clan Heavy Battle Star",  mechs:["Turkina","Kingfisher","Ebony Jaguar","Crossbow","Huntsman"], amazon:""},
+    {name:"Clan Striker Star",       mechs:["Vapor Eagle","Conjurer","Horned Owl","Incubus","Piranha"], amazon:""},
+    {name:"Clan Ad Hoc Star",        mechs:["Kodiak","Pack Hunter","Hellion","Fire Falcon","Howler"], amazon:""},
+    {name:"Wolf's Dragoons Assault Star",      mechs:["Annihilator","Timber Wolf","Rifleman","Archer","Blackjack"], amazon:""},
+    {name:"Eridani Light Horse Hunter Lance",  mechs:["Sagittaire","Banshee","Cyclops","Thunderbolt"], amazon:""},
+    {name:"Hansen's Roughriders Battle Lance", mechs:["Penetrator","Atlas","Enforcer","Hatchetman"], amazon:""},
+    {name:"Northwind Highlanders Command Lance", mechs:["Gunslinger","Highlander","Grasshopper","Warhammer"], amazon:""}
+];
+
+// DB chassis spelled differently than the pack's name -> pack spelling.
+const CHASSIS_ALIASES = { "Axman": "Axeman" };
+
+function forceUnitChassis(u) {
+    let c = u.chassis || (u.name || '').replace(/\s+\S+$/, '').trim();
+    return CHASSIS_ALIASES[c] || c;
+}
+function forceUnitValue(u) {
+    return currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+}
+function saveForceState() { localStorage.setItem('battletechForce', JSON.stringify(currentForce)); }
+
+function amazonSearchLink(terms) {
+    return `https://${AMAZON_DOMAIN}/s?k=${encodeURIComponent(terms)}&tag=${AMAZON_TAG}`;
+}
+// Unmatched 'Mechs: target CGL's single-mini Salvage Box line, not a generic search.
+function salvageBoxLink(chassis) {
+    return amazonSearchLink(`BattleTech ${chassis} Salvage Box ForcePack Catalyst miniature`);
+}
+
+function addLanceToForce() {
+    if (currentLance.length === 0) {
+        alert(isClanFaction() ? "Star is empty, Technician." : "Add some 'Mechs to the lance first!");
+        return;
+    }
+    const def = (isClanFaction() ? 'Star ' : 'Lance ') + (currentForce.length + 1);
+    const name = prompt("Name this " + (isClanFaction() ? 'Star' : 'lance') + ":", def);
+    if (name === null) return;
+    currentForce.push({
+        name: name || def,
+        type: isClanFaction() ? 'Star' : 'Lance',
+        units: JSON.parse(JSON.stringify(currentLance))
+    });
+    saveForceState();
+    renderForce();
+    document.getElementById('force-panel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function removeForceLance(i) { currentForce.splice(i, 1); saveForceState(); renderForce(); }
+function renameForceLance(i, v) { currentForce[i].name = v; saveForceState(); }
+function clearForce() {
+    if (currentForce.length && !confirm("Clear the entire force?")) return;
+    currentForce = []; saveForceState(); renderForce();
+}
+
+function renderForce() {
+    const panel = document.getElementById('force-panel');
+    if (!panel) return;
+    if (currentForce.length === 0) { panel.innerHTML = ''; return; }
+
+    const valueLabel = currentMode === 'classic' ? 'BV' : 'PV';
+    let totalUnits = 0, totalTons = 0, totalValue = 0;
+
+    const lanceCards = currentForce.map((L, i) => {
+        const lt = L.units.reduce((s,u)=>s+u.tons, 0);
+        const lv = L.units.reduce((s,u)=>s+forceUnitValue(u), 0);
+        totalUnits += L.units.length; totalTons += lt; totalValue += lv;
+        return `
+        <div style="background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:12px 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <input value="${L.name}" onchange="renameForceLance(${i}, this.value)"
+                    style="background:transparent; border:none; color:#fff; font-family:'Rajdhani'; font-weight:700; font-size:1rem; width:70%;">
+                <button onclick="removeForceLance(${i})" style="background:none; border:none; color:#ff4c4c; cursor:pointer; font-size:1.1em;">×</button>
+            </div>
+            ${L.units.map(u=>`<div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:3px 0; border-bottom:1px solid #1c1c1c;">
+                <span>${u.name}</span><span style="color:#888;">${u.tons}t · ${forceUnitValue(u)} ${valueLabel}</span></div>`).join('')}
+            <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Share Tech Mono'; font-size:0.8rem; color:#888;">
+                <span>${lt}t</span><span>${lv} ${valueLabel}</span></div>
+        </div>`;
+    }).join('');
+
+    panel.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 style="margin:0; color:#ff8c00;">FORCE ROSTER</h2>
+            <button onclick="clearForce()" style="background:transparent; color:#888; border:1px solid #444; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.8rem;">Clear Force</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#2a2a2a; border:1px solid #2a2a2a; border-radius:6px; overflow:hidden; margin-bottom:16px;">
+            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${currentForce.length}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">${isClanFaction()?'Stars':'Lances'}</div></div>
+            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalUnits}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">'Mechs</div></div>
+            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalTons}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">Tonnage</div></div>
+            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalValue.toLocaleString()}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">Total ${valueLabel}</div></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px;">${lanceCards}</div>
+        ${renderShoppingList()}`;
+}
+
+function renderShoppingList() {
+    const need = {};
+    currentForce.forEach(L => L.units.forEach(u => {
+        const c = forceUnitChassis(u); need[c] = (need[c]||0) + 1;
+    }));
+    const totalMechs = Object.values(need).reduce((a,b)=>a+b, 0);
+    if (totalMechs === 0) return '';
+
+    let remaining = {...need};
+    const chosen = [];
+    while (true) {
+        let best = null, bestHits = [];
+        for (const p of FORCE_PACKS) {
+            const hits = p.mechs.filter(m => remaining[m] > 0);
+            if (hits.length > bestHits.length) { best = p; bestHits = hits; }
+        }
+        if (!best || bestHits.length === 0) break;
+        chosen.push({pack: best, covers: bestHits});
+        bestHits.forEach(m => { remaining[m]--; if (remaining[m] <= 0) delete remaining[m]; });
+    }
+    const leftover = Object.keys(remaining);
+    const covered = totalMechs - leftover.reduce((s,m)=>s+remaining[m], 0);
+
+    const packRows = chosen.map(c => {
+        const direct = !!c.pack.amazon;
+        const link = direct ? c.pack.amazon : amazonSearchLink(c.pack.name + " BattleTech ForcePack");
+        return `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
+            <div><div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${c.pack.name}</div>
+            <div style="font-size:0.76rem; color:#888; margin-top:2px;">Gives you: <span style="color:#ccc;">${c.covers.join(', ')}</span></div></div>
+            <a href="${link}" target="_blank" rel="nofollow sponsored" style="background:${direct?'#ff8c00':'transparent'}; color:${direct?'#000':'#ff8c00'}; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">${direct?'Buy →':'Find on Amazon →'}</a>
+        </div>`;
+    }).join('');
+
+    const singleRows = leftover.map(m =>
+        `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
+            <div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${m}<div style="font-size:0.72rem; color:#777; margin-top:2px;">Single mini (Salvage Box)</div></div>
+            <a href="${salvageBoxLink(m)}" target="_blank" rel="nofollow sponsored" style="background:transparent; color:#ff8c00; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">Find on Amazon →</a>
+        </div>`).join('');
+
+    return `
+    <div style="background:linear-gradient(160deg, rgba(255,140,0,0.06), #111); border:1px solid rgba(255,140,0,0.3); border-radius:10px; padding:20px; margin-top:18px;">
+        <div style="color:#ff8c00; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;">Field this force</div>
+        <h2 style="margin:6px 0 2px;">Shopping List</h2>
+        <div style="font-family:'Share Tech Mono'; color:#888; font-size:0.82rem; margin:4px 0 16px;">
+            <span style="color:#3ad17a;">${chosen.length}</span> pack${chosen.length!==1?'s':''} cover <span style="color:#3ad17a;">${covered}</span> of ${totalMechs} 'Mechs${leftover.length?` · ${leftover.length} sold as single minis`:''}.</div>
+        ${packRows}
+        ${leftover.length ? `<div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing:0.14em; margin:16px 0 8px;">Single 'Mechs — sold individually</div>${singleRows}` : ''}
+        <div style="font-size:0.72rem; color:#555; margin-top:14px;">As an Amazon Associate I earn from qualifying purchases. Single 'Mechs link to Salvage Box / individual minis where available.</div>
+    </div>`;
+}
+
+(function hookModeToggle(){
+    const orig = window.updateDisplay;
+    if (typeof orig === 'function') {
+        window.updateDisplay = function(){ orig.apply(this, arguments); if (currentForce.length) renderForce(); };
+    }
+})();
+
+document.addEventListener('DOMContentLoaded', renderForce);
+// ================== END FORCE BUILDER ==================
 
 </script>
 </body>
