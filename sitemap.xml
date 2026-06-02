@@ -1,63 +1,186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core -->
   <url>
     <loc>https://battletechhq.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://battletechhq.com/articles/alpha-strike-vs-classic.html</loc>
+    <loc>https://battletechhq.com/lance-builder.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://battletechhq.com/articles/battletech-beginner-guide.html</loc>
+    <loc>https://battletechhq.com/paint-tool.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
+
+  <!-- Lore & History Articles -->
   <url>
     <loc>https://battletechhq.com/articles/battletech-lore-explained.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://battletechhq.com/articles/battletech-painting-tutorial.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/battletech-terrain-building.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/battletech-vs-warhammer.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/best-battletech-paints.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/best-beginner-mechs.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/best-heavy-mechs.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/best-light-mechs.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/best-starter-sets.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/budget-battletech-army.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/faction-color-schemes.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/great-houses-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/heat-management-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/lance-building-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://battletechhq.com/articles/speed-painting-battletech.html</loc>
+    <loc>https://battletechhq.com/articles/star-league.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://battletechhq.com/articles/succession-wars-explained.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/succession-wars-deep-dive.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/great-houses-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/clan-invasion.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/fedcom-civil-war.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/jihad-deep-dive.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/dark-age.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/ilclan.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Beginner & Buying Guides -->
+  <url>
+    <loc>https://battletechhq.com/articles/battletech-beginner-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/best-starter-sets.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://battletechhq.com/articles/where-to-buy-battletech.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/budget-battletech-army.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/battletech-vs-warhammer.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tactics & Gameplay -->
+  <url>
+    <loc>https://battletechhq.com/articles/alpha-strike-vs-classic.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/lance-building-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/heat-management-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/best-beginner-mechs.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/best-light-mechs.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/best-heavy-mechs.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/megamek-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Painting & Hobby -->
+  <url>
+    <loc>https://battletechhq.com/articles/battletech-painting-tutorial.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/speed-painting-battletech.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/best-battletech-paints.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/faction-color-schemes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/articles/battletech-terrain-building.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Tools & Updates -->
+  <url>
+    <loc>https://battletechhq.com/articles/lance-builder-update.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Site Pages -->
+  <url>
+    <loc>https://battletechhq.com/about.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://battletechhq.com/affiliate-disclosure.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
