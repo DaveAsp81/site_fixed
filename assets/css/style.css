@@ -892,3 +892,58 @@ article table {
     article { padding: 20px 16px; }
     .hero h1 { font-size: 2rem; }
 }
+
+/* ---- Buy Me a Coffee support button ---- */
+.bmc-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-gold);
+    color: #1a1a1a;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+.bmc-button:hover {
+    background: #ffca2c;
+    padding-left: 18px;               /* override footer-link hover shift */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.35);
+}
+.footer-section .bmc-button:hover { color: #1a1a1a; }  /* keep dark text on gold */
+
+/* Support prompt block on the tool pages */
+.support-strip {
+    max-width: 1400px;
+    margin: 40px auto 0;
+    padding: 22px 24px;
+    background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-card));
+    border: 1px solid rgba(255, 193, 7, 0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.support-strip .support-copy h4 {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--accent-gold);
+    font-size: 1.25rem;
+    margin: 0 0 4px;
+}
+.support-strip .support-copy p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+    max-width: 640px;
+}
+@media (max-width: 600px) {
+    .support-strip { flex-direction: column; align-items: flex-start; }
+}
