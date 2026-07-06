@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Tracker — Alpha Strike | BattleTech Hub</title>
+<meta name="description" content="Free in-game Alpha Strike tracker for BattleTech. Loads your saved force from the Lance Builder — tap armor and structure, track heat, see live movement and attack penalties.">
+<link rel="canonical" href="https://battletechhq.com/game-tracker.html">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body { background:#0a0a0a; color:#ddd; font-family:'Rajdhani',sans-serif; margin:0; padding:20px; }
+  .gt-wrap { max-width:1200px; margin:0 auto; }
+  .gt-head { display:flex; justify-content:space-between; align-items:flex-end; gap:14px; flex-wrap:wrap;
+             border-bottom:2px solid #d32f2f; padding-bottom:14px; margin-bottom:18px; }
+  .gt-head h1 { margin:0; color:#ff8c00; letter-spacing:0.04em; font-size:1.7rem; }
+  .gt-head .sub { color:#888; font-family:'Share Tech Mono',monospace; font-size:0.78rem; }
+  .gt-btn { background:#161616; border:1px solid #333; color:#ff8c00; padding:9px 16px; border-radius:5px;
+            cursor:pointer; font-family:'Rajdhani'; font-weight:600; font-size:0.85rem; text-decoration:none; display:inline-block; }
+  .gt-btn:hover { border-color:#ff8c00; }
+  .gt-btn.danger { color:#ff4c4c; }
+
+  .gt-lance-title { color:#ff8c00; font-size:1.05rem; letter-spacing:0.12em; text-transform:uppercase;
+                    margin:22px 0 10px; border-left:3px solid #d32f2f; padding-left:10px; }
+  .gt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
+
+  .card { background:#141414; border:1px solid #2a2a2a; border-radius:8px; padding:14px 16px; position:relative; }
+  .card.dead { opacity:0.45; }
+  .card.dead::after { content:"DESTROYED"; position:absolute; top:40%; left:50%; transform:translate(-50%,-50%) rotate(-12deg);
+                      color:#ff4c4c; border:2px solid #ff4c4c; padding:4px 14px; font-weight:700; letter-spacing:0.2em; border-radius:4px; }
+  .card.shut { border-color:#ffc107; }
+  .card h3 { margin:0 0 2px; color:#eee; font-size:1.05rem; }
+  .meta { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:#888; margin-bottom:10px; }
+  .meta b { color:#ccc; font-weight:600; }
+
+  .dmg-table { display:flex; gap:6px; margin:8px 0; }
+  .dmg-cell { flex:1; background:#0e0e0e; border:1px solid #262626; border-radius:4px; text-align:center; padding:5px 2px; }
+  .dmg-cell .v { font-family:'Share Tech Mono'; color:#ff8c00; font-size:1.05rem; }
+  .dmg-cell .l { font-size:0.6rem; color:#777; letter-spacing:0.1em; }
+
+  .pip-row { display:flex; align-items:center; gap:8px; margin:6px 0; flex-wrap:wrap; }
+  .pip-row .lbl { width:24px; font-family:'Share Tech Mono'; font-size:0.72rem; color:#888; }
+  .pips { display:flex; gap:4px; flex-wrap:wrap; }
+  .pip { width:18px; height:18px; border-radius:50%; border:2px solid #555; background:transparent; cursor:pointer; padding:0; }
+  .pip.armor.on { background:#3ad17a; border-color:#3ad17a; }
+  .pip.struct { border-radius:3px; }
+  .pip.struct.on { background:#ff8c00; border-color:#ff8c00; }
+  .pip.off { background:#2a2a2a; border-color:#333; }
+
+  .heat-row { display:flex; align-items:center; gap:8px; margin-top:10px; }
+  .heat-row .lbl { width:34px; font-family:'Share Tech Mono'; font-size:0.72rem; color:#888; }
+  .heat-steps { display:flex; gap:5px; }
+  .hstep { width:34px; height:28px; border:1px solid #444; background:#0e0e0e; color:#888; cursor:pointer;
+           font-family:'Share Tech Mono'; font-size:0.85rem; border-radius:4px; }
+  .hstep.cur { background:#d32f2f; border-color:#ff4c4c; color:#fff; font-weight:700; }
+  .hstep.s.cur { background:#ffc107; color:#000; }
+  .effects { font-family:'Share Tech Mono'; font-size:0.72rem; margin-top:8px; min-height:1em; }
+  .effects.ok { color:#3ad17a; }
+  .effects.hot { color:#ffc107; }
+  .effects.down { color:#ff4c4c; font-weight:700; }
+
+  .abil { font-size:0.7rem; color:#777; font-family:'Share Tech Mono'; margin-top:6px; word-break:break-all; }
+  .card-foot { display:flex; justify-content:flex-end; margin-top:8px; }
+  .mini { background:none; border:1px solid #333; color:#666; font-size:0.68rem; padding:3px 9px; border-radius:4px; cursor:pointer; }
+  .mini:hover { color:#ff4c4c; border-color:#ff4c4c; }
+
+  .empty { text-align:center; padding:70px 20px; color:#888; }
+  .empty h2 { color:#ff8c00; }
+  .notice { background:#161616; border:1px solid #333; border-radius:6px; padding:10px 14px;
+            font-size:0.8rem; color:#999; margin-bottom:14px; }
+</style>
+</head>
+<body>
+<div class="gt-wrap">
+  <div class="gt-head">
+    <div>
+      <h1>⚔ GAME TRACKER</h1>
+      <div class="sub">ALPHA STRIKE MODE · tap armor/structure · heat auto-applies penalties</div>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <a class="gt-btn" href="lance-builder.html">← Lance Builder</a>
+      <button class="gt-btn" onclick="newRound()">Cool Inactive (End Phase)</button>
+      <button class="gt-btn danger" onclick="resetGame()">Reset Game</button>
+    </div>
+  </div>
+  <div id="app"></div>
+
+  <!-- support strip -->
+  <div class="support-strip">
+    <div class="support-copy">
+      <h4>Enjoying the Game Tracker?</h4>
+      <p>It's free and always will be. If it's kept your table moving, you can chuck a couple of bucks in the tip jar to help cover hosting. No pressure — the tools stay free either way.</p>
+    </div>
+    <a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+  </div>
+</div>
+
+<script>
+/* ============ GAME TRACKER v1 — Alpha Strike ============
+   Reads the force saved by the Lance Builder (localStorage: battletechForce).
+   Game state persists separately (battletechGameState) so refreshes are safe.
+   AS heat rules (AS:CE + v2.5 errata):
+     - scale 0..3 then S(hutdown at 4). Each heat level: +1 attack TN, -2" ground Move (jump unaffected)
+     - no weapon attack this turn -> heat drops to 0 (the "Cool Inactive" button)
+     - shutdown unit restarts at heat 0
+======================================================== */
+
+let force = [];
+let gs = [];   // per-unit game state: {a: armorLost, s: structLost, h: heat(0-4), dead: bool}
+
+function loadForce() {
+    try { force = JSON.parse(localStorage.getItem('battletechForce') || '[]'); }
+    catch(e) { force = []; }
+}
+function unitKeyCount() { return force.reduce((n,L)=>n+L.units.length, 0); }
+function loadState() {
+    try { gs = JSON.parse(localStorage.getItem('battletechGameState') || '[]'); } catch(e) { gs = []; }
+    const n = unitKeyCount();
+    if (gs.length !== n) gs = Array.from({length:n}, () => ({a:0,s:0,h:0,dead:false}));
+}
+function saveState() { localStorage.setItem('battletechGameState', JSON.stringify(gs)); }
+
+/* Older saved forces (pre bf-patch) lack card stats — look them up from mechs.json by name */
+async function hydrateMissing() {
+    const missing = force.some(L => L.units.some(u => !u.bf));
+    if (!missing) return;
+    try {
+        const res = await fetch('mechs.json');
+        const db = await res.json();
+        const lookup = {};
+        db.forEach(m => m.variants.forEach(v => { lookup[`${m.chassis} ${v.name}`] = v; }));
+        force.forEach(L => L.units.forEach(u => {
+            if (!u.bf) {
+                const v = lookup[u.name];
+                if (v) {
+                    u.bf = { armor:v.bf_armor, structure:v.bf_structure, damage:v.bf_damage, overheat:v.bf_overheat, abilities:v.bf_abilities };
+                    u.movement = u.movement || v.movement;
+                }
+            }
+        }));
+    } catch(e) { /* offline or fetch blocked — cards render without stats */ }
+}
+
+/* AS Move from Classic MP string: inches = MP x 2 */
+function asMove(u) {
+    const m = /Walk (\d+)/.exec(u.movement || '');
+    const j = /Jump (\d+)/.exec(u.movement || '');
+    return { ground: m ? parseInt(m[1]) * 2 : null, jump: j ? parseInt(j[1]) * 2 : 0 };
+}
+
+function heatEffects(u, st) {
+    if (st.h >= 4) return { cls:'down', txt:'SHUT DOWN — restarts next End Phase at heat 0. Attacks vs this unit: −4 TN, no TMM.' };
+    if (st.h === 0) return { cls:'ok', txt:'Running cool — no penalties.' };
+    const mv = asMove(u);
+    const g = mv.ground != null ? Math.max(0, mv.ground - st.h * 2) : null;
+    return { cls:'hot', txt:`+${st.h} to attack TN · Move ${g != null ? g + '"' : '−' + st.h*2 + '"'}${mv.jump ? ' / ' + mv.jump + '"j (jump unaffected)' : ''}` };
+}
+
+function render() {
+    const app = document.getElementById('app');
+    if (!force.length) {
+        app.innerHTML = `<div class="empty"><h2>No force loaded</h2>
+            <p>Build a lance in the Lance Builder and hit <b style="color:#ff8c00;">Add This Lance to Force</b> — it'll show up here automatically.</p>
+            <a class="gt-btn" href="lance-builder.html">Open the Lance Builder →</a></div>`;
+        return;
+    }
+    let gi = 0, html = '';
+    force.forEach(L => {
+        html += `<div class="gt-lance-title">${L.name} <span style="color:#555;">· ${L.type}</span></div><div class="gt-grid">`;
+        L.units.forEach(u => {
+            const i = gi++;
+            const st = gs[i];
+            const bf = u.bf || {};
+            const mv = asMove(u);
+            const dmg = bf.damage || {};
+            const dead = st.dead || (bf.structure && st.s >= bf.structure);
+            if (dead && !st.dead) { st.dead = true; }
+            const fx = heatEffects(u, st);
+            const pip = (type, total, lost, idx) =>
+                `<button class="pip ${type} ${idx < (total-lost) ? 'on' : 'off'}" onclick="tapPip(${i},'${type==='armor'?'a':'s'}',${idx},${total})" title="${type} ${idx+1}"></button>`;
+            html += `<div class="card ${st.dead?'dead':''} ${st.h>=4?'shut':''}">
+                <h3>${u.name}</h3>
+                <div class="meta">MV <b>${mv.ground!=null? mv.ground+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b> · OV <b>${bf.overheat ?? '—'}</b> · ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
+                <div class="dmg-table">
+                    <div class="dmg-cell"><div class="v">${dmg.short ?? '—'}</div><div class="l">SHORT</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.medium ?? '—'}</div><div class="l">MEDIUM</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.long ?? '—'}</div><div class="l">LONG</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.extreme ?? '—'}</div><div class="l">EXTREME</div></div>
+                </div>
+                <div class="pip-row"><span class="lbl">A</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#555;font-size:0.75rem;">no card data</span>'}</span></div>
+                <div class="pip-row"><span class="lbl">S</span><span class="pips">${bf.structure ? Array.from({length:bf.structure},(_,x)=>pip('struct',bf.structure,st.s,x)).join('') : ''}</span></div>
+                <div class="heat-row"><span class="lbl">HEAT</span><span class="heat-steps">
+                    ${[0,1,2,3].map(h=>`<button class="hstep ${st.h===h?'cur':''}" onclick="setHeat(${i},${h})">${h}</button>`).join('')}
+                    <button class="hstep s ${st.h>=4?'cur':''}" onclick="setHeat(${i},4)">S</button>
+                </span></div>
+                <div class="effects ${fx.cls}">${fx.txt}</div>
+                ${bf.abilities ? `<div class="abil">${bf.abilities}</div>` : ''}
+                <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
+            </div>`;
+        });
+        html += `</div>`;
+    });
+    app.innerHTML = html;
+}
+
+/* fill-to behavior: tapping an intact pip damages it and everything right of it;
+   tapping a damaged pip heals it and everything left of it */
+function tapPip(i, field, idx, total) {
+    const st = gs[i];
+    const intactBefore = total - st[field];
+    const lost = (idx < intactBefore) ? (total - idx) : (total - idx - 1);
+    st[field] = Math.min(total, Math.max(0, lost));
+    if (field === 's') st.dead = st.s >= total;
+    saveState(); render();
+}
+function setHeat(i, h) { gs[i].h = h; saveState(); render(); }
+function toggleDead(i) { gs[i].dead = !gs[i].dead; saveState(); render(); }
+function newRound() {
+    if (!confirm("End Phase: drop heat to 0 for units that made no weapon attack?\n(Leaves every other unit's heat as-is — adjust attackers manually.)")) return;
+    // v1 keeps this simple: it zeroes SHUTDOWN units (they restart) and asks per hot unit.
+    gs.forEach((st, i) => { if (st.h >= 4) st.h = 0; });
+    saveState(); render();
+}
+function resetGame() {
+    if (!confirm("Reset all damage and heat for a new game?")) return;
+    gs = gs.map(() => ({a:0,s:0,h:0,dead:false}));
+    saveState(); render();
+}
+
+(async function init(){
+    loadForce();
+    await hydrateMissing();
+    loadState();
+    render();
+})();
+</script>
+</body>
+</html>

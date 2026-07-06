@@ -1659,7 +1659,10 @@ function renderForce() {
     panel.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <h2 style="margin:0; color:#ff8c00;">FORCE ROSTER</h2>
-            <button onclick="clearForce()" style="background:transparent; color:#888; border:1px solid #444; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.8rem;">Clear Force</button>
+            <div style="display:flex; gap:8px;">
+                <a href="game-tracker.html" style="background:#d32f2f; color:#fff; text-decoration:none; padding:6px 14px; border-radius:4px; font-size:0.8rem; font-weight:700; font-family:'Rajdhani',sans-serif;">⚔ PLAY — Game Tracker</a>
+                <button onclick="clearForce()" style="background:transparent; color:#888; border:1px solid #444; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.8rem;">Clear Force</button>
+            </div>
         </div>
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#2a2a2a; border:1px solid #2a2a2a; border-radius:6px; overflow:hidden; margin-bottom:16px;">
             <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${currentForce.length}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">${isClanFaction()?'Stars':'Lances'}</div></div>
