@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Tracker — Alpha Strike | BattleTech Hub</title>
-<meta name="description" content="Free in-game Alpha Strike tracker for BattleTech. Loads your saved force from the Lance Builder — tap armor and structure, track heat, see live movement and attack penalties.">
+<title>Game Tracker — Alpha Strike & Classic | BattleTech Hub</title>
+<meta name="description" content="Free in-game tracker for BattleTech. Loads your saved force from the Lance Builder — Alpha Strike cards with tappable armor and heat, plus a Classic mode heat calculator with per-weapon heat and the full 0–30 scale.">
 <link rel="canonical" href="https://battletechhq.com/game-tracker.html">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -68,6 +68,38 @@
   .empty h2 { color:#ff8c00; }
   .notice { background:#161616; border:1px solid #333; border-radius:6px; padding:10px 14px;
             font-size:0.8rem; color:#999; margin-bottom:14px; }
+
+  /* mode toggle */
+  .mode-toggle { display:flex; border:1px solid #333; border-radius:6px; overflow:hidden; }
+  .mode-toggle button { background:#161616; color:#888; border:none; padding:9px 16px;
+                        font-family:'Rajdhani'; font-weight:700; font-size:0.85rem; cursor:pointer; letter-spacing:0.04em; }
+  .mode-toggle button.on { background:#d32f2f; color:#fff; }
+
+  /* classic mode */
+  .heatbox { display:flex; align-items:center; gap:12px; margin:8px 0; }
+  .heatnum { font-family:'Share Tech Mono'; font-size:2rem; min-width:64px; text-align:center;
+             padding:4px 8px; border-radius:6px; background:#0e0e0e; border:1px solid #333; }
+  .heatnum.h0 { color:#3ad17a; } .heatnum.h1 { color:#ffc107; } .heatnum.h2 { color:#ff8c00; } .heatnum.h3 { color:#ff4c4c; }
+  .step { width:30px; height:30px; background:#161616; border:1px solid #444; color:#ccc;
+          border-radius:4px; cursor:pointer; font-size:1rem; font-family:'Share Tech Mono'; }
+  .step:hover { border-color:#ff8c00; }
+  .weap { display:flex; align-items:center; gap:8px; padding:4px 0; border-bottom:1px solid #1c1c1c; font-size:0.84rem; }
+  .weap .wname { flex:1; color:#ccc; }
+  .weap .wheat { width:44px; background:#0e0e0e; border:1px solid #333; color:#ff8c00; font-family:'Share Tech Mono';
+                 text-align:center; border-radius:4px; padding:3px 2px; }
+  .weap .wheat.unknown { border-color:#ffc107; }
+  .weap .fired { font-family:'Share Tech Mono'; color:#ccc; min-width:34px; text-align:center; }
+  .movesel { display:flex; gap:5px; margin:8px 0; flex-wrap:wrap; }
+  .movesel button { background:#0e0e0e; border:1px solid #444; color:#888; padding:5px 12px;
+                    border-radius:4px; cursor:pointer; font-family:'Share Tech Mono'; font-size:0.75rem; }
+  .movesel button.on { background:#1976d2; border-color:#00b0ff; color:#fff; }
+  .apply-btn { width:100%; background:#d32f2f; color:#fff; border:none; padding:10px; border-radius:5px;
+               font-family:'Rajdhani'; font-weight:700; letter-spacing:0.05em; cursor:pointer; margin-top:10px; }
+  .apply-btn:hover { background:#ff1744; }
+  .net { font-family:'Share Tech Mono'; font-size:0.78rem; color:#888; text-align:center; margin-top:6px; }
+  .pilot-row { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:0.8rem; color:#888; }
+  .notes-in { width:100%; background:#0e0e0e; border:1px solid #2a2a2a; color:#aaa; border-radius:4px;
+              padding:6px 8px; font-size:0.78rem; margin-top:8px; font-family:'Rajdhani'; }
 </style>
 </head>
 <body>
@@ -75,11 +107,15 @@
   <div class="gt-head">
     <div>
       <h1>⚔ GAME TRACKER</h1>
-      <div class="sub">ALPHA STRIKE MODE · tap armor/structure · heat auto-applies penalties</div>
+      <div class="sub" id="mode-sub">ALPHA STRIKE MODE · tap armor/structure · heat auto-applies penalties</div>
     </div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+      <div class="mode-toggle">
+        <button id="mode-as" class="on" onclick="setMode('as')">ALPHA STRIKE</button>
+        <button id="mode-cl" onclick="setMode('classic')">CLASSIC</button>
+      </div>
       <a class="gt-btn" href="lance-builder.html">← Lance Builder</a>
-      <button class="gt-btn" onclick="newRound()">Cool Inactive (End Phase)</button>
+      <button class="gt-btn" id="cool-btn" onclick="newRound()">Cool Inactive (End Phase)</button>
       <button class="gt-btn danger" onclick="resetGame()">Reset Game</button>
     </div>
   </div>
@@ -106,7 +142,10 @@
 ======================================================== */
 
 let force = [];
-let gs = [];   // per-unit game state: {a: armorLost, s: structLost, h: heat(0-4), dead: bool}
+let gs = [];   // per-unit state: {a,s,h,dead} (AS) + {ch, pilot, notes, fired, move, extra} (Classic)
+let mode = localStorage.getItem('battletechTrackerMode') || 'as';
+
+const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0});
 
 function loadForce() {
     try { force = JSON.parse(localStorage.getItem('battletechForce') || '[]'); }
@@ -116,7 +155,8 @@ function unitKeyCount() { return force.reduce((n,L)=>n+L.units.length, 0); }
 function loadState() {
     try { gs = JSON.parse(localStorage.getItem('battletechGameState') || '[]'); } catch(e) { gs = []; }
     const n = unitKeyCount();
-    if (gs.length !== n) gs = Array.from({length:n}, () => ({a:0,s:0,h:0,dead:false}));
+    if (gs.length !== n) gs = Array.from({length:n}, BLANK);
+    gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing classic fields
 }
 function saveState() { localStorage.setItem('battletechGameState', JSON.stringify(gs)); }
 
@@ -156,6 +196,18 @@ function heatEffects(u, st) {
     return { cls:'hot', txt:`+${st.h} to attack TN · Move ${g != null ? g + '"' : '−' + st.h*2 + '"'}${mv.jump ? ' / ' + mv.jump + '"j (jump unaffected)' : ''}` };
 }
 
+function setMode(m) {
+    mode = m;
+    localStorage.setItem('battletechTrackerMode', m);
+    document.getElementById('mode-as').classList.toggle('on', m === 'as');
+    document.getElementById('mode-cl').classList.toggle('on', m === 'classic');
+    document.getElementById('cool-btn').style.display = m === 'as' ? '' : 'none';
+    document.getElementById('mode-sub').textContent = m === 'as'
+        ? 'ALPHA STRIKE MODE · tap armor/structure · heat auto-applies penalties'
+        : 'CLASSIC MODE · tick fired weapons + movement · Apply End Phase computes net heat on the 0–30 scale';
+    render();
+}
+
 function render() {
     const app = document.getElementById('app');
     if (!force.length) {
@@ -164,6 +216,12 @@ function render() {
             <a class="gt-btn" href="lance-builder.html">Open the Lance Builder →</a></div>`;
         return;
     }
+    if (mode === 'classic') { renderClassic(); return; }
+    renderAS();
+}
+
+function renderAS() {
+    const app = document.getElementById('app');
     let gi = 0, html = '';
     force.forEach(L => {
         html += `<div class="gt-lance-title">${L.name} <span style="color:#555;">· ${L.type}</span></div><div class="gt-grid">`;
@@ -223,15 +281,166 @@ function newRound() {
 }
 function resetGame() {
     if (!confirm("Reset all damage and heat for a new game?")) return;
-    gs = gs.map(() => ({a:0,s:0,h:0,dead:false}));
+    gs = gs.map(BLANK);
     saveState(); render();
 }
+
+/* ============ CLASSIC MODE — TW heat scale ============
+   Weapon heat defaults (Total Warfare values). Every value is editable
+   on the card; unknown weapons show 0 with an amber field to fill in. */
+const WEAPON_HEAT = {
+  "small laser":1,"medium laser":3,"large laser":8,
+  "er small laser":2,"er medium laser":5,"er large laser":12,
+  "small pulse laser":2,"medium pulse laser":4,"large pulse laser":10,
+  "micro pulse laser":1,"er micro laser":1,
+  "small x-pulse laser":3,"medium x-pulse laser":6,"large x-pulse laser":14,
+  "small vsp laser":3,"medium vsp laser":7,"large vsp laser":10,
+  "heavy small laser":3,"heavy medium laser":7,"heavy large laser":18,
+  "improved heavy small laser":3,"improved heavy medium laser":7,"improved heavy large laser":18,
+  "ppc":10,"er ppc":15,"heavy ppc":15,"light ppc":5,"snub-nose ppc":10,
+  "ac/2":1,"ac/5":1,"ac/10":3,"ac/20":7,
+  "ultra ac/2":1,"ultra ac/5":1,"ultra ac/10":4,"ultra ac/20":8,
+  "lb 2-x ac":1,"lb 5-x ac":1,"lb 10-x ac":2,"lb 20-x ac":6,
+  "rotary ac/2":1,"rotary ac/5":1,
+  "light ac/2":1,"light ac/5":1,
+  "gauss rifle":1,"light gauss rifle":1,"heavy gauss rifle":2,"ap gauss rifle":1,
+  "hag/20":4,"hag/30":6,"hag/40":8,
+  "lrm 5":2,"lrm 10":4,"lrm 15":5,"lrm 20":6,
+  "srm 2":2,"srm 4":3,"srm 6":4,
+  "streak srm 2":2,"streak srm 4":3,"streak srm 6":4,
+  "mml 3":2,"mml 5":3,"mml 7":4,"mml 9":5,
+  "mrm 10":4,"mrm 20":6,"mrm 30":10,"mrm 40":12,
+  "atm 3":2,"atm 6":4,"atm 9":6,"atm 12":8,
+  "machine gun":0,"light machine gun":0,"heavy machine gun":0,
+  "flamer":3,"er flamer":4,"plasma rifle":10,"plasma cannon":7,
+  "anti-missile system":1,"laser ams":5,
+  "narc":0,"inarc":0,"tag":0,"light tag":0,
+  "c3 computer (master)":0,"c3 computer (slave)":0,"c3 boosted (master)":0,"c3 boosted (slave)":0
+};
+
+function parseWeapons(u) {
+    return (u.weapons || []).map(w => {
+        const m = /^(\d+)x\s*(.+)$/.exec(w);
+        const count = m ? parseInt(m[1]) : 1;
+        const name = (m ? m[2] : w).trim();
+        const heat = WEAPON_HEAT[name.toLowerCase()];
+        return { count, name, heat: heat != null ? heat : 0, known: heat != null };
+    });
+}
+function dissipation(u) {
+    const m = /^(\d+)/.exec(u.heatsinks || '');
+    if (!m) return 0;
+    const n = parseInt(m[1]);
+    return /double/i.test(u.heatsinks) ? n * 2 : n;
+}
+const MOVE_HEAT = { none:0, walk:1, run:2, jump:3 };
+
+function classicEffects(h) {
+    const parts = [];
+    const mp = h>=25?5:h>=20?4:h>=15?3:h>=10?2:h>=5?1:0;
+    const th = h>=24?4:h>=17?3:h>=13?2:h>=8?1:0;
+    if (mp) parts.push(`−${mp} MP`);
+    if (th) parts.push(`+${th} to-hit`);
+    if (h>=30) parts.push('AUTO SHUTDOWN');
+    else if (h>=26) parts.push('shutdown: avoid on 10+');
+    else if (h>=22) parts.push('shutdown: avoid on 8+');
+    else if (h>=18) parts.push('shutdown: avoid on 6+');
+    else if (h>=14) parts.push('shutdown: avoid on 4+');
+    if (h>=28) parts.push('ammo exp: avoid on 8+');
+    else if (h>=23) parts.push('ammo exp: avoid on 6+');
+    else if (h>=19) parts.push('ammo exp: avoid on 4+');
+    return parts;
+}
+
+function pendingHeat(u, st) {
+    const weps = parseWeapons(u);
+    let gen = 0;
+    weps.forEach((w, wi) => {
+        const fired = st.fired[wi] || 0;
+        const heat = st.wheat && st.wheat[wi] != null ? st.wheat[wi] : w.heat;
+        gen += fired * heat;
+    });
+    gen += MOVE_HEAT[st.move || 'none'] + (st.extra || 0);
+    return { gen, sink: dissipation(u), net: gen - dissipation(u) };
+}
+
+function renderClassic() {
+    const app = document.getElementById('app');
+    let gi = 0, html = '';
+    force.forEach(L => {
+        html += `<div class="gt-lance-title">${L.name} <span style="color:#555;">· ${L.type}</span></div><div class="gt-grid">`;
+        L.units.forEach(u => {
+            const i = gi++;
+            const st = gs[i];
+            const weps = parseWeapons(u);
+            const p = pendingHeat(u, st);
+            const fx = classicEffects(st.ch);
+            const hcls = st.ch>=20?'h3':st.ch>=10?'h2':st.ch>=5?'h1':'h0';
+            const pilotTN = ['—','3+','5+','7+','10+','11+','DEAD'][st.pilot] || '—';
+            html += `<div class="card ${st.dead?'dead':''} ${st.ch>=30?'shut':''}">
+                <h3>${u.name}</h3>
+                <div class="meta"><b>${u.movement || '?'}</b> · Sinks <b>${u.heatsinks || '?'} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv ?? '—'}</b></div>
+                <div class="heatbox">
+                    <button class="step" onclick="adjHeat(${i},-1)">−</button>
+                    <div class="heatnum ${hcls}">${st.ch}</div>
+                    <button class="step" onclick="adjHeat(${i},1)">+</button>
+                    <div class="effects ${st.ch>=30?'down':fx.length?'hot':'ok'}" style="margin-top:0; flex:1;">${st.ch>=30?'SHUT DOWN':(fx.length?fx.join(' · '):'Running cool')}</div>
+                </div>
+                <div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-top:6px;">Weapons fired this turn</div>
+                ${weps.map((w,wi)=>{
+                    const heat = st.wheat && st.wheat[wi] != null ? st.wheat[wi] : w.heat;
+                    return `<div class="weap">
+                        <button class="step" onclick="fireStep(${i},${wi},-1,${w.count})">−</button>
+                        <span class="fired">${st.fired[wi]||0}/${w.count}</span>
+                        <button class="step" onclick="fireStep(${i},${wi},1,${w.count})">+</button>
+                        <span class="wname">${w.name}</span>
+                        <input class="wheat ${w.known?'':'unknown'}" type="number" min="0" value="${heat}" title="heat per shot${w.known?'':' — unknown weapon, set manually'}" onchange="setWHeat(${i},${wi},this.value)">
+                    </div>`;}).join('')}
+                <div class="movesel">
+                    ${['none','walk','run','jump'].map(mv=>`<button class="${st.move===mv?'on':''}" onclick="setMoveHeat(${i},'${mv}')">${mv.toUpperCase()}${MOVE_HEAT[mv]?' +'+MOVE_HEAT[mv]:''}</button>`).join('')}
+                    <span style="color:#666; font-size:0.72rem; align-self:center;">extra:</span>
+                    <button class="step" onclick="extraStep(${i},-1)">−</button>
+                    <span class="fired">${st.extra||0}</span>
+                    <button class="step" onclick="extraStep(${i},1)">+</button>
+                </div>
+                <button class="apply-btn" onclick="applyTurn(${i})">APPLY END PHASE → ${p.net>=0?'+':''}${p.net} heat</button>
+                <div class="net">generates ${p.gen} − sinks ${p.sink} · jump is min 3, use extra for longer jumps</div>
+                <div class="pilot-row">PILOT HITS
+                    <button class="step" onclick="pilotStep(${i},-1)">−</button>
+                    <span class="fired">${st.pilot}</span>
+                    <button class="step" onclick="pilotStep(${i},1)">+</button>
+                    <span>consciousness: <b style="color:${st.pilot>=6?'#ff4c4c':'#ccc'};">${pilotTN}</b></span>
+                </div>
+                <input class="notes-in" placeholder="notes / ammo…" value="${(st.notes||'').replace(/"/g,'&quot;')}" onchange="setNotes(${i},this.value)">
+                <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
+            </div>`;
+        });
+        html += `</div>`;
+    });
+    app.innerHTML = html;
+}
+
+function adjHeat(i,d){ gs[i].ch = Math.max(0, Math.min(50, gs[i].ch + d)); saveState(); render(); }
+function fireStep(i,wi,d,max){ const f = gs[i].fired; f[wi] = Math.max(0, Math.min(max, (f[wi]||0) + d)); saveState(); render(); }
+function setWHeat(i,wi,v){ gs[i].wheat = gs[i].wheat || {}; gs[i].wheat[wi] = Math.max(0, parseInt(v)||0); saveState(); render(); }
+function setMoveHeat(i,mv){ gs[i].move = mv; saveState(); render(); }
+function extraStep(i,d){ gs[i].extra = Math.max(0, (gs[i].extra||0) + d); saveState(); render(); }
+function pilotStep(i,d){ gs[i].pilot = Math.max(0, Math.min(6, gs[i].pilot + d)); saveState(); render(); }
+function setNotes(i,v){ gs[i].notes = v; saveState(); }
+function applyTurn(i){
+    const u = idxToUnit(i);
+    const p = pendingHeat(u, gs[i]);
+    gs[i].ch = Math.max(0, gs[i].ch + p.net);
+    gs[i].fired = {}; gs[i].move = 'none'; gs[i].extra = 0;
+    saveState(); render();
+}
+function idxToUnit(i){ let n=0; for (const L of force) for (const u of L.units) { if (n===i) return u; n++; } return null; }
 
 (async function init(){
     loadForce();
     await hydrateMissing();
     loadState();
-    render();
+    setMode(mode);
 })();
 </script>
 </body>
