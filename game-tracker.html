@@ -39,7 +39,9 @@
   .dmg-cell .l { font-size:0.6rem; color:#777; letter-spacing:0.1em; }
 
   .pip-row { display:flex; align-items:center; gap:8px; margin:6px 0; flex-wrap:wrap; }
-  .pip-row .lbl { width:24px; font-family:'Share Tech Mono'; font-size:0.72rem; color:#888; }
+  .pip-row .lbl { width:52px; font-family:'Share Tech Mono'; font-size:0.66rem; color:#888; letter-spacing:0.06em; }
+  .weap-list { font-size:0.74rem; color:#999; margin-top:8px; line-height:1.5; }
+  .weap-list span { color:#666; font-size:0.62rem; letter-spacing:0.14em; }
   .pips { display:flex; gap:4px; flex-wrap:wrap; }
   .pip { width:18px; height:18px; border-radius:50%; border:2px solid #555; background:transparent; cursor:pointer; padding:0; }
   .pip.armor.on { background:#3ad17a; border-color:#3ad17a; }
@@ -48,7 +50,7 @@
   .pip.off { background:#2a2a2a; border-color:#333; }
 
   .heat-row { display:flex; align-items:center; gap:8px; margin-top:10px; }
-  .heat-row .lbl { width:34px; font-family:'Share Tech Mono'; font-size:0.72rem; color:#888; }
+  .heat-row .lbl { width:52px; font-family:'Share Tech Mono'; font-size:0.66rem; color:#888; letter-spacing:0.06em; }
   .heat-steps { display:flex; gap:5px; }
   .hstep { width:34px; height:28px; border:1px solid #444; background:#0e0e0e; color:#888; cursor:pointer;
            font-family:'Share Tech Mono'; font-size:0.85rem; border-radius:4px; }
@@ -239,14 +241,15 @@ function renderAS() {
             html += `<div class="card ${st.dead?'dead':''} ${st.h>=4?'shut':''}">
                 <h3>${u.name}</h3>
                 <div class="meta">MV <b>${mv.ground!=null? mv.ground+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b> · OV <b>${bf.overheat ?? '—'}</b> · ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
+                <div style="font-size:0.62rem; color:#666; letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;">Damage dealt at range</div>
                 <div class="dmg-table">
-                    <div class="dmg-cell"><div class="v">${dmg.short ?? '—'}</div><div class="l">SHORT</div></div>
-                    <div class="dmg-cell"><div class="v">${dmg.medium ?? '—'}</div><div class="l">MEDIUM</div></div>
-                    <div class="dmg-cell"><div class="v">${dmg.long ?? '—'}</div><div class="l">LONG</div></div>
-                    <div class="dmg-cell"><div class="v">${dmg.extreme ?? '—'}</div><div class="l">EXTREME</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.short ?? '—'}</div><div class="l">SHORT 0–6"</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.medium ?? '—'}</div><div class="l">MED ≤24"</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.long ?? '—'}</div><div class="l">LONG ≤42"</div></div>
+                    <div class="dmg-cell"><div class="v">${dmg.extreme ?? '—'}</div><div class="l">EXTR ≤60"</div></div>
                 </div>
-                <div class="pip-row"><span class="lbl">A</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#555;font-size:0.75rem;">no card data</span>'}</span></div>
-                <div class="pip-row"><span class="lbl">S</span><span class="pips">${bf.structure ? Array.from({length:bf.structure},(_,x)=>pip('struct',bf.structure,st.s,x)).join('') : ''}</span></div>
+                <div class="pip-row"><span class="lbl">ARMOR</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#555;font-size:0.75rem;">no card data</span>'}</span></div>
+                <div class="pip-row"><span class="lbl">STRUCT</span><span class="pips">${bf.structure ? Array.from({length:bf.structure},(_,x)=>pip('struct',bf.structure,st.s,x)).join('') : ''}</span></div>
                 <div class="heat-row"><span class="lbl">HEAT</span><span class="heat-steps">
                     ${[0,1,2,3].map(h=>`<button class="hstep ${st.h===h?'cur':''}" onclick="setHeat(${i},${h})">${h}</button>`).join('')}
                     <button class="hstep s ${st.h>=4?'cur':''}" onclick="setHeat(${i},4)">S</button>
