@@ -859,6 +859,7 @@ function addSelectedVariant() {
     const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
 
     currentLance.push({
+        id: v.id,
         name: `${c.chassis} ${v.name}`,
         chassis: c.chassis,
         tons: c.tons,
@@ -868,9 +869,9 @@ function addSelectedVariant() {
         movement: v.movement,
         heatsinks: v.heatsinks,
         weapons: v.weapons,
+        bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },
         gunnery: 4,
         piloting: 5,
-        background: Object.keys(pilotBackgrounds())[0],
         background: randomBackground,
         img: c.img
     });
@@ -998,6 +999,7 @@ function randomizeThemedLance() {
 
             const bgKeys = Object.keys(pilotBackgrounds());
             currentLance.push({
+                id: variant.id,
                 name: `${mech.chassis} ${variant.name}`,
                 chassis: mech.chassis,
                 tons: mech.tons,
@@ -1007,6 +1009,7 @@ function randomizeThemedLance() {
                 movement: variant.movement,
                 heatsinks: variant.heatsinks,
                 weapons: variant.weapons,
+                bf: { armor: variant.bf_armor, structure: variant.bf_structure, damage: variant.bf_damage, overheat: variant.bf_overheat, abilities: variant.bf_abilities },
                 gunnery: 4,
                 piloting: 5,
                 background: bgKeys[Math.floor(Math.random() * bgKeys.length)],
