@@ -91,7 +91,8 @@
                  text-align:center; border-radius:4px; padding:3px 2px; }
   .weap .wheat.unknown { border-color:#ffc107; }
   .weap .fired { font-family:'Share Tech Mono'; color:#ccc; min-width:34px; text-align:center; }
-  .movesel { display:flex; gap:5px; margin:8px 0; flex-wrap:wrap; }
+  .movesel { display:flex; gap:5px; margin:8px 0; flex-wrap:wrap; align-items:center; }
+  .movesel .extra-group { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
   .movesel button { background:#0e0e0e; border:1px solid #444; color:#888; padding:5px 12px;
                     border-radius:4px; cursor:pointer; font-family:'Share Tech Mono'; font-size:0.75rem; }
   .movesel button.on { background:#1976d2; border-color:#00b0ff; color:#fff; }
@@ -401,10 +402,7 @@ function renderClassic() {
                     </div>`;}).join('')}
                 <div class="movesel">
                     ${['none','walk','run','jump'].map(mv=>`<button class="${st.move===mv?'on':''}" onclick="setMoveHeat(${i},'${mv}')">${mv.toUpperCase()}${MOVE_HEAT[mv]?' +'+MOVE_HEAT[mv]:''}</button>`).join('')}
-                    <span style="color:#666; font-size:0.72rem; align-self:center;">extra:</span>
-                    <button class="step" onclick="extraStep(${i},-1)">−</button>
-                    <span class="fired">${st.extra||0}</span>
-                    <button class="step" onclick="extraStep(${i},1)">+</button>
+                    <span class="extra-group"><span style="color:#666; font-size:0.72rem;">extra:</span><button class="step" onclick="extraStep(${i},-1)">−</button><span class="fired">${st.extra||0}</span><button class="step" onclick="extraStep(${i},1)">+</button></span>
                 </div>
                 <button class="apply-btn" onclick="applyTurn(${i})">APPLY END PHASE → ${p.net>=0?'+':''}${p.net} heat</button>
                 <div class="net">generates ${p.gen} − sinks ${p.sink} · jump is min 3, use extra for longer jumps</div>
