@@ -307,7 +307,49 @@
 <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
     <button onclick="addLanceToForce()" style="flex:2; min-width:220px; background:#ff8c00; color:#000; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">➕ Add This Lance to Force</button>
     <a href="game-tracker.html" style="flex:1; min-width:160px; display:flex; align-items:center; justify-content:center; background:#d32f2f; color:#fff; text-decoration:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; border-radius:4px;">⚔ Game Tracker</a>
+    <button onclick="toggleCustomPanel()" style="flex:1; min-width:160px; background:transparent; color:#ff8c00; border:1px dashed #ff8c00; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">🔧 Custom 'Mech</button>
 </div>
+
+<!-- ==================== CUSTOM MECH PANEL ==================== -->
+<div id="custom-panel" style="display:none; margin-top:14px; background:#141414; border:1px solid #2a2a2a; border-radius:8px; padding:18px;">
+    <h3 style="margin:0 0 4px; color:#ff8c00;">CUSTOM 'MECH</h3>
+    <p style="margin:0 0 14px; font-size:0.8rem; color:#888;">For house rules, refits, and your own designs. Name, tonnage and BV are enough for force building; add movement, heat sinks and weapons if you want it to work in the Game Tracker's Classic mode, and the Alpha Strike stats for AS mode.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;">
+        <label style="font-size:0.72rem; color:#888;">NAME *<input id="cm-name" placeholder="Warhammer WHM-6N 'Nate'" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">BASE CHASSIS<input id="cm-chassis" placeholder="Warhammer (for the shopping list)" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">TONS *<input id="cm-tons" type="number" min="10" max="200" placeholder="70" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">BV *<input id="cm-bv" type="number" min="1" placeholder="1450" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">PV (blank = BV÷40)<input id="cm-pv" type="number" min="1" placeholder="36" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-top:10px;">
+        <label style="font-size:0.72rem; color:#888;">WALK MP<input id="cm-walk" type="number" min="0" placeholder="4" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">JUMP MP<input id="cm-jump" type="number" min="0" placeholder="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">HEAT SINKS<input id="cm-sinks" type="number" min="0" placeholder="20" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">SINK TYPE<select id="cm-sinktype" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"><option>Single</option><option>Double</option></select></label>
+    </div>
+    <label style="font-size:0.72rem; color:#888; display:block; margin-top:10px;">WEAPONS — one per line, e.g. "2x PPC"
+        <textarea id="cm-weapons" rows="3" placeholder="2x PPC&#10;2x Medium Laser" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px; font-family:inherit;"></textarea></label>
+    <details style="margin-top:10px;">
+        <summary style="font-size:0.78rem; color:#ff8c00; cursor:pointer;">Alpha Strike card stats (optional)</summary>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:10px; margin-top:10px;">
+            <label style="font-size:0.72rem; color:#888;">ARMOR<input id="cm-as-a" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">STRUCT<input id="cm-as-s" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">DMG S<input id="cm-as-ds" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">DMG M<input id="cm-as-dm" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">DMG L<input id="cm-as-dl" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">DMG E<input id="cm-as-de" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">OV<input id="cm-as-ov" type="number" min="0" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+            <label style="font-size:0.72rem; color:#888;">ABILITIES<input id="cm-as-ab" placeholder="LRM 1/1/1" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        </div>
+    </details>
+    <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button onclick="addCustomMech(false)" style="flex:1; min-width:170px; background:#ff8c00; color:#000; border:none; padding:11px; font-weight:700; font-family:'Rajdhani',sans-serif; cursor:pointer; border-radius:4px;">ADD TO LANCE</button>
+        <button onclick="addCustomMech(true)" style="flex:1; min-width:170px; background:#161616; color:#ff8c00; border:1px solid #ff8c00; padding:11px; font-weight:700; font-family:'Rajdhani',sans-serif; cursor:pointer; border-radius:4px;">ADD + SAVE TO MY 'MECHS</button>
+    </div>
+    <div id="custom-library" style="margin-top:14px;"></div>
+</div>
+<!-- ================== END CUSTOM MECH PANEL ================= -->
+
 <div id="force-panel" style="margin-top:18px;"></div>
 <!-- ================== END FORCE BUILDER PANEL ================= -->
 
@@ -1735,6 +1777,115 @@ function renderShoppingList() {
 
 document.addEventListener('DOMContentLoaded', renderForce);
 // ================== END FORCE BUILDER ==================
+// ==================== CUSTOM MECHS ====================
+// House rules, refits and player designs. Saved designs live in
+// localStorage ('battletechCustomMechs') as a personal library.
+
+function toggleCustomPanel() {
+    const p = document.getElementById('custom-panel');
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+    if (p.style.display === 'block') renderCustomLibrary();
+}
+
+function cmVal(id) { return document.getElementById(id).value.trim(); }
+function cmNum(id) { const v = parseInt(cmVal(id)); return isNaN(v) ? null : v; }
+
+function buildCustomUnit() {
+    const name = cmVal('cm-name');
+    const tons = cmNum('cm-tons');
+    const bv   = cmNum('cm-bv');
+    if (!name || !tons || !bv) {
+        alert("Name, tonnage and BV are required — that's enough for force building.");
+        return null;
+    }
+    const walk = cmNum('cm-walk');
+    const jump = cmNum('cm-jump') || 0;
+    const sinks = cmNum('cm-sinks');
+    const weapons = cmVal('cm-weapons').split('\n').map(s => s.trim()).filter(Boolean);
+    const asA = cmNum('cm-as-a'), asS = cmNum('cm-as-s');
+    const hasAS = asA != null && asS != null;
+    return {
+        id: 'custom-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+        name: name,
+        chassis: cmVal('cm-chassis') || name.split(' ')[0],
+        tons: tons,
+        bv: bv,
+        pv: cmNum('cm-pv') || Math.round(bv / 40),
+        role: 'Custom',
+        movement: walk != null ? `Walk ${walk} / Run ${Math.ceil(walk * 1.5)} / Jump ${jump}` : '',
+        heatsinks: sinks != null ? `${sinks} ${cmVal('cm-sinktype') || 'Single'}` : '',
+        weapons: weapons,
+        bf: hasAS ? {
+            armor: asA, structure: asS,
+            damage: { short: cmNum('cm-as-ds') ?? 0, medium: cmNum('cm-as-dm') ?? 0, long: cmNum('cm-as-dl') ?? 0, extreme: cmNum('cm-as-de') ?? 0 },
+            overheat: cmNum('cm-as-ov') ?? 0,
+            abilities: cmVal('cm-as-ab')
+        } : null,
+        gunnery: 4, piloting: 5,
+        background: 'Custom design',
+        img: '',
+        custom: true
+    };
+}
+
+function pushCustomToLance(unit) {
+    if (currentLance.length >= getMaxUnits()) {
+        alert(isClanFaction() ? "Star is full, Technician." : "Lance is full! Remove a 'Mech first.");
+        return false;
+    }
+    currentLance.push(JSON.parse(JSON.stringify(unit)));
+    updateDisplay();
+    return true;
+}
+
+function addCustomMech(saveToLibrary) {
+    const unit = buildCustomUnit();
+    if (!unit) return;
+    if (!pushCustomToLance(unit)) return;
+    if (saveToLibrary) {
+        const lib = getCustomLibrary();
+        const existing = lib.findIndex(m => m.id === unit.id);
+        if (existing >= 0) lib[existing] = unit; else lib.push(unit);
+        localStorage.setItem('battletechCustomMechs', JSON.stringify(lib));
+        renderCustomLibrary();
+    }
+    ['cm-name','cm-chassis','cm-tons','cm-bv','cm-pv','cm-walk','cm-jump','cm-sinks','cm-weapons','cm-as-a','cm-as-s','cm-as-ds','cm-as-dm','cm-as-dl','cm-as-de','cm-as-ov','cm-as-ab'].forEach(id => { document.getElementById(id).value = ''; });
+}
+
+function getCustomLibrary() {
+    try { return JSON.parse(localStorage.getItem('battletechCustomMechs') || '[]'); }
+    catch(e) { return []; }
+}
+
+function addSavedCustom(i) {
+    const lib = getCustomLibrary();
+    if (lib[i]) pushCustomToLance(lib[i]);
+}
+function deleteSavedCustom(i) {
+    const lib = getCustomLibrary();
+    if (!confirm(`Delete "${lib[i].name}" from your saved 'Mechs?`)) return;
+    lib.splice(i, 1);
+    localStorage.setItem('battletechCustomMechs', JSON.stringify(lib));
+    renderCustomLibrary();
+}
+
+function renderCustomLibrary() {
+    const el = document.getElementById('custom-library');
+    if (!el) return;
+    const lib = getCustomLibrary();
+    if (!lib.length) { el.innerHTML = ''; return; }
+    el.innerHTML = `<div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">My saved 'Mechs</div>` +
+        lib.map((m, i) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; background:#0e0e0e; border:1px solid #262626; border-radius:5px; padding:8px 12px; margin-bottom:6px;">
+            <div style="font-size:0.85rem;"><b style="color:#eee;">${m.name}</b>
+                <span style="color:#777; font-family:'Share Tech Mono',monospace; font-size:0.72rem;"> ${m.tons}t · BV ${m.bv}${m.bf ? ' · AS ✓' : ''}${m.weapons && m.weapons.length ? ' · ' + m.weapons.length + ' wpn' : ''}</span></div>
+            <div style="display:flex; gap:6px;">
+                <button onclick="addSavedCustom(${i})" style="background:#161616; border:1px solid #ff8c00; color:#ff8c00; padding:5px 12px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-weight:700;">＋ lance</button>
+                <button onclick="deleteSavedCustom(${i})" style="background:none; border:1px solid #333; color:#666; padding:5px 9px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button>
+            </div>
+        </div>`).join('');
+}
+// ================== END CUSTOM MECHS ==================
 
 </script>
 

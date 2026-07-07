@@ -165,7 +165,7 @@ function saveState() { localStorage.setItem('battletechGameState', JSON.stringif
 
 /* Older saved forces (pre bf-patch) lack card stats — look them up from mechs.json by name */
 async function hydrateMissing() {
-    const missing = force.some(L => L.units.some(u => !u.bf));
+    const missing = force.some(L => L.units.some(u => !u.bf && !u.custom));
     if (!missing) return;
     try {
         const res = await fetch('mechs.json');
