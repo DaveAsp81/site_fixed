@@ -90,6 +90,10 @@
   .weap .wheat { width:44px; background:#0e0e0e; border:1px solid #333; color:#ff8c00; font-family:'Share Tech Mono';
                  text-align:center; border-radius:4px; padding:3px 2px; }
   .weap .wheat.unknown { border-color:#ffc107; }
+  .weap .wammo { width:52px; background:#0e0e0e; border:1px solid #2a4a2a; color:#3ad17a; font-family:'Share Tech Mono';
+                 text-align:center; border-radius:4px; padding:3px 2px; font-size:0.78rem; }
+  .weap .wammo::placeholder { color:#444; font-size:0.62rem; }
+  .weap .wammo.empty { border-color:#ff4c4c; color:#ff4c4c; background:rgba(255,76,76,0.08); }
   .weap .fired { font-family:'Share Tech Mono'; color:#ccc; min-width:34px; text-align:center; }
   .movesel { display:flex; gap:5px; margin:8px 0; flex-wrap:wrap; align-items:center; }
   .movesel .extra-group { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
@@ -103,6 +107,12 @@
   .pilot-row { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:0.8rem; color:#888; }
   .notes-in { width:100%; background:#0e0e0e; border:1px solid #2a2a2a; color:#aaa; border-radius:4px;
               padding:6px 8px; font-size:0.78rem; margin-top:8px; font-family:'Rajdhani'; }
+  .equip-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:8px 0 2px; }
+  .equip-lbl { font-size:0.6rem; color:#555; letter-spacing:0.14em; }
+  .chip { background:#0e0e0e; border:1px solid #333; color:#777; padding:4px 10px; border-radius:12px;
+          cursor:pointer; font-family:'Share Tech Mono'; font-size:0.66rem; letter-spacing:0.06em; }
+  .chip:hover { border-color:#ffc107; color:#ffc107; }
+  .chip.on { background:#ffc107; border-color:#ffc107; color:#000; font-weight:700; }
 </style>
 </head>
 <body>
@@ -148,7 +158,7 @@ let force = [];
 let gs = [];   // per-unit state: {a,s,h,dead} (AS) + {ch, pilot, notes, fired, move, extra} (Classic)
 let mode = localStorage.getItem('battletechTrackerMode') || 'as';
 
-const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0});
+const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0, pod:false, pwing:false, rhs:false, ammo:{}, ammoMax:{}});
 
 function loadForce() {
     try { force = JSON.parse(localStorage.getItem('battletechForce') || '[]'); }
@@ -284,8 +294,14 @@ function newRound() {
     saveState(); render();
 }
 function resetGame() {
-    if (!confirm("Reset all damage and heat for a new game?")) return;
-    gs = gs.map(BLANK);
+    if (!confirm("Reset all damage and heat for a new game? (Ammo refills to your set amounts; Partial Wing stays.)")) return;
+    gs = gs.map(old => {
+        const b = BLANK();
+        b.pwing = old.pwing;                                  // physical equipment persists
+        b.ammoMax = old.ammoMax || {};
+        b.ammo = JSON.parse(JSON.stringify(b.ammoMax));       // refill to set maximums
+        return b;
+    });
     saveState(); render();
 }
 
@@ -331,11 +347,23 @@ function parseWeapons(u) {
         return { count, name, heat: heat != null ? heat : 0, known: heat != null };
     });
 }
-function dissipation(u) {
+/* Effective dissipation for the turn, including equipment.
+   Coolant Pod (TacOps): singles sink 2 each, doubles 3 each, for one turn.
+   RHS (IntOps): +50% total dissipation while active (verified vs canon units:
+   Doloire 32->48, Lament 30->45). Failure roll is the player's — see toggle hint.
+   Partial Wing (TacOps): +3 heat sunk on a turn the unit jumps. */
+function baseSinks(u) {
     const m = /^(\d+)/.exec(u.heatsinks || '');
-    if (!m) return 0;
-    const n = parseInt(m[1]);
-    return /double/i.test(u.heatsinks) ? n * 2 : n;
+    return m ? { n: parseInt(m[1]), dbl: /double/i.test(u.heatsinks) } : null;
+}
+function dissipation(u, st) {
+    const s = baseSinks(u);
+    if (!s) return 0;
+    const perSink = s.dbl ? (st && st.pod ? 3 : 2) : (st && st.pod ? 2 : 1);
+    let total = s.n * perSink;
+    if (st && st.rhs) total = Math.ceil(total * 1.5);
+    if (st && st.pwing && st.move === 'jump') total += 3;
+    return total;
 }
 const MOVE_HEAT = { none:0, walk:1, run:2, jump:3 };
 
@@ -365,7 +393,7 @@ function pendingHeat(u, st) {
         gen += fired * heat;
     });
     gen += MOVE_HEAT[st.move || 'none'] + (st.extra || 0);
-    return { gen, sink: dissipation(u), net: gen - dissipation(u) };
+    return { gen, sink: dissipation(u, st), net: gen - dissipation(u, st) };
 }
 
 function renderClassic() {
@@ -393,16 +421,25 @@ function renderClassic() {
                 <div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-top:6px;">Weapons fired this turn</div>
                 ${weps.map((w,wi)=>{
                     const heat = st.wheat && st.wheat[wi] != null ? st.wheat[wi] : w.heat;
+                    const tracksAmmo = usesAmmo(w.name);
+                    const a = st.ammo ? st.ammo[wi] : null;
                     return `<div class="weap">
                         <button class="step" onclick="fireStep(${i},${wi},-1,${w.count})">−</button>
                         <span class="fired">${st.fired[wi]||0}/${w.count}</span>
                         <button class="step" onclick="fireStep(${i},${wi},1,${w.count})">+</button>
                         <span class="wname">${w.name}</span>
+                        ${tracksAmmo ? `<input class="wammo ${a===0?'empty':''}" type="number" min="0" placeholder="ammo" value="${a ?? ''}" title="shots remaining — set once from your record sheet, fires auto-deduct. Reset Game refills to the highest number you've entered; to lower that maximum, clear the field and re-enter. Clear to stop tracking." onchange="setAmmo(${i},${wi},this.value)">` : ''}
                         <input class="wheat ${w.known?'':'unknown'}" type="number" min="0" value="${heat}" title="heat per shot${w.known?'':' — unknown weapon, set manually'}" onchange="setWHeat(${i},${wi},this.value)">
                     </div>`;}).join('')}
                 <div class="movesel">
                     ${['none','walk','run','jump'].map(mv=>`<button class="${st.move===mv?'on':''}" onclick="setMoveHeat(${i},'${mv}')">${mv.toUpperCase()}${MOVE_HEAT[mv]?' +'+MOVE_HEAT[mv]:''}</button>`).join('')}
                     <span class="extra-group"><span style="color:#666; font-size:0.72rem;">extra:</span><button class="step" onclick="extraStep(${i},-1)">−</button><span class="fired">${st.extra||0}</span><button class="step" onclick="extraStep(${i},1)">+</button></span>
+                </div>
+                <div class="equip-row">
+                    <span class="equip-lbl">EQUIPMENT</span>
+                    <button class="chip ${st.pod?'on':''}" onclick="togglePod(${i})" title="Coolant Pod — one turn: singles sink 2 each, doubles 3 each. Consumed on use.">COOLANT POD${(u.weapons||[]).some(w=>/coolant pod/i.test(w))?' ●':''}</button>
+                    <button class="chip ${st.pwing?'on':''}" onclick="togglePwing(${i})" title="Partial Wing — sinks 3 extra heat on turns this unit jumps. LAMs count as having one.">PARTIAL WING${(u.weapons||[]).some(w=>/partial wing/i.test(w))?' ●':''}</button>
+                    <button class="chip ${st.rhs?'on':''}" onclick="toggleRhs(${i})" title="Radical Heat Sink System — +50% dissipation while active. Roll your own failure check per IntOps each turn it runs.">RHS${(u.weapons||[]).some(w=>/radical heat/i.test(w))?' ●':''}</button>
                 </div>
                 <button class="apply-btn" onclick="applyTurn(${i})">APPLY END PHASE → ${p.net>=0?'+':''}${p.net} heat</button>
                 <div class="net">generates ${p.gen} − sinks ${p.sink} · jump is min 3, use extra for longer jumps</div>
@@ -422,17 +459,51 @@ function renderClassic() {
 }
 
 function adjHeat(i,d){ gs[i].ch = Math.max(0, Math.min(50, gs[i].ch + d)); saveState(); render(); }
-function fireStep(i,wi,d,max){ const f = gs[i].fired; f[wi] = Math.max(0, Math.min(max, (f[wi]||0) + d)); saveState(); render(); }
+/* Does this weapon consume ammo? Energy weapons and pure electronics don't. */
+function usesAmmo(name) {
+    const n = name.toLowerCase();
+    if (/laser ams/.test(n)) return false;
+    if (/(laser|ppc|flamer|tag|c3|ecm|probe|partial wing|coolant pod|radical heat|masc|supercharger)/.test(n) && !/vehicle flamer/.test(n)) return false;
+    return /(ac\/|lb \d|ultra|rotary|gauss|hag|magshot|lrm|srm|mrm|mml|atm|streak|thunderbolt|machine gun|narc|inarc|anti-missile|ams\b|plasma|arrow|long tom|sniper|thumper|rifle \(|vehicle flamer)/.test(n);
+}
+
+function fireStep(i,wi,d,max){
+    const st = gs[i];
+    const before = st.fired[wi] || 0;
+    const after = Math.max(0, Math.min(max, before + d));
+    st.fired[wi] = after;
+    // auto-decrement tracked ammo on fire; refund on un-fire
+    if (st.ammo && st.ammo[wi] != null) {
+        st.ammo[wi] = Math.max(0, st.ammo[wi] - (after - before));
+        if (st.ammoMax[wi] != null) st.ammo[wi] = Math.min(st.ammoMax[wi], st.ammo[wi]);
+    }
+    saveState(); render();
+}
+function setAmmo(i,wi,v){
+    const st = gs[i];
+    const n = parseInt(v);
+    if (isNaN(n) || n < 0) { delete st.ammo[wi]; delete st.ammoMax[wi]; }
+    else {
+        st.ammo[wi] = n;
+        // first set (or raising above previous max) defines the refill maximum
+        if (st.ammoMax[wi] == null || n > st.ammoMax[wi]) st.ammoMax[wi] = n;
+    }
+    saveState(); render();
+}
 function setWHeat(i,wi,v){ gs[i].wheat = gs[i].wheat || {}; gs[i].wheat[wi] = Math.max(0, parseInt(v)||0); saveState(); render(); }
 function setMoveHeat(i,mv){ gs[i].move = mv; saveState(); render(); }
 function extraStep(i,d){ gs[i].extra = Math.max(0, (gs[i].extra||0) + d); saveState(); render(); }
 function pilotStep(i,d){ gs[i].pilot = Math.max(0, Math.min(6, gs[i].pilot + d)); saveState(); render(); }
 function setNotes(i,v){ gs[i].notes = v; saveState(); }
+function togglePod(i){ gs[i].pod = !gs[i].pod; saveState(); render(); }
+function togglePwing(i){ gs[i].pwing = !gs[i].pwing; saveState(); render(); }
+function toggleRhs(i){ gs[i].rhs = !gs[i].rhs; saveState(); render(); }
 function applyTurn(i){
     const u = idxToUnit(i);
     const p = pendingHeat(u, gs[i]);
     gs[i].ch = Math.max(0, gs[i].ch + p.net);
     gs[i].fired = {}; gs[i].move = 'none'; gs[i].extra = 0;
+    gs[i].pod = false;   // coolant pods are one-use — expended this turn
     saveState(); render();
 }
 function idxToUnit(i){ let n=0; for (const L of force) for (const u of L.units) { if (n===i) return u; n++; } return null; }
