@@ -62,6 +62,11 @@
   .effects.down { color:#ff4c4c; font-weight:700; }
 
   .abil { font-size:0.7rem; color:#777; font-family:'Share Tech Mono'; margin-top:6px; word-break:break-all; }
+  .abil-tap { cursor:pointer; }
+  .abil-tap:hover { color:#ffc107; }
+  .abil-defs { background:#0e0e0e; border:1px solid #262626; border-radius:5px; padding:8px 10px; margin-top:6px; }
+  .abil-defs div { font-size:0.7rem; color:#999; line-height:1.5; padding:2px 0; }
+  .abil-defs b { color:#ffc107; font-family:'Share Tech Mono'; }
   .card-foot { display:flex; justify-content:flex-end; margin-top:8px; }
   .mini { background:none; border:1px solid #333; color:#666; font-size:0.68rem; padding:3px 9px; border-radius:4px; cursor:pointer; }
   .mini:hover { color:#ff4c4c; border-color:#ff4c4c; }
@@ -286,7 +291,8 @@ function renderAS() {
                     <button class="hstep s ${st.h>=4?'cur':''}" onclick="setHeat(${i},4)">S</button>
                 </span></div>
                 <div class="effects ${fx.cls}">${fx.txt}</div>
-                ${bf.abilities ? `<div class="abil">${bf.abilities}</div>` : ''}
+                ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${bf.abilities} <span style="color:#555;">${st.abilOpen?'▾':'ⓘ'}</span></div>
+                ${st.abilOpen ? `<div class="abil-defs">${expandAbilities(bf.abilities).map(a=>`<div><b>${a.tok}</b> · ${a.def.replace(/^[^—]+—\s*/,'')}</div>`).join('')}</div>` : ''}` : ''}
                 <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
             </div>`;
         });
@@ -404,6 +410,75 @@ function classicEffects(h) {
     return parts;
 }
 
+// Official BV2 pilot skill multiplier (TechManual errata / MUL): gunnery ±20%/step, piloting ±10%/step from 4/5.
+function getPilotMultiplier(gunnery, piloting) {
+    const g = Math.min(Math.max(gunnery ?? 4, 0), 8);
+    const p = Math.min(Math.max(piloting ?? 5, 0), 8);
+    return Math.max(0.2, 1 + 0.2 * (4 - g)) * Math.max(0.3, 1 + 0.1 * (5 - p));
+}
+
+/* ============ Alpha Strike ability glossary ============
+   Definitions for the codes that appear in this database. Anything
+   unmapped gets an honest pointer to AS:CE instead of a guess. */
+const AS_ABILITIES = {
+  CASE:  "CASE — protects against ammo explosions: an Ammo Hit critical deals limited damage instead of crippling the unit.",
+  CASEII:"CASE II — advanced ammo protection: Ammo Hit criticals are ignored.",
+  ENE:   "Energy — carries no ammunition; immune to Ammo Hit criticals.",
+  OMNI:  "OmniMech — pod-based configuration; can carry a battle armor squad (mechanized BA).",
+  IF:    "Indirect Fire — may attack without line of sight using a spotter, dealing the listed damage at long range.",
+  ECM:   "ECM — electronic countermeasures; disrupts enemy C3, Artemis, Narc and probes nearby.",
+  AECM:  "Angel ECM — advanced ECM suite; counts as double-strength countermeasures.",
+  MHQ:   "Mobile HQ — command vehicle rating; grants initiative/command benefits in advanced rules.",
+  C3S:   "C3 Slave — networked targeting: units in a C3 network may use the best member's range bracket.",
+  C3M:   "C3 Master — controls a C3 targeting network (see C3 rules).",
+  C3I:   "C3i — improved peer-to-peer C3 network (no master required).",
+  C3BSS: "C3 Boosted Slave — ECM-resistant C3 network member.",
+  C3BSM: "C3 Boosted Master — ECM-resistant C3 network master.",
+  C3EM:  "C3 Emergency Master — can take over as network master.",
+  FLK:   "Flak — improved fire against airborne targets, using the listed S/M/L values.",
+  RCN:   "Recon — scouting specialist; benefits in advanced reconnaissance rules.",
+  PRB:   "Active Probe — detects hidden units; counters ECM in advanced rules.",
+  LPRB:  "Light Active Probe — shorter-ranged active probe.",
+  BH:    "Bloodhound Probe — advanced active probe with superior detection.",
+  REAR:  "Rear weapons — may attack targets behind it with the listed values.",
+  MEL:   "Melee — physical-attack specialist (hatchet, sword, etc.); +1 damage on physical attacks.",
+  JMPS:  "Strong Jumper — increases the to-hit/TMM benefit when this unit jumps (by the listed number).",
+  JMPW:  "Weak Jumper — reduces the to-hit/TMM benefit when this unit jumps (by the listed number).",
+  AMS:   "Anti-Missile System — reduces damage from missile attacks (LRM/SRM/IF) against this unit by 1.",
+  LRM:   "LRM — the listed portion of its damage comes from LRMs; enables indirect fire and special munitions.",
+  SRM:   "SRM — the listed portion of its damage comes from SRMs; enables special munitions.",
+  AC:    "AC — the listed portion of its damage comes from autocannons; enables special munitions.",
+  TOR:   "Torpedoes — underwater missile attacks with the listed values.",
+  TAG:   "TAG — laser designator; guides homing artillery and semi-guided munitions onto targets.",
+  LTAG:  "Light TAG — shorter-ranged target designator.",
+  TSM:   "Triple-Strength Myomer — while at heat 1+, gains +2\" Move and improved physical attacks.",
+  STL:   "Stealth — stealth armor system; attackers suffer extra to-hit penalties at range.",
+  OVL:   "Overheat Long — may use its Overheat value on long-range attacks, not just short/medium.",
+  HT:    "Heat — its attacks can add heat to the target (listed by range band).",
+  CR:    "Critical-Resistant — armored components; reduced chance of critical hits taking effect.",
+  ARM:   "Armored Components — the first critical hit against this unit is ignored.",
+  SNARC: "Narc — launches homing pods that improve friendly missile fire against the tagged target.",
+  INARC: "iNarc — improved Narc pod launcher.",
+  TUR:   "Turret — the listed weapons are turret-mounted with a 360° field of fire.",
+  NOVA:  "Nova CEWS — combined advanced ECM and C3-style network in one system.",
+  WAT:   "Watchdog CEWS — combined ECM and active probe.",
+  TSEMP: "TSEMP — cannon that can temporarily shut down a target's electronics/systems.",
+  UMU:   "UMU — underwater maneuvering units; can move while submerged.",
+  BHJ:   "HarJel — self-sealing armor; repairs/withstands breaches (higher marks regenerate armor).",
+  RHS:   "Radical Heat Sinks — can boost heat dissipation with a risk of failure.",
+  RFA:   "Reflective Armor — laser-reflective plating; reduces damage from energy attacks.",
+  RCA:   "Reactive Armor — reduces damage from missile and area-effect attacks.",
+  DRO:   "Drone — remotely operated unit.",
+  OVLR:  "Overheat Long — may apply Overheat at long range."
+};
+function expandAbilities(str) {
+    return (str || '').split(/[,;]\s*/).filter(Boolean).map(tok => {
+        const fam = (tok.match(/^C3\w*/) || tok.match(/^[A-Za-z]+/) || [tok])[0].toUpperCase();
+        return { tok, def: AS_ABILITIES[fam] || (tok + " — Alpha Strike special ability; see AS: Commander's Edition.") };
+    });
+}
+function toggleAbil(i) { gs[i].abilOpen = !gs[i].abilOpen; saveState(); render(); }
+
 function heatToHit(h) { return h>=24?4:h>=17?3:h>=13?2:h>=8?1:0; }
 
 /* ============ GATOR to-hit calculator ============
@@ -458,7 +533,7 @@ function renderClassic() {
             const pilotTN = ['—','3+','5+','7+','10+','11+','DEAD'][st.pilot] || '—';
             html += `<div class="card ${st.dead?'dead':''} ${st.ch>=30?'shut':''}">
                 <h3>${u.name}</h3>
-                <div class="meta"><b>${u.movement || '?'}</b> · Sinks <b>${u.heatsinks || '?'} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv ?? '—'}</b></div>
+                <div class="meta"><b>${u.movement || '?'}</b> · Sinks <b>${u.heatsinks || '?'} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv != null ? Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting)) : '—'}</b> <span style="color:#666;">(${u.gunnery ?? 4}/${u.piloting ?? 5})</span></div>
                 <div class="heatbox">
                     <button class="step" onclick="adjHeat(${i},-1)">−</button>
                     <div class="heatnum ${hcls}">${st.ch}</div>

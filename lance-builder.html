@@ -515,13 +515,18 @@ function switchMode(mode) {
     updateDisplay();
 }
 
-// Official BV2 pilot skill multiplier (also used lightly for PV)
+// Official BV2 pilot skill multiplier (TechManual errata / MUL):
+// each Gunnery step from 4 is ±20%, each Piloting step from 5 is ±10%, multiplied.
+// Anchors: 4/5 = 1.00, 3/4 = 1.32, 2/3 = 1.68. Applies to BV only (AS PV uses a different system).
 function getPilotMultiplier(gunnery, piloting) {
-    const gMult = [2.42, 1.82, 1.42, 1.22, 1.00, 0.82, 0.62, 0.42]; // Gunnery 0–7
-    const pMult = [1.80, 1.40, 1.10, 1.00, 0.85, 0.70, 0.55];       // Piloting 0–6
-    const g = Math.min(Math.max(gunnery || 4, 0), 7);
-    const p = Math.min(Math.max(piloting || 5, 0), 6);
-    return gMult[g] * pMult[p];
+    const g = Math.min(Math.max(gunnery ?? 4, 0), 8);
+    const p = Math.min(Math.max(piloting ?? 5, 0), 8);
+    return Math.max(0.2, 1 + 0.2 * (4 - g)) * Math.max(0.3, 1 + 0.1 * (5 - p));
+}
+
+function adjustedUnitValue(u) {
+    if (currentMode === 'classic') return Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting));
+    return u.pv || Math.round(u.bv / 40);   // AS PV: skill adjustment is a different system, not the BV table
 }
 
 // ==================== SMART LANCE FEEDBACK ====================
@@ -537,8 +542,7 @@ function getLanceFeedback() {
 
     let totalTons  = currentLance.reduce((sum, u) => sum + u.tons, 0);
     let totalValue = currentLance.reduce((sum, u) => {
-        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
-        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+        return sum + adjustedUnitValue(u);
     }, 0);
 
     const maxTons  = parseInt(document.getElementById('max-ton').value) || 200;
@@ -1096,8 +1100,8 @@ function updateDisplay() {
 
         // Calculate adjusted value using pilot skills
         const baseValue = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
-        const multiplier = getPilotMultiplier(unit.gunnery, unit.piloting);
-        const adjustedValue = Math.round(baseValue * multiplier);
+        const multiplier = currentMode === 'classic' ? getPilotMultiplier(unit.gunnery, unit.piloting) : 1;
+        const adjustedValue = adjustedUnitValue(unit);
 
         totalValue += adjustedValue;
 
@@ -1373,8 +1377,8 @@ function copyLanceToClipboard() {
 
     currentLance.forEach((unit, i) => {
         const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
-        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
-        const adj = Math.round(base * mult);
+        const mult = currentMode === 'classic' ? getPilotMultiplier(unit.gunnery, unit.piloting) : 1;
+        const adj = adjustedUnitValue(unit);
 
         text += `${i+1}. **${unit.name}** (${unit.tons}t)\n`;
         text += `   ${currentMode.toUpperCase()}: ${adj} (${base} base × ${mult.toFixed(2)})\n`;
@@ -1385,8 +1389,7 @@ function copyLanceToClipboard() {
 
     const totalTons = currentLance.reduce((sum, u) => sum + u.tons, 0);
     const totalValue = currentLance.reduce((sum, u) => {
-        const base = currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
-        return sum + Math.round(base * getPilotMultiplier(u.gunnery, u.piloting));
+        return sum + adjustedUnitValue(u);
     }, 0);
 
     text += `**TOTAL:** ${totalTons}t | ${totalValue} ${currentMode.toUpperCase()}\n`;
@@ -1407,8 +1410,8 @@ function exportLanceToCSV() {
 
     currentLance.forEach(unit => {
         const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
-        const mult = getPilotMultiplier(unit.gunnery, unit.piloting);
-        const adj = Math.round(base * mult);
+        const mult = currentMode === 'classic' ? getPilotMultiplier(unit.gunnery, unit.piloting) : 1;
+        const adj = adjustedUnitValue(unit);
 
         csv += `"${unit.name}",${unit.tons},"${unit.role || ''}",${base},${adj},${unit.gunnery},${unit.piloting},"${unit.background}"\n`;
     });
@@ -1637,7 +1640,7 @@ function forceUnitChassis(u) {
     return CHASSIS_ALIASES[c] || c;
 }
 function forceUnitValue(u) {
-    return currentMode === 'classic' ? u.bv : (u.pv || Math.round(u.bv / 40));
+    return adjustedUnitValue(u);   // skill-adjusted BV in classic; base PV in Alpha Strike
 }
 function saveForceState() { localStorage.setItem('battletechForce', JSON.stringify(currentForce)); }
 
@@ -1908,6 +1911,8 @@ function unitToShare(u) {
         delete c.background;
         return c;
     }
+    // non-default pilots travel as [id, gunnery, piloting]
+    if ((u.gunnery ?? 4) !== 4 || (u.piloting ?? 5) !== 5) return [u.id, u.gunnery ?? 4, u.piloting ?? 5];
     return u.id;
 }
 
@@ -1943,7 +1948,9 @@ function checkSharedForce() {
         name: L.n || 'Shared Lance',
         type: L.t === 'Star' ? 'Star' : 'Lance',
         units: (L.u || []).map(entry => {
-            if (typeof entry === 'object' && entry) { mechCount++; return entry; }   // inlined custom
+            let g = 4, p = 5;
+            if (Array.isArray(entry)) { g = entry[1] ?? 4; p = entry[2] ?? 5; entry = entry[0]; }
+            else if (typeof entry === 'object' && entry) { mechCount++; return entry; }   // inlined custom
             const hit = byId[entry];
             if (!hit) { missing++; return null; }
             mechCount++;
@@ -1953,7 +1960,7 @@ function checkSharedForce() {
                 bv: v.bv, pv: v.pv || Math.round(v.bv / 40), role: v.role,
                 movement: v.movement, heatsinks: v.heatsinks, weapons: v.weapons,
                 bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },
-                gunnery: 4, piloting: 5, background: 'Shared force', img: m.img
+                gunnery: g, piloting: p, background: 'Shared force', img: m.img
             };
         }).filter(Boolean)
     })).filter(L => L.units.length);
