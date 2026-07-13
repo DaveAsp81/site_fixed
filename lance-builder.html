@@ -1296,6 +1296,7 @@ window.onload = () => {
             });
             filterChassis();
             refreshSavedList();
+            checkSharedForce();
         })
         .catch(err => {
             console.error('Could not load mech database:', err);
@@ -1704,6 +1705,7 @@ function renderForce() {
             <h2 style="margin:0; color:#ff8c00;">FORCE ROSTER</h2>
             <div style="display:flex; gap:8px;">
                 <a href="game-tracker.html" style="background:#d32f2f; color:#fff; text-decoration:none; padding:6px 14px; border-radius:4px; font-size:0.8rem; font-weight:700; font-family:'Rajdhani',sans-serif;">⚔ PLAY — Game Tracker</a>
+                <button id="share-force-btn" onclick="shareForce()" style="background:transparent; color:#ffc107; border:1px solid #ffc107; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:0.8rem; font-weight:700; font-family:'Rajdhani',sans-serif;">🔗 SHARE</button>
                 <button onclick="clearForce()" style="background:transparent; color:#888; border:1px solid #444; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.8rem;">Clear Force</button>
             </div>
         </div>
@@ -1886,6 +1888,88 @@ function renderCustomLibrary() {
         </div>`).join('');
 }
 // ================== END CUSTOM MECHS ==================
+// ==================== SHAREABLE FORCE LINKS ====================
+// Stock units encode as just their variant id (tiny); custom units and
+// anything unresolvable inline the full object. Base64url over the URL.
+
+function b64uEncode(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function b64uDecode(s) { s = s.replace(/-/g,'+').replace(/_/g,'/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
+
+function unitToShare(u) {
+    if (u.custom || !u.id) {
+        // try resolving a missing id by name so it can still travel light
+        if (!u.custom) {
+            for (const m of mechDatabase) {
+                const v = m.variants.find(v => `${m.chassis} ${v.name}` === u.name);
+                if (v) return v.id;
+            }
+        }
+        const c = JSON.parse(JSON.stringify(u));   // inline (custom or unresolvable)
+        delete c.background;
+        return c;
+    }
+    return u.id;
+}
+
+function shareForce() {
+    if (!currentForce.length) { alert("Add at least one lance to the force first!"); return; }
+    const compact = currentForce.map(L => ({ n: L.name, t: L.type, u: L.units.map(unitToShare) }));
+    const url = location.origin + location.pathname + '?force=' + b64uEncode(JSON.stringify(compact));
+    if (url.length > 8000) { alert("This force is too large to share as a link (lots of custom 'Mechs). Trim it down and try again."); return; }
+    const done = () => {
+        const btn = document.getElementById('share-force-btn');
+        if (btn) { const old = btn.textContent; btn.textContent = 'COPIED ✓'; setTimeout(()=>{ btn.textContent = old; }, 1600); }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(() => prompt("Copy your force link:", url));
+    } else {
+        prompt("Copy your force link:", url);
+    }
+}
+
+function checkSharedForce() {
+    const p = new URLSearchParams(location.search).get('force');
+    if (!p) return;
+    let compact;
+    try { compact = JSON.parse(b64uDecode(p)); } catch(e) { console.error('Bad share link', e); return; }
+    if (!Array.isArray(compact) || !compact.length) return;
+
+    // id -> {chassis data, variant} lookup
+    const byId = {};
+    mechDatabase.forEach(m => m.variants.forEach(v => { byId[v.id] = { m, v }; }));
+
+    let mechCount = 0, missing = 0;
+    const loaded = compact.map(L => ({
+        name: L.n || 'Shared Lance',
+        type: L.t === 'Star' ? 'Star' : 'Lance',
+        units: (L.u || []).map(entry => {
+            if (typeof entry === 'object' && entry) { mechCount++; return entry; }   // inlined custom
+            const hit = byId[entry];
+            if (!hit) { missing++; return null; }
+            mechCount++;
+            const { m, v } = hit;
+            return {
+                id: v.id, name: `${m.chassis} ${v.name}`, chassis: m.chassis, tons: m.tons,
+                bv: v.bv, pv: v.pv || Math.round(v.bv / 40), role: v.role,
+                movement: v.movement, heatsinks: v.heatsinks, weapons: v.weapons,
+                bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },
+                gunnery: 4, piloting: 5, background: 'Shared force', img: m.img
+            };
+        }).filter(Boolean)
+    })).filter(L => L.units.length);
+
+    if (!loaded.length) return;
+    const msg = `Load this shared force? ${loaded.length} ${loaded.length===1?'lance':'lances'}, ${mechCount} 'Mechs.` +
+        (missing ? ` (${missing} unit${missing>1?'s':''} couldn't be found and will be skipped.)` : '') +
+        (currentForce.length ? `\n\nThis replaces your current force.` : '');
+    if (!confirm(msg)) { history.replaceState(null, '', location.pathname); return; }
+    currentForce = loaded;
+    saveForceState();
+    renderForce();
+    history.replaceState(null, '', location.pathname);   // clean the URL so refresh doesn't re-prompt
+    document.getElementById('force-panel').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+// ================== END SHAREABLE FORCE LINKS ==================
 
 </script>
 
