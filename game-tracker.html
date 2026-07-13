@@ -94,6 +94,26 @@
                  text-align:center; border-radius:4px; padding:3px 2px; font-size:0.78rem; }
   .weap .wammo::placeholder { color:#444; font-size:0.62rem; }
   .weap .wammo.empty { border-color:#ff4c4c; color:#ff4c4c; background:rgba(255,76,76,0.08); }
+
+  /* GATOR */
+  .gator { margin:8px 0 2px; border:1px solid #262626; border-radius:6px; background:#0e0e0e; }
+  .gator-head { width:100%; background:none; border:none; color:#888; text-align:left; padding:8px 12px;
+                cursor:pointer; font-family:'Share Tech Mono'; font-size:0.7rem; letter-spacing:0.1em; }
+  .gator-head:hover { color:#ffc107; }
+  .tn-mini { color:#ff8c00; font-weight:700; float:right; }
+  .gator-body { padding:4px 12px 12px; border-top:1px solid #1c1c1c; }
+  .grow { display:flex; align-items:center; gap:8px; margin:7px 0; flex-wrap:wrap; }
+  .glbl { width:14px; color:#ff8c00; font-family:'Share Tech Mono'; font-weight:700; font-size:0.85rem; }
+  .gauto { font-family:'Share Tech Mono'; color:#3ad17a; min-width:26px; }
+  .ghint { color:#666; font-size:0.68rem; }
+  .gbtns { display:flex; gap:4px; flex-wrap:wrap; }
+  .gbtns button { background:#141414; border:1px solid #333; color:#888; padding:4px 8px; border-radius:4px;
+                  cursor:pointer; font-family:'Share Tech Mono'; font-size:0.68rem; }
+  .gbtns button.on { background:#1976d2; border-color:#00b0ff; color:#fff; }
+  .tn-line { display:flex; align-items:baseline; gap:12px; margin-top:10px; padding-top:8px; border-top:1px solid #1c1c1c; flex-wrap:wrap; }
+  .tn-big { font-family:'Share Tech Mono'; font-size:1.8rem; color:#ffc107; font-weight:700; }
+  .tn-big.impossible { color:#ff4c4c; font-size:1.1rem; }
+  .tn-sub { font-family:'Share Tech Mono'; font-size:0.72rem; color:#888; }
   .weap .fired { font-family:'Share Tech Mono'; color:#ccc; min-width:34px; text-align:center; }
   .movesel { display:flex; gap:5px; margin:8px 0; flex-wrap:wrap; align-items:center; }
   .movesel .extra-group { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
@@ -158,7 +178,7 @@ let force = [];
 let gs = [];   // per-unit state: {a,s,h,dead} (AS) + {ch, pilot, notes, fired, move, extra} (Classic)
 let mode = localStorage.getItem('battletechTrackerMode') || 'as';
 
-const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0, pod:false, pwing:false, rhs:false, ammo:{}, ammoMax:{}});
+const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0, pod:false, pwing:false, rhs:false, ammo:{}, ammoMax:{}, gator:{open:false,g:null,tmm:0,tjump:false,imm:false,range:'s',other:0}});
 
 function loadForce() {
     try { force = JSON.parse(localStorage.getItem('battletechForce') || '[]'); }
@@ -384,6 +404,33 @@ function classicEffects(h) {
     return parts;
 }
 
+function heatToHit(h) { return h>=24?4:h>=17?3:h>=13?2:h>=8?1:0; }
+
+/* ============ GATOR to-hit calculator ============
+   TN = Gunnery + Attacker move (this turn's selection, auto)
+      + Target move (TMM by hexes, +1 if it jumped; immobile = -4 flat)
+      + Other (heat auto from current heat + manual terrain/cover/min-range)
+      + Range (S +0 / M +2 / L +4)                                    */
+const ATT_MOVE_MOD = { none:0, walk:1, run:2, jump:3 };
+const RANGE_MOD = { s:0, m:2, l:4 };
+const TMM_HEX = ['0–2 hexes','3–4 hexes','5–6 hexes','7–9 hexes','10–17 hexes','18–24 hexes','25+ hexes'];
+
+function gatorTN(u, st) {
+    const g = st.gator.g != null ? st.gator.g : (u.gunnery ?? 4);
+    const A = ATT_MOVE_MOD[st.move || 'none'];
+    const T = st.gator.imm ? -4 : (st.gator.tmm + (st.gator.tjump ? 1 : 0));
+    const O = heatToHit(st.ch) + (st.gator.other || 0);
+    const R = RANGE_MOD[st.gator.range || 's'];
+    return { g, A, T, O, R, tn: g + A + T + O + R };
+}
+function hitChance(tn) {
+    if (tn > 12) return 0;
+    if (tn <= 2) return 100;
+    return {3:97,4:92,5:83,6:72,7:58,8:42,9:28,10:17,11:8,12:3}[tn];
+}
+function setGator(i, key, val) { gs[i].gator[key] = val; saveState(); render(); }
+function toggleGator(i) { gs[i].gator.open = !gs[i].gator.open; saveState(); render(); }
+
 function pendingHeat(u, st) {
     const weps = parseWeapons(u);
     let gen = 0;
@@ -441,6 +488,34 @@ function renderClassic() {
                     <button class="chip ${st.pwing?'on':''}" onclick="togglePwing(${i})" title="Partial Wing — sinks 3 extra heat on turns this unit jumps. LAMs count as having one.">PARTIAL WING${(u.weapons||[]).some(w=>/partial wing/i.test(w))?' ●':''}</button>
                     <button class="chip ${st.rhs?'on':''}" onclick="toggleRhs(${i})" title="Radical Heat Sink System — +50% dissipation while active. Roll your own failure check per IntOps each turn it runs.">RHS${(u.weapons||[]).some(w=>/radical heat/i.test(w))?' ●':''}</button>
                 </div>
+                ${(() => {
+                    const gt = gatorTN(u, st);
+                    const pct = hitChance(gt.tn);
+                    return `<div class="gator ${st.gator.open?'open':''}">
+                    <button class="gator-head" onclick="toggleGator(${i})">🎯 TO-HIT (GATOR) ${st.gator.open?'▾':'▸'}${st.gator.open?'':` <span class="tn-mini">${gt.tn>12?'—':gt.tn+'+'}</span>`}</button>
+                    ${st.gator.open ? `
+                    <div class="gator-body">
+                        <div class="grow"><span class="glbl" title="Gunnery skill — edit if this pilot differs">G</span>
+                            <input class="wheat" type="number" min="0" max="8" value="${gt.g}" onchange="setGator(${i},'g',Math.max(0,parseInt(this.value)||0))">
+                            <span class="ghint">gunnery</span></div>
+                        <div class="grow"><span class="glbl" title="Attacker movement — follows the movement you selected this turn">A</span>
+                            <span class="gauto">+${gt.A}</span><span class="ghint">${(st.move||'none')==='none'?'stationary':st.move} (auto)</span></div>
+                        <div class="grow"><span class="glbl" title="Target movement modifier by hexes moved">T</span>
+                            <span class="gbtns">${TMM_HEX.map((hx,t)=>`<button class="${!st.gator.imm && st.gator.tmm===t?'on':''}" title="${hx}" onclick="setGator(${i},'imm',false)||setGator(${i},'tmm',${t})">+${t}</button>`).join('')}</span></div>
+                        <div class="grow"><span class="glbl"></span>
+                            <button class="chip ${st.gator.tjump?'on':''}" onclick="setGator(${i},'tjump',!gs[${i}].gator.tjump)" title="Target jumped: +1">JUMPED +1</button>
+                            <button class="chip ${st.gator.imm?'on':''}" onclick="setGator(${i},'imm',!gs[${i}].gator.imm)" title="Immobile target: −4 (replaces TMM)">IMMOBILE −4</button></div>
+                        <div class="grow"><span class="glbl" title="Heat to-hit penalty (auto) plus manual terrain / cover / minimum range">O</span>
+                            <span class="gauto">+${heatToHit(st.ch)}</span><span class="ghint">heat (auto)</span>
+                            <span class="extra-group"><span class="ghint">terrain/other:</span><button class="step" onclick="setGator(${i},'other',Math.max(-4,(gs[${i}].gator.other||0)-1))">−</button><span class="fired">${st.gator.other||0}</span><button class="step" onclick="setGator(${i},'other',(gs[${i}].gator.other||0)+1)">+</button></span></div>
+                        <div class="grow"><span class="glbl" title="Range bracket">R</span>
+                            <span class="gbtns">${[['s','SHORT +0'],['m','MED +2'],['l','LONG +4']].map(([k,l])=>`<button class="${st.gator.range===k?'on':''}" onclick="setGator(${i},'range','${k}')">${l}</button>`).join('')}</span></div>
+                        <div class="tn-line">${gt.tn>12
+                            ? `<span class="tn-big impossible">NO SHOT</span><span class="tn-sub">needs ${gt.tn} — impossible on 2d6</span>`
+                            : `<span class="tn-big">${gt.tn}+</span><span class="tn-sub">${pct}% on 2d6 · G${gt.g} A+${gt.A} T${gt.T>=0?'+':''}${gt.T} O+${gt.O} R+${gt.R}</span>`}</div>
+                    </div>` : ''}
+                    </div>`;
+                })()}
                 <button class="apply-btn" onclick="applyTurn(${i})">APPLY END PHASE → ${p.net>=0?'+':''}${p.net} heat</button>
                 <div class="net">generates ${p.gen} − sinks ${p.sink} · jump is min 3, use extra for longer jumps</div>
                 <div class="pilot-row">PILOT HITS
