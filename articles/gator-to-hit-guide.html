@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to calculate to-hit numbers in BattleTech using GATOR. Gunnery, Attacker movement, Target movement, Other modifiers and Range explained with worked examples and a 2d6 odds table.">
+    <meta name="keywords" content="BattleTech GATOR, BattleTech to hit, how to calculate to hit BattleTech, target movement modifier, BattleTech to hit calculator, 2d6 odds">
+    <title>BattleTech GATOR: How to Calculate To-Hit Numbers | BattleTech Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+<link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="https://battletechhq.com/articles/gator-to-hit-guide.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/articles/gator-to-hit-guide.html">
+    <meta property="og:title" content="BattleTech GATOR: How to Calculate To-Hit Numbers | BattleTech Hub">
+    <meta property="og:description" content="How to calculate to-hit numbers in BattleTech using GATOR. Gunnery, Attacker movement, Target movement, Other modifiers and Range explained with worked examples and a 2d6 odds table.">
+    <meta property="og:image" content="https://battletechhq.com/assets/images/og-default.jpg">
+    <meta property="og:site_name" content="BattleTech Hub">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BattleTech GATOR: How to Calculate To-Hit Numbers | BattleTech Hub">
+    <meta name="twitter:description" content="How to calculate to-hit numbers in BattleTech using GATOR. Gunnery, Attacker movement, Target movement, Other modifiers and Range explained with worked examples and a 2d6 odds table.">
+    <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BattleTech GATOR: How to Calculate To-Hit Numbers | BattleTech Hub", "description": "How to calculate to-hit numbers in BattleTech using GATOR. Gunnery, Attacker movement, Target movement, Other modifiers and Range explained with worked examples and a 2d6 odds table.", "url": "https://battletechhq.com/articles/gator-to-hit-guide.html", "author": {"@type": "Person", "name": "David White"}, "publisher": {"@type": "Organization", "name": "BattleTech Hub", "url": "https://battletechhq.com"}, "datePublished": "2026-07-13", "dateModified": "2026-07-13"}</script>
+</head>
+<body>
+    <header><div class="header-content"><a href="../index.html" class="logo">⚔️ BattleTech Hub</a><button class="nav-toggle" aria-label="Menu">☰ MENU</button>
+<nav><ul><li><a href="../index.html#getting-started">Getting Started</a></li><li><a href="../index.html#painting">Painting &amp; Hobby</a></li><li><a href="../index.html#gameplay">Gameplay</a></li><li><a href="../index.html#lore">Lore</a></li><li><a href="../index.html#buying-guides">Buying Guides</a></li></ul></nav></div></header>
+
+    <div class="container"><div class="content-wrapper"><main class="main-content">
+        <div class="article-hero" style="background-image: url('../assets/images/articles/gator.jpg')"></div>
+        <article>
+<h1>BattleTech GATOR: How to Calculate To-Hit Numbers</h1>
+
+<p>You will do this calculation more than anything else in BattleTech. Every weapon, every attack, every turn. Get it wrong and you either miss a shot you should have landed or take one you had no business taking. Get it right and the whole game speeds up.</p>
+
+<p>The good news is that it is not complicated once it clicks. There is a mnemonic for it, GATOR, and by your third or fourth game you will be running the numbers without thinking about it.</p>
+
+<h2>What GATOR Stands For</h2>
+
+<p>Every to-hit number in Classic BattleTech is built from five things. Add them together, and the result is the number you need to roll or beat on 2d6.</p>
+
+<ul>
+<li><strong>G</strong> = Gunnery skill (your pilot's base number)</li>
+<li><strong>A</strong> = Attacker movement (what your 'Mech did this turn)</li>
+<li><strong>T</strong> = Target movement (how far the enemy moved)</li>
+<li><strong>O</strong> = Other modifiers (terrain, heat, damage, all the rest)</li>
+<li><strong>R</strong> = Range (which bracket the target sits in)</li>
+</ul>
+
+<p>That is it. Five numbers, added up. The order in the mnemonic is not the order you have to calculate in, it just makes it easy to remember so you do not forget one. Forgetting the range modifier is the classic new-player mistake.</p>
+
+<h2>G: Gunnery Skill</h2>
+
+<p>Your starting point. A standard pilot has Gunnery 4, and that is the baseline the game is balanced around. Green pilots run 5, veterans 3, and elite pilots 2 or better.</p>
+
+<p>Lower is better, and the difference is enormous. A Gunnery 3 pilot is not slightly better than a Gunnery 4 pilot. Because you are rolling 2d6, every single point shifts your odds dramatically. Look at the odds table further down and it becomes obvious why people pay so much Battle Value for good pilots.</p>
+
+<h2>A: Attacker Movement</h2>
+
+<p>What your own 'Mech did in the movement phase. Shooting while standing still is easy. Shooting while sprinting across broken ground is not.</p>
+
+<ul>
+<li>Stationary: <strong>+0</strong></li>
+<li>Walked: <strong>+1</strong></li>
+<li>Ran: <strong>+2</strong></li>
+<li>Jumped: <strong>+3</strong></li>
+</ul>
+
+<p>This is the modifier players most often eat without thinking. Running to a slightly better position and then taking a +2 on every shot is frequently a worse deal than standing still and firing clean. Jumping is worse again. Sometimes the position is worth it. Often it is not, and you should do the maths before you commit.</p>
+
+<h2>T: Target Movement</h2>
+
+<p>How far the enemy moved, counted in hexes. This is called the Target Movement Modifier, or TMM, and it is the reason light 'Mechs survive.</p>
+
+<ul>
+<li>0 to 2 hexes: <strong>+0</strong></li>
+<li>3 to 4 hexes: <strong>+1</strong></li>
+<li>5 to 6 hexes: <strong>+2</strong></li>
+<li>7 to 9 hexes: <strong>+3</strong></li>
+<li>10 to 17 hexes: <strong>+4</strong></li>
+<li>18 to 24 hexes: <strong>+5</strong></li>
+<li>25 or more hexes: <strong>+6</strong></li>
+</ul>
+
+<p>On top of that, if the target <strong>jumped</strong>, add another <strong>+1</strong>. And if the target is <strong>immobile</strong>, shut down, or the pilot is unconscious, you get <strong>-4</strong> instead of any TMM at all. That is not a typo. Immobile targets are free hits, which is exactly why a shutdown 'Mech is in so much trouble.</p>
+
+<p>This is the single biggest reason a Locust is not a waste of tonnage. It cannot take a hit, but a Locust that has run 12 hexes is sitting at +4 before you have added anything else. Speed is armour.</p>
+
+<h2>O: Other Modifiers</h2>
+
+<p>This is the catch-all bucket, and it is where most of the arguments at the table happen. The common ones:</p>
+
+<ul>
+<li><strong>Heat.</strong> Your own heat gives you a to-hit penalty. At heat 8 you take +1, at 13 you take +2, at 17 you take +3, and at 24 you take +4. Read our <a href="heat-management-guide.html">heat management guide</a> for the full scale.</li>
+<li><strong>Light woods:</strong> +1 per hex, including the target's own hex.</li>
+<li><strong>Heavy woods:</strong> +2 per hex. These stack, so two hexes of heavy woods between you and the target is +4 and your shot is probably gone.</li>
+<li><strong>Partial cover:</strong> +1, and any hit that would have landed on a leg misses instead.</li>
+<li><strong>Minimum range:</strong> if you fire a weapon inside its minimum range, add 1 for every hex you are inside it, plus one. An LRM with a minimum range of 6 firing at a target 4 hexes away takes a +3. This is why brawling with an LRM boat is a bad idea.</li>
+<li><strong>Damage:</strong> sensor hits, shoulder and arm actuator hits all add penalties.</li>
+</ul>
+
+<p>There are more, and the full list lives in Total Warfare. But heat, woods and range are the ones you will actually hit in a normal game.</p>
+
+<h2>R: Range</h2>
+
+<p>Which bracket the target falls into for the weapon you are firing. Note that this is per weapon, not per 'Mech, which is the part that trips people up.</p>
+
+<ul>
+<li>Short range: <strong>+0</strong></li>
+<li>Medium range: <strong>+2</strong></li>
+<li>Long range: <strong>+4</strong></li>
+</ul>
+
+<p>A medium laser at 6 hexes is at long range and eating a +4. A PPC at 6 hexes is at short range and taking nothing. Same target, same turn, completely different numbers. When you are working out a shot, you have to do it weapon by weapon.</p>
+
+<h2>Worked Example</h2>
+
+<p>Your Warhammer WHM-6R walked this turn. You are firing a PPC at an Atlas that ran 5 hexes, sitting 10 hexes away (medium range for a PPC), with one hex of light woods in the way. Your pilot is a standard Gunnery 4, and your 'Mech is running at heat 3.</p>
+
+<ul>
+<li><strong>G</strong>unnery: 4</li>
+<li><strong>A</strong>ttacker walked: +1</li>
+<li><strong>T</strong>arget moved 5 hexes: +2</li>
+<li><strong>O</strong>ther (light woods): +1 (heat 3 is below the threshold, so nothing there)</li>
+<li><strong>R</strong>ange (medium): +2</li>
+</ul>
+
+<p>Total: <strong>4 + 1 + 2 + 1 + 2 = 10</strong>. You need a 10 or better on 2d6, which is a 17% shot. That is a bad shot. If you had stood still and skipped the walk, it would be a 9, which is 28%. Standing still nearly doubled your chances.</p>
+
+<h2>2d6 Odds Table</h2>
+
+<p>This is the table worth committing to memory, because it turns your to-hit number into an actual decision. The jump from 7 to 8 is where shots start feeling bad.</p>
+
+<ul>
+<li>2+: 100%</li>
+<li>3+: 97%</li>
+<li>4+: 92%</li>
+<li>5+: 83%</li>
+<li>6+: 72%</li>
+<li>7+: 58%</li>
+<li>8+: 42%</li>
+<li>9+: 28%</li>
+<li>10+: 17%</li>
+<li>11+: 8%</li>
+<li>12+: 3%</li>
+<li>13 or higher: impossible</li>
+</ul>
+
+<p>Anything needing 13 or more cannot be rolled on 2d6. If your maths gets you there, that shot is simply not happening and you should be firing something else, or moving somewhere better.</p>
+
+<h2>The Tactical Point</h2>
+
+<p>Once GATOR is second nature, it stops being arithmetic and starts being strategy. You begin to see the game differently.</p>
+
+<p>You will notice that standing still is underrated. That closing to short range often beats staying safe at long range, because +0 versus +4 is worth more than the extra armour you keep by hanging back. That chasing a fast light 'Mech with a slow assault is a losing proposition, because you are eating the movement penalty while it racks up TMM. That a shutdown 'Mech at -4 needs to be killed right now, before it stands back up.</p>
+
+<p>That is the real value of learning it. Not the sums, the decisions.</p>
+
+<div style="background:#141414;border:1px solid rgba(211,47,47,0.3);border-radius:8px;padding:16px 18px;margin:20px 0;"><p style="margin:0;"><strong style="color:#ff8c00;">Let the tool do the maths.</strong> Our free <a href="../game-tracker.html" style="color:#ff8c00;">Game Tracker</a> has a GATOR calculator built into every 'Mech card. Your attacker movement and heat penalty fill themselves in automatically, so you only set target movement and range, and it gives you the target number and your odds on 2d6 instantly. <a href="../game-tracker.html" style="color:#ff8c00;">Open the tracker &rarr;</a></p></div>
+
+<h2>Common Mistakes</h2>
+
+<p><strong>Forgetting range is per weapon.</strong> Your PPC and your medium laser are almost never in the same bracket. Work them out separately.</p>
+
+<p><strong>Forgetting your own heat.</strong> It creeps up on you, and suddenly every shot is +2 worse and you have not noticed.</p>
+
+<p><strong>Forgetting the target jumped.</strong> That extra +1 gets dropped constantly.</p>
+
+<p><strong>Counting the target's hex twice in woods.</strong> The target's own hex counts once, along with each intervening hex.</p>
+
+<p><strong>Taking bad shots anyway.</strong> If it is a 10+, ask whether holding fire and cooling off, or repositioning next turn, would be better. Often it would be.</p>
+
+<h2>Where to Go Next</h2>
+
+<p>GATOR and heat are the two systems that decide most BattleTech games. If you have got your head around this one, the other half of the puzzle is understanding what your heat curve lets you actually fire.</p>
+
+<p>Have a read of the <a href="heat-management-guide.html">heat management guide</a> next, and if you are still working out how to put a force together in the first place, start with the <a href="lance-building-guide.html">lance building guide</a>.</p>
+
+                <div class="sidebar-widget newsletter-box" style="margin-top:16px;">
+                    <h3 style="color:#ff8c00; margin-bottom:8px;">📬 Stay in the Loop</h3>
+                    <p style="font-size:0.85rem; color:#999;">New guides, tool updates and BattleTech content. No spam.</p>
+                </div>
+        </article>
+    </main>
+
+    <aside class="sidebar">
+        <div class="sidebar-widget"><h3>🔧 Free Tools</h3><ul><li><a href="../lance-builder.html">Lance Builder &amp; Force Planner</a></li><li><a href="../game-tracker.html">Game Tracker (Classic &amp; Alpha Strike)</a></li><li><a href="../paint-tool.html">Paint Scheme Planner</a></li></ul></div>
+        <div class="sidebar-widget"><h3>🔥 Popular Guides</h3><ul><li><a href="battletech-beginner-guide.html">Beginner's Guide</a></li><li><a href="heat-management-guide.html">Heat Management</a></li><li><a href="lance-building-guide.html">Lance Building Guide</a></li><li><a href="alpha-strike-vs-classic.html">Alpha Strike vs Classic</a></li></ul></div>
+        <div class="sidebar-widget"><h3>⚡ Quick Links</h3><ul><li><a href="https://www.sarna.net" target="_blank">Sarna.net Wiki</a></li><li><a href="https://store.catalystgamelabs.com" target="_blank">Official Store</a></li><li><a href="https://megamek.org" target="_blank">MegaMek Software</a></li></ul></div>
+    </aside>
+    </div></div>
+
+    <footer><div class="footer-content"><div class="footer-section"><h4>About BattleTech Hub</h4><p>Your trusted source for BattleTech guides, reviews, and strategies.</p></div><div class="footer-section"><h4>Quick Links</h4><ul><li><a href="../about.html">About Us</a></li><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../affiliate-disclosure.html">Affiliate Disclosure</a></li></ul></div><div class="footer-section"><h4>Resources</h4><ul><li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li><li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li><li><a href="https://bg.battletech.com" target="_blank">Official BattleTech</a></li></ul></div></div><div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech Hub. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>            <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+        </div></footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.querySelector('nav');
+    if (toggle && nav) {
+        toggle.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+    }
+});
+</script>
+</body>
+</html>
