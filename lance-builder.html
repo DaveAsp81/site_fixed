@@ -330,6 +330,7 @@
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;">
         <label style="font-size:0.72rem; color:#888;">NAME *<input id="cm-name" placeholder="Warhammer WHM-6N 'Nate'" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
         <label style="font-size:0.72rem; color:#888;">BASE CHASSIS<input id="cm-chassis" placeholder="Warhammer (for the shopping list)" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
+        <label style="font-size:0.72rem; color:#888;">TECHNOLOGY<select id="cm-technology" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"><option>Inner Sphere</option><option>Clan</option><option>Mixed</option></select></label>
         <label style="font-size:0.72rem; color:#888;">TONS *<input id="cm-tons" type="number" min="10" max="200" placeholder="70" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
         <label style="font-size:0.72rem; color:#888;">BV *<input id="cm-bv" type="number" min="1" placeholder="1450" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
         <label style="font-size:0.72rem; color:#888;">PV (blank = BV÷40)<input id="cm-pv" type="number" min="1" placeholder="36" style="width:100%; background:#0e0e0e; border:1px solid #333; color:#eee; padding:8px; border-radius:4px; margin-top:3px;"></label>
@@ -923,6 +924,7 @@ function addSelectedVariant() {
         name: `${c.chassis} ${v.name}`,
         chassis: c.chassis,
         tons: c.tons,
+        technology: c.technology || 'Inner Sphere',
         bv: v.bv,
         pv: v.pv || Math.round(v.bv / 40),
         role: v.role,
@@ -1063,6 +1065,7 @@ function randomizeThemedLance() {
                 name: `${mech.chassis} ${variant.name}`,
                 chassis: mech.chassis,
                 tons: mech.tons,
+                technology: mech.technology || 'Inner Sphere',
                 bv: variant.bv,
                 pv: variant.pv || Math.round(variant.bv / 40),
                 role: variant.role,
@@ -1665,17 +1668,40 @@ function salvageBoxLink(chassis) {
     return amazonSearchLink(`BattleTech ${chassis} Salvage Box ForcePack Catalyst miniature`);
 }
 
+// Determine Star vs Lance from what's actually in the roster, not the
+// (possibly since-changed) faction filter dropdown. Majority Clan-tech
+// wins; a tie falls back to roster size (Stars run 5, Lances run 4).
+// Aggregate label for the force panel: reflects what's actually in currentForce,
+// not the live faction dropdown. "Formations" covers a mixed Star+Lance force.
+function forceUnitLabel(force) {
+    if (!force.length) return 'Lances';
+    const stars = force.filter(L => L.type === 'Star').length;
+    if (stars === 0) return 'Lances';
+    if (stars === force.length) return 'Stars';
+    return 'Formations';
+}
+
+function lanceIsClan(units) {
+    if (!units || !units.length) return isClanFaction();
+    let clanCount = 0;
+    units.forEach(u => { if ((u.technology || 'Inner Sphere').startsWith('Clan')) clanCount++; });
+    const isCount = units.length - clanCount;
+    if (clanCount !== isCount) return clanCount > isCount;
+    return units.length > 4;   // even split: size is the next-best signal
+}
+
 function addLanceToForce() {
     if (currentLance.length === 0) {
         alert(isClanFaction() ? "Star is empty, Technician." : "Add some 'Mechs to the lance first!");
         return;
     }
-    const def = (isClanFaction() ? 'Star ' : 'Lance ') + (currentForce.length + 1);
-    const name = prompt("Name this " + (isClanFaction() ? 'Star' : 'lance') + ":", def);
+    const clan = lanceIsClan(currentLance);
+    const def = (clan ? 'Star ' : 'Lance ') + (currentForce.length + 1);
+    const name = prompt("Name this " + (clan ? 'Star' : 'lance') + ":", def);
     if (name === null) return;
     currentForce.push({
         name: name || def,
-        type: isClanFaction() ? 'Star' : 'Lance',
+        type: clan ? 'Star' : 'Lance',
         units: JSON.parse(JSON.stringify(currentLance))
     });
     saveForceState();
@@ -1706,7 +1732,8 @@ function renderForce() {
         <div style="background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:12px 14px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                 <input value="${L.name}" onchange="renameForceLance(${i}, this.value)"
-                    style="background:transparent; border:none; color:#fff; font-family:'Rajdhani'; font-weight:700; font-size:1rem; width:70%;">
+                    style="background:transparent; border:none; color:#fff; font-family:'Rajdhani'; font-weight:700; font-size:1rem; width:60%;">
+                <span style="font-family:'Share Tech Mono'; font-size:0.65rem; color:#ffc107; border:1px solid #ffc107; border-radius:10px; padding:2px 8px; letter-spacing:0.08em;">${L.type ? L.type.toUpperCase() : 'LANCE'}</span>
                 <button onclick="removeForceLance(${i})" style="background:none; border:none; color:#ff4c4c; cursor:pointer; font-size:1.1em;">×</button>
             </div>
             ${L.units.map(u=>`<div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:3px 0; border-bottom:1px solid #1c1c1c;">
@@ -1726,7 +1753,7 @@ function renderForce() {
             </div>
         </div>
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#2a2a2a; border:1px solid #2a2a2a; border-radius:6px; overflow:hidden; margin-bottom:16px;">
-            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${currentForce.length}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">${isClanFaction()?'Stars':'Lances'}</div></div>
+            <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${currentForce.length}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">${forceUnitLabel(currentForce)}</div></div>
             <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalUnits}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">'Mechs</div></div>
             <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalTons}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">Tonnage</div></div>
             <div style="background:#111; padding:12px;"><div style="font-family:'Share Tech Mono'; font-size:1.4rem; color:#ff8c00;">${totalValue.toLocaleString()}</div><div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">Total ${valueLabel}</div></div>
@@ -1826,6 +1853,7 @@ function buildCustomUnit() {
         id: 'custom-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
         name: name,
         chassis: cmVal('cm-chassis') || name.split(' ')[0],
+        technology: cmVal('cm-technology') || 'Inner Sphere',
         tons: tons,
         bv: bv,
         pv: cmNum('cm-pv') || Math.round(bv / 40),
@@ -1868,6 +1896,7 @@ function addCustomMech(saveToLibrary) {
         renderCustomLibrary();
     }
     ['cm-name','cm-chassis','cm-tons','cm-bv','cm-pv','cm-walk','cm-jump','cm-sinks','cm-weapons','cm-as-a','cm-as-s','cm-as-ds','cm-as-dm','cm-as-dl','cm-as-de','cm-as-ov','cm-as-ab'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('cm-technology').value = 'Inner Sphere';
 }
 
 function getCustomLibrary() {
@@ -1970,6 +1999,7 @@ function checkSharedForce() {
             const { m, v } = hit;
             return {
                 id: v.id, name: `${m.chassis} ${v.name}`, chassis: m.chassis, tons: m.tons,
+                technology: m.technology || 'Inner Sphere',
                 bv: v.bv, pv: v.pv || Math.round(v.bv / 40), role: v.role,
                 movement: v.movement, heatsinks: v.heatsinks, weapons: v.weapons,
                 bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },
