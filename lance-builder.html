@@ -396,6 +396,19 @@
 // ==================== COMPLETE SUCCESSION WARS DATABASE ====================
 let mechDatabase = [];
 
+// ==================== SAFETY HELPERS ====================
+// Escape user-controlled strings before HTML interpolation. Matters because
+// share links can carry attacker-crafted custom-mech fields to a recipient.
+function esc(v) {
+    return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+// localStorage can hold corrupted JSON (partial writes, extensions, manual edits).
+// One bad key should never take down the whole page.
+function safeParse(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
+    catch(e) { console.error('Corrupted localStorage key, resetting:', key, e); return fallback; }
+}
+
 // ==================== SETTINGS ====================
 let currentMode = "classic";   // "classic" or "alpha"
 let currentLance = [];
@@ -1125,15 +1138,15 @@ function updateDisplay() {
 
         roster.innerHTML += `
             <li class="roster-item">
-                <img src="${unit.img}" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
+                <img src="${esc(unit.img)}" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
                 <div style="flex-grow:1;">
-                    <strong>${unit.name}</strong><br>
+                    <strong>${esc(unit.name)}</strong><br>
                     <small>${unit.tons}t | ${adjustedValue} ${valueLabel} <span style="font-size:0.75em;color:#888;">(${baseValue} base × ${multiplier.toFixed(2)})</span></small>
                     
                     <div class="pilot-edit">
                         <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
                             <input type="text" id="pilot-name-${i}"
-                                value="${unit.pilotName || ''}"
+                                value="${esc(unit.pilotName || '')}"
                                 placeholder="${isClanFaction() ? 'Warrior name...' : 'Pilot name...'}"
                                 style="flex:1; background:#111; border:1px solid #2a2a2a; color:#ddd; padding:5px 8px; border-radius:4px; font-size:0.8rem; font-family:inherit;"
                                 onchange="updatePilotName(${i}, this.value)">
@@ -1153,7 +1166,7 @@ function updateDisplay() {
                             ${Object.keys(pilotBackgrounds()).map(bg => `<option value="${bg}" ${unit.background === bg ? 'selected' : ''}>${bg}</option>`).join('')}
                             <option value="Custom" ${unit.background === 'Custom' ? 'selected' : ''}>Custom</option>
                         </select>
-                        ${unit.background === 'Custom' ? `<input type="text" value="${unit.customBackground || ''}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
+                        ${unit.background === 'Custom' ? `<input type="text" value="${esc(unit.customBackground || '')}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
                     </div>
                 </div>
                 <button onclick="removeUnit(${i})" style="background:none;color:#ff4c4c;border:none;cursor:pointer;font-size:1.2em;">×</button>
@@ -1341,7 +1354,7 @@ function saveLance() {
     const name = prompt("Enter a name for this lance:", "Lance " + new Date().toLocaleDateString());
     if (!name) return;
 
-    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    let saved = safeParse('battletechLances', {});
     saved[name] = JSON.parse(JSON.stringify(currentLance)); // deep copy
     localStorage.setItem('battletechLances', JSON.stringify(saved));
     refreshSavedList();
@@ -1349,7 +1362,7 @@ function saveLance() {
 }
 
 function loadLance(name) {
-    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    const saved = safeParse('battletechLances', {});
     if (saved[name]) {
         currentLance = JSON.parse(JSON.stringify(saved[name]));
         updateDisplay();
@@ -1359,7 +1372,7 @@ function loadLance(name) {
 
 function deleteSavedLance(name) {
     if (!confirm(`Delete "${name}" permanently?`)) return;
-    let saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    let saved = safeParse('battletechLances', {});
     delete saved[name];
     localStorage.setItem('battletechLances', JSON.stringify(saved));
     refreshSavedList();
@@ -1367,7 +1380,7 @@ function deleteSavedLance(name) {
 
 function refreshSavedList() {
     const container = document.getElementById('saved-list');
-    const saved = JSON.parse(localStorage.getItem('battletechLances') || '{}');
+    const saved = safeParse('battletechLances', {});
     let html = '';
 
     Object.keys(saved).sort().forEach(name => {
@@ -1617,7 +1630,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const AMAZON_TAG = "battletechhq-20";   // Amazon Associates tag
 const AMAZON_DOMAIN = "www.amazon.com";
 
-let currentForce = JSON.parse(localStorage.getItem('battletechForce') || '[]');
+let currentForce = safeParse('battletechForce', []);
 
 // Verified Force Pack contents (Catalyst ForcePacks + Mercenary line).
 // Add `amazon` product URL to turn a search link into a direct Buy button.
@@ -1731,13 +1744,13 @@ function renderForce() {
         return `
         <div style="background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:12px 14px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <input value="${L.name}" onchange="renameForceLance(${i}, this.value)"
+                <input value="${esc(L.name)}" onchange="renameForceLance(${i}, this.value)"
                     style="background:transparent; border:none; color:#fff; font-family:'Rajdhani'; font-weight:700; font-size:1rem; width:60%;">
                 <span style="font-family:'Share Tech Mono'; font-size:0.65rem; color:#ffc107; border:1px solid #ffc107; border-radius:10px; padding:2px 8px; letter-spacing:0.08em;">${L.type ? L.type.toUpperCase() : 'LANCE'}</span>
                 <button onclick="removeForceLance(${i})" style="background:none; border:none; color:#ff4c4c; cursor:pointer; font-size:1.1em;">×</button>
             </div>
             ${L.units.map(u=>`<div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:3px 0; border-bottom:1px solid #1c1c1c;">
-                <span>${u.name}</span><span style="color:#888;">${u.tons}t · ${forceUnitValue(u)} ${valueLabel}</span></div>`).join('')}
+                <span>${esc(u.name)}</span><span style="color:#888;">${u.tons}t · ${forceUnitValue(u)} ${valueLabel}</span></div>`).join('')}
             <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Share Tech Mono'; font-size:0.8rem; color:#888;">
                 <span>${lt}t</span><span>${lv} ${valueLabel}</span></div>
         </div>`;
@@ -1924,7 +1937,7 @@ function renderCustomLibrary() {
     el.innerHTML = `<div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">My saved 'Mechs</div>` +
         lib.map((m, i) => `
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; background:#0e0e0e; border:1px solid #262626; border-radius:5px; padding:8px 12px; margin-bottom:6px;">
-            <div style="font-size:0.85rem;"><b style="color:#eee;">${m.name}</b>
+            <div style="font-size:0.85rem;"><b style="color:#eee;">${esc(m.name)}</b>
                 <span style="color:#777; font-family:'Share Tech Mono',monospace; font-size:0.72rem;"> ${m.tons}t · BV ${m.bv}${m.bf ? ' · AS ✓' : ''}${m.weapons && m.weapons.length ? ' · ' + m.weapons.length + ' wpn' : ''}</span></div>
             <div style="display:flex; gap:6px;">
                 <button onclick="addSavedCustom(${i})" style="background:#161616; border:1px solid #ff8c00; color:#ff8c00; padding:5px 12px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-weight:700;">＋ lance</button>

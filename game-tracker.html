@@ -192,6 +192,12 @@
      - shutdown unit restarts at heat 0
 ======================================================== */
 
+// Escape user-controlled strings (names, notes, custom-mech fields) before
+// HTML interpolation. Share links can deliver attacker-crafted customs.
+function esc(v) {
+    return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 let force = [];
 let gs = [];   // per-unit state: {a,s,h,dead} (AS) + {ch, pilot, notes, fired, move, extra} (Classic)
 let mode = localStorage.getItem('battletechTrackerMode') || 'as';
@@ -203,11 +209,19 @@ function loadForce() {
     catch(e) { force = []; }
 }
 function unitKeyCount() { return force.reduce((n,L)=>n+L.units.length, 0); }
+function forceFingerprint() {
+    return force.map(L => L.units.map(u => u.id || u.name).join(',')).join('|');
+}
 function loadState() {
     try { gs = JSON.parse(localStorage.getItem('battletechGameState') || '[]'); } catch(e) { gs = []; }
     const n = unitKeyCount();
-    if (gs.length !== n) gs = Array.from({length:n}, BLANK);
-    gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing classic fields
+    const fp = forceFingerprint();
+    const savedFp = localStorage.getItem('battletechGameStateFp');
+    // Reset if the roster changed shape OR composition — length alone can match
+    // while every unit's state belongs to a different 'Mech (edited force).
+    if (gs.length !== n || (savedFp !== null && savedFp !== fp)) gs = Array.from({length:n}, BLANK);
+    gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing newer fields
+    localStorage.setItem('battletechGameStateFp', fp);
 }
 function saveState() { localStorage.setItem('battletechGameState', JSON.stringify(gs)); }
 
@@ -275,7 +289,7 @@ function renderAS() {
     const app = document.getElementById('app');
     let gi = 0, html = '';
     force.forEach(L => {
-        html += `<div class="gt-lance-title">${L.name} <span style="color:#555;">· ${L.type}</span></div><div class="gt-grid">`;
+        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#555;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
         L.units.forEach(u => {
             const i = gi++;
             const st = gs[i];
@@ -288,7 +302,7 @@ function renderAS() {
             const pip = (type, total, lost, idx) =>
                 `<button class="pip ${type} ${idx < (total-lost) ? 'on' : 'off'}" onclick="tapPip(${i},'${type==='armor'?'a':'s'}',${idx},${total})" title="${type} ${idx+1}"></button>`;
             html += `<div class="card ${st.dead?'dead':''} ${st.h>=4?'shut':''}">
-                <h3>${u.name}</h3>
+                <h3>${esc(u.name)}</h3>
                 <div class="meta">MV <b>${mv.ground!=null? mv.ground+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b> · OV <b>${bf.overheat ?? '—'}</b> · ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
                 <div style="font-size:0.62rem; color:#666; letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;">Damage dealt at range</div>
                 <div class="dmg-table">
@@ -304,8 +318,8 @@ function renderAS() {
                     <button class="hstep s ${st.h>=4?'cur':''}" onclick="setHeat(${i},4)">S</button>
                 </span></div>
                 <div class="effects ${fx.cls}">${fx.txt}</div>
-                ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${bf.abilities} <span style="color:#555;">${st.abilOpen?'▾':'ⓘ'}</span></div>
-                ${st.abilOpen ? `<div class="abil-defs">${expandAbilities(bf.abilities).map(a=>`<div><b>${a.tok}</b> · ${a.def.replace(/^[^—]+—\s*/,'')}</div>`).join('')}</div>` : ''}` : ''}
+                ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${esc(bf.abilities)} <span style="color:#555;">${st.abilOpen?'▾':'ⓘ'}</span></div>
+                ${st.abilOpen ? `<div class="abil-defs">${expandAbilities(bf.abilities).map(a=>`<div><b>${esc(a.tok)}</b> · ${esc(a.def.replace(/^[^—]+—\s*/,''))}</div>`).join('')}</div>` : ''}` : ''}
                 <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
             </div>`;
         });
@@ -535,7 +549,7 @@ function renderClassic() {
     const app = document.getElementById('app');
     let gi = 0, html = '';
     force.forEach(L => {
-        html += `<div class="gt-lance-title">${L.name} <span style="color:#555;">· ${L.type}</span></div><div class="gt-grid">`;
+        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#555;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
         L.units.forEach(u => {
             const i = gi++;
             const st = gs[i];
@@ -545,8 +559,8 @@ function renderClassic() {
             const hcls = st.ch>=20?'h3':st.ch>=10?'h2':st.ch>=5?'h1':'h0';
             const pilotTN = ['—','3+','5+','7+','10+','11+','DEAD'][st.pilot] || '—';
             html += `<div class="card ${st.dead?'dead':''} ${st.ch>=30?'shut':''}">
-                <h3>${u.name}</h3>
-                <div class="meta"><b>${u.movement || '?'}</b> · Sinks <b>${u.heatsinks || '?'} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv != null ? Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting)) : '—'}</b> <span style="color:#666;">(${u.gunnery ?? 4}/${u.piloting ?? 5})</span></div>
+                <h3>${esc(u.name)}</h3>
+                <div class="meta"><b>${esc(u.movement || '?')}</b> · Sinks <b>${esc(u.heatsinks || '?')} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv != null ? Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting)) : '—'}</b> <span style="color:#666;">(${u.gunnery ?? 4}/${u.piloting ?? 5})</span></div>
                 <div class="heatbox">
                     <button class="step" onclick="adjHeat(${i},-1)">−</button>
                     <div class="heatnum ${hcls}">${st.ch}</div>
@@ -562,7 +576,7 @@ function renderClassic() {
                         <button class="step" onclick="fireStep(${i},${wi},-1,${w.count})">−</button>
                         <span class="fired">${st.fired[wi]||0}/${w.count}</span>
                         <button class="step" onclick="fireStep(${i},${wi},1,${w.count})">+</button>
-                        <span class="wname">${w.name}</span>
+                        <span class="wname">${esc(w.name)}</span>
                         ${tracksAmmo ? `<input class="wammo ${a===0?'empty':''}" type="number" min="0" placeholder="ammo" value="${a ?? ''}" title="shots remaining — set once from your record sheet, fires auto-deduct. Reset Game refills to the highest number you've entered; to lower that maximum, clear the field and re-enter. Clear to stop tracking." onchange="setAmmo(${i},${wi},this.value)">` : ''}
                         <input class="wheat ${w.known?'':'unknown'}" type="number" min="0" value="${heat}" title="heat per shot${w.known?'':' — unknown weapon, set manually'}" onchange="setWHeat(${i},${wi},this.value)">
                     </div>`;}).join('')}
@@ -612,7 +626,7 @@ function renderClassic() {
                     <button class="step" onclick="pilotStep(${i},1)">+</button>
                     <span>consciousness: <b style="color:${st.pilot>=6?'#ff4c4c':'#ccc'};">${pilotTN}</b></span>
                 </div>
-                <input class="notes-in" placeholder="notes / ammo…" value="${(st.notes||'').replace(/"/g,'&quot;')}" onchange="setNotes(${i},this.value)">
+                <input class="notes-in" placeholder="notes / ammo…" value="${esc(st.notes||'')}" onchange="setNotes(${i},this.value)">
                 <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
             </div>`;
         });
