@@ -194,6 +194,10 @@
 
 // Escape user-controlled strings (names, notes, custom-mech fields) before
 // HTML interpolation. Share links can deliver attacker-crafted customs.
+function safeSave(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch(e) { console.error('Could not save game state:', e); return false; }
+}
 function esc(v) {
     return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
@@ -223,7 +227,7 @@ function loadState() {
     gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing newer fields
     localStorage.setItem('battletechGameStateFp', fp);
 }
-function saveState() { localStorage.setItem('battletechGameState', JSON.stringify(gs)); }
+function saveState() { safeSave('battletechGameState', gs); }
 
 /* Older saved forces (pre bf-patch) lack card stats — look them up from mechs.json by name */
 async function hydrateMissing() {
@@ -598,7 +602,7 @@ function renderClassic() {
                     ${st.gator.open ? `
                     <div class="gator-body">
                         <div class="grow"><span class="glbl" title="Gunnery skill — edit if this pilot differs">G</span>
-                            <input class="wheat" type="number" min="0" max="8" value="${gt.g}" onchange="setGator(${i},'g',Math.max(0,parseInt(this.value)||0))">
+                            <input class="wheat" type="number" min="0" max="8" value="${gt.g}" onchange="setGator(${i},'g',Math.min(8,Math.max(0,parseInt(this.value,10)||0)))">
                             <span class="ghint">gunnery</span></div>
                         <div class="grow"><span class="glbl" title="Attacker movement — follows the movement you selected this turn">A</span>
                             <span class="gauto">+${gt.A}</span><span class="ghint">${(st.move||'none')==='none'?'stationary':st.move} (auto)</span></div>

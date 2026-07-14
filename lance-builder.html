@@ -402,8 +402,25 @@ let mechDatabase = [];
 function esc(v) {
     return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
+// CSV cell: escape embedded quotes, and neutralise spreadsheet formula injection
+// (a name starting with = + - @ executes as a formula in Excel/Sheets).
+function csvCell(v) {
+    let t = String(v ?? '');
+    if (/^[=+\-@\t\r]/.test(t)) t = "'" + t;
+    return '"' + t.replace(/"/g, '""') + '"';
+}
 // localStorage can hold corrupted JSON (partial writes, extensions, manual edits).
 // One bad key should never take down the whole page.
+// localStorage.setItem throws QuotaExceededError when full (big forces + customs
+// + game state). Unguarded, that kills the save silently mid-operation.
+function safeSave(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch(e) {
+        console.error('Could not save to localStorage:', key, e);
+        alert("Couldn't save — your browser storage is full. Try clearing some saved lances or custom 'Mechs.");
+        return false;
+    }
+}
 function safeParse(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
     catch(e) { console.error('Corrupted localStorage key, resetting:', key, e); return fallback; }
@@ -658,7 +675,12 @@ function updatePilot(index, field, value) {
         currentLance[index].background = value;
         if (value !== 'Custom') delete currentLance[index].customBackground;
     } else {
-        currentLance[index][field] = parseInt(value) || 4;
+        // Gunnery 0 / Piloting 0 are legal elite skills — `|| 4` would silently
+        // erase them (same falsy-zero class as the old BV multiplier bug).
+        // Defaults differ per field: gunnery 4, piloting 5.
+        const fallback = field === 'piloting' ? 5 : 4;
+        const n = parseInt(value, 10);
+        currentLance[index][field] = Number.isFinite(n) ? Math.min(8, Math.max(0, n)) : fallback;
     }
     updateDisplay();
 }
@@ -1356,7 +1378,7 @@ function saveLance() {
 
     let saved = safeParse('battletechLances', {});
     saved[name] = JSON.parse(JSON.stringify(currentLance)); // deep copy
-    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    safeSave('battletechLances', saved);
     refreshSavedList();
     alert(`✅ Lance saved as "${name}"`);
 }
@@ -1374,7 +1396,7 @@ function deleteSavedLance(name) {
     if (!confirm(`Delete "${name}" permanently?`)) return;
     let saved = safeParse('battletechLances', {});
     delete saved[name];
-    localStorage.setItem('battletechLances', JSON.stringify(saved));
+    safeSave('battletechLances', saved);
     refreshSavedList();
 }
 
@@ -1442,7 +1464,7 @@ function exportLanceToCSV() {
         const mult = currentMode === 'classic' ? getPilotMultiplier(unit.gunnery, unit.piloting) : 1;
         const adj = adjustedUnitValue(unit);
 
-        csv += `"${unit.name}",${unit.tons},"${unit.role || ''}",${base},${adj},${unit.gunnery},${unit.piloting},"${unit.background}"\n`;
+        csv += [csvCell(unit.name), unit.tons, csvCell(unit.role || ''), base, adj, unit.gunnery, unit.piloting, csvCell(unit.background)].join(',') + "\n";
     });
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -1671,7 +1693,7 @@ function forceUnitChassis(u) {
 function forceUnitValue(u) {
     return adjustedUnitValue(u);   // skill-adjusted BV in classic; base PV in Alpha Strike
 }
-function saveForceState() { localStorage.setItem('battletechForce', JSON.stringify(currentForce)); }
+function saveForceState() { safeSave('battletechForce', currentForce); }
 
 function amazonSearchLink(terms) {
     return `https://${AMAZON_DOMAIN}/s?k=${encodeURIComponent(terms)}&tag=${AMAZON_TAG}`;
@@ -1723,7 +1745,7 @@ function addLanceToForce() {
 }
 
 function removeForceLance(i) { currentForce.splice(i, 1); saveForceState(); renderForce(); }
-function renameForceLance(i, v) { currentForce[i].name = v; saveForceState(); }
+function renameForceLance(i, v) { if (!currentForce[i]) return; currentForce[i].name = v; saveForceState(); }
 function clearForce() {
     if (currentForce.length && !confirm("Clear the entire force?")) return;
     currentForce = []; saveForceState(); renderForce();
@@ -1803,14 +1825,14 @@ function renderShoppingList() {
         const link = direct ? c.pack.amazon : amazonSearchLink(c.pack.name + " BattleTech ForcePack");
         return `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
             <div><div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${c.pack.name}</div>
-            <div style="font-size:0.76rem; color:#888; margin-top:2px;">Gives you: <span style="color:#ccc;">${c.covers.join(', ')}</span></div></div>
+            <div style="font-size:0.76rem; color:#888; margin-top:2px;">Gives you: <span style="color:#ccc;">${esc(c.covers.join(', '))}</span></div></div>
             <a href="${link}" target="_blank" rel="nofollow sponsored" style="background:${direct?'#ff8c00':'transparent'}; color:${direct?'#000':'#ff8c00'}; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">${direct?'Buy →':'Find on Amazon →'}</a>
         </div>`;
     }).join('');
 
     const singleRows = leftover.map(m =>
         `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
-            <div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${m}<div style="font-size:0.72rem; color:#777; margin-top:2px;">Single mini (Salvage Box)</div></div>
+            <div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${esc(m)}<div style="font-size:0.72rem; color:#777; margin-top:2px;">Single mini (Salvage Box)</div></div>
             <a href="${salvageBoxLink(m)}" target="_blank" rel="nofollow sponsored" style="background:transparent; color:#ff8c00; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">Find on Amazon →</a>
         </div>`).join('');
 
@@ -1905,7 +1927,7 @@ function addCustomMech(saveToLibrary) {
         const lib = getCustomLibrary();
         const existing = lib.findIndex(m => m.id === unit.id);
         if (existing >= 0) lib[existing] = unit; else lib.push(unit);
-        localStorage.setItem('battletechCustomMechs', JSON.stringify(lib));
+        safeSave('battletechCustomMechs', lib);
         renderCustomLibrary();
     }
     ['cm-name','cm-chassis','cm-tons','cm-bv','cm-pv','cm-walk','cm-jump','cm-sinks','cm-weapons','cm-as-a','cm-as-s','cm-as-ds','cm-as-dm','cm-as-dl','cm-as-de','cm-as-ov','cm-as-ab'].forEach(id => { document.getElementById(id).value = ''; });
@@ -1925,7 +1947,7 @@ function deleteSavedCustom(i) {
     const lib = getCustomLibrary();
     if (!confirm(`Delete "${lib[i].name}" from your saved 'Mechs?`)) return;
     lib.splice(i, 1);
-    localStorage.setItem('battletechCustomMechs', JSON.stringify(lib));
+    safeSave('battletechCustomMechs', lib);
     renderCustomLibrary();
 }
 
