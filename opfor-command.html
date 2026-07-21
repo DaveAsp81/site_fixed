@@ -176,6 +176,8 @@ ol.steps li::before{content:counter(s,upper-alpha);position:absolute;left:0;top:
 .sitrow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}
 .sit{display:flex;align-items:center;gap:6px}
 .sit-l{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.persona-sel{width:auto;font-family:var(--mono);font-size:10px;padding:3px 6px;border:1.5px solid var(--ink);
+  border-radius:14px;background:var(--card);color:var(--ink);cursor:pointer}
 
 details.gen{border:1.5px solid var(--ink);border-radius:2px;background:var(--card);margin-bottom:16px}
 details.gen>summary{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.09em;text-transform:uppercase;
@@ -440,17 +442,49 @@ function abilVal(u,code,band){
 }
 const has=(u,a)=>new RegExp('(^|,)'+a+'\\d*','i').test(u.v.b||'');
 
+/* Classic adds +2 to hit at medium and +4 at long. Equal damage further out
+   is therefore worse, not safer, so a longer band has to earn its place with
+   real extra damage. Alpha Strike has no range to-hit penalty, so out there
+   the longer band genuinely is the safer pick on a tie. */
+const CLASSIC_WEIGHT=[1, .85, .7, .55];
+/* Rough pass for weapons that cannot fire, or fire badly, up close. Alpha
+   Strike's damage numbers flatten minimum range away entirely, so without
+   this a PPC boat gets told to close to knife range. */
+const MINRANGE=/\bPPC\b|\bLRM\b|Gauss|AC\/2|AC\/5|Arrow IV|Long Tom/i;
+function minRangeShare(v){
+  const w=v.w||[]; if(!w.length) return 0;
+  let tot=0,min=0;
+  for(const s of w){ const m=/^(\d+)x/.exec(s), n=m?+m[1]:1;
+    tot+=n; if(MINRANGE.test(s)) min+=n; }
+  return tot?min/tot:0;
+}
 function preferredBand(v){
   const d=v.d, max=Math.max(...d);
   if(max<=0) return 0;
+  const melee=/(^|,)MEL/i.test(v.b||'');
+  if(RS==='classic'){
+    const shy=minRangeShare(v);
+    const w=d.map((x,i)=>x*CLASSIC_WEIGHT[i]*(i===0?(1-shy*0.5):1));
+    const best=Math.max(...w);
+    const idx=w.map((x,i)=>[x,i]).filter(p=>p[0]===best).map(p=>p[1]);
+    return idx[0];               // ties go to the shorter, easier-to-hit band
+  }
   const idx=d.map((x,i)=>[x,i]).filter(p=>p[0]===max).map(p=>p[1]);
   if(idx.length===1) return idx[0];
-  // Equal damage across bands. The longer band is strictly better, because
-  // fewer of the enemy's weapons reach you there. Melee units are the
-  // exception: contact is the whole point of the loadout.
-  return /(^|,)MEL/i.test(v.b||'') ? idx[0] : idx[idx.length-1];
+  return melee ? idx[0] : idx[idx.length-1];
 }
 const AGGR={Juggernaut:2,Brawler:2,Striker:1,Skirmisher:0,Ambusher:0,Sniper:-1,'Missile Boat':-2,Scout:-2};
+/* Pilot temperament, on top of role and the 2d6. Lets the same 'mech be
+   played by a glory hunter or by someone who wants to go home. */
+const PERSONA={
+  reckless:{l:'Reckless',m:3},
+  aggressive:{l:'Aggressive',m:2},
+  balanced:{l:'Balanced',m:0},
+  cautious:{l:'Cautious',m:-2},
+  timid:{l:'Timid',m:-4}
+};
+const PERSONA_ROLL=['balanced','balanced','balanced','aggressive','aggressive','cautious','cautious','reckless','timid'];
+const personaOf=u=>PERSONA[u.persona]||PERSONA.balanced;
 
 const TARGETS={
   Sniper:['whatever you have got a clean line on, the biggest one you can see','the one already bleeding armour, finish what someone else started','whoever is easiest to hit, do not waste the shot'],
@@ -463,15 +497,18 @@ const TARGETS={
   Ambusher:['whoever has not clocked you yet','whoever is already hurting','once you are seen, take the closest and make it count']
 };
 
-function generateOrder(u){
+function generateOrder(u,fixedRoll){
   const v=u.v, cur=u.band, pref=preferredBand(v), dmgHere=v.d[cur];
-  const roll=d6()+d6();
+  /* A fixed roll lets the order refresh when heat or damage changes without
+     silently re-rolling the pilot's nerve out from under the player. */
+  const roll=Number.isFinite(fixedRoll)?fixedRoll:d6()+d6();
   let mod=(AGGR[v.r]??0);
   if(u.dmg==='hurt') mod-=1;
   if(u.dmg==='crippled') mod-=4;
   if(!u.enemyMoved) mod+=1;
   if(RS==='classic' ? u.heat>=13 : u.heat>=2) mod-=1;
   mod+=skillMod(u.gun);
+  mod+=personaOf(u).m;
   const score=roll+mod;
 
   const o={roll,mod,score,pref,cur,steps:[],notes:[],want:'',headline:'',why:'',fire:'',target:'',alts:[]};
@@ -545,18 +582,22 @@ function generateOrder(u){
       'No time for cover this turn. Get there.'];
   } else if(intent==='close'){
     o.headline='Close your range';
-    o.want=`Wants ${pb} · ${best} dmg`;
+    o.want= RS==='as' ? `Wants ${pb} · ${best} dmg` : `Wants ${pb}`;
     o.why = destDmg>dmgHere
-      ? `Your guns are near useless out here, only ${dmgHere} at ${cb}. Get to ${db} and it jumps to ${destDmg}. Close it up.`
+      ? (RS==='as'
+          ? `Your guns are near useless out here, only ${dmgHere} at ${cb}. Get to ${db} and it jumps to ${destDmg}. Close it up.`
+          : `Your guns bite a lot harder at ${db} than they do out here, and the to-hit is kinder in close. Close it up.`)
       : `Damage does not change either way, but you want to be in their face. Get inside and start swinging.`;
     o.steps=[`Push in until you are inside ${BAND_HEX[dest]}.`,
       'Watch yourself on the way, they will be gunning for you the moment you commit.',
       jj?'Jump it if the ground gets in your way.':'Stay off open ground unless it is genuinely the quicker route in.'];
   } else if(intent==='open'){
     o.headline='Open the range, now';
-    o.want=`Wants ${pb} · ${best} dmg`;
+    o.want= RS==='as' ? `Wants ${pb} · ${best} dmg` : `Wants ${pb}`;
     o.why = destDmg>dmgHere
-      ? `You are sitting too close for your own good. Your guns want ${db}, where you are hitting for ${destDmg}. Back off and let them work.`
+      ? (RS==='as'
+          ? `You are sitting too close for your own good. Your guns want ${db}, where you are hitting for ${destDmg}. Back off and let them work.`
+          : `You are sitting too close for your own good. This loadout does its real work at ${db}. Back off and let it.`)
       : `Same damage either way, so take the safer ground. Fewer of their guns can reach you out at ${db}.`;
     o.steps=[`Fall back to ${BAND_HEX[dest]}, and keep your face to them the whole way.`,
       'Do not turn your back on them, not for a second.',
@@ -564,7 +605,9 @@ function generateOrder(u){
   } else {
     const pressing=(score>=10);
     o.headline='Hold your ground';
-    o.want= delta===0 ? `Best band · ${best} dmg` : `Wants ${pb}, holding`;
+    o.want= delta===0
+      ? (RS==='as' ? `Best band · ${best} dmg` : 'Best band')
+      : `Wants ${pb}, holding`;
     o.why= delta===0
       ? `You are exactly where you want to be. ${cb.charAt(0).toUpperCase()+cb.slice(1)} is your sweet spot, stay put.`
       : pressing
@@ -614,6 +657,11 @@ function generateOrder(u){
   }
   if(u.pil!=null && u.pil>=5 && (intent==='charge'||wantsContact||jj))
     o.notes.push(`You are shaky on your feet. Think twice before you jump or throw a punch this turn.`);
+  const pz=personaOf(u);
+  if(pz.m>=3) o.notes.push('This one is a glory hunter. Expect them to take the fight to the enemy whether it is wise or not.');
+  else if(pz.m>0) o.notes.push('This pilot leans forward. Give them the aggressive read when it is a close call.');
+  else if(pz.m<=-4) o.notes.push('This one wants to go home in one piece. They will take the careful option every time.');
+  else if(pz.m<0) o.notes.push('This pilot plays it safe. When in doubt, they hold or give ground.');
 
   if(dmgHere<=0){
     o.fire = canIndirect
@@ -626,8 +674,11 @@ function generateOrder(u){
       ? `${dmgHere} damage at ${cb}, or push it to ${dmgHere+use} if you spend ${use} OV. That leaves you on heat ${u.heat+use} going into next turn.`
       : `${dmgHere} damage at ${cb}.`+(u.heat>0?` You are running hot, heat ${u.heat} adds +${u.heat} to your to-hit.`:'');
   } else {
-    const heatCap = u.heat>=17 ? 'Fire light, your heat is critical.' :
+    const heatCap = u.heat>=24 ? 'You are about to cook. Fire one weapon at most.' :
+                    u.heat>=19 ? 'Ammo is cooking off at this heat. Fire light or not at all.' :
+                    u.heat>=17 ? 'Fire light, your heat is critical.' :
                     u.heat>=13 ? 'Hold back your hottest guns, you are running warm.' :
+                    u.heat>=8  ? 'Mind the heat, you are already taking a penalty. Leave the worst offenders cold.' :
                     'Let everything go.';
     o.fire = `Everything on your sheet that reaches ${cb} is live, roll each weapon against its own target number. ${heatCap}`;
   }
@@ -684,6 +735,7 @@ function mkUnit(c,v,opts){
   const num=x=>Number.isFinite(x)?x:null;
   return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
+    persona:opts.persona||'balanced',rollVal:null,
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
     band:2,enemyMoved:false,prone:false,dead:false,order:null};
 }
@@ -760,7 +812,9 @@ function rollForce(append){
     st.textContent='Nothing in the roster matches that combination. Loosen the era or weight.';
     return;
   }
-  const units=picks.map(([c,v])=>mkUnit(c,v,''));
+  // Roll temperaments too, so a generated force does not all think alike.
+  const units=picks.map(([c,v])=>mkUnit(c,v,{
+    persona:PERSONA_ROLL[Math.floor(Math.random()*PERSONA_ROLL.length)]}));
   force = append ? force.concat(units) : units;
   const usingBV=RS==='classic';
   const pv=units.reduce((a,u)=>a+(usingBV?(u.bv??u.v.bv??0):(u.v.pv||0)),0);
@@ -923,19 +977,22 @@ function readHandoff(){
 /* ---------- render ---------- */
 function ladderHTML(u){
   const v=u.v,pref=preferredBand(v),max=Math.max(...v.d,1);
+  const showNums=(RS==='as');
   let bands='',axis='',marks='';
   for(let i=0;i<4;i++){
     const val=v.d[i],h=Math.max(3,Math.round(val/max*24));
     const c=['band',i===pref?'pref':'',i===u.band?'here':'',val<=0?'zero':''].filter(Boolean).join(' ');
-    bands+=`<div class="${c}"><div class="bar-n">${val}</div><div class="bar" style="height:${h}px"></div></div>`;
+    bands+=`<div class="${c}">${showNums?`<div class="bar-n">${val}</div>`:''}<div class="bar" style="height:${h}px"></div></div>`;
     axis+=`<div class="ax"><b>${['S','M','L','E'][i]}</b>${RULES[RS].tick[i]}</div>`;
     marks+= i===u.band&&i===pref ? '<span class="you">◆ here &amp; best</span>'
           : i===u.band ? '<span class="you">▲ here</span>'
           : i===pref  ? '<span class="want">● wants</span>' : '<span></span>';
   }
   return `<div class="ladder">
-    <div class="ladder-top"><span class="ladder-t">Damage by range</span>
-    <span class="ladder-want">${v.d[pref]} dmg at ${BANDS[pref].toLowerCase()}</span></div>
+    <div class="ladder-top"><span class="ladder-t">${showNums?'Damage by range':'Range profile'}</span>
+    <span class="ladder-want">${showNums
+      ? `${v.d[pref]} dmg at ${BANDS[pref].toLowerCase()}`
+      : `Best at ${BANDS[pref].toLowerCase()}`}</span></div>
     <div class="bands">${bands}</div><div class="axis">${axis}</div><div class="mk">${marks}</div></div>`;
 }
 function vitalsHTML(u){
@@ -1052,6 +1109,11 @@ function renderOrders(){
             <div class="sit"><span class="sit-l">Prone</span>
               <div class="seg pill"><button data-pr="${u.uid}:1" aria-pressed="${u.prone}">Y</button>
               <button data-pr="${u.uid}:0" aria-pressed="${!u.prone}">N</button></div></div>
+            <div class="sit"><span class="sit-l">Pilot</span>
+              <select class="persona-sel" data-persona="${u.uid}" aria-label="Pilot temperament">
+                ${Object.entries(PERSONA).map(([k,p])=>
+                  `<option value="${k}"${u.persona===k?' selected':''}>${p.l}</option>`).join('')}
+              </select></div>
           </div>
           <button class="btn grow" data-gen="${u.uid}" style="margin-top:9px">${o?'Re-roll order':'Generate order'}</button>
         </div>
@@ -1071,7 +1133,11 @@ function renderOrders(){
       </div></div>`;}).join('');
 
   /* Every action rebuilds the whole list, which drops keyboard focus.
-     Remember which control was active and put focus back on it. */
+     Remember which control was active and put focus back on it.
+     Changing heat, damage or range also refreshes any order already on
+     screen, reusing the same 2d6 so the pilot's nerve does not change
+     just because you ticked a pip. */
+  const LIVE=['band','em','pr','heat','arm','str','cond','crip','repair'];
   const bind=(sel,fn)=>el.querySelectorAll(sel).forEach(b=>b.onclick=()=>{
     const key=Object.keys(b.dataset)[0];
     const raw=b.dataset[key];
@@ -1079,6 +1145,10 @@ function renderOrders(){
     const u=force.find(x=>x.uid===+id); if(!u) return;
     const wasFocused=(document.activeElement===b);
     fn(u,val);
+    if(u.order && LIVE.includes(key)){
+      u.dmg=condOf(u);
+      u.order=generateOrder(u,u.rollVal);
+    }
     renderOrders();
     if(wasFocused){
       const again=el.querySelector(`[data-${key}="${raw}"]`);
@@ -1089,7 +1159,15 @@ function renderOrders(){
   bind('[data-em]',  (u,v)=>{u.enemyMoved=v==='1';});
   bind('[data-pr]',  (u,v)=>{u.prone=v==='1';});
   bind('[data-heat]',(u,v)=>{u.heat=Math.max(0,Math.min(HEATMAX(),u.heat+ +v));});
-  bind('[data-gen]', u=>{u.dmg=condOf(u);u.order=generateOrder(u);});
+  bind('[data-gen]', u=>{u.dmg=condOf(u);u.order=generateOrder(u);u.rollVal=u.order.roll;});
+  el.querySelectorAll('[data-persona]').forEach(sel=>sel.onchange=()=>{
+    const u=force.find(x=>x.uid===+sel.dataset.persona); if(!u) return;
+    u.persona=sel.value;
+    if(u.order){ u.dmg=condOf(u); u.order=generateOrder(u,u.rollVal); }
+    renderOrders();
+    const again=el.querySelector(`[data-persona="${sel.dataset.persona}"]`);
+    if(again) try{ again.focus({preventScroll:true}); }catch(_){}
+  });
   bind('[data-kill]',u=>{u.dead=true;u.order=null;});
   bind('[data-crip]',u=>{u.forceCrip=!u.forceCrip;});
   bind('[data-repair]',u=>{u.arm=u.v.a;u.str=u.v.s;u.heat=0;u.forceCrip=false;u.manualCond='fresh';});
