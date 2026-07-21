@@ -442,14 +442,178 @@ function abilVal(u,code,band){
 }
 const has=(u,a)=>new RegExp('(^|,)'+a+'\\d*','i').test(u.v.b||'');
 
-/* Classic adds +2 to hit at medium and +4 at long. Equal damage further out
-   is therefore worse, not safer, so a longer band has to earn its place with
-   real extra damage. Alpha Strike has no range to-hit penalty, so out there
-   the longer band genuinely is the safer pick on a tie. */
+/* ---- Classic range model -------------------------------------------------
+   Alpha Strike compresses a loadout into four numbers, which throws away
+   minimum range and each weapon's own brackets. Classic gets its range
+   preference from the real weapon list instead: expected damage per band at
+   gunnery 4, averaged across the hexes in that band, then weighted by role
+   doctrine. Weapon stats below are transcribed by hand, so treat them as a
+   good working model rather than gospel. --------------------------------- */
+const W = [
+  [/^ER Large Pulse Laser$/i,       null,           [0,7,15,23,10]],
+  [/^ER Medium Pulse Laser$/i,      null,           [0,5,9,14,7]],
+  [/^ER Small Pulse Laser$/i,       null,           [0,2,4,6,5]],
+  [/^Large Re-engineered Laser$/i,  [0,5,10,15,9],  null],
+  [/^Medium Re-engineered Laser$/i, [0,3,6,9,6],    null],
+  [/^Small Re-engineered Laser$/i,  [0,1,2,3,4],    null],
+  [/^Streak LRM 5$/i,               null,           [0,7,14,21,5]],
+  [/^Streak LRM 10$/i,              null,           [0,7,14,21,10]],
+  [/^Streak LRM 15$/i,              null,           [0,7,14,21,15]],
+  [/^Streak LRM 20$/i,              null,           [0,7,14,21,20]],
+  [/^Thunderbolt 5$/i,              [5,6,12,18,5],  null],
+  [/^Thunderbolt 10$/i,             [5,6,12,18,10], null],
+  [/^Thunderbolt 15$/i,             [5,6,12,18,15], null],
+  [/^Thunderbolt 20$/i,             [5,6,12,18,20], null],
+  [/^Magshot$/i,                    [0,3,6,9,2],    null],
+  [/^(Light )?Machine Gun Array$/i, [0,1,2,3,2],    null],
+  [/^Silver Bullet Gauss$/i,        [2,7,15,22,15], null],
+  [/^Improved Autocannon\/2$/i,     [4,8,16,24,2],  null],
+  [/^Improved Autocannon\/5$/i,     [3,6,12,18,5],  null],
+  [/^Improved Autocannon\/10$/i,    [0,5,10,15,10], null],
+  [/^Improved Autocannon\/20$/i,    [0,3,6,9,20],   null],
+  // --- energy, lasers ---
+  [/^Improved Heavy Large Laser$/i, null,           [0,5,10,15,16]],
+  [/^Improved Heavy Medium Laser$/i,null,           [0,3,6,9,10]],
+  [/^Improved Heavy Small Laser$/i, null,           [0,1,2,3,6]],
+  [/^Heavy Large Laser$/i,          null,           [0,5,10,15,16]],
+  [/^Heavy Medium Laser$/i,         null,           [0,3,6,9,10]],
+  [/^Heavy Small Laser$/i,          null,           [0,1,2,3,6]],
+  [/^ER Large Laser$/i,             [0,7,14,19,8],  [0,8,15,25,10]],
+  [/^ER Medium Laser$/i,            [0,4,8,12,5],   [0,5,10,15,7]],
+  [/^ER Small Laser$/i,             [0,2,4,5,3],    [0,2,4,6,5]],
+  [/^ER Micro Laser$/i,             null,           [0,1,2,4,2]],
+  [/^Large Pulse Laser$/i,          [0,3,7,10,9],   [0,6,14,20,10]],
+  [/^Medium Pulse Laser$/i,         [0,2,4,6,6],    [0,4,8,12,7]],
+  [/^Small Pulse Laser$/i,          [0,1,2,3,3],    [0,2,4,6,3]],
+  [/^Micro Pulse Laser$/i,          null,           [0,1,2,3,3]],
+  [/^Large X-Pulse Laser$/i,        [0,5,10,15,9],  null],
+  [/^Medium X-Pulse Laser$/i,       [0,3,6,9,6],    null],
+  [/^Small X-Pulse Laser$/i,        [0,2,4,5,3],    null],
+  [/^Large VSP Laser$/i,            [0,4,8,12,9],   null],
+  [/^Medium VSP Laser$/i,           [0,2,5,9,7],    null],
+  [/^Small VSP Laser$/i,            [0,1,2,4,5],    null],
+  [/^Large Laser$/i,                [0,5,10,15,8],  null],
+  [/^Medium Laser$/i,               [0,3,6,9,5],    null],
+  [/^Small Laser$/i,                [0,1,2,3,3],    null],
+  // --- PPCs ---
+  [/^ER PPC$/i,                     [0,7,14,23,10], [0,7,14,23,15]],
+  [/^Light PPC$/i,                  [3,6,12,18,5],  null],
+  [/^Heavy PPC$/i,                  [3,4,8,12,15],  null],
+  [/^Snub-Nose PPC$/i,              [0,9,13,15,10], null],
+  [/^PPC$/i,                        [3,6,12,18,10], null],
+  // --- flamers, MGs ---
+  [/^ER Flamer$/i,                  [0,2,4,6,2],    null],
+  [/^Flamer$/i,                     [0,1,2,3,2],    null],
+  [/^Heavy Machine Gun$/i,          [0,1,1,2,3],    null],
+  [/^Light Machine Gun$/i,          [0,2,4,6,1],    null],
+  [/^Machine Gun$/i,                [0,1,2,3,2],    null],
+  // --- plasma ---
+  [/^Plasma Rifle$/i,               [0,5,10,15,10], null],
+  [/^Plasma Cannon$/i,              null,           [0,6,12,18,5]],
+  // --- ballistic ---
+  [/^Ultra AC\/2$/i,                [3,8,17,25,4],  [2,9,18,27,4]],
+  [/^Ultra AC\/5$/i,                [2,6,13,20,10], [0,7,14,21,10]],
+  [/^Ultra AC\/10$/i,               [0,6,12,18,20], [0,6,12,18,20]],
+  [/^Ultra AC\/20$/i,               [0,3,7,10,40],  [0,4,8,12,40]],
+  [/^Rotary AC\/2$/i,               [0,6,12,18,12], null],
+  [/^Rotary AC\/5$/i,               [0,5,10,15,30], null],
+  [/^LB 2-X AC$/i,                  [4,9,18,27,2],  [4,10,20,30,2]],
+  [/^LB 5-X AC$/i,                  [3,7,14,21,5],  [0,8,16,24,5]],
+  [/^LB 10-X AC$/i,                 [0,6,12,18,10], [0,7,14,21,10]],
+  [/^LB 20-X AC$/i,                 [0,4,8,12,20],  [0,5,10,15,20]],
+  [/^Light AC\/2$/i,                [0,6,12,18,2],  null],
+  [/^Light AC\/5$/i,                [0,5,10,15,5],  null],
+  [/^AC\/2$/i,                      [4,8,16,24,2],  null],
+  [/^AC\/5$/i,                      [3,6,12,18,5],  null],
+  [/^AC\/10$/i,                     [0,5,10,15,10], null],
+  [/^AC\/20$/i,                     [0,3,6,9,20],   null],
+  [/^Heavy Gauss Rifle$/i,          [4,6,13,20,25], null],
+  [/^Light Gauss Rifle$/i,          [3,8,17,25,8],  null],
+  [/^AP Gauss Rifle$/i,             null,           [0,3,6,9,3]],
+  [/^Gauss Rifle$/i,                [2,7,15,22,15], [2,7,15,22,15]],
+  [/^HAG\/20$/i,                    null,           [2,8,16,24,20]],
+  [/^HAG\/30$/i,                    null,           [2,8,16,24,30]],
+  [/^HAG\/40$/i,                    null,           [2,8,16,24,40]],
+  // --- missiles (Clan LRMs have no minimum range) ---
+  [/^LRM 5$/i,                      [6,7,14,21,5],  [0,7,14,21,5]],
+  [/^LRM 10$/i,                     [6,7,14,21,10], [0,7,14,21,10]],
+  [/^LRM 15$/i,                     [6,7,14,21,15], [0,7,14,21,15]],
+  [/^LRM 20$/i,                     [6,7,14,21,20], [0,7,14,21,20]],
+  [/^Streak SRM 2$/i,               [0,3,6,9,4],    [0,4,8,12,4]],
+  [/^Streak SRM 4$/i,               [0,3,6,9,8],    [0,4,8,12,8]],
+  [/^Streak SRM 6$/i,               [0,3,6,9,12],   [0,4,8,12,12]],
+  [/^SRM 2$/i,                      [0,3,6,9,4],    [0,3,6,9,4]],
+  [/^SRM 4$/i,                      [0,3,6,9,8],    [0,3,6,9,8]],
+  [/^SRM 6$/i,                      [0,3,6,9,12],   [0,3,6,9,12]],
+  [/^MRM 10$/i,                     [0,3,8,15,10],  null],
+  [/^MRM 20$/i,                     [0,3,8,15,20],  null],
+  [/^MRM 30$/i,                     [0,3,8,15,30],  null],
+  [/^MRM 40$/i,                     [0,3,8,15,40],  null],
+  [/^MML 3$/i,                      [6,7,14,21,3],  null],
+  [/^MML 5$/i,                      [6,7,14,21,5],  null],
+  [/^MML 7$/i,                      [6,7,14,21,7],  null],
+  [/^MML 9$/i,                      [6,7,14,21,9],  null],
+  [/^ATM 3$/i,                      null,           [4,5,10,15,6]],
+  [/^ATM 6$/i,                      null,           [4,5,10,15,12]],
+  [/^ATM 9$/i,                      null,           [4,5,10,15,18]],
+  [/^ATM 12$/i,                     null,           [4,5,10,15,24]],
+  [/^Rocket Launcher 10$/i,         [0,5,11,18,10], null],
+  [/^Rocket Launcher 15$/i,         [0,4,9,15,15],  null],
+  [/^Rocket Launcher 20$/i,         [0,3,7,12,20],  null],
+];
+/* Not weapons: electronics, spotters, defensive gear. Excluded from damage. */
+const NOTWEAPON=/TAG|Narc|C3|Anti-Missile|AMS|ECM|Probe|Computer|Guardian|Angel|Watchdog|Arrow IV|Long Tom|Sniper Artillery|Thumper|B-Pod|M-Pod|Coolant|Supercharger|TSEMP/i;
+function wStats(name,clan){
+  if(NOTWEAPON.test(name)) return null;
+  for(const [re,is,cl] of W){ if(re.test(name)) return clan?(cl||is):(is||cl); }
+  return undefined;
+}
+const P2=n=>{const t=[0,0,36,35,33,30,26,21,15,10,6,3,1];return n<=2?1:n>12?0:t[n]/36;};
+const CBANDS=[[1,3],[4,9],[10,15],[16,21]];
+const ROLE_W={
+  'Missile Boat':[0.50,0.85,1.35,1.30],
+  Sniper:        [0.75,1.00,1.15,1.00],
+  Scout:         [0.80,1.00,1.15,1.10],
+  Skirmisher:    [1.00,1.10,1.00,0.85],
+  Striker:       [1.20,1.10,0.85,0.60],
+  Ambusher:      [1.25,1.05,0.80,0.60],
+  Brawler:       [1.30,1.10,0.75,0.50],
+  Juggernaut:    [1.30,1.10,0.75,0.50]
+};
+function classicProfile(v,clan){
+  if(v.__cp) return v.__cp;
+  const list=v.w||[];
+  let known=0,unknown=0;
+  const at=dist=>{
+    let total=0;
+    for(const entry of list){
+      const m=/^(\d+)x\s+(.+)$/.exec(entry);
+      const n=m?+m[1]:1, name=m?m[2]:entry;
+      const st=wStats(name,clan);
+      if(st===null) continue;
+      if(st===undefined){ unknown+=n; continue; }
+      known+=n;
+      const [min,s,md,l,d]=st;
+      if(dist>l) continue;
+      let mod = dist<=s?0 : dist<=md?2 : 4;
+      if(min>0 && dist<min) mod += (min-dist+1);
+      total += n*d*P2(4+mod);
+    }
+    return total;
+  };
+  const profile=CBANDS.map(([lo,hi])=>{
+    let sum=0,n=0; for(let d=lo;d<=hi;d++){ sum+=at(d); n++; } return sum/n;
+  });
+  // If most of the loadout is unrecognised, this model is not trustworthy.
+  const ok = (known+unknown)>0 ? (known/(known+unknown))>=0.6 : false;
+  v.__cp={profile,ok};
+  return v.__cp;
+}
+/* Alpha Strike keeps its own damage numbers, which are the official
+   abstraction for that ruleset. Classic uses the weapon model above, and
+   falls back to the Alpha Strike figures only when the loadout is too
+   exotic to model. */
 const CLASSIC_WEIGHT=[1, .85, .7, .55];
-/* Rough pass for weapons that cannot fire, or fire badly, up close. Alpha
-   Strike's damage numbers flatten minimum range away entirely, so without
-   this a PPC boat gets told to close to knife range. */
 const MINRANGE=/\bPPC\b|\bLRM\b|Gauss|AC\/2|AC\/5|Arrow IV|Long Tom/i;
 function minRangeShare(v){
   const w=v.w||[]; if(!w.length) return 0;
@@ -458,17 +622,30 @@ function minRangeShare(v){
     tot+=n; if(MINRANGE.test(s)) min+=n; }
   return tot?min/tot:0;
 }
-function preferredBand(v){
-  const d=v.d, max=Math.max(...d);
-  if(max<=0) return 0;
+function bandProfile(v,clan){
+  if(RS!=='classic') return v.d;
+  const cp=classicProfile(v,clan);
+  return cp.ok ? cp.profile : v.d;
+}
+function preferredBand(v,clan){
   const melee=/(^|,)MEL/i.test(v.b||'');
   if(RS==='classic'){
+    const cp=classicProfile(v,clan);
+    if(cp.ok && Math.max(...cp.profile)>0){
+      const w=ROLE_W[v.r]||ROLE_W.Skirmisher;
+      const score=cp.profile.map((x,i)=>x*w[i]);
+      let best=0; score.forEach((x,i)=>{ if(x>score[best]) best=i; });
+      return best;
+    }
+    // fallback: Alpha Strike numbers, nudged for to-hit and minimum range
+    const d=v.d; if(Math.max(...d)<=0) return 0;
     const shy=minRangeShare(v);
-    const w=d.map((x,i)=>x*CLASSIC_WEIGHT[i]*(i===0?(1-shy*0.5):1));
-    const best=Math.max(...w);
-    const idx=w.map((x,i)=>[x,i]).filter(p=>p[0]===best).map(p=>p[1]);
-    return idx[0];               // ties go to the shorter, easier-to-hit band
+    const wf=d.map((x,i)=>x*CLASSIC_WEIGHT[i]*(i===0?(1-shy*0.5):1));
+    const bf=Math.max(...wf);
+    return wf.findIndex(x=>x===bf);
   }
+  const d=v.d, max=Math.max(...d);
+  if(max<=0) return 0;
   const idx=d.map((x,i)=>[x,i]).filter(p=>p[0]===max).map(p=>p[1]);
   if(idx.length===1) return idx[0];
   return melee ? idx[0] : idx[idx.length-1];
@@ -498,7 +675,10 @@ const TARGETS={
 };
 
 function generateOrder(u,fixedRoll){
-  const v=u.v, cur=u.band, pref=preferredBand(v), dmgHere=v.d[cur];
+  const v=u.v, cur=u.band, clan=(u.tech==='C');
+  const pref=preferredBand(v,clan);
+  const prof=bandProfile(v,clan);
+  const dmgHere=prof[cur];
   /* A fixed roll lets the order refresh when heat or damage changes without
      silently re-rolling the pilot's nerve out from under the player. */
   const roll=Number.isFinite(fixedRoll)?fixedRoll:d6()+d6();
@@ -568,7 +748,7 @@ function generateOrder(u,fixedRoll){
   if((intent==='open'||intent==='close') && dest===cur) intent='hold';
 
   const pb=BANDS[pref].toLowerCase(), cb=BANDS[cur].toLowerCase(), db=BANDS[dest].toLowerCase();
-  const best=v.d[pref], destDmg=v.d[dest], jj=v.m[2]>0;
+  const best=prof[pref], destDmg=prof[dest], jj=v.m[2]>0;
 
   if(intent==='charge'){
     const inPlace=(dest===cur);
@@ -976,11 +1156,14 @@ function readHandoff(){
 
 /* ---------- render ---------- */
 function ladderHTML(u){
-  const v=u.v,pref=preferredBand(v),max=Math.max(...v.d,1);
+  const v=u.v, clan=(u.tech==='C');
+  const pref=preferredBand(v,clan);
+  const prof=bandProfile(v,clan);
+  const max=Math.max(...prof,0.0001);
   const showNums=(RS==='as');
   let bands='',axis='',marks='';
   for(let i=0;i<4;i++){
-    const val=v.d[i],h=Math.max(3,Math.round(val/max*24));
+    const val=prof[i],h=Math.max(3,Math.round(val/max*24));
     const c=['band',i===pref?'pref':'',i===u.band?'here':'',val<=0?'zero':''].filter(Boolean).join(' ');
     bands+=`<div class="${c}">${showNums?`<div class="bar-n">${val}</div>`:''}<div class="bar" style="height:${h}px"></div></div>`;
     axis+=`<div class="ax"><b>${['S','M','L','E'][i]}</b>${RULES[RS].tick[i]}</div>`;
