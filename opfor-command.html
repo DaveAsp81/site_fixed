@@ -71,12 +71,18 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .unit-name{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1;letter-spacing:.02em;text-transform:uppercase}
 .unit-var{font-family:var(--mono);font-size:12px;color:var(--stamp);font-weight:600;letter-spacing:.04em}
 .unit-meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);letter-spacing:.07em;text-transform:uppercase;margin-top:4px}
+.vitals{display:flex;align-items:center;gap:9px;margin-top:6px;flex-wrap:wrap}
+.vit{display:flex;align-items:center;gap:3px}
+.vit-l{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.vit-pips{display:flex;gap:1.5px;flex-wrap:wrap;max-width:130px}
+.vit-pips .pip{width:9px;height:9px;border-width:1px}
+.vit-n{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--ink-2)}
 .unit-bd{padding:12px 13px 13px}
 .pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
   border:1.2px solid var(--rule);padding:2px 6px;border-radius:2px;color:var(--ink-2);white-space:nowrap}
 .pill.on{border-color:var(--ink);color:var(--ink);background:var(--card-2)}
 
-.ladder{border:1.5px solid var(--rule);border-radius:2px;background:var(--card-2);padding:10px 10px 8px}
+.ladder{border:1.5px solid var(--rule);border-radius:2px;background:var(--card-2);padding:8px 9px 7px}
 .loadout{border:1.5px solid var(--rule);border-radius:2px;background:var(--card-2);padding:10px 11px;margin-top:10px}
 .loadout-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:8px}
 .loadout-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
@@ -87,23 +93,23 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .wep-row:last-child{border-bottom:0}
 .wep-n{font-family:var(--mono);font-weight:600;color:var(--stamp);min-width:20px}
 .wep-name{flex:1}
-.ladder-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;gap:8px}
-.ladder-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
-.ladder-want{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--stamp);font-weight:600;text-align:right}
-.bands{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:end;height:74px}
+.ladder-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:8px}
+.ladder-t{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2)}
+.ladder-want{font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--stamp);font-weight:600;text-align:right}
+.bands{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;align-items:end;height:42px}
 .band{display:flex;flex-direction:column;justify-content:flex-end;height:100%}
 .bar{background:var(--ink-3);border:1.2px solid var(--ink-2);border-bottom:0;border-radius:1px 1px 0 0;min-height:3px}
 .band.pref .bar{background:var(--stamp);border-color:var(--stamp)}
 .band.here .bar{background:var(--ink);border-color:var(--ink)}
 .band.here.pref .bar{background:var(--stamp);border-color:var(--ink);border-width:2px}
-.bar-n{font-family:var(--mono);font-size:12px;font-weight:600;text-align:center;line-height:1;margin-bottom:3px}
+.bar-n{font-family:var(--mono);font-size:11px;font-weight:600;text-align:center;line-height:1;margin-bottom:2px}
 .band.zero .bar-n{color:var(--ink-3)}
-.axis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-top:1.5px solid var(--ink);padding-top:5px}
-.ax{text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--ink-2)}
-.ax b{display:block;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.08em;color:var(--ink)}
-.mk{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:5px}
-.mk span{text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--ink-3);min-height:12px}
+.axis{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;border-top:1.5px solid var(--ink);padding-top:4px}
+.ax{text-align:center;font-family:var(--mono);font-size:8.5px;letter-spacing:.03em;color:var(--ink-2)}
+.ax b{display:block;font-family:var(--disp);font-weight:700;font-size:11.5px;letter-spacing:.07em;color:var(--ink)}
+.mk{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:3px}
+.mk span{text-align:center;font-family:var(--mono);font-size:8px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);min-height:11px}
 .mk span.you{color:var(--ink);font-weight:600}
 .mk span.want{color:var(--stamp);font-weight:600}
 
@@ -153,7 +159,7 @@ ol.steps li::before{content:counter(s,upper-alpha);position:absolute;left:0;top:
 .hpip.crit{background:var(--stamp);border-color:var(--stamp)}
 .heat-fx{font-family:var(--mono);font-size:10.5px;color:var(--stamp);margin-top:5px;letter-spacing:.05em}
 
-.ctl{background:var(--card-2);border:1.2px solid var(--rule);border-radius:2px;padding:11px;margin-bottom:12px}
+.ctl{background:var(--card-2);border:1.2px solid var(--rule);border-radius:2px;padding:9px;margin-bottom:9px}
 .seg{display:flex;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden}
 .seg button{flex:1;font-family:var(--mono);font-size:11px;font-weight:500;padding:9px 3px;background:var(--card);
   border:0;border-right:1px solid var(--rule);color:var(--ink-2);cursor:pointer;line-height:1.25}
@@ -162,7 +168,14 @@ ol.steps li::before{content:counter(s,upper-alpha);position:absolute;left:0;top:
 .seg button:focus-visible{outline:2px solid var(--draft);outline-offset:-3px;position:relative;z-index:2}
 .seg.sm button{font-size:10.5px;padding:7px 3px}
 .seg.tiny button{font-size:10px;padding:5px 8px}
-.ctl-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);margin-bottom:5px}
+.seg.rng button{padding:5px 2px;font-size:10px;line-height:1.15}
+.seg.rng button small{display:block;font-size:8px;font-weight:400;opacity:.68;letter-spacing:0}
+.seg.pill{border-radius:14px;overflow:hidden;flex:0 0 auto}
+.seg.pill button{flex:0 0 auto;padding:4px 10px;font-size:10px}
+.ctl-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:4px}
+.sitrow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}
+.sit{display:flex;align-items:center;gap:6px}
+.sit-l{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
 
 details.gen{border:1.5px solid var(--ink);border-radius:2px;background:var(--card);margin-bottom:16px}
 details.gen>summary{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.09em;text-transform:uppercase;
@@ -178,6 +191,17 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 .empty .eh{font-family:var(--disp);font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .foot{margin-top:26px;padding-top:14px;border-top:1.5px solid var(--rule);font-family:var(--mono);font-size:10.5px;
   color:var(--ink-3);letter-spacing:.05em;line-height:1.7}
+.support{margin-top:22px;border:1.5px solid var(--ink);border-radius:2px;background:var(--card);
+  padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  box-shadow:2px 2px 0 rgba(25,28,31,.10)}
+.support h4{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.05em;
+  text-transform:uppercase;margin-bottom:4px}
+.support p{font-family:var(--body);font-size:13px;color:var(--ink-2);line-height:1.6;max-width:430px;letter-spacing:0}
+.bmc{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.09em;text-transform:uppercase;
+  background:var(--stamp);color:var(--stock);text-decoration:none;padding:10px 16px;border-radius:2px;
+  white-space:nowrap;flex:0 0 auto}
+.bmc:hover{background:#b23423}
+.bmc:focus-visible{outline:2px solid var(--draft);outline-offset:2px}
 .foot b{color:var(--ink-2);font-weight:600}
 .stamp-tag{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--stamp);border:1.5px solid var(--stamp);padding:2px 7px;border-radius:2px;display:inline-block}
@@ -302,6 +326,14 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
   </div>
 </section>
 
+<div class="support">
+  <div>
+    <h4>Enjoying OpFor Command?</h4>
+    <p>It's free and always will be. If it's kept your solo games moving, you can chuck a couple of bucks in the tip jar to help cover hosting. No pressure, the tools stay free either way.</p>
+  </div>
+  <a class="bmc" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+</div>
+
 <footer class="foot">
   <b>How to read it.</b> Orders run A, B, C. Carry out the first one that is actually possible on your table, and drop to the next if it will not work. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
   <b>Weapons.</b> In Classic, each card shows the full loadout and heat sink count, so you know exactly what to roll on the record sheet without needing to know every variant by heart.<br><br>
@@ -349,6 +381,11 @@ function skillMod(g){
   if(g<=4) return 0; if(g<=5) return -1; return -2;
 }
 const cls=t=> t<=35?'Light': t<=55?'Medium': t<=75?'Heavy':'Assault';
+/* Pilot and background text arrives from imported CSV and from the #force=
+   URL, both of which are outside our control. Anything from those sources
+   must be escaped before it goes anywhere near innerHTML. */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* Your catalogue files Clan OmniMechs under Inner Sphere reporting names.
    Players know them by both, so resolve either and label with both. */
@@ -549,6 +586,11 @@ function generateOrder(u){
   const ht=abilVal(u,'HT',cur);
   if(ht>0) o.notes.push(`You are packing HT ${ht} at this range. Dump that heat on whatever you hit, or hit anything that does not track heat that bit harder.`);
   if(RS==='as'){
+    const AS_BAND_MAX=[6,24,42,60];
+    const reach=AS_BAND_MAX[pref]+Math.max(v.m[0]||0,v.m[1]||0);
+    o.notes.push(`Within about ${reach}" you can reach this turn, go for the lowest TMM you can find, an easy-to-hit target beats a juicier one you cannot land a shot on.`);
+  }
+  if(RS==='as'){
     const ovReach = cur<=1 || has(u,'OVL');
     const room = 3-u.heat;
     if(v.o>0 && ovReach && room>0){
@@ -640,7 +682,7 @@ function afterData(){ buildChassis(); buildGenFilters(); readHandoff(); }
 function mkUnit(c,v,opts){
   if(typeof opts==='string'||opts==null) opts={pilot:opts||''};
   const num=x=>Number.isFinite(x)?x:null;
-  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,pilot:opts.pilot||'',
+  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
     band:2,enemyMoved:false,prone:false,dead:false,order:null};
@@ -883,7 +925,7 @@ function ladderHTML(u){
   const v=u.v,pref=preferredBand(v),max=Math.max(...v.d,1);
   let bands='',axis='',marks='';
   for(let i=0;i<4;i++){
-    const val=v.d[i],h=Math.max(3,Math.round(val/max*46));
+    const val=v.d[i],h=Math.max(3,Math.round(val/max*24));
     const c=['band',i===pref?'pref':'',i===u.band?'here':'',val<=0?'zero':''].filter(Boolean).join(' ');
     bands+=`<div class="${c}"><div class="bar-n">${val}</div><div class="bar" style="height:${h}px"></div></div>`;
     axis+=`<div class="ax"><b>${['S','M','L','E'][i]}</b>${RULES[RS].tick[i]}</div>`;
@@ -895,6 +937,24 @@ function ladderHTML(u){
     <div class="ladder-top"><span class="ladder-t">Damage by range</span>
     <span class="ladder-want">${v.d[pref]} dmg at ${BANDS[pref].toLowerCase()}</span></div>
     <div class="bands">${bands}</div><div class="axis">${axis}</div><div class="mk">${marks}</div></div>`;
+}
+function vitalsHTML(u){
+  const cond=condOf(u);
+  if(RS==='as'){
+    const ap=Array.from({length:u.v.a},(_,i)=>
+      `<button class="pip${i>=u.arm?' gone':''}" data-arm="${u.uid}:${i}" aria-label="Armour ${i+1}"></button>`).join('');
+    const sp=Array.from({length:u.v.s},(_,i)=>
+      `<button class="pip st${i>=u.str?' gone':''}" data-str="${u.uid}:${i}" aria-label="Structure ${i+1}"></button>`).join('');
+    return `<div class="vitals">
+      <div class="vit"><span class="vit-l">Arm</span><div class="vit-pips">${ap}</div><span class="vit-n">${u.arm}/${u.v.a}</span></div>
+      <div class="vit"><span class="vit-l">Str</span><div class="vit-pips">${sp}</div><span class="vit-n">${u.str}/${u.v.s}</span></div>
+      <span class="cond ${cond==='hurt'?'hurt':cond==='crippled'?'crip':''}" style="font-size:9.5px;padding:1px 6px">${CONDLBL[cond]}</span>
+    </div>`;
+  }
+  return `<div class="vitals">
+    <div class="seg pill">${[['fresh','Fresh'],['hurt','Damaged'],['crippled','Crippled']].map(([k,l])=>
+      `<button data-cond="${u.uid}:${k}" aria-pressed="${cond===k}">${l}</button>`).join('')}</div>
+  </div>`;
 }
 function loadoutHTML(u){
   const wlist=u.v.w||[];
@@ -910,27 +970,10 @@ function loadoutHTML(u){
     <div class="loadout-list">${rows}</div></div>`;
 }
 function trackHTML(u){
-  const cond=condOf(u), max=HEATMAX();
-  let body='';
-  if(RS==='as'){
-    const ap=Array.from({length:u.v.a},(_,i)=>
-      `<button class="pip${i>=u.arm?' gone':''}" data-arm="${u.uid}:${i}" aria-label="Armour ${i+1}"></button>`).join('');
-    const sp=Array.from({length:u.v.s},(_,i)=>
-      `<button class="pip st${i>=u.str?' gone':''}" data-str="${u.uid}:${i}" aria-label="Structure ${i+1}"></button>`).join('');
-    body=`<div class="trk-row"><span class="trk-l">Armour</span>
-        <div class="pips">${ap||'<span class="trk-n">n/a</span>'}</div>
-        <span class="trk-n">${u.arm}/${u.v.a}</span></div>
-      <div class="trk-row"><span class="trk-l">Structure</span>
-        <div class="pips">${sp||'<span class="trk-n">n/a</span>'}</div>
-        <span class="trk-n">${u.str}/${u.v.s}</span></div>`;
-  } else {
-    body=`<div class="trk-row"><span class="trk-l">Condition</span>
-        <div class="seg sm" style="flex:1">
-          ${[['fresh','Fresh'],['hurt','Damaged'],['crippled','Crippled']].map(([k,l])=>
-            `<button data-cond="${u.uid}:${k}" aria-pressed="${cond===k}">${l}</button>`).join('')}
-        </div></div>
-      <div class="trk-hint">Your record sheet holds the hit locations. This only needs the bucket.</div>`;
-  }
+  const max=HEATMAX();
+  const body = RS==='classic'
+    ? '<div class="trk-hint">Your record sheet holds the hit locations. The strip up top only needs the bucket.</div>'
+    : '';
   const steps = RS==='classic' ? 10 : 4;
   const hp=Array.from({length:steps},(_,i)=>{
     let on,c;
@@ -953,7 +996,6 @@ function trackHTML(u){
       <button class="btn ghost sm" data-heat="${u.uid}:1">+</button></div>
     ${fx?`<div class="heat-fx">${fx}</div>`:''}
     <div class="trk-row" style="margin-top:9px">
-      <span class="cond ${cond==='hurt'?'hurt':cond==='crippled'?'crip':''}">${CONDLBL[cond]}</span>
       <button class="btn ghost sm" data-crip="${u.uid}">${u.forceCrip?'Undo crippled':'Mark crippled'}</button>
       <button class="btn ghost sm" data-repair="${u.uid}">Reset</button>
     </div></div>`;
@@ -971,7 +1013,8 @@ function renderLance(){
     <div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t ${cls(u.tons)} · ${u.v.r} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+u.pilot:''}</div>
+        <div class="unit-meta">${u.tons}t ${cls(u.tons)} · ${u.v.r} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        ${vitalsHTML(u)}
       </div><button class="btn ghost sm" data-del="${u.uid}">Remove</button></div>
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
         <div class="row" style="margin-top:10px">
@@ -993,25 +1036,24 @@ function renderOrders(){
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t · ${u.v.r}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+u.pilot:''}</div>
+        <div class="unit-meta">${u.tons}t · ${u.v.r}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        ${vitalsHTML(u)}
       </div>${u.dead?'<span class="stamp-tag">Destroyed</span>'
         :`<button class="btn ghost sm" data-kill="${u.uid}">Destroyed</button>`}</div>
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
-        <div class="ctl" style="margin-top:12px">
+        <div class="ctl" style="margin-top:10px">
           <div class="ctl-lbl">Range to nearest enemy</div>
-          <div class="seg">${BANDS.map((b,i)=>
-            `<button data-band="${u.uid}:${i}" aria-pressed="${u.band===i}">${b}<br>${RULES[RS].tick[i]}</button>`).join('')}</div>
-          <div class="row" style="margin-top:9px">
-            <div class="grow"><div class="ctl-lbl">Has that enemy moved?</div>
-              <div class="seg sm"><button data-em="${u.uid}:1" aria-pressed="${u.enemyMoved}">Yes</button>
-              <button data-em="${u.uid}:0" aria-pressed="${!u.enemyMoved}">No</button></div></div>
-            <div class="grow"><div class="ctl-lbl">Prone?</div>
-              <div class="seg sm"><button data-pr="${u.uid}:1" aria-pressed="${u.prone}">Yes</button>
-              <button data-pr="${u.uid}:0" aria-pressed="${!u.prone}">No</button></div></div>
+          <div class="seg rng">${BANDS.map((b,i)=>
+            `<button data-band="${u.uid}:${i}" aria-pressed="${u.band===i}">${b[0]}<small>${RULES[RS].tick[i]}</small></button>`).join('')}</div>
+          <div class="sitrow">
+            <div class="sit"><span class="sit-l">Moved</span>
+              <div class="seg pill"><button data-em="${u.uid}:1" aria-pressed="${u.enemyMoved}">Y</button>
+              <button data-em="${u.uid}:0" aria-pressed="${!u.enemyMoved}">N</button></div></div>
+            <div class="sit"><span class="sit-l">Prone</span>
+              <div class="seg pill"><button data-pr="${u.uid}:1" aria-pressed="${u.prone}">Y</button>
+              <button data-pr="${u.uid}:0" aria-pressed="${!u.prone}">N</button></div></div>
           </div>
-          <div class="row" style="margin-top:10px">
-            <button class="btn grow" data-gen="${u.uid}">${o?'Re-roll order':'Generate order'}</button>
-          </div>
+          <button class="btn grow" data-gen="${u.uid}" style="margin-top:9px">${o?'Re-roll order':'Generate order'}</button>
         </div>
         ${o?`<div class="order">
           <div class="order-w">${o.want||'Order'}</div>
@@ -1028,10 +1070,21 @@ function renderOrders(){
         ${trackHTML(u)}
       </div></div>`;}).join('');
 
+  /* Every action rebuilds the whole list, which drops keyboard focus.
+     Remember which control was active and put focus back on it. */
   const bind=(sel,fn)=>el.querySelectorAll(sel).forEach(b=>b.onclick=()=>{
-    const raw=b.dataset[Object.keys(b.dataset)[0]];
+    const key=Object.keys(b.dataset)[0];
+    const raw=b.dataset[key];
     const [id,val]=raw.split(':');
-    const u=force.find(x=>x.uid===+id); if(!u) return; fn(u,val); renderOrders();});
+    const u=force.find(x=>x.uid===+id); if(!u) return;
+    const wasFocused=(document.activeElement===b);
+    fn(u,val);
+    renderOrders();
+    if(wasFocused){
+      const again=el.querySelector(`[data-${key}="${raw}"]`);
+      if(again) try{ again.focus({preventScroll:true}); }catch(_){}
+    }
+  });
   bind('[data-band]',(u,v)=>{u.band=+v;});
   bind('[data-em]',  (u,v)=>{u.enemyMoved=v==='1';});
   bind('[data-pr]',  (u,v)=>{u.prone=v==='1';});
@@ -1094,8 +1147,10 @@ document.getElementById('btnClear').onclick=()=>{
   document.getElementById('impStatus').textContent='';
   renderLance(); renderOrders();};
 document.getElementById('btnExport').onclick=()=>{
+  if(!force.length) return;
   const payload={tool:'opfor-command',version:2,ruleset:RS,turn,
     force:force.map(u=>({chassis:u.chassis,variant:u.v.n,pilot:u.pilot,
+      gun:u.gun,pil:u.pil,bv:u.bv,adj:u.adj,
       heat:u.heat,armour:u.arm,structure:u.str,dead:u.dead}))};
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,1)],{type:'application/json'}));
@@ -1114,10 +1169,13 @@ function parseEntry(e){
   if(e&&typeof e==='object'){
     const chassis=e.chassis||e.Chassis||e.mech||e.model||'';
     const variant=e.variant||e.Variant||e.code||e.designation||'';
-    if(!chassis&&e.name) return {raw:String(e.name),pilot:e.pilot||e.callsign||'',
-      heat:e.heat,armour:e.armour??e.armor,structure:e.structure};
-    return {chassis:String(chassis),variant:String(variant||''),pilot:e.pilot||e.callsign||'',
-      heat:e.heat,armour:e.armour??e.armor,structure:e.structure};
+    const extra={pilot:e.pilot||e.callsign||'',
+      heat:e.heat,armour:e.armour??e.armor,structure:e.structure,
+      gun:e.gun??e.gunnery,pil:e.pil??e.piloting,
+      bv:e.bv??e.baseValue,adj:e.adj??e.adjustedValue,
+      condition:e.condition};
+    if(!chassis&&e.name) return Object.assign({raw:String(e.name)},extra);
+    return Object.assign({chassis:String(chassis),variant:String(variant||'')},extra);
   }
   return null;
 }
