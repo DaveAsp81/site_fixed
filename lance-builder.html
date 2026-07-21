@@ -320,6 +320,7 @@
 <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
     <button onclick="addLanceToForce()" style="flex:2; min-width:220px; background:#ff8c00; color:#000; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">➕ Add This Lance to Force</button>
     <a href="game-tracker.html" style="flex:1; min-width:160px; display:flex; align-items:center; justify-content:center; background:#d32f2f; color:#fff; text-decoration:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; border-radius:4px;">⚔ Game Tracker</a>
+    <button onclick="playAgainstLance()" style="flex:1; min-width:180px; background:#455a64; color:#fff; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;" title="Send this lance to OpFor Command and play against it solo">🎯 Play Against This</button>
     <button onclick="toggleCustomPanel()" style="flex:1; min-width:160px; background:transparent; color:#ff8c00; border:1px dashed #ff8c00; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">🔧 Custom 'Mech</button>
 </div>
 
@@ -1451,21 +1452,38 @@ function copyLanceToClipboard() {
     });
 }
 
+// Builds the lance CSV. Shared by the file export and the OpFor Command hand-off.
+function buildLanceCSV() {
+    let csv = "Name,Tonnage,Role,Base Value,Adjusted Value,Gunnery,Piloting,Background\n";
+
+    currentLance.forEach(unit => {
+        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
+        const adj = adjustedUnitValue(unit);
+
+        csv += [csvCell(unit.name), unit.tons, csvCell(unit.role || ''), base, adj, unit.gunnery, unit.piloting, csvCell(unit.background)].join(',') + "\n";
+    });
+
+    return csv;
+}
+
+// Hands the current lance straight to OpFor Command as the enemy force.
+function playAgainstLance() {
+    if (currentLance.length === 0) {
+        alert(`Build a lance first, then you can play against it.`);
+        return;
+    }
+    const rules = currentMode === 'classic' ? 'classic' : 'alpha';
+    const url = 'opfor-command.html#force=' + encodeURIComponent(buildLanceCSV()) + '&rules=' + rules;
+    window.open(url, '_blank');
+}
+
 function exportLanceToCSV() {
     if (currentLance.length === 0) {
         alert(`No ${getUnitLabel().toLowerCase()} to export!`);
         return;
     }
 
-    let csv = "Name,Tonnage,Role,Base Value,Adjusted Value,Gunnery,Piloting,Background\n";
-
-    currentLance.forEach(unit => {
-        const base = currentMode === 'classic' ? unit.bv : (unit.pv || Math.round(unit.bv / 40));
-        const mult = currentMode === 'classic' ? getPilotMultiplier(unit.gunnery, unit.piloting) : 1;
-        const adj = adjustedUnitValue(unit);
-
-        csv += [csvCell(unit.name), unit.tons, csvCell(unit.role || ''), base, adj, unit.gunnery, unit.piloting, csvCell(unit.background)].join(',') + "\n";
-    });
+    const csv = buildLanceCSV();
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);

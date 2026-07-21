@@ -74,6 +74,53 @@
         .tool-hero-preview .pv { color: #ccc; }
         .tool-hero-preview .sep { border-top: 1px solid #2a2a2a; margin: 10px 0; }
 
+        /* ── Solo play pair ──────────────────────────── */
+        .solo-note { color: #bbb; line-height: 1.7; margin: 0 0 26px; max-width: 780px; }
+        .solo-pair {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 0 0 50px;
+        }
+        .solo-card {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #ff8c00;
+            border-radius: 10px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+        }
+        .solo-card.mine   { border-top-color: #3d7ea6; }
+        .solo-card.theirs { border-top-color: #b03a24; }
+        .solo-side {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .solo-card.mine .solo-side   { color: #6ba3c9; }
+        .solo-card.theirs .solo-side { color: #d4644a; }
+        .solo-card h3 { color: #ff8c00; font-size: 1.35rem; margin: 0 0 10px; }
+        .solo-card p { color: #ccc; line-height: 1.65; margin: 0 0 18px; flex: 1; }
+        .solo-cta {
+            background: transparent;
+            border: 1px solid #ff8c00;
+            color: #ff8c00;
+            padding: 12px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        .solo-cta:hover { background: #ff8c00; color: #000; }
+
         /* ── About strip ─────────────────────────────── */
         .about-strip {
             background: rgba(255,140,0,0.06);
@@ -186,6 +233,7 @@
                     <li><a href="#getting-started">Getting Started</a></li>
                     <li><a href="lance-builder.html">Lance Builder</a></li>
                     <li><a href="paint-tool.html">Paint Tool</a></li>
+                    <li><a href="#solo">Solo Play</a></li>
                     <li><a href="#painting">Painting</a></li>
                     <li><a href="#gameplay">Gameplay</a></li>
                     <li><a href="#lore">Lore</a></li>
@@ -250,6 +298,26 @@
                 <div class="pv">Total: <span style="color:#ff8c00">3,841 BV / 195t</span></div>
                 <div class="sep"></div>
                 <div style="color:#555; font-size:0.75rem;">[ PRINT ROSTER ] [ EXPORT ]</div>
+            </div>
+        </div>
+
+        <!-- ── SOLO PLAY ─────────────────────────────────────────── -->
+        <div class="section-divider" id="solo">
+            <h2>🎲 Playing Solo</h2>
+        </div>
+        <p class="solo-note">No opponent, no problem. Two tools that run side by side: one keeps your own lance straight, the other thinks for the enemy. Build a force in the Lance Builder and send it across with one click.</p>
+        <div class="solo-pair">
+            <div class="solo-card mine">
+                <div class="solo-side">Your force</div>
+                <h3>⚔ Game Tracker</h3>
+                <p>Heat, armour and ammo for the 'Mechs you are piloting. Keeps a full lance straight across a long game so you are not rubbing out pencil marks between turns.</p>
+                <a href="game-tracker.html" class="solo-cta">Open Game Tracker →</a>
+            </div>
+            <div class="solo-card theirs">
+                <div class="solo-side">Their force</div>
+                <h3>🎯 OpFor Command</h3>
+                <p>A weapon-aware opponent. It reads the actual variant you are facing, works out the range band that 'Mech wants to fight at, and gives you movement and fire orders every turn. Classic and Alpha Strike.</p>
+                <a href="opfor-command.html" class="solo-cta">Open OpFor Command →</a>
             </div>
         </div>
 
@@ -551,6 +619,8 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="game-tracker.html">Game Tracker</a></li>
+                    <li><a href="opfor-command.html">OpFor Command</a></li>
                     <li><a href="paint-tool.html">Paint Tool</a></li>
                     <li><a href="articles/battletech-beginner-guide.html">Beginner Guide</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
