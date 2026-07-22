@@ -559,14 +559,30 @@ const W = [
   [/^MML 5$/i, [6,7,14,21,5], null],
   [/^MML 7$/i, [6,7,14,21,7], null],
   [/^MML 9$/i, [6,7,14,21,9], null],
-  /* Not in Total Warfare, carried over by hand and unverified: */
+  /* Not in Total Warfare. Taken from the Tactical Operations advanced
+     weapons tables, except the Re-engineered lasers, which post-date it
+     and are still unverified. */
   [/^ER Flamer$/i, [0,2,4,6,2], [0,2,4,6,2]],
   [/^Improved Heavy Gauss Rifle$/i, [3,6,12,19,22], null],
   [/^Binary Laser \(Blazer\) Cannon$/i, [0,5,10,15,12], null],
   [/^Bombast Laser$/i, [0,5,10,15,12], null],
-  [/^(Large|Medium|Small) Chemical Laser$/i, [0,5,10,15,8], [0,5,10,15,8]],
-  [/^Enhanced LRM (5|10|15|20)$/i, [3,7,14,21,10], null],
-  [/^Extended LRM (5|10|15|20)$/i, [10,12,22,38,10], null],
+  [/^Large Chemical Laser$/i, [0,5,10,15,8], [0,5,10,15,8]],
+  [/^Medium Chemical Laser$/i, [0,3,6,9,5], [0,3,6,9,5]],
+  [/^Small Chemical Laser$/i, [0,1,2,3,3], [0,1,2,3,3]],
+  [/^Enhanced LRM 5$/i, [3,7,14,21,5], null],
+  [/^Enhanced LRM 10$/i, [3,7,14,21,10], null],
+  [/^Enhanced LRM 15$/i, [3,7,14,21,15], null],
+  [/^Enhanced LRM 20$/i, [3,7,14,21,20], null],
+  [/^Extended LRM 5$/i, [10,12,22,38,5], null],
+  [/^Extended LRM 10$/i, [10,12,22,38,10], null],
+  [/^Extended LRM 15$/i, [10,12,22,38,15], null],
+  [/^Extended LRM 20$/i, [10,12,22,38,20], null],
+  [/^'?.?Mech Mortar\/1$/i, [6,7,14,21,2], [6,7,14,21,2]],
+  [/^'?.?Mech Mortar\/2$/i, [6,7,14,21,4], [6,7,14,21,4]],
+  [/^'?.?Mech Mortar\/4$/i, [6,7,14,21,8], [6,7,14,21,8]],
+  [/^'?.?Mech Mortar\/8$/i, [6,7,14,21,16], [6,7,14,21,16]],
+  [/^BattleMech Taser$/i, [0,1,2,4,1], null],
+  [/^Heavy Flamer$/i, [0,2,3,4,4], [0,2,3,4,4]],
   [/^ProtoMech AC\/(2|4|8)$/i, null, [0,5,10,15,4]],
   [/^Improved Heavy Medium Laser$/i, null, [0,3,6,9,10]],
   [/^Improved Heavy Large Laser$/i, null, [0,5,10,15,16]],
@@ -582,9 +598,9 @@ const W = [
   [/^Silver Bullet Gauss$/i, [2,7,15,22,15], null],
   [/^Small X\-Pulse Laser$/i, [0,2,4,5,3], null],
   [/^Machine Gun Array$/i, [0,1,2,3,2], null],
-  [/^Medium VSP Laser$/i, [0,2,5,9,7], null],
-  [/^Large VSP Laser$/i, [0,4,8,12,9], null],
-  [/^Small VSP Laser$/i, [0,1,2,4,5], null],
+  [/^Medium VSP Laser$/i, [0,2,5,9,[9,7,5]], null],
+  [/^Large VSP Laser$/i, [0,4,8,15,[11,9,7]], null],
+  [/^Small VSP Laser$/i, [0,2,4,6,[5,4,3]], null],
   [/^Thunderbolt 10$/i, [5,6,12,18,10], null],
   [/^Thunderbolt 15$/i, [5,6,12,18,15], null],
   [/^Thunderbolt 20$/i, [5,6,12,18,20], null],
@@ -607,7 +623,15 @@ function wStats(name,clan){
     .replace(/\s*\(CP\)$/i,'')
     .replace(/^Prototype\s+/i,'')
     .replace(/^Improved\s+(Autocannon|AC)/i,'$1')
-    .replace(/^HAG\/(\d+)$/i,'HAG $1');
+    .replace(/^HAG\/(\d+)$/i,'HAG $1')
+    // "Silver Bullet Gauss Rifle" -> "Silver Bullet Gauss"
+    .replace(/^Silver Bullet Gauss Rifle$/i,'Silver Bullet Gauss')
+    // mortars appear with a space or a slash
+    .replace(/^('?.?Mech Mortar)\s+(\d+)$/i,'$1/$2')
+    /* "Improved" prototypes share their production stats, apart from the
+       Improved Heavy Gauss and Improved Heavy lasers, which are listed
+       separately above and match before this rule is reached. */
+    .replace(/^Improved (ATM|Large Laser|Medium Laser|Small Laser|LRM|SRM)/i,'$1');
   if(NOTWEAPON.test(n)) return null;
   name=n;
   for(const [re,is,cl] of W){ if(re.test(name)) return clan?(cl||is):(is||cl); }
