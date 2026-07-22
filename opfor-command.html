@@ -386,6 +386,24 @@ function skillMod(g){
   if(g<=4) return 0; if(g<=5) return -1; return -2;
 }
 const cls=t=> t<=35?'Light': t<=55?'Medium': t<=75?'Heavy':'Assault';
+/* Alpha Strike TMM is not rolled or measured, it is a lookup on the unit's
+   Move. Brackets per AlphaStrike Companion errata: over 34" is 5, over 18"
+   is 4, over 12" is 3, over 8" is 2, over 4" is 1, anything less is 0.
+   Jumping adds 1 on the turn it jumps; a shutdown unit is immobile at -4. */
+const tmmFor=inches=> inches>34?5 : inches>18?4 : inches>12?3 : inches>8?2 : inches>4?1 : 0;
+function asMoveIn(v){ return Math.max((v.m[0]||0)*2, 0); }
+function asJumpIn(v){ return (v.m[2]||0)*2; }
+function tmmLabel(u){
+  if(RS==='as' && u.heat>=4) return '-4 (shutdown, immobile)';
+  const t=tmmOf(u.v);
+  // only call out the jump value when it actually differs
+  return (t.jump!=null && t.jump!==t.ground) ? `${t.ground} (${t.jump} jumping)` : `${t.ground}`;
+}
+function tmmOf(v){
+  const g=tmmFor(asMoveIn(v));
+  const j=asJumpIn(v)>0 ? tmmFor(asJumpIn(v))+1 : null;
+  return {ground:g, jump:j};
+}
 /* Movement, in the units the player is actually using. Classic counts
    movement points; Alpha Strike works in inches, at twice the walk MP. */
 function moveStr(v){
@@ -849,8 +867,19 @@ function generateOrder(u,fixedRoll){
   if(ht>0) o.notes.push(`You are packing HT ${ht} at this range. Dump that heat on whatever you hit, or hit anything that does not track heat that bit harder.`);
   if(RS==='as'){
     const AS_BAND_MAX=[6,24,42,60];
-    const reach=AS_BAND_MAX[pref]+Math.max(v.m[0]||0,v.m[1]||0);
+    /* Band maxima are inches, but the stored movement is Classic MP, so it
+       has to be converted first. Alpha Strike move is twice the walk MP. */
+    const moveIn=Math.max((v.m[0]||0)*2,(v.m[2]||0)*2);
+    const reach=AS_BAND_MAX[pref]+moveIn;
     o.notes.push(`Within about ${reach}" you can reach this turn, go for the lowest TMM you can find, an easy-to-hit target beats a juicier one you cannot land a shot on.`);
+    /* The player has to shoot back at this thing, so hand them the number
+       rather than making them work it out. */
+    const t=tmmOf(v);
+    const staying=(intent==='hold'&&dest===cur);
+    const jt=(t.jump!=null && t.jump!==t.ground) ? t.jump : null;
+    o.notes.push(staying
+      ? `Shooting back at this one: TMM ${t.ground} if it moves${jt!=null?`, ${jt} if it jumps`:''}, and 0 if it stands still this turn.`
+      : `Shooting back at this one: TMM ${t.ground}${jt!=null?`, or ${jt} if it jumps`:''}.`);
   }
   if(RS==='as'){
     const ovReach = cur<=1 || has(u,'OVL');
@@ -1307,7 +1336,7 @@ function renderLance(){
     <div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        <div class="unit-meta">${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
         ${vitalsHTML(u)}
       </div><button class="btn ghost sm" data-del="${u.uid}">Remove</button></div>
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
@@ -1330,7 +1359,7 @@ function renderOrders(){
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
         ${vitalsHTML(u)}
       </div><div class="hd-btns">
         <button class="btn ghost sm" data-fold="${u.uid}" aria-expanded="${!u.collapsed}"
