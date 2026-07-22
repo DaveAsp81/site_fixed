@@ -119,7 +119,7 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .order-why{font-size:14px;color:var(--ink-2);margin-top:5px}
 ol.steps{list-style:none;margin-top:11px;counter-reset:s}
 ol.steps li{counter-increment:s;position:relative;padding-left:25px;margin-bottom:7px;font-size:14.5px}
-ol.steps li::before{content:counter(s,upper-alpha);position:absolute;left:0;top:1px;font-family:var(--mono);
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;font-family:var(--mono);
   font-size:10.5px;font-weight:600;color:var(--stock);background:var(--ink);width:17px;height:17px;
   display:grid;place-items:center;border-radius:2px}
 .tgt{margin-top:11px;padding:9px 10px;background:var(--card-2);border:1.2px solid var(--rule);border-radius:2px}
@@ -341,7 +341,7 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 </div>
 
 <footer class="foot">
-  <b>How to read it.</b> Orders run A, B, C. Carry out the first one that is actually possible on your table, and drop to the next if it will not work. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
+  <b>How to read it.</b> Step 1 is the order. Steps 2 and 3 are how to carry it out, not alternatives to it, so treat all three as one instruction. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
   <b>Weapons.</b> In Classic, each card shows the full loadout and heat sink count, so you know exactly what to roll on the record sheet without needing to know every variant by heart.<br><br>
   <b>Tracking.</b> In Alpha Strike, tap the armour and structure pips and the condition updates itself. In Classic, your record sheet holds the hit locations, so just set the condition. A crippled unit gets ordered off the field either way.<br><br>
   Unofficial fan tool. Not affiliated with Catalyst Game Labs or Topps. Force data lives in the page only and is lost on refresh, so use <b>Export force</b> to keep it.
