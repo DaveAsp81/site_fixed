@@ -92,7 +92,26 @@
             flex-direction: column;
         }
         .solo-card.mine   { border-top-color: #3d7ea6; }
-        .solo-card.theirs { border-top-color: #b03a24; }
+        .solo-card.theirs {
+            border-top-color: #b03a24;
+            /* Photo from a reader's game, sitting behind a heavy tinted wash so
+               the copy stays readable. Overlay measured at 88% against the
+               brightest part of the shot. */
+            background-image:
+                linear-gradient(rgba(14,9,8,0.90), rgba(14,9,8,0.86)),
+                url('assets/images/opfor-community.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .solo-card.theirs .solo-credit {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            color: #8a8079;
+            margin: 14px 0 0;
+            flex: none;
+        }
         .solo-side {
             font-family: 'Rajdhani', sans-serif;
             font-size: 0.75rem;
@@ -102,7 +121,7 @@
             margin-bottom: 8px;
         }
         .solo-card.mine .solo-side   { color: #6ba3c9; }
-        .solo-card.theirs .solo-side { color: #d4644a; }
+        .solo-card.theirs .solo-side { color: #e0785e; }
         .solo-card h3 { color: #ff8c00; font-size: 1.35rem; margin: 0 0 10px; }
         .solo-card p { color: #ccc; line-height: 1.65; margin: 0 0 18px; flex: 1; }
         .solo-cta {
@@ -318,6 +337,7 @@
                 <h3>🎯 OpFor Command</h3>
                 <p>A weapon-aware opponent. It reads the actual variant you are facing, works out the range band that 'Mech wants to fight at, and gives you movement and fire orders every turn. Classic and Alpha Strike.</p>
                 <a href="opfor-command.html" class="solo-cta">Open OpFor Command →</a>
+                <p class="solo-credit">Table photo by Valtteri Hyvärinen, used with permission.</p>
             </div>
         </div>
 
