@@ -95,10 +95,10 @@
         .solo-card.theirs {
             border-top-color: #b03a24;
             /* Photo from a reader's game, sitting behind a heavy tinted wash so
-               the copy stays readable. Overlay measured at 88% against the
-               brightest part of the shot. */
+               the copy stays readable. Overlay measured against the
+               brightest part of the shot so the copy still clears AA contrast. */
             background-image:
-                linear-gradient(rgba(14,9,8,0.90), rgba(14,9,8,0.86)),
+                linear-gradient(rgba(14,9,8,0.82), rgba(14,9,8,0.78)),
                 url('assets/images/opfor-community.jpg');
             background-size: cover;
             background-position: center;
@@ -108,7 +108,7 @@
             font-family: 'Rajdhani', sans-serif;
             font-size: 0.7rem;
             letter-spacing: 0.06em;
-            color: #8a8079;
+            color: #b8ada7;
             margin: 14px 0 0;
             flex: none;
         }
@@ -121,7 +121,7 @@
             margin-bottom: 8px;
         }
         .solo-card.mine .solo-side   { color: #6ba3c9; }
-        .solo-card.theirs .solo-side { color: #e0785e; }
+        .solo-card.theirs .solo-side { color: #f8886e; }
         .solo-card h3 { color: #ff8c00; font-size: 1.35rem; margin: 0 0 10px; }
         .solo-card p { color: #ccc; line-height: 1.65; margin: 0 0 18px; flex: 1; }
         .solo-cta {
