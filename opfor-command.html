@@ -47,7 +47,7 @@ h1 em{font-style:normal;color:var(--stamp)}
 .hr{height:1px;background:var(--rule-2);margin:14px 0}
 label.fl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:5px}
-select,input[type=text]{width:100%;font-family:var(--body);font-size:15px;padding:9px 10px;background:var(--card);
+select,input[type=text],input[type=search]{width:100%;font-family:var(--body);font-size:15px;padding:9px 10px;background:var(--card);
   border:1.5px solid var(--rule);border-radius:2px;color:var(--ink)}
 select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;border-color:var(--draft)}
 
@@ -179,6 +179,15 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;font-fam
 .persona-sel{width:auto;font-family:var(--mono);font-size:10px;padding:3px 6px;border:1.5px solid var(--ink);
   border-radius:14px;background:var(--card);color:var(--ink);cursor:pointer}
 .hd-btns{display:flex;gap:6px;align-items:flex-start;flex:0 0 auto}
+.phase{margin-top:11px;border:1.2px solid var(--rule);border-radius:2px;background:var(--card-2);padding:9px 11px 10px}
+.phase-l{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--stock);background:var(--ink);display:inline-block;padding:2px 7px;border-radius:2px;margin-bottom:7px}
+.phase-main{font-size:14.5px;line-height:1.5;font-weight:600}
+.phase-sub{list-style:none;margin:7px 0 0;padding:0}
+.phase-sub li{position:relative;padding-left:14px;font-size:13.5px;line-height:1.55;color:var(--ink-2);margin-top:4px}
+.phase-sub li::before{content:'';position:absolute;left:3px;top:9px;width:4px;height:4px;
+  background:var(--ink-3);border-radius:50%}
+.phase-sub li b{color:var(--ink);font-weight:600}
 .abil-row{margin-top:8px;gap:4px}
 .fold-peek{padding:9px 14px 12px;font-family:var(--disp);font-weight:700;font-size:15px;
   letter-spacing:.04em;color:var(--ink-2);border-top:1.2px dashed var(--rule)}
@@ -253,11 +262,11 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
     <summary>Generate a force</summary>
     <div class="gen-bd">
       <div class="row">
-        <div class="grow" style="min-width:190px">
+        <div class="grow" style="min-width:230px">
           <label class="fl" for="genFaction">Faction</label>
           <select id="genFaction"></select>
         </div>
-        <div class="grow" style="min-width:120px">
+        <div class="grow" style="min-width:180px">
           <label class="fl" for="genEra">Era</label>
           <select id="genEra"></select>
         </div>
@@ -294,8 +303,9 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
   <div class="ctl">
     <div class="row">
       <div class="grow" style="min-width:180px">
-        <label class="fl" for="selChassis">Chassis</label>
-        <select id="selChassis"></select>
+        <label class="fl" for="chassisFind">Chassis</label>
+        <input id="chassisFind" type="search" placeholder="Type to filter, e.g. atlas" autocomplete="off">
+        <select id="selChassis" size="1"></select>
       </div>
       <div class="grow" style="min-width:130px">
         <label class="fl" for="selVariant">Variant</label>
@@ -341,7 +351,7 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 </div>
 
 <footer class="foot">
-  <b>How to read it.</b> Step 1 is the order. Steps 2 and 3 are how to carry it out, not alternatives to it, so treat all three as one instruction. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
+  <b>How to read it.</b> Each order is split into the two phases of the turn. The bold line in each block is the instruction, and the bullets under it are qualifiers on how to carry it out, not separate steps. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
   <b>Weapons.</b> In Classic, each card shows the full loadout and heat sink count, so you know exactly what to roll on the record sheet without needing to know every variant by heart.<br><br>
   <b>Tracking.</b> In Alpha Strike, tap the armour and structure pips and the condition updates itself. In Classic, your record sheet holds the hit locations, so just set the condition. A crippled unit gets ordered off the field either way.<br><br>
   Unofficial fan tool. Not affiliated with Catalyst Game Labs or Topps. Force data lives in the page only and is lost on refresh, so use <b>Export force</b> to keep it.
@@ -766,6 +776,15 @@ function generateOrder(u,fixedRoll){
 
   const o={roll,mod,score,pref,cur,steps:[],notes:[],want:'',headline:'',why:'',fire:'',target:'',alts:[]};
 
+  /* The player shoots at this unit whatever it is doing, so the return-fire
+     TMM belongs on every path, including the ones that bail out early. */
+  const addReturnFire=(immobile)=>{
+    if(RS!=='as') return;
+    if(immobile){ o.notes.push('Shooting back at this one: it is immobile, so TMM -4. It is the easiest target on the board right now.'); return; }
+    const t=tmmOf(v), jt=(t.jump!=null&&t.jump!==t.ground)?t.jump:null;
+    o.notes.push(`Shooting back at this one: TMM ${t.ground}${jt!=null?`, or ${jt} if it jumps`:''}.`);
+  };
+
   if(RS==='as' && u.heat>=4){
     o.headline='Sit tight, you are cooking';
     o.want='Offline';
@@ -775,15 +794,17 @@ function generateOrder(u,fixedRoll){
       'Heat drops to zero the moment the turn ends. You are back on your feet next turn, so it is one bad turn, not the whole fight.'];
     o.fire='Nothing. The reactor is down.';
     o.target='not applicable while shut down';
+    addReturnFire(true);
     return o;
   }
   if(u.prone){
     o.headline='Get up, now';
     o.want='Prone';
     o.why='You are down. Everything else waits until you are back on your feet.';
-    o.steps=['Make the piloting roll and get upright.','Turn to face the biggest cluster of them while you do it.','Do not try to move any further this turn.'];
+    o.steps=['Make the piloting roll and get upright.','Face the largest group of enemy units while you do it, so your front armour takes the hits.','Do not try to move any further this turn.'];
     o.fire='If you make it up, snap a shot at whoever is nearest. Do not get greedy.';
     o.target='the nearest enemy';
+    addReturnFire(false);
     return o;
   }
   if(u.dmg==='crippled'){
@@ -795,6 +816,7 @@ function generateOrder(u,fixedRoll){
       : RS==='as' ? `Fire as you go. You have got ${dmgHere} damage in you at this range.`
       : 'Fire as you go. Roll whatever on your sheet still reaches, do not stop moving to line it up.';
     o.target='whoever is chasing you';
+    addReturnFire(false);
     return o;
   }
 
@@ -838,9 +860,12 @@ function generateOrder(u,fixedRoll){
     o.why=inPlace
       ? `This is your ground. Stand at ${cb} and trade blows, do not give an inch.`
       : `No half measures. You will eat some return fire getting to ${db}, take it and keep going.`;
-    o.steps=[inPlace?'Plant your feet right here and put everything you have on the target.':'Full throttle, straight down their throat.',
-      jj?'Kick the jump jets and drop into the best firing arc you can reach.':'Take the shortest line in, terrain be damned.',
-      'No time for cover this turn. Get there.'];
+    o.steps=[inPlace?'Plant your feet right here and put everything you have on the target.'
+                    :`Full throttle toward the enemy until you are inside ${BAND_HEX[dest]}.`,
+      jj?'Kick the jump jets and drop into the best firing arc you can reach.'
+        :`Take the shortest line to ${BAND_HEX[dest]}, terrain be damned.`,
+      inPlace?'Do not give ground, even for a better firing position.'
+             :'Speed matters more than cover on this one. Get there.'];
   } else if(intent==='close'){
     o.headline='Close your range';
     o.want= RS==='as' ? `Wants ${pb} · ${best} dmg` : `Wants ${pb}`;
@@ -897,14 +922,11 @@ function generateOrder(u,fixedRoll){
     const moveIn=Math.max((v.m[0]||0)*2,(v.m[2]||0)*2);
     const reach=AS_BAND_MAX[pref]+moveIn;
     o.notes.push(`Within about ${reach}" you can reach this turn, go for the lowest TMM you can find, an easy-to-hit target beats a juicier one you cannot land a shot on.`);
-    /* The player has to shoot back at this thing, so hand them the number
-       rather than making them work it out. */
     const t=tmmOf(v);
     const staying=(intent==='hold'&&dest===cur);
     const jt=(t.jump!=null && t.jump!==t.ground) ? t.jump : null;
-    o.notes.push(staying
-      ? `Shooting back at this one: TMM ${t.ground} if it moves${jt!=null?`, ${jt} if it jumps`:''}, and 0 if it stands still this turn.`
-      : `Shooting back at this one: TMM ${t.ground}${jt!=null?`, or ${jt} if it jumps`:''}.`);
+    if(staying) o.notes.push(`Shooting back at this one: TMM ${t.ground} if it moves${jt!=null?`, ${jt} if it jumps`:''}, and 0 if it stands still this turn.`);
+    else addReturnFire(false);
   }
   if(RS==='as'){
     const ovReach = cur<=1 || has(u,'OVL');
@@ -936,9 +958,12 @@ function generateOrder(u,fixedRoll){
   else if(pz.m<=-4) o.notes.push('This one wants to go home in one piece. They will take the careful option every time.');
   else if(pz.m<0) o.notes.push('This pilot plays it safe. When in doubt, they hold or give ground.');
 
-  /* Speed reality check. The order can be right and still be unachievable. */
-  if((intent==='close'||intent==='charge') && dest!==cur && turnsNeeded>=2)
+  /* Speed reality check. The order can be right and still be unachievable.
+     Not on a charge, where the whole point is that speed beats cover. */
+  if(intent==='close' && dest!==cur && turnsNeeded>=2)
     o.notes.push(`At ${mp} MP that is roughly ${turnsNeeded} turns of closing before your guns are where you want them. Expect to eat fire on the way in, so use cover rather than the direct line.`);
+  if(intent==='charge' && dest!==cur && turnsNeeded>=2)
+    o.notes.push(`At ${mp} MP this still takes roughly ${turnsNeeded} turns to cross. You are committing to all of it, so be sure the trade is worth it.`);
   if(intent==='open' && slow)
     o.notes.push('You are slow. If they want to stay on you, you will not shake them off, so be ready to turn and fight rather than get run down from behind.');
   if(intent==='hold' && delta>0 && slow && mp>0)
@@ -1015,7 +1040,10 @@ async function loadData(){
   st.textContent=`Core roster: ${DB.length} chassis, ${DB.reduce((a,x)=>a+x.v.length,0)} variants. Sits beside mechs.json for the full catalogue.`;
   afterData();
 }
-function afterData(){ buildChassis(); buildGenFilters(); readHandoff(); }
+function afterData(){
+  buildChassis(); buildGenFilters(); readHandoff();
+  document.getElementById('chassisFind').oninput=buildChassis;
+}
 
 /* ---------- unit factory ---------- */
 function mkUnit(c,v,opts){
@@ -1040,23 +1068,65 @@ const HEATMAX=()=>RS==='classic'?30:4;
 const CONDLBL={fresh:'Fresh',hurt:'Damaged',crippled:'Crippled'};
 
 /* ---------- generator ---------- */
+const ERAORD=['Age of War','Star League','Early Succession Wars','Late Succession Wars','Clan Invasion',
+  'Civil War','Jihad','Early Republic','Dark Ages','ilClan'];
+/* Earliest era each faction can validly appear in an Inner Sphere game.
+   The data tags modern factions onto old chassis regardless of the
+   timeline, so this gates them to when they actually existed. Founding
+   years in comments; the Clans are gated to the Invasion because that is
+   when they reach the Inner Sphere, not their 2807 founding in exile. */
+const FACTION_ERA={
+  Davion:0, FedSuns:0, Kurita:0, Liao:0, Marik:0, Steiner:0,   // Great Houses, Age of War
+  Canopus:0,                                                   // Magistracy founded 2530, Age of War
+  Outworlds:1,                                                 // Outworlds Alliance, ~2680s Star League
+  Marian:3,                                                    // Marian Hegemony founded 2920, Late SW
+  Mercenaries:0,
+  StarLeague:1,                                                // Star League founded 2571
+  ComStar:1,                                                   // ComStar founded 2788
+  StIvesCompact:3,                                             // 3029
+  FreeRasalhague:4,                                            // 3034, first playable in Clan Invasion era
+  FedCom:4,                                                    // Federated Commonwealth military, ~3040s
+  LyranAlliance:5,                                             // renamed 3057, Civil War era
+  WordOfBlake:5,                                               // founded after Tukayyid, 3052
+  ClanWolf:4, ClanJadeFalcon:4, ClanGhostBear:4, ClanSmokeJaguar:4,
+  ClanDiamondShark:4, ClanNovacat:4, ClanSteelViper:4, ClanStarAdder:4,
+  ClanHellsHorses:4, ClanIceHellion:4, ClanBloodSpirit:4, ClanCoyote:4,
+  ClanFireMandrill:4, ClanGoliathScorpion:4, ClanWolverine:4  // Clans reach the IS in 3050
+};
+const factionMinEra=f=>FACTION_ERA[f]??0;
 function buildGenFilters(){
   const fs=new Map(), es=new Set();
   for(const c of DB) for(const v of c.v){
     for(const f of (v.f||[])) fs.set(f,(fs.get(f)||0)+1);
     if(v.e) es.add(v.e);
   }
-  const facs=[...fs.entries()].filter(x=>x[1]>=6).sort((a,b)=>pretty(a[0]).localeCompare(pretty(b[0])));
-  document.getElementById('genFaction').innerHTML=
-    '<option value="">Any faction</option>'+facs.map(([f,n])=>`<option value="${f}">${pretty(f)} (${n})</option>`).join('');
-  const ERAORD=['Age of War','Star League','Early Succession Wars','Late Succession Wars','Clan Invasion',
-    'Civil War','Jihad','Early Republic','Dark Ages','ilClan'];
   const eras=[...es].sort((a,b)=>{const i=ERAORD.indexOf(a),j=ERAORD.indexOf(b);
     return (i<0?99:i)-(j<0?99:j)||a.localeCompare(b);});
   document.getElementById('genEra').innerHTML=
     '<option value="">Any era</option>'+eras.map(e=>`<option value="${e}">${e}</option>`).join('');
+  document.getElementById('genEra').onchange=paintFactions;
+  window.__genFacCounts=fs;
+  paintFactions();
+}
+function paintFactions(){
+  const fs=window.__genFacCounts||new Map();
+  const era=document.getElementById('genEra').value;
+  const eraIdx=era?ERAORD.indexOf(era):null;
+  const sel=document.getElementById('genFaction');
+  const keep=sel.value;
+  /* When an era is chosen, drop factions that did not exist yet. */
+  const facs=[...fs.entries()]
+    .filter(([f,n])=>n>=6 && (eraIdx===null || factionMinEra(f)<=eraIdx))
+    .sort((a,b)=>pretty(a[0]).localeCompare(pretty(b[0])));
+  sel.innerHTML='<option value="">Any faction</option>'
+    +facs.map(([f,n])=>`<option value="${f}">${pretty(f)} (${n})</option>`).join('');
+  // keep the current choice if it is still valid, else fall back to Any
+  if(keep && facs.some(([f])=>f===keep)) sel.value=keep;
 }
 function pool(fac,era,weight){
+  const eraIdx=era?ERAORD.indexOf(era):null;
+  // A faction cannot field anything in an era before it existed.
+  if(fac && eraIdx!==null && factionMinEra(fac)>eraIdx) return [];
   const out=[];
   for(const c of DB){
     if(weight&&weight!=='Mixed'&&cls(c.t)!==weight) continue;
@@ -1338,7 +1408,7 @@ function loadoutHTML(u){
 function trackHTML(u){
   const max=HEATMAX();
   const body = RS==='classic'
-    ? '<div class="trk-hint">Your record sheet holds the hit locations. The strip up top only needs the bucket.</div>'
+    ? '<div class="trk-hint">Track hit locations on your paper record sheet. Here you only need to set Fresh, Damaged or Crippled, next to the name above.</div>'
     : '';
   const steps = RS==='classic' ? 10 : 4;
   const hp=Array.from({length:steps},(_,i)=>{
@@ -1385,7 +1455,7 @@ function renderLance(){
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
         <div class="row" style="margin-top:10px">
           ${RS==='classic'?'':(u.v.w||[]).map(w=>`<span class="pill">${esc(w)}</span>`).join('')}
-          ${abilPills(u)}
+          ${RS==='as'?abilPills(u):''}
         </div></div></div>`).join('');
   el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
     force=force.filter(x=>x.uid!==+b.dataset.del); renderLance(); renderOrders();});
@@ -1411,7 +1481,7 @@ function renderOrders(){
         :`<button class="btn ghost sm" data-kill="${u.uid}">Destroyed</button>`}</div></div>
       ${u.collapsed?`<div class="fold-peek">${o?esc(o.headline):'No order yet'}</div>`:`
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
-        ${u.v.b?`<div class="row abil-row">${abilPills(u)}</div>`:''}
+        ${RS==='as'&&u.v.b?`<div class="row abil-row">${abilPills(u)}</div>`:''}
         <div class="ctl" style="margin-top:10px">
           <div class="ctl-lbl">Range to nearest enemy</div>
           <div class="seg rng">${BANDS.map((b,i)=>
@@ -1438,11 +1508,19 @@ function renderOrders(){
           <div class="order-w">${o.want||'Order'}</div>
           <div class="order-h">${o.headline}</div>
           <div class="order-why">${o.why}</div>
-          <ol class="steps">${o.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
-          <div class="tgt"><div class="tgt-l">Fire</div><div class="tgt-v">${o.fire}</div>
-            <div class="hr" style="margin:9px 0"></div>
-            <div class="tgt-l">Target priority</div><div class="tgt-v">${o.target}</div>
-            ${o.alts.length?`<div class="tgt-alt">If that is not on the table: ${o.alts.join(', then ')}.</div>`:''}</div>
+          <div class="phase">
+            <div class="phase-l">Movement phase</div>
+            <div class="phase-main">${o.steps[0]}</div>
+            ${o.steps.length>1?`<ul class="phase-sub">${o.steps.slice(1).map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+          </div>
+          <div class="phase">
+            <div class="phase-l">Weapon attack phase</div>
+            <div class="phase-main">${o.fire}</div>
+            <ul class="phase-sub">
+              <li><b>Shoot at:</b> ${o.target}</li>
+              ${o.alts.length?`<li>If that is not on the table: ${o.alts.join(', then ')}.</li>`:''}
+            </ul>
+          </div>
           ${o.notes.length?`<div class="notes">${o.notes.map(n=>`<div class="note">${n}</div>`).join('')}</div>`:''}
           <div class="roll">2d6 ${o.roll} · role and condition ${o.mod>=0?'+':''}${o.mod} · resolve ${o.score}</div>
         </div>`:''}
@@ -1498,13 +1576,21 @@ function renderOrders(){
 /* ---------- setup ---------- */
 function buildChassis(){
   const sc=document.getElementById('selChassis');
-  sc.innerHTML=DB.map((c,i)=>`<option value="${i}">${dualName(c)} · ${c.t}t</option>`).join('');
+  const q=(document.getElementById('chassisFind').value||'').trim().toLowerCase();
+  /* Match against the alias too, so "timber wolf" finds the Mad Cat. */
+  const rows=DB.map((c,i)=>[c,i]).filter(([c])=>
+    !q || dualName(c).toLowerCase().includes(q));
+  sc.innerHTML = rows.length
+    ? rows.map(([c,i])=>`<option value="${i}">${esc(dualName(c))} · ${c.t}t</option>`).join('')
+    : '<option value="-1">No chassis matches that</option>';
   sc.onchange=buildVariant; buildVariant();
 }
 function buildVariant(){
   const i=+document.getElementById('selChassis').value;
-  document.getElementById('selVariant').innerHTML=
-    DB[i].v.map((v,j)=>`<option value="${j}">${v.n} · ${v.r}</option>`).join('');
+  const sv=document.getElementById('selVariant');
+  if(!DB[i]){ sv.innerHTML='<option value="-1">—</option>'; return; }
+  sv.innerHTML=DB[i].v.map((v,j)=>
+    `<option value="${j}">${esc(v.n)} · ${esc(v.r)}${v.e?' · '+esc(v.e):''}</option>`).join('');
 }
 function setRuleset(r){
   RS=r; BAND_HEX=RULES[r].full;
@@ -1531,6 +1617,7 @@ document.getElementById('btnGenAdd').onclick=()=>rollForce(true);
 document.getElementById('btnAdd').onclick=()=>{
   const i=+document.getElementById('selChassis').value;
   const j=+document.getElementById('selVariant').value;
+  if(!DB[i]||!DB[i].v[j]) return;      // nothing matched the filter
   force.push(mkUnit(DB[i],DB[i].v[j],document.getElementById('inpPilot').value.trim()));
   document.getElementById('inpPilot').value='';
   renderLance(); renderOrders();};
