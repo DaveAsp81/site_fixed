@@ -996,17 +996,29 @@ function randomizeThemedLance() {
     let usingFactionFilter = false;
     let usedFallback = false;
 
-    // Era filter always applies
+    // Era filter always applies.
+    // MUL tracks availability PER ERA, so a mech is fieldable in every era its
+    // availability map lists, not only the era it was introduced in. Falling
+    // back to m.era keeps pre-MUL data working.
     if (eraFilter !== 'ALL') {
-        pool = pool.filter(m => m.era === eraFilter);
+        pool = pool.filter(m =>
+            m.availability ? Object.hasOwn(m.availability, eraFilter)
+                           : m.era === eraFilter
+        );
     }
 
     if (f !== 'ALL') {
         if (hasEnrichedFactions) {
             // Hard filter: only mechs this faction can actually field
-            const factionPool = pool.filter(m =>
-                m.factions && m.factions.includes(f)
-            );
+            // Scope the faction check to the selected era where possible, so a
+            // faction only gets mechs it could field in THAT era.
+            const factionPool = pool.filter(m => {
+                if (m.availability && eraFilter !== 'ALL') {
+                    const inEra = m.availability[eraFilter];
+                    return Array.isArray(inEra) && inEra.includes(f);
+                }
+                return m.factions && m.factions.includes(f);
+            });
 
             if (factionPool.length >= 4) {
                 pool = factionPool;
@@ -1072,11 +1084,26 @@ function randomizeThemedLance() {
 
             // Pick a random variant from this chassis
             // For faction-filtered pools, prefer variants the faction can field
-            let eligibleVariants = mech.variants;
-            if (usingFactionFilter) {
-                const factionVariants = mech.variants.filter(v =>
-                    v.factions && v.factions.includes(f)
+            // MUL flags one-off 'Mechs (hero units) as Unique with no faction
+            // availability. They should never appear in a generated force.
+            let eligibleVariants = mech.variants.filter(v => !v.unique);
+            if (eligibleVariants.length === 0) eligibleVariants = mech.variants;
+
+            if (eraFilter !== 'ALL') {
+                const eraVariants = eligibleVariants.filter(v =>
+                    v.availability ? Object.hasOwn(v.availability, eraFilter)
+                                   : (v.era || mech.era) === eraFilter
                 );
+                if (eraVariants.length > 0) eligibleVariants = eraVariants;
+            }
+            if (usingFactionFilter) {
+                const factionVariants = eligibleVariants.filter(v => {
+                    if (v.availability && eraFilter !== 'ALL') {
+                        const inEra = v.availability[eraFilter];
+                        return Array.isArray(inEra) && inEra.includes(f);
+                    }
+                    return v.factions && v.factions.includes(f);
+                });
                 if (factionVariants.length > 0) eligibleVariants = factionVariants;
             }
 
@@ -1342,7 +1369,19 @@ window.onload = () => {
 
             // Populate era dropdown from database
             const eraSelect = document.getElementById('era-filter');
-            const uniqueEras = [...new Set(mechDatabase.map(m => m.era))].sort();
+            const ERA_ORDER = ['Age of War','Star League','Early Succession War',
+                'Late Succession War - LosTech','Late Succession War - Renaissance',
+                'Clan Invasion','Civil War','Jihad','Early Republic','Late Republic',
+                'Dark Age','ilClan'];
+            const eraSet = new Set();
+            mechDatabase.forEach(m => {
+                if (m.availability) Object.keys(m.availability).forEach(e => eraSet.add(e));
+                else if (m.era) eraSet.add(m.era);
+            });
+            const uniqueEras = [...eraSet].sort((a, b) => {
+                const ia = ERA_ORDER.indexOf(a), ib = ERA_ORDER.indexOf(b);
+                return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+            });
             eraSelect.innerHTML = '<option value="ALL">All Eras</option>';
             uniqueEras.forEach(era => {
                 const opt = document.createElement('option');

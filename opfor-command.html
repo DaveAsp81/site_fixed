@@ -1026,6 +1026,7 @@ function normalise(raw){
         a:v.bf_armor|0,s:v.bf_structure|0,o:v.bf_overheat|0,
         b:v.bf_abilities||'',m:mp(v.movement),pv:v.pv|0,bv:v.bv|0,
         e:eraOfVariant(v),f:(v.factions||c.factions||[]),
+        av:v.availability||null,uq:!!v.unique,
         w:(v.weapons||[]),hs:v.heatsinks||''});
     }
     if(vs.length) out.push({c:c.chassis,t:c.tons,tech:(c.technology||'').includes('Clan')?'C':'IS',v:vs});
@@ -1098,9 +1099,12 @@ function eraIdxOfYear(y){
 const eraOfYear=y=>ERAORD[eraIdxOfYear(y)];
 /* Only for the handful of variants with no introduction year: map the older
    ten-era label onto the first year of the matching MUL era. */
-const OLDERA={'Age of War':2005,'Star League':2571,'Early Succession Wars':2781,
+const OLDERA={'Age of War':2005,'Star League':2571,
+  'Early Succession War':2781,'Early Succession Wars':2781,
+  'Late Succession War - LosTech':2901,'Late Succession War - Renaissance':3020,
   'Late Succession Wars':2901,'Clan Invasion':3050,'Civil War':3062,'Jihad':3068,
-  'Early Republic':3081,'Dark Ages':3101,'ilClan':3131};
+  'Early Republic':3081,'Late Republic':3101,'Dark Age':3131,'Dark Ages':3101,
+  'ilClan':3151};
 function eraOfVariant(v){
   const m=/(\d{4})/.exec(String(v.date_introduced||''));
   if(m) return eraOfYear(+m[1]);
@@ -1129,11 +1133,19 @@ const FACTION_FOUNDED={
   ClanFireMandrill:3050, ClanGoliathScorpion:3050
 };
 const factionMinEra=f=>eraIdxOfYear(FACTION_FOUNDED[f]??ERAS[0][1]);
+/* MUL tracks availability PER ERA, so a unit is fieldable in every era its
+   availability map lists, not only the era it was introduced in. Without this
+   a Succession Wars chassis vanishes from every later era it still serves in.
+   Falls back to the single introduction era for pre-MUL data. */
+const eraListOf=v=>v.av?Object.keys(v.av):(v.e?[v.e]:[]);
+const inEra=(v,era)=>!era||(v.av?Object.hasOwn(v.av,era):v.e===era);
+const facsOf=(v,era)=>(era&&v.av)?(v.av[era]||[]):(v.f||[]);
 function buildGenFilters(){
   const fs=new Map(), es=new Set();
   for(const c of DB) for(const v of c.v){
+    if(v.uq) continue;
     for(const f of (v.f||[])) fs.set(f,(fs.get(f)||0)+1);
-    if(v.e) es.add(v.e);
+    for(const e of eraListOf(v)) es.add(e);
   }
   const eras=[...es].sort((a,b)=>{const i=ERAORD.indexOf(a),j=ERAORD.indexOf(b);
     return (i<0?99:i)-(j<0?99:j)||a.localeCompare(b);});
@@ -1153,8 +1165,9 @@ function paintFactions(){
      other eras. */
   const fs=new Map();
   for(const c of DB) for(const v of c.v){
-    if(era && v.e!==era) continue;
-    for(const f of (v.f||[])){
+    if(v.uq) continue;
+    if(!inEra(v,era)) continue;
+    for(const f of facsOf(v,era)){
       const key=FACTION_DUPE[f]||f;
       if(eraIdx!==null && factionMinEra(key)>eraIdx) continue;
       fs.set(key,(fs.get(key)||0)+1);
@@ -1176,8 +1189,9 @@ function pool(fac,era,weight){
   for(const c of DB){
     if(weight&&weight!=='Mixed'&&cls(c.t)!==weight) continue;
     for(const v of c.v){
-      if(fac&&!(v.f||[]).includes(fac)) continue;
-      if(era&&v.e!==era) continue;
+      if(v.uq) continue;
+      if(!inEra(v,era)) continue;
+      if(fac&&!facsOf(v,era).includes(fac)) continue;
       out.push([c,v]);
     }
   }
