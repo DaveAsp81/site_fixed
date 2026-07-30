@@ -116,6 +116,40 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .order{border-left:3px solid var(--stamp);padding:2px 0 2px 11px;margin-top:13px}
 .order-h{font-family:var(--disp);font-weight:700;font-size:19px;line-height:1.1;text-transform:uppercase;letter-spacing:.02em}
 .order-w{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--stamp);margin-bottom:3px}
+.order-mission{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--stock);
+  background:var(--stamp);display:inline-block;padding:2px 8px;border-radius:2px;margin-bottom:5px;letter-spacing:.03em}
+.obj-wrap{border:1.4px solid var(--ink);border-radius:2px;background:var(--card-2);padding:11px 13px;margin-bottom:14px}
+.obj-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:9px}
+.obj-hd-l{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--stock);background:var(--ink);padding:2px 8px;border-radius:2px}
+.obj-hd-note{font-size:11.5px;color:var(--ink-3)}
+.obj-empty{font-size:12.5px;color:var(--ink-3);padding:2px 0 6px}
+.obj-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 0;border-top:1px dashed var(--rule)}
+.obj-off{opacity:.5}
+.obj-type{font-weight:600;font-size:13.5px}
+.obj-name{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.obj-btns{margin-left:auto;display:flex;gap:6px}
+.obj-add{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;padding-top:9px;border-top:1.2px solid var(--rule)}
+.obj-add select{flex:1;min-width:180px}
+.obj-add input{flex:1;min-width:150px}
+.pf-section{margin-top:20px;padding-top:16px;border-top:2px solid var(--ink)}
+.pf-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:11px}
+.pf-hd-l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--stock);background:var(--ink);padding:3px 9px;border-radius:2px}
+.pf-hd-note{font-size:11.5px;color:var(--ink-3);flex:1;min-width:200px}
+.pf-pilot{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:400}
+.punit{border:1.2px solid var(--rule);border-radius:2px;background:var(--card);padding:10px 12px;margin-top:8px}
+.punit.dead{opacity:.45}
+.punit-ctl{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--rule)}
+.seg.pill.sm button{font-size:11px;padding:3px 8px}
+.focus-fire{border:1.6px solid var(--stamp);border-radius:2px;background:var(--card);
+  padding:11px 13px;margin-bottom:14px;box-shadow:2px 2px 0 var(--stamp)}
+.ff-l{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--stock);background:var(--stamp);display:inline-block;padding:2px 8px;border-radius:2px;margin-bottom:7px}
+.ff-main{font-size:15px;line-height:1.5;font-weight:600}
+.ff-main b{color:var(--stamp)}
+.ff-why{font-size:13px;color:var(--ink-2);margin-top:4px}
+.ff-called{font-size:12.5px;color:var(--ink-2);margin-top:7px;padding-top:7px;border-top:1px dashed var(--rule)}
 .order-why{font-size:14px;color:var(--ink-2);margin-top:5px}
 ol.steps{list-style:none;margin-top:11px;counter-reset:s}
 ol.steps li{counter-increment:s;position:relative;padding-left:25px;margin-bottom:7px;font-size:14.5px}
@@ -324,6 +358,34 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 
   <div id="lanceList"></div>
 
+  <div class="pf-section">
+    <div class="pf-hd">
+      <span class="pf-hd-l">Your forces</span>
+      <span class="pf-hd-note">Optional. Add your own mechs and the OpFor will target them for real — actual TMM, armour state and weight, not guesses.</span>
+    </div>
+    <div class="ctl">
+      <div class="row">
+        <div class="grow" style="min-width:180px">
+          <label class="fl" for="pChassisFind">Chassis</label>
+          <input id="pChassisFind" type="search" placeholder="Type to filter, e.g. marauder" autocomplete="off">
+          <select id="pSelChassis" size="1"></select>
+        </div>
+        <div class="grow" style="min-width:130px">
+          <label class="fl" for="pSelVariant">Variant</label>
+          <select id="pSelVariant"></select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;align-items:flex-end">
+        <div class="grow" style="min-width:150px">
+          <label class="fl" for="pInpPilot">Pilot or callsign <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="text" id="pInpPilot" placeholder="e.g. Sergeant Cole" autocomplete="off">
+        </div>
+        <button class="btn stamp" id="pBtnAdd">Add my mech</button>
+      </div>
+    </div>
+    <div id="playerList"></div>
+  </div>
+
   <div class="tools">
     <button class="btn ghost sm" id="btnExport">Export JSON</button>
     <button class="btn ghost sm" id="btnExportCsv">Export CSV</button>
@@ -336,6 +398,7 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 
 <section id="pane-orders" class="hide">
   <div class="eyebrow">Set the situation, then read the order</div>
+  <div id="objectiveBar"></div>
   <div id="orderList"></div>
   <div class="row" style="margin-top:18px">
     <button class="btn grow" id="btnEndTurn">End turn and advance</button>
@@ -375,6 +438,41 @@ const BANDS=['Short','Medium','Long','Extreme'];
 let BAND_HEX=RULES.classic.full;
 
 let DB=[], force=[], turn=1, uidSeq=1;
+/* The player's own lance. Unlike the OpFor, these are not given orders —
+   they exist so the OpFor's advice can read real target data: actual TMM,
+   armour state and tonnage, instead of guessing. This is what turns "go
+   for the lowest TMM you can find" into "shoot the Firestarter, it is
+   TMM 2 and already cored". */
+let players=[];
+/* Force-wide mission objectives. The OpFor shares these across the lance;
+   each turn a unit rolls whether it is pulled toward one or fights the
+   battle in front of it (the split-attention model), so the whole force
+   never robotically beelines the same marker. */
+let objectives=[];   // {id,type,name,reachable}
+let objSeq=1;
+const OBJ_TYPES={
+  destroy:{label:'Destroy a structure or position',verb:'movement',
+    short:'the objective',noun:'the objective'},
+  vip:{label:'Hunt a specific enemy',verb:'both',
+    short:'the marked enemy',noun:'the marked enemy'},
+  hold:{label:'Reach and hold a location',verb:'movement',
+    short:'the position',noun:'the position'},
+  recon:{label:'Recon or scan, then withdraw',verb:'movement',
+    short:'the scan site',noun:'the scan site'}
+};
+const activeObjectives=()=>objectives.filter(o=>o.reachable!==false);
+/* Whether this unit acts on an objective this turn. With objectives live,
+   each unit has an even chance of being pulled to one versus taking a
+   normal combat order, so engagement cycles naturally across turns. The
+   fixed roll keeps it stable when the order refreshes on a state change. */
+function objectiveFor(u,fixedRoll){
+  const act=activeObjectives();
+  if(!act.length) return null;
+  const r=Number.isFinite(fixedRoll)?fixedRoll:(d6()+d6());
+  // ~45% pulled toward the mission, else the fight in front of them
+  if(r<7) return null;
+  return act[(r+ (u.uid||0)) % act.length];
+}
 let genW='Mixed', genN=4;
 
 const FNAME={FedSuns:'Federated Suns (Davion)',Davion:'Federated Suns (Davion)',
@@ -865,6 +963,13 @@ function generateOrder(u,fixedRoll){
   const turnsNeeded= mp>0 ? Math.ceil(gapHex/mp) : 99;
   const slow=(mp<=4);
 
+  /* Is this unit pulled toward a mission objective this turn? If so it still
+     gets a coherent combat order, but the objective reshapes the headline
+     and adds the mission step, so the lance works the objective without
+     every unit robotically beelining the same marker. */
+  const obj=objectiveFor(u,roll);
+  o.objective=obj?{type:obj.type,name:obj.name}:null;
+
   if(intent==='charge'){
     const inPlace=(dest===cur);
     o.headline=inPlace?'Dig in and trade':'Go, go, go';
@@ -917,7 +1022,32 @@ function generateOrder(u,fixedRoll){
       'Keep your exposure down, the fewer of them that can see you, the better.'];
   }
 
-  if(canIndirect) o.notes.push('You can shoot indirect from right where you are. No need to show yourself for this one.');
+  /* Overlay the objective on the combat order it just built. The unit still
+     moves and shoots sensibly, but its priority this turn is the mission. */
+  if(obj){
+    const ot=OBJ_TYPES[obj.type];
+    const tgt=obj.name||ot.noun;
+    o.want='On mission';
+    if(obj.type==='vip'){
+      o.headline='Go after the marked target';
+      o.why=`Orders are to hunt ${tgt}. Press toward it and put your fire on it over easier targets.`;
+      o.steps=[`Close on ${tgt} and keep the pressure on it.`, ...o.steps.slice(0,2)];
+    } else if(obj.type==='recon'){
+      o.headline='Break off and scan';
+      o.why=`This turn the mission comes first. Get to ${tgt} and run the scan instead of pressing the attack.`;
+      o.steps=[`Move onto ${tgt} and hold fire once you are in range, the scan is the job this turn.`, o.steps[0]];
+    } else if(obj.type==='destroy'){
+      o.headline='Push for the objective';
+      o.why=`Orders are to destroy ${tgt}. Advance on it and bring it down once you are in range.`;
+      o.steps=[`Advance on ${tgt} and put your fire on it the moment it is in range.`, ...o.steps.slice(0,2)];
+    } else { // hold
+      o.headline='Take and hold the ground';
+      o.why=`Orders are to reach and hold ${tgt}. Get onto it and stay, do not get drawn off chasing kills.`;
+      o.steps=[`Move onto ${tgt} and hold there, face the enemy but do not chase them off it.`, ...o.steps.slice(0,2)];
+    }
+  }
+
+
   if(has(u,'STL')) o.notes.push('Your armour is built for this. Stay out at range and hug what cover you can, you are hard to pin down out there.');
   if(has(u,'ECM')) o.notes.push('Keep your ECM close enough to cover the rest of the lance, that is worth more than the extra ground.');
   if(has(u,'TAG')) o.notes.push('You are on TAG duty. Paint the target, let someone else land the killing blow.');
@@ -1007,6 +1137,19 @@ function generateOrder(u,fixedRoll){
   }
   const tl=TARGETS[v.r]||TARGETS.Skirmisher;
   o.target=tl[0]; o.alts=tl.slice(1);
+
+  /* Objective overrides the target line, after the combat fire block has set
+     its default. A mission target beats the generic role priority. */
+  if(obj){
+    const tgt=obj.name||OBJ_TYPES[obj.type].noun;
+    if(obj.type==='vip'){ o.target=`${tgt}, this is the priority kill`; o.alts=['whatever is between you and it']; }
+    else if(obj.type==='destroy'){ o.target=`${tgt}, once anything else shooting at you is dealt with`; o.alts=['whatever is shooting at you right now']; }
+    else if(obj.type==='recon'){
+      o.fire='Hold fire this turn if you are in scan range. A shot gives your position away for nothing.';
+      o.target='no one, you are on the scan'; o.alts=[];
+    }
+    // 'hold' keeps its normal combat target: you hold the ground and shoot normally
+  }
   return o;
 }
 
@@ -1026,7 +1169,6 @@ function normalise(raw){
         a:v.bf_armor|0,s:v.bf_structure|0,o:v.bf_overheat|0,
         b:v.bf_abilities||'',m:mp(v.movement),pv:v.pv|0,bv:v.bv|0,
         e:eraOfVariant(v),f:(v.factions||c.factions||[]),
-        av:v.availability||null,uq:!!v.unique,
         w:(v.weapons||[]),hs:v.heatsinks||''});
     }
     if(vs.length) out.push({c:c.chassis,t:c.tons,tech:(c.technology||'').includes('Clan')?'C':'IS',v:vs});
@@ -1056,6 +1198,32 @@ async function loadData(){
 function afterData(){
   buildChassis(); buildGenFilters(); readHandoff();
   document.getElementById('chassisFind').oninput=buildChassis;
+  buildPChassis();
+  document.getElementById('pChassisFind').oninput=buildPChassis;
+}
+/* Player-force pickers, parallel to the OpFor ones but feeding players[]. */
+function buildPChassis(){
+  const sc=document.getElementById('pSelChassis');
+  const q=(document.getElementById('pChassisFind').value||'').trim().toLowerCase();
+  const rows=DB.map((c,i)=>[c,i]).filter(([c])=>!q||dualName(c).toLowerCase().includes(q));
+  sc.innerHTML = rows.length
+    ? rows.map(([c,i])=>`<option value="${i}">${esc(dualName(c))} · ${c.t}t</option>`).join('')
+    : '<option value="-1">No chassis matches that</option>';
+  sc.onchange=buildPVariant; buildPVariant();
+}
+function buildPVariant(){
+  const i=+document.getElementById('pSelChassis').value;
+  const sv=document.getElementById('pSelVariant');
+  if(!DB[i]){ sv.innerHTML='<option value="-1">—</option>'; return; }
+  sv.innerHTML=DB[i].v.map((v,j)=>`<option value="${j}">${esc(v.n)} · ${esc(v.r)}</option>`).join('');
+}
+/* A player mech carries only what the OpFor needs to target it: identity,
+   TMM inputs (movement is on the variant), and a live damage state. No
+   persona, no orders — these are never given orders. */
+function mkPlayer(c,v,pilot){
+  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,
+    pilot:String(pilot||'').slice(0,60),
+    arm:v.a,str:v.s,manualCond:'fresh',forceCrip:false,moved:'moved',dead:false,manual:true};
 }
 
 /* ---------- unit factory ---------- */
@@ -1070,6 +1238,8 @@ function mkUnit(c,v,opts){
 }
 function condOf(u){
   if(u.forceCrip) return 'crippled';
+  // Player units are set by button, not pip tracking, so trust that directly.
+  if(u.manual) return u.manualCond||'fresh';
   if(RS==='classic') return u.manualCond||'fresh';
   if(u.str<=0) return 'crippled';
   if(u.v.s>0&&u.str<=Math.floor(u.v.s/2)) return 'crippled';
@@ -1099,12 +1269,9 @@ function eraIdxOfYear(y){
 const eraOfYear=y=>ERAORD[eraIdxOfYear(y)];
 /* Only for the handful of variants with no introduction year: map the older
    ten-era label onto the first year of the matching MUL era. */
-const OLDERA={'Age of War':2005,'Star League':2571,
-  'Early Succession War':2781,'Early Succession Wars':2781,
-  'Late Succession War - LosTech':2901,'Late Succession War - Renaissance':3020,
+const OLDERA={'Age of War':2005,'Star League':2571,'Early Succession Wars':2781,
   'Late Succession Wars':2901,'Clan Invasion':3050,'Civil War':3062,'Jihad':3068,
-  'Early Republic':3081,'Late Republic':3101,'Dark Age':3131,'Dark Ages':3101,
-  'ilClan':3151};
+  'Early Republic':3081,'Dark Ages':3101,'ilClan':3131};
 function eraOfVariant(v){
   const m=/(\d{4})/.exec(String(v.date_introduced||''));
   if(m) return eraOfYear(+m[1]);
@@ -1133,19 +1300,11 @@ const FACTION_FOUNDED={
   ClanFireMandrill:3050, ClanGoliathScorpion:3050
 };
 const factionMinEra=f=>eraIdxOfYear(FACTION_FOUNDED[f]??ERAS[0][1]);
-/* MUL tracks availability PER ERA, so a unit is fieldable in every era its
-   availability map lists, not only the era it was introduced in. Without this
-   a Succession Wars chassis vanishes from every later era it still serves in.
-   Falls back to the single introduction era for pre-MUL data. */
-const eraListOf=v=>v.av?Object.keys(v.av):(v.e?[v.e]:[]);
-const inEra=(v,era)=>!era||(v.av?Object.hasOwn(v.av,era):v.e===era);
-const facsOf=(v,era)=>(era&&v.av)?(v.av[era]||[]):(v.f||[]);
 function buildGenFilters(){
   const fs=new Map(), es=new Set();
   for(const c of DB) for(const v of c.v){
-    if(v.uq) continue;
     for(const f of (v.f||[])) fs.set(f,(fs.get(f)||0)+1);
-    for(const e of eraListOf(v)) es.add(e);
+    if(v.e) es.add(v.e);
   }
   const eras=[...es].sort((a,b)=>{const i=ERAORD.indexOf(a),j=ERAORD.indexOf(b);
     return (i<0?99:i)-(j<0?99:j)||a.localeCompare(b);});
@@ -1165,9 +1324,8 @@ function paintFactions(){
      other eras. */
   const fs=new Map();
   for(const c of DB) for(const v of c.v){
-    if(v.uq) continue;
-    if(!inEra(v,era)) continue;
-    for(const f of facsOf(v,era)){
+    if(era && v.e!==era) continue;
+    for(const f of (v.f||[])){
       const key=FACTION_DUPE[f]||f;
       if(eraIdx!==null && factionMinEra(key)>eraIdx) continue;
       fs.set(key,(fs.get(key)||0)+1);
@@ -1189,9 +1347,8 @@ function pool(fac,era,weight){
   for(const c of DB){
     if(weight&&weight!=='Mixed'&&cls(c.t)!==weight) continue;
     for(const v of c.v){
-      if(v.uq) continue;
-      if(!inEra(v,era)) continue;
-      if(fac&&!facsOf(v,era).includes(fac)) continue;
+      if(fac&&!(v.f||[]).includes(fac)) continue;
+      if(era&&v.e!==era) continue;
       out.push([c,v]);
     }
   }
@@ -1519,14 +1676,152 @@ function renderLance(){
   el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
     force=force.filter(x=>x.uid!==+b.dataset.del); renderLance(); renderOrders();});
 }
+/* The player list. Each card exposes just the state the OpFor targets on:
+   damage condition and whether it moved (for TMM). Editing any of it
+   refreshes the OpFor orders, since target priority can shift. */
+function renderPlayers(){
+  const el=document.getElementById('playerList');
+  if(!el) return;
+  if(!players.length){ el.innerHTML=''; return; }
+  el.innerHTML=`<div class="eyebrow">Your force · ${players.length} ${players.length===1?'unit':'units'}</div>`
+    +players.map(p=>{
+    const tmm=RS==='as'?tmmOf(p.v):null;
+    const cond=condOf(p);
+    return `<div class="punit${p.dead?' dead':''}">
+      <div class="unit-hd"><div>
+        <div class="unit-name">${p.chassis} <span class="unit-var">${p.v.n}</span>${p.pilot?` <span class="pf-pilot">${esc(p.pilot)}</span>`:''}</div>
+        <div class="unit-meta">${p.tons}t ${cls(p.tons)} · ${p.v.r}${moveStr(p.v)?' · '+(RS==='as'?'':'MP ')+moveStr(p.v):''}${RS==='as'?' · TMM '+(p.moved==='still'?'0 (stood still)':tmm.ground+(tmm.jump!=null&&tmm.jump!==tmm.ground?'/'+tmm.jump+'j':'')):''}</div>
+      </div><button class="btn ghost sm" data-pdel="${p.uid}">Remove</button></div>
+      <div class="punit-ctl">
+        <div class="sit"><span class="sit-l">Condition</span>
+          <div class="seg pill sm">
+            <button data-pcond="${p.uid}:fresh" aria-pressed="${cond==='fresh'}">Fresh</button>
+            <button data-pcond="${p.uid}:hurt" aria-pressed="${cond==='hurt'}">Hurt</button>
+            <button data-pcond="${p.uid}:crippled" aria-pressed="${cond==='crippled'}">Crippled</button>
+          </div></div>
+        <div class="sit"><span class="sit-l">This turn</span>
+          <div class="seg pill sm">
+            <button data-pmoved="${p.uid}:moved" aria-pressed="${p.moved!=='still'}">Moved</button>
+            <button data-pmoved="${p.uid}:still" aria-pressed="${p.moved==='still'}">Stood still</button>
+          </div></div>
+      </div></div>`;
+  }).join('');
+  el.querySelectorAll('[data-pdel]').forEach(b=>b.onclick=()=>{
+    players=players.filter(x=>x.uid!==+b.dataset.pdel); renderPlayers(); refreshAllOrders(); renderOrders();});
+  el.querySelectorAll('[data-pcond]').forEach(b=>b.onclick=()=>{
+    const [uid,val]=b.dataset.pcond.split(':'); const p=players.find(x=>x.uid==uid);
+    if(p){ p.manualCond=val; p.forceCrip=(val==='crippled'); renderPlayers(); refreshAllOrders(); renderOrders(); }});
+  el.querySelectorAll('[data-pmoved]').forEach(b=>b.onclick=()=>{
+    const [uid,val]=b.dataset.pmoved.split(':'); const p=players.find(x=>x.uid==uid);
+    if(p){ p.moved=val; renderPlayers(); refreshAllOrders(); renderOrders(); }});
+}
+function renderObjectiveBar(){
+  const bar=document.getElementById('objectiveBar');
+  if(!bar) return;
+  const rows=objectives.map(o=>{
+    const t=OBJ_TYPES[o.type];
+    const off=o.reachable===false;
+    return `<div class="obj-row${off?' obj-off':''}">
+      <span class="obj-type">${t?esc(t.label):esc(o.type)}</span>
+      ${o.name?`<span class="obj-name">${esc(o.name)}</span>`:''}
+      <div class="obj-btns">
+        <button class="btn ghost sm" data-obj-reach="${o.id}"
+          title="Mark whether the lance can act on this objective this turn">
+          ${off?'Unreachable this turn':'Reachable'}</button>
+        <button class="btn ghost sm" data-obj-del="${o.id}" title="Remove objective">✕</button>
+      </div></div>`;
+  }).join('');
+  bar.innerHTML=`<div class="obj-wrap">
+    <div class="obj-hd">
+      <span class="obj-hd-l">Mission objectives</span>
+      <span class="obj-hd-note">Shared across the OpFor lance. Toggle one off on a turn it cannot be reached.</span>
+    </div>
+    ${rows||'<div class="obj-empty">No objectives. The lance fights a straight engagement.</div>'}
+    <div class="obj-add">
+      <select id="objType">${Object.entries(OBJ_TYPES).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}</select>
+      <input id="objName" type="text" placeholder="Name (optional), e.g. comms tower">
+      <button class="btn ghost sm" id="objAdd">+ Add</button>
+    </div>
+  </div>`;
+  bar.querySelectorAll('[data-obj-reach]').forEach(b=>b.onclick=()=>{
+    const o=objectives.find(x=>x.id==b.dataset.objReach); if(o){o.reachable=(o.reachable===false); refreshAllOrders(); renderOrders();}});
+  bar.querySelectorAll('[data-obj-del]').forEach(b=>b.onclick=()=>{
+    objectives=objectives.filter(x=>x.id!=b.dataset.objDel); refreshAllOrders(); renderOrders();});
+  const add=document.getElementById('objAdd');
+  if(add) add.onclick=()=>{
+    const type=document.getElementById('objType').value;
+    const name=document.getElementById('objName').value.trim().slice(0,50);
+    objectives.push({id:objSeq++,type,name,reachable:true});
+    refreshAllOrders(); renderOrders();
+  };
+}
+/* A change to the objective set can change every unit's order, so re-roll
+   them all against the new state, reusing each unit's stored nerve roll. */
+function refreshAllOrders(){
+  for(const u of force) if(!u.dead) u.order=generateOrder(u,u.rollVal);
+}
+/* ---------- target analysis (reads the player force) ----------
+   Ranks the player's live units as targets for the OpFor, so the fire
+   advice can name a real mech instead of a generic criterion. Three
+   pulls, blended: ease of hit (low TMM), the value of finishing a unit
+   that is already down, and raw threat (tonnage and role). This is only
+   possible because the tool now knows the player's actual mechs. */
+function livePlayers(){ return players.filter(p=>!p.dead && condOf(p)!=='crippled-gone'); }
+function targetScore(p){
+  const cond=condOf(p);
+  // ease of hit: lower TMM is better to shoot. Standing still is a gift.
+  const tmm = p.moved==='still' ? 0 : (RS==='as' ? tmmOf(p.v).ground : Math.max(0,(p.v.m[0]||0)-3));
+  const ease = 6 - Math.min(6,tmm);            // 0..6, higher = easier
+  // finish the wounded: a crippled unit is the priority kill, well clear of
+  // a merely-hurt one, since it is one hit from gone and trying to escape.
+  const wounded = cond==='crippled' ? 12 : cond==='hurt' ? 3 : 0;
+  // threat: heavier and harder-hitting units are worth removing
+  const threat = (p.tons/20) + (p.v.r==='Juggernaut'||p.v.r==='Brawler'?2:0)
+                 + (p.v.r==='Missile Boat'||p.v.r==='Sniper'?1:0);
+  return {p, ease, wounded, threat, tmm, cond, total: ease*1.1 + wounded*1.4 + threat};
+}
+/* The single unit the OpFor lance should concentrate on this turn, plus a
+   one-line reason. Null when the player has entered no force. */
+function focusTarget(){
+  const live=livePlayers();
+  if(!live.length) return null;
+  const ranked=live.map(targetScore).sort((a,b)=>b.total-a.total);
+  const top=ranked[0];
+  let reason;
+  if(top.cond==='crippled') reason='it is crippled, finish it before it limps away';
+  else if(top.cond==='hurt' && top.ease>=4) reason='it is already hurt and easy to hit, put it down';
+  else if(top.cond==='hurt') reason='it is already hurt, pile on and finish it';
+  else if(top.tmm===0) reason='it stood still, you will not get an easier shot';
+  else if(top.ease>=5) reason='it is the easiest target to actually hit';
+  else reason='it is the biggest threat on the board';
+  return {name:`${top.p.chassis} ${top.p.v.n}${top.p.pilot?' ('+top.p.pilot+')':''}`,
+    reason, tmm:top.tmm, cond:top.cond, moved:top.p.moved};
+}
+/* A called-shot hint: only when a player unit is hurt (not fresh, not yet
+   crippled) and reachable, so the advice has real information behind it. */
+function calledShot(){
+  const hurt=livePlayers().map(targetScore).filter(t=>t.cond==='hurt')
+    .sort((a,b)=>b.ease-a.ease)[0];
+  if(!hurt) return null;
+  return `${hurt.p.chassis} ${hurt.p.v.n} is already carrying damage. If you have the shot, aim for where its armour is already open rather than spreading fresh hits around.`;
+}
 function renderOrders(){
   const el=document.getElementById('orderList');
+  renderObjectiveBar();
   if(!force.length){
     el.innerHTML=`<div class="empty"><div class="eh">Nothing to command</div>
       <p>Build or roll a force on the Lance tab first.</p></div>`;
     return;
   }
-  el.innerHTML=force.map(u=>{
+  const ft=focusTarget();
+  const cs=calledShot();
+  const focusHTML = ft ? `<div class="focus-fire">
+    <div class="ff-l">Concentrate fire</div>
+    <div class="ff-main">Whole lance onto <b>${esc(ft.name)}</b> where they can reach it.</div>
+    <div class="ff-why">${esc(ft.reason)}.${RS==='as'?` It is TMM ${ft.tmm} to shoot right now.`:''}</div>
+    ${cs?`<div class="ff-called">${esc(cs)}</div>`:''}
+  </div>` : '';
+  el.innerHTML=focusHTML+force.map(u=>{
     const o=u.order;
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
@@ -1565,6 +1860,7 @@ function renderOrders(){
         </div>
         ${o?`<div class="order">
           <div class="order-w">${o.want||'Order'}</div>
+          ${o.objective?`<div class="order-mission">▸ On mission: ${esc((OBJ_TYPES[o.objective.type]||{}).label||o.objective.type)}${o.objective.name?' — '+esc(o.objective.name):''}</div>`:''}
           <div class="order-h">${o.headline}</div>
           <div class="order-why">${o.why}</div>
           <div class="phase">
@@ -1657,7 +1953,7 @@ function setRuleset(r){
   document.getElementById('rsAS').setAttribute('aria-pressed',r==='as');
   document.getElementById('subtitle').textContent='Solo opposing-force controller · '+RULES[r].name;
   force.forEach(u=>{u.order=null;u.heat=Math.min(u.heat,HEATMAX());});
-  renderLance(); renderOrders();
+  renderLance(); renderPlayers(); renderOrders();
 }
 document.getElementById('rsClassic').onclick=()=>setRuleset('classic');
 document.getElementById('rsAS').onclick=()=>setRuleset('as');
@@ -1680,15 +1976,22 @@ document.getElementById('btnAdd').onclick=()=>{
   force.push(mkUnit(DB[i],DB[i].v[j],document.getElementById('inpPilot').value.trim()));
   document.getElementById('inpPilot').value='';
   renderLance(); renderOrders();};
+document.getElementById('pBtnAdd').onclick=()=>{
+  const i=+document.getElementById('pSelChassis').value;
+  const j=+document.getElementById('pSelVariant').value;
+  if(!DB[i]||!DB[i].v[j]) return;
+  players.push(mkPlayer(DB[i],DB[i].v[j],document.getElementById('pInpPilot').value.trim()));
+  document.getElementById('pInpPilot').value='';
+  renderPlayers(); refreshAllOrders(); renderOrders();};
 document.getElementById('btnEndTurn').onclick=()=>{
   turn++; document.getElementById('turnNo').textContent=turn;
   force.forEach(u=>{u.order=null;u.enemyMoved=false;});
   renderOrders(); window.scrollTo({top:0,behavior:'smooth'});};
 document.getElementById('btnClear').onclick=()=>{
   if(force.length&&!confirm('Remove every unit from the force?')) return;
-  force=[];turn=1;document.getElementById('turnNo').textContent=1;
+  force=[];turn=1;objectives=[];players=[];document.getElementById('turnNo').textContent=1;
   document.getElementById('impStatus').textContent='';
-  renderLance(); renderOrders();};
+  renderLance(); renderPlayers(); renderOrders();};
 document.getElementById('btnExport').onclick=()=>{
   if(!force.length) return;
   const payload={tool:'opfor-command',version:2,ruleset:RS,turn,
