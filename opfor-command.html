@@ -151,6 +151,11 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .ff-why{font-size:13px;color:var(--ink-2);margin-top:4px}
 .ff-called{font-size:12.5px;color:var(--ink-2);margin-top:7px;padding-top:7px;border-top:1px dashed var(--rule)}
 .order-why{font-size:14px;color:var(--ink-2);margin-top:5px}
+.last-turn{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:5px;font-style:italic}
+.turn-summary{font-family:var(--mono);font-size:12px;color:var(--ink-2);background:var(--card-2);
+  border:1.2px solid var(--rule);border-radius:2px;padding:8px 12px;margin-bottom:12px;line-height:1.5}
+.turn-summary .ts-l{font-weight:700;color:var(--ink);letter-spacing:.08em;text-transform:uppercase;font-size:10.5px}
+.heat-cooled{font-family:var(--mono);font-size:10px;color:var(--stamp);margin-top:4px}
 ol.steps{list-style:none;margin-top:11px;counter-reset:s}
 ol.steps li{counter-increment:s;position:relative;padding-left:25px;margin-bottom:7px;font-size:14.5px}
 ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;font-family:var(--mono);
@@ -1060,7 +1065,7 @@ function generateOrder(u,fixedRoll){
   if(has(u,'RCN')) o.notes.push('You are the eyes out here. Push forward for the spot even if the numbers are not in your favour.');
   if(wantsContact && cur===0) o.notes.push('You are in their face now, throw the punch.');
   if(has(u,'AMS')) o.notes.push('Your AMS has your back against their missiles, do not let that dictate where you go.');
-  if(has(u,'ENE')) o.notes.push('All energy on this one, you will never run dry. Keep the trigger down.');
+  if(RS==='as' && has(u,'ENE')) o.notes.push('All energy on this one, you will never run dry. Keep the trigger down.');
   const ht=abilVal(u,'HT',cur);
   if(ht>0) o.notes.push(`You are packing HT ${ht} at this range. Dump that heat on whatever you hit, or hit anything that does not track heat that bit harder.`);
   if(RS==='as'){
@@ -1120,6 +1125,24 @@ function generateOrder(u,fixedRoll){
   if(u.flanked){
     o.notes.push('You are flanked. Whatever else you do, stop them getting behind you: put terrain or the map edge at your back and turn to face the bigger threat.');
     o.notes.push('If you cannot cover both, shoot the one that can hurt you most and accept the other one gets a shot in.');
+  }
+
+  /* Ammo pressure. An ammo-fed mech deep into a game is a conservation
+     decision the player should be prompted on; an energy mech never is.
+     Scaled by how ammo-reliant the loadout is and how many turns have
+     passed, since exact rounds are unknowable. In Alpha Strike the ENE
+     ability is the game's own "never runs dry" flag, so defer to it there
+     (Plasma Rifles and the like read as energy at AS abstraction). */
+  const ap=ammoProfile(v);
+  const eneOverride = RS==='as' && has(u,'ENE');
+  if(ap.share>0 && turn>=3 && !eneOverride){
+    const heavy=ap.share>=0.6;
+    if(turn>=6 && heavy)
+      o.notes.push(`You have been leaning on ammo weapons for a while now. Assume your ${ap.main} is close to dry, make every remaining volley count and do not waste it on a low-percentage shot.`);
+    else if(turn>=6)
+      o.notes.push(`Your ${ap.main} has been working since the start. Keep an eye on what is left and save it for a shot worth taking.`);
+    else if(heavy)
+      o.notes.push(`You are ammo-dependent, so watch your load. Do not burn your ${ap.main} on a shot you are not likely to land.`);
   }
 
   if(dmgHere<=0){
@@ -1240,7 +1263,7 @@ function mkUnit(c,v,opts){
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     persona:opts.persona||'balanced',rollVal:null,flanked:false,collapsed:false,
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
-    band:2,enemyMoved:false,prone:false,dead:false,order:null};
+    band:2,enemyMoved:false,prone:false,dead:false,order:null,lastHeadline:null,cooledBy:0};
 }
 function condOf(u){
   if(u.forceCrip) return 'crippled';
@@ -1254,6 +1277,36 @@ function condOf(u){
   return 'fresh';
 }
 const HEATMAX=()=>RS==='classic'?30:4;
+/* Ammo dependence. Energy weapons never run dry; missiles, autocannons,
+   Gauss, MGs and the like carry a finite load. We can't know exact rounds
+   (tonnage varies), so this models pressure over time: how much of the
+   loadout is ammo-fed, which the engine turns into a conserve reminder that
+   grows as a game drags on. Reads real weapon names, so it's exactly the
+   kind of per-variant read a category-based tool can't do. */
+const AMMO_RE=/lrm|srm|mrm|\bac\/|autocannon|gauss|machine gun|\bmg\b|ultra ac|rotary ac|streak|thunderbolt|arrow iv|narc|mortar|\batm\b|plasma|silver bullet|hag|lb \d+-x|magshot/i;
+const ENERGY_RE=/laser|ppc|flamer|\btag\b/i;
+/* Rocket launchers are one-shot disposables, not a sustained ammo draw, so
+   they do not count toward conservation pressure. */
+const RL_RE=/rocket launcher/i;
+function ammoProfile(v){
+  const ws=(v.w||[]).map(w=>w.replace(/^\d+x\s+/,''));
+  if(!ws.length) return {share:0, main:null};
+  const ammo=ws.filter(w=>AMMO_RE.test(w) && !ENERGY_RE.test(w) && !RL_RE.test(w));
+  const main=ammo.sort((a,b)=>b.length-a.length)[0]||null;
+  return {share:ammo.length/ws.length, main};
+}
+/* Standing heat dissipation for a variant, from its heat-sink string
+   ("10 IS Double", "20 Clan Double", "10 Single"). Double sinks shed 2
+   each, singles 1. This is the Classic cooldown the tool can know without
+   being told what the mech fired, so it is offered as a starting point
+   the player can nudge, not a hard truth. */
+function dissipation(v){
+  const hs=String(v.hs||'');
+  const m=/^(\d+)/.exec(hs);
+  if(!m) return 10;                       // sane default if unparseable
+  const count=+m[1];
+  return /double/i.test(hs) ? count*2 : count;
+}
 const CONDLBL={fresh:'Fresh',hurt:'Damaged',crippled:'Crippled'};
 
 /* ---------- generator ---------- */
@@ -1653,6 +1706,7 @@ function trackHTML(u){
       <span class="trk-n">${u.heat}/${max}</span>
       <button class="btn ghost sm" data-heat="${u.uid}:1">+</button></div>
     ${fx?`<div class="heat-fx">${fx}</div>`:''}
+    ${u.cooledBy?`<div class="heat-cooled">Cooled ${u.cooledBy} from last turn's dissipation. Nudge it if you vented more or less.</div>`:''}
     <div class="trk-row" style="margin-top:9px">
       <button class="btn ghost sm" data-crip="${u.uid}">${u.forceCrip?'Undo crippled':'Mark crippled'}</button>
       <button class="btn ghost sm" data-repair="${u.uid}">Reset</button>
@@ -1811,6 +1865,39 @@ function calledShot(){
   if(!hurt) return null;
   return `${hurt.p.chassis} ${hurt.p.v.n} is already carrying damage. If you have the shot, aim for where its armour is already open rather than spreading fresh hits around.`;
 }
+/* A running-game line at the top of the turn: the OpFor's own shape, the
+   objective picture, and where fire is going. Reads only state that already
+   exists, so it needs no new input. */
+function turnSummary(){
+  const live=force.filter(u=>!u.dead);
+  if(!live.length) return null;
+  const dead=force.length-live.length;
+  const parts=[];
+  // OpFor condition
+  const hurt=live.filter(u=>{const c=condOf(u);return c==='hurt';}).length;
+  const crip=live.filter(u=>condOf(u)==='crippled').length;
+  const hot=live.filter(u=>RS==='classic'?u.heat>=14:u.heat>=3).length;
+  let shape=`${live.length} ${live.length===1?'mech':'mechs'} still up`;
+  if(dead) shape+=`, ${dead} down`;
+  const flags=[];
+  if(crip) flags.push(`${crip} crippled`);
+  if(hurt) flags.push(`${hurt} hurt`);
+  if(hot) flags.push(`${hot} running hot`);
+  if(flags.length) shape+=` (${flags.join(', ')})`;
+  parts.push(shape);
+  // objective picture
+  const act=activeObjectives();
+  if(objectives.length){
+    const off=objectives.length-act.length;
+    let os=`${act.length} of ${objectives.length} ${objectives.length===1?'objective':'objectives'} in reach`;
+    if(off) os+=` (${off} out of reach this turn)`;
+    parts.push(os);
+  }
+  // focus
+  const ft=focusTarget();
+  if(ft) parts.push(`fire on the ${ft.name.replace(/\s*\(.*\)$/,'')}`);
+  return parts.join(' · ');
+}
 function renderOrders(){
   const el=document.getElementById('orderList');
   renderObjectiveBar();
@@ -1821,19 +1908,22 @@ function renderOrders(){
   }
   const ft=focusTarget();
   const cs=calledShot();
+  const summary=turnSummary();
+  const summaryHTML = summary ? `<div class="turn-summary"><span class="ts-l">Turn ${turn}</span> ${esc(summary)}</div>` : '';
   const focusHTML = ft ? `<div class="focus-fire">
     <div class="ff-l">Concentrate fire</div>
     <div class="ff-main">Whole lance onto <b>${esc(ft.name)}</b> where they can reach it.</div>
     <div class="ff-why">${esc(ft.reason)}.${RS==='as'?` It is TMM ${ft.tmm} to shoot right now.`:''}</div>
     ${cs?`<div class="ff-called">${esc(cs)}</div>`:''}
   </div>` : '';
-  el.innerHTML=focusHTML+force.map(u=>{
+  el.innerHTML=summaryHTML+focusHTML+force.map(u=>{
     const o=u.order;
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
         <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
         ${vitalsHTML(u)}
+        ${turn>1&&u.lastHeadline?`<div class="last-turn">Last turn: ${esc(u.lastHeadline)}</div>`:''}
       </div><div class="hd-btns">
         <button class="btn ghost sm" data-fold="${u.uid}" aria-expanded="${!u.collapsed}"
           title="${u.collapsed?'Show this order':'Hide this order'}">${u.collapsed?'Expand':'Collapse'}</button>
@@ -1916,7 +2006,7 @@ function renderOrders(){
   bind('[data-pr]',  (u,v)=>{u.prone=v==='1';});
   bind('[data-fl]',  (u,v)=>{u.flanked=v==='1';});
   bind('[data-fold]',u=>{u.collapsed=!u.collapsed;});
-  bind('[data-heat]',(u,v)=>{u.heat=Math.max(0,Math.min(HEATMAX(),u.heat+ +v));});
+  bind('[data-heat]',(u,v)=>{u.heat=Math.max(0,Math.min(HEATMAX(),u.heat+ +v));u.cooledBy=0;});
   bind('[data-gen]', u=>{u.dmg=condOf(u);u.order=generateOrder(u);u.rollVal=u.order.roll;});
   el.querySelectorAll('[data-persona]').forEach(sel=>sel.onchange=()=>{
     const u=force.find(x=>x.uid===+sel.dataset.persona); if(!u) return;
@@ -1928,7 +2018,7 @@ function renderOrders(){
   });
   bind('[data-kill]',u=>{u.dead=true;u.order=null;});
   bind('[data-crip]',u=>{u.forceCrip=!u.forceCrip;});
-  bind('[data-repair]',u=>{u.arm=u.v.a;u.str=u.v.s;u.heat=0;u.forceCrip=false;u.manualCond='fresh';});
+  bind('[data-repair]',u=>{u.arm=u.v.a;u.str=u.v.s;u.heat=0;u.forceCrip=false;u.manualCond='fresh';u.cooledBy=0;});
   bind('[data-cond]',(u,v)=>{u.manualCond=v;u.forceCrip=false;});
   bind('[data-arm]', (u,v)=>{const i=+v;u.arm = u.arm>i ? i : i+1;});
   bind('[data-str]', (u,v)=>{const i=+v;u.str = u.str>i ? i : i+1;});
@@ -1991,8 +2081,24 @@ document.getElementById('pBtnAdd').onclick=()=>{
   renderPlayers(); refreshAllOrders(); renderOrders();};
 document.getElementById('btnEndTurn').onclick=()=>{
   turn++; document.getElementById('turnNo').textContent=turn;
-  force.forEach(u=>{u.order=null;u.enemyMoved=false;});
-  renderOrders(); window.scrollTo({top:0,behavior:'smooth'});};
+  for(const u of force){
+    if(u.dead) continue;
+    // remember what this unit was told last turn, for continuity on the card
+    if(u.order) u.lastHeadline=u.order.headline;
+    // heat cools by standing dissipation (AS steps down by 1 on its 0-4 scale)
+    const before=u.heat;
+    if(RS==='classic') u.heat=Math.max(0, u.heat - dissipation(u.v));
+    else u.heat=Math.max(0, u.heat - 1);
+    u.cooledBy = before>u.heat ? before-u.heat : 0;
+    // band and condition persist (they are position and damage, not events).
+    // per-turn situation flags reset: next turn has not happened yet.
+    u.enemyMoved=false; u.flanked=false;
+    u.order=null; u.rollVal=null;
+  }
+  // players also get their per-turn "moved" flag reset, damage persists
+  for(const p of players) p.moved='moved';
+  renderLance(); renderPlayers(); renderOrders();
+  window.scrollTo({top:0,behavior:'smooth'});};
 document.getElementById('btnClear').onclick=()=>{
   if(force.length&&!confirm('Remove every unit from the force?')) return;
   force=[];turn=1;objectives=[];players=[];document.getElementById('turnNo').textContent=1;
