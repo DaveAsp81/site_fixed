@@ -461,6 +461,10 @@ const OBJ_TYPES={
     short:'the scan site',noun:'the scan site'}
 };
 const activeObjectives=()=>objectives.filter(o=>o.reachable!==false);
+/* Safe lookup: an objective type that isn't a real key (constructor,
+   __proto__, a malformed import) falls back to destroy rather than
+   returning something off the prototype chain. */
+const objType=ty=>Object.prototype.hasOwnProperty.call(OBJ_TYPES,ty)?OBJ_TYPES[ty]:OBJ_TYPES.destroy;
 /* Whether this unit acts on an objective this turn. With objectives live,
    each unit has an even chance of being pulled to one versus taking a
    normal combat order, so engagement cycles naturally across turns. The
@@ -1025,7 +1029,9 @@ function generateOrder(u,fixedRoll){
   /* Overlay the objective on the combat order it just built. The unit still
      moves and shoots sensibly, but its priority this turn is the mission. */
   if(obj){
-    const ot=OBJ_TYPES[obj.type];
+    // Object.hasOwn guards against prototype keys (constructor, __proto__)
+    // being passed as a type and returning a truthy non-objective.
+    const ot=objType(obj.type);
     const tgt=obj.name||ot.noun;
     o.want='On mission';
     if(obj.type==='vip'){
@@ -1141,7 +1147,7 @@ function generateOrder(u,fixedRoll){
   /* Objective overrides the target line, after the combat fire block has set
      its default. A mission target beats the generic role priority. */
   if(obj){
-    const tgt=obj.name||OBJ_TYPES[obj.type].noun;
+    const tgt=obj.name||objType(obj.type).noun;
     if(obj.type==='vip'){ o.target=`${tgt}, this is the priority kill`; o.alts=['whatever is between you and it']; }
     else if(obj.type==='destroy'){ o.target=`${tgt}, once anything else shooting at you is dealt with`; o.alts=['whatever is shooting at you right now']; }
     else if(obj.type==='recon'){
@@ -1719,7 +1725,7 @@ function renderObjectiveBar(){
   const bar=document.getElementById('objectiveBar');
   if(!bar) return;
   const rows=objectives.map(o=>{
-    const t=OBJ_TYPES[o.type];
+    const t=objType(o.type);
     const off=o.reachable===false;
     return `<div class="obj-row${off?' obj-off':''}">
       <span class="obj-type">${t?esc(t.label):esc(o.type)}</span>
@@ -1860,23 +1866,23 @@ function renderOrders(){
         </div>
         ${o?`<div class="order">
           <div class="order-w">${o.want||'Order'}</div>
-          ${o.objective?`<div class="order-mission">▸ On mission: ${esc((OBJ_TYPES[o.objective.type]||{}).label||o.objective.type)}${o.objective.name?' — '+esc(o.objective.name):''}</div>`:''}
-          <div class="order-h">${o.headline}</div>
-          <div class="order-why">${o.why}</div>
+          ${o.objective?`<div class="order-mission">▸ On mission: ${esc(objType(o.objective.type).label)}${o.objective.name?' — '+esc(o.objective.name):''}</div>`:''}
+          <div class="order-h">${esc(o.headline)}</div>
+          <div class="order-why">${esc(o.why)}</div>
           <div class="phase">
             <div class="phase-l">Movement phase</div>
-            <div class="phase-main">${o.steps[0]}</div>
-            ${o.steps.length>1?`<ul class="phase-sub">${o.steps.slice(1).map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+            <div class="phase-main">${esc(o.steps[0])}</div>
+            ${o.steps.length>1?`<ul class="phase-sub">${o.steps.slice(1).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
           </div>
           <div class="phase">
             <div class="phase-l">Weapon attack phase</div>
-            <div class="phase-main">${o.fire}</div>
+            <div class="phase-main">${esc(o.fire)}</div>
             <ul class="phase-sub">
-              <li><b>Shoot at:</b> ${o.target}</li>
-              ${o.alts.length?`<li>If that is not on the table: ${o.alts.join(', then ')}.</li>`:''}
+              <li><b>Shoot at:</b> ${esc(o.target)}</li>
+              ${o.alts.length?`<li>If that is not on the table: ${esc(o.alts.join(', then '))}.</li>`:''}
             </ul>
           </div>
-          ${o.notes.length?`<div class="notes">${o.notes.map(n=>`<div class="note">${n}</div>`).join('')}</div>`:''}
+          ${o.notes.length?`<div class="notes">${o.notes.map(n=>`<div class="note">${esc(n)}</div>`).join('')}</div>`:''}
           <div class="roll">2d6 ${o.roll} · role and condition ${o.mod>=0?'+':''}${o.mod} · resolve ${o.score}</div>
         </div>`:''}
         ${trackHTML(u)}
