@@ -115,6 +115,43 @@
     font-weight: 600; letter-spacing: 0.05em; transition: all 0.12s;
 }
 .action-btn:hover { border-color: #ff8c00; color: #ff8c00; }
+
+/* ---------- Paint plan ---------- */
+.plan-wrap {
+    background: #141414; border: 1px solid #222; border-radius: 8px;
+    padding: 14px; display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,0.8fr); gap: 16px;
+}
+@media (max-width: 700px) { .plan-wrap { grid-template-columns: 1fr; } }
+#paint-plan { width: 100%; height: auto; display: block; }
+.plate { cursor: pointer; }
+.plate .plate-fill { transition: stroke 0.12s; }
+.plate:hover .plate-fill { stroke: #888; stroke-width: 2; }
+.plate.selected .plate-fill { stroke: #ff8c00; stroke-width: 3; }
+.plate:focus { outline: none; }
+.plate:focus-visible .plate-fill { stroke: #ff8c00; stroke-width: 3; }
+.plate-label {
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 11px;
+    letter-spacing: 0.05em; fill: #6d6d6d; cursor: pointer; user-select: none;
+}
+.plate-label:hover { fill: #aaa; }
+.plate-label.on { fill: #ff8c00; }
+.plan-side { display: flex; flex-direction: column; gap: 4px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.zone-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: #1a1a1a; border: 1px solid #2a2a2a; color: #999;
+    padding: 6px 9px; border-radius: 4px; cursor: pointer;
+    font-size: 0.72rem; font-family: 'Rajdhani', sans-serif; font-weight: 600;
+    letter-spacing: 0.04em; transition: border-color 0.12s, color 0.12s;
+}
+.zone-chip:hover { border-color: #555; color: #ddd; }
+.zone-chip.on { border-color: #ff8c00; color: #fff; }
+.chip-dot { width: 13px; height: 13px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
+.plan-hint { font-size: 0.72rem; color: #555; line-height: 1.5; }
+.plan-hint b { color: #ff8c00; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+    .plate .plate-fill, .zone-chip, .action-btn, .zone-btn, .scheme-swatch-large { transition: none; }
+}
 </style>
 <body>
 <header>
@@ -177,13 +214,32 @@
                 <div id="scheme-name" style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:0.08em; font-size:1.1rem;">CUSTOM SCHEME</div>
                 <div style="font-size:0.72rem; color:#444;">Click a zone to edit it</div>
             </div>
+            <div class="pt-label">Paint Plan</div>
+            <div class="plan-wrap">
+                <svg id="paint-plan" viewBox="-24 0 448 478" role="img"
+                     aria-label="BattleMech armour diagram. Select a panel to change which colour it uses."></svg>
+                <div class="plan-side">
+                    <div class="pt-label" style="margin-top:0;">Panel: <span id="plan-sel-name" style="color:#ff8c00;">Centre Torso</span></div>
+                    <div class="chip-row" id="plan-chips"></div>
+                    <div class="pt-label">Camo Pattern</div>
+                    <div class="chip-row" id="plan-patterns"></div>
+                    <div class="pt-label">Quick Layouts</div>
+                    <div class="chip-row" id="plan-layouts"></div>
+                    <p class="plan-hint">Pick a panel on the diagram, then choose which colour it takes.
+                       Cockpit, weapons, vents and trim details stay tied to their own colours.</p>
+                </div>
+            </div>
+
+            <div class="pt-label">Colours &amp; Paint Matches</div>
             <div class="scheme-display" id="scheme-display"></div>
 
             <div style="margin-top:20px; padding:14px 16px; background:#141414; border:1px solid #1a1a1a; border-radius:6px; font-size:0.78rem; color:#555; line-height:1.6;">
                 <strong style="color:#888; font-family:'Rajdhani',sans-serif; letter-spacing:0.06em; font-size:0.7rem;">HOW TO USE</strong><br>
-                Select a zone on the left, pick a colour on the wheel, and your scheme updates in real time.
-                Paint names are suggested automatically. Use faction presets as a starting point, then customise.
-                Hit <strong style="color:#888;">Share Scheme</strong> to copy a link you can send to others.
+                Pick a zone on the left, choose a colour on the wheel, and the plan updates in real time.
+                Click any armour panel to change which colour it wears, so you can work out where the
+                base coat stops and the secondary starts before you open a pot.
+                The swatch list below always shows flat, unshaded colour, so that is the one to hold against a paint pot. Paint names are matched automatically. Hit <strong style="color:#888;">Share Scheme</strong>
+                to copy a link that carries your colours, panel layout and camo pattern.
             </div>
         </div>
     </div>
@@ -248,19 +304,26 @@ const FACTIONS = [
     { name:'Steiner',    bg:'#4488cc',fg:'#ffffff',c:{primary:'#4488cc',secondary:'#ddeeff',trim:'#ccaa00',weapons:'#0a1820',cockpit:'#88ddff',vents:'#cc3300'} },
     // House Kurita — Sword of Light: bright red, black trim, gold dragon patch (p.6 Wasp)
     { name:'Kurita',     bg:'#cc1111',fg:'#ffffff',c:{primary:'#cc1111',secondary:'#0a0a0a',trim:'#ccaa00',weapons:'#060606',cockpit:'#00aaff',vents:'#cc4400'} },
-    // House Liao — Capellan Hussars / Northwind Highlanders: deep green, white trim (p.13 Blackjack, p.25 Catapult)
+    // House Liao — Northwind Highlanders / Chesterton Reserves: deep green, white trim
+    // (p.25 Catapult, p.31 Marauder). Note the Capellan Hussars on p.13 are the Red
+    // Lancers, the Liao Household Guard, and they are red rather than green.
     { name:'Liao',       bg:'#1a5c1a',fg:'#ffffff',c:{primary:'#1a5c1a',secondary:'#f5f5f5',trim:'#bb2200',weapons:'#080808',cockpit:'#00cc44',vents:'#cc3300'} },
     // House Marik — Marik Militia / Free Worlds Guards: medium purple, lighter purple secondary (p.7 Stinger, p.28 Thunderbolt)
     { name:'Marik',      bg:'#6633aa',fg:'#ffffff',c:{primary:'#6633aa',secondary:'#9955cc',trim:'#cc2222',weapons:'#1a0828',cockpit:'#aa88ff',vents:'#cc3300'} },
-    // Clan Wolf — grey with red chevron trim, black weapons (p.30 Natasha's Warhammer — black; standard Wolf grey)
+    /* The five Clan presets below and ComStar are NOT from Camo Specs. That book is
+       FASA 1988 and predates the Clans entirely; its 44 plates are all Inner Sphere
+       and mercenary regiments. These are canonical colours from later sources and
+       should be re-checked against a Clan-era sourcebook before being called sourced.
+       In particular p.30 is Wolf's Dragoons, a mercenary unit, not Clan Wolf. */
+    // Clan Wolf — grey with red chevron trim, black weapons
     { name:'C. Wolf',    bg:'#505050',fg:'#ffffff',c:{primary:'#505050',secondary:'#282828',trim:'#cc2200',weapons:'#101010',cockpit:'#00aaff',vents:'#cc4400'} },
-    // Clan Jade Falcon — dark forest green, bright jade/lime trim (sourcebook illustrations)
+    // Clan Jade Falcon — dark forest green, bright jade/lime trim
     { name:'Jade Falcon',bg:'#1a5c1a',fg:'#aadd00',c:{primary:'#1a5c1a',secondary:'#0a2a0a',trim:'#aadd00',weapons:'#060606',cockpit:'#00ddaa',vents:'#cc4400'} },
-    // Clan Ghost Bear — dark navy blue with off-white/cream secondary (sourcebook illustrations)
+    // Clan Ghost Bear — dark navy blue with off-white/cream secondary
     { name:'Ghost Bear', bg:'#1e3e5e',fg:'#ffffff',c:{primary:'#1e3e5e',secondary:'#e8e0d0',trim:'#7799bb',weapons:'#060606',cockpit:'#88ccff',vents:'#cc3300'} },
-    // Clan Smoke Jaguar — flat black, orange-red jaguar spot trim (Dave's own Clan — p.30 style)
+    // Clan Smoke Jaguar — flat black, orange-red jaguar spot trim
     { name:'Smoke Jag',  bg:'#0a0a0a',fg:'#ee5500',c:{primary:'#0a0a0a',secondary:'#1a1a1a',trim:'#dd4400',weapons:'#040404',cockpit:'#ff3300',vents:'#ff5500'} },
-    // Clan Nova Cat — deep navy blue, gold secondary stripe, white trim (sourcebook illustrations)
+    // Clan Nova Cat — deep navy blue, gold secondary stripe, white trim
     { name:'Nova Cat',   bg:'#0a1a40',fg:'#ffcc00',c:{primary:'#0a1a40',secondary:'#ffcc00',trim:'#ffffff',weapons:'#040410',cockpit:'#00aaff',vents:'#ffcc00'} },
     // ComStar — white/silver primary, grey secondary, red trim (canonical white & red)
     { name:'ComStar',    bg:'#d0d0d0',fg:'#1a1a1a',c:{primary:'#d0d0d0',secondary:'#888888',trim:'#cc0000',weapons:'#141414',cockpit:'#00aaff',vents:'#cc3300'} },
@@ -398,6 +461,272 @@ function hexInputChanged(val){
 
 // State
 let currentZone='primary',scheme={};
+
+/* ---------------- Paint plan ----------------
+   An armour-location diagram rather than a picture of a 'Mech. Each plate is a
+   BattleMech armour location and can be assigned to any colour zone, so the
+   diagram answers the question a painter actually has: which panel gets which
+   pot. Geometry is original chamfered-plate work, not traced from any artwork. */
+
+const LOC = [
+    /* Contiguous angular plates following the record sheet armour diagram: the
+       'Mech's own left is on the viewer's left, limbs meet the torso rather than
+       floating, labels sit in the side gutters, and the rear torso group is below
+       the figure. Geometry is original, drawn to the same conventions, not traced. */
+    { code:'HD', label:'Head',        lx:200, ly:16,  z:'primary',
+      d:'M183.2,47.6 L183.2,30.5 Q183.2,18 200,18 Q216.8,18 216.8,30.5 L216.8,47.6 Z' },
+    { code:'LT', label:'Left Torso',  lx:27.2,  ly:97.6, z:'secondary',
+      d:'M171.2,49.2 L135.2,55.4 L118.4,72.6 L118.4,138.1 L137.6,156.8 L171.2,156.8 Z' },
+    { code:'CT', label:'Centre Torso',lx:200, ly:367, z:'primary',
+      d:'M173.6,49.2 L226.4,49.2 L226.4,156.8 L233.6,164.6 L233.6,181.8 L214.4,191.2 L185.6,191.2 L166.4,181.8 L166.4,164.6 L173.6,156.8 Z' },
+    { code:'RT', label:'Right Torso', lx:372.8, ly:97.6, z:'secondary',
+      d:'M228.8,49.2 L264.8,55.4 L281.6,72.6 L281.6,138.1 L262.4,156.8 L228.8,156.8 Z' },
+    { code:'LA', label:'Left Arm',    lx:27.2,  ly:160, z:'secondary',
+      d:'M82.4,71 L118.4,60.1 L118.4,111.6 L112.4,119.4 L118.4,127.2 L118.4,169.3 L87.2,169.3 L80,127.2 L86,119.4 L80,111.6 Z' },
+    { code:'RA', label:'Right Arm',   lx:372.8, ly:160, z:'secondary',
+      d:'M317.6,71 L281.6,60.1 L281.6,111.6 L287.6,119.4 L281.6,127.2 L281.6,169.3 L312.8,169.3 L320,127.2 L314,119.4 L320,111.6 Z' },
+    { code:'LL', label:'Left Leg',    lx:27.2,  ly:266, z:'primary',
+      d:'M149.6,184.9 L192.8,184.9 L192.8,253.6 L198.8,262.9 L192.8,272.3 L192.8,325.3 L198.8,344 L198.8,355 L138.8,355 L138.8,344 L148.4,325.3 L148.4,272.3 L142.4,262.9 L148.4,253.6 Z' },
+    { code:'RL', label:'Right Leg',   lx:372.8, ly:266, z:'primary',
+      d:'M250.4,184.9 L207.2,184.9 L207.2,253.6 L201.2,262.9 L207.2,272.3 L207.2,325.3 L201.2,344 L201.2,355 L261.2,355 L261.2,344 L251.6,325.3 L251.6,272.3 L257.6,262.9 L251.6,253.6 Z' },
+    { code:'LTR', label:'L.T. Rear',  lx:70.4,  ly:424.4, z:'secondary',
+      d:'M123.2,397.9 L180.8,393.2 L180.8,443.2 L132.8,446.3 Z' },
+    { code:'CTR', label:'C.T. Rear',  lx:200, ly:461.9, z:'primary',
+      d:'M185.6,393.2 L214.4,393.2 L214.4,443.2 L185.6,443.2 Z' },
+    { code:'RTR', label:'R.T. Rear',  lx:329.6, ly:424.4, z:'secondary',
+      d:'M219.2,393.2 L276.8,397.9 L267.2,446.3 L219.2,443.2 Z' },
+];
+
+/* Fixed details. These never change zone, which is the point of having them:
+   the cockpit is always cockpit colour however you carve up the armour. */
+const DETAIL = [
+    { x:188, y:24.2, w:24, h:7, c:2, z:'cockpit' },  // visor
+    { x:238.4, y:69.5, w:36, h:12.5, c:3, z:'weapons' },  // right torso launcher
+    { x:125.6, y:113.2, w:31.2, h:4.7, c:1, z:'vents'   },  // left torso louvres
+    { x:125.6, y:121, w:31.2, h:4.7, c:1, z:'vents'   },
+    { x:125.6, y:128.8, w:31.2, h:4.7, c:1, z:'vents'   },
+    { x:80, y:153.7, w:38.4, h:15.6, c:4, z:'weapons' },  // arm muzzles
+    { x:281.6, y:153.7, w:38.4, h:15.6, c:4, z:'weapons' },
+    { x:173.6, y:78.8, w:52.8, h:10.1, c:2, z:'trim'    },  // chest band
+    { x:148.4, y:298.8, w:44.4, h:9.4, c:2, z:'trim'    },  // leg bands
+    { x:207.2, y:298.8, w:44.4, h:9.4, c:2, z:'trim'    },
+];
+
+const ENGRAVE = [
+    [118.4,89.8,171.2,89.8],[173.6,121,226.4,121],[148.4,316,192.8,316],[207.2,316,251.6,316],
+];
+
+const PATTERNS = [
+    { id:'flat',     label:'Flat'     },
+    { id:'woodland', label:'Woodland' },
+    { id:'desert',   label:'Desert'   },
+    { id:'urban',    label:'Urban'    },
+    { id:'tiger',    label:'Tiger'    },
+];
+
+const LAYOUTS = [
+    { label:'All one colour',
+      map:['primary','primary','primary','primary','primary','primary','primary','primary','primary','primary','primary'] },
+    { label:'Torsos and limbs',
+      map:['primary','primary','primary','primary','secondary','secondary','secondary','secondary','primary','primary','primary'] },
+    { label:'Dark limbs',
+      map:['primary','primary','primary','primary','weapons','weapons','secondary','secondary','primary','primary','primary'] },
+    { label:'Split down the middle',
+      map:['primary','secondary','primary','primary','secondary','primary','secondary','primary','secondary','primary','primary'] },
+];
+
+const ZCODE = { primary:'p', secondary:'s', trim:'t', weapons:'w', cockpit:'c', vents:'v' };
+const ZFROM = Object.fromEntries(Object.entries(ZCODE).map(([k,v])=>[v,k]));
+
+let planMap = LOC.map(l=>l.z);
+let planPattern = 'flat';
+let planShade = true;
+let planSel = 2; // Centre Torso
+let planPips = true;
+
+function chamfer(x,y,w,h,c){
+    return `M${x+c},${y} L${x+w-c},${y} L${x+w},${y+c} L${x+w},${y+h-c} `
+         + `L${x+w-c},${y+h} L${x+c},${y+h} L${x},${y+h-c} L${x},${y+c} Z`;
+}
+function shade(hex,amt){
+    const n=parseInt(hex.slice(1),16);
+    const ch=i=>{
+        const v=(n>>(16-8*i))&255;
+        return Math.max(0,Math.min(255,Math.round(amt>=0 ? v+(255-v)*amt : v*(1+amt))));
+    };
+    return '#'+[0,1,2].map(i=>ch(i).toString(16).padStart(2,'0')).join('');
+}
+function readableOn(hex){
+    const n=parseInt(hex.slice(1),16);
+    const lin=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+    const L=0.2126*lin((n>>16)&255)+0.7152*lin((n>>8)&255)+0.0722*lin(n&255);
+    return L>0.42 ? 'rgba(0,0,0,0.78)' : 'rgba(255,255,255,0.86)';
+}
+
+/* Camo tiles. Each is a small repeating patch built from the zone colour plus a
+   shade derived from it, so a pattern never clashes with the colour it sits on. */
+function patternBody(kind,base){
+    const d=shade(base,-0.22), l=shade(base,0.15), dd=shade(base,-0.40);
+    if(kind==='woodland') return `<rect width="52" height="52" fill="${base}"/>`
+        + `<path d="M-6,10 C6,2 14,14 24,9 C34,4 40,12 52,6 L52,22 C40,28 32,20 22,25 C12,30 4,22 -6,28Z" fill="${d}"/>`
+        + `<path d="M-6,34 C4,28 12,38 22,34 C32,30 42,40 52,34 L52,46 C42,52 32,44 22,48 C12,52 2,46 -6,50Z" fill="${dd}"/>`
+        + `<path d="M14,0 C22,4 20,12 12,14 C4,16 0,8 6,2Z" fill="${l}"/>`;
+    if(kind==='desert') return `<rect width="52" height="52" fill="${base}"/>`
+        + `<path d="M-6,6 C8,-2 20,8 32,4 C44,0 50,10 52,14 L52,26 C42,22 34,28 22,26 C10,24 2,30 -6,24Z" fill="${l}"/>`
+        + `<path d="M-6,36 C6,30 16,40 28,36 C40,32 48,42 52,38 L52,52 L-6,52Z" fill="${d}"/>`;
+    if(kind==='urban') return `<rect width="44" height="44" fill="${base}"/>`
+        + `<path d="M0,0 L22,0 L14,18 L0,13Z" fill="${d}"/>`
+        + `<path d="M26,2 L44,8 L44,24 L20,20Z" fill="${l}"/>`
+        + `<path d="M2,20 L16,26 L10,44 L0,38Z" fill="${dd}"/>`
+        + `<path d="M22,28 L40,30 L44,44 L18,44Z" fill="${d}"/>`;
+    if(kind==='tiger') return `<rect width="34" height="34" fill="${base}"/>`
+        + `<path d="M-4,3 C6,9 14,3 20,-1 C26,-4 32,0 38,-2 L38,4 C31,5 26,3 21,7 C14,12 6,15 -4,9Z" fill="${dd}"/>`
+        + `<path d="M-4,20 C7,27 15,20 22,16 C28,13 33,17 38,15 L38,21 C31,22 27,20 22,24 C15,29 6,32 -4,26Z" fill="${dd}"/>`;
+    return `<rect width="10" height="10" fill="${base}"/>`;
+}
+const PSIZE={woodland:52,desert:52,urban:44,tiger:34,flat:10};
+
+function planFill(colour,defs,seen){
+    if(planPattern==='flat') return colour;
+    const id='pat-'+planPattern+'-'+colour.slice(1);
+    if(!seen.has(id)){
+        seen.add(id);
+        const s=PSIZE[planPattern];
+        defs.push(`<pattern id="${id}" width="${s}" height="${s}" patternUnits="userSpaceOnUse">`
+            + patternBody(planPattern,colour) + `</pattern>`);
+    }
+    return `url(#${id})`;
+}
+
+function pipStroke(hex){
+    const n=parseInt(hex.slice(1),16);
+    const lin=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+    const L=0.2126*lin((n>>16)&255)+0.7152*lin((n>>8)&255)+0.0722*lin(n&255);
+    return L>0.42 ? 'rgba(0,0,0,0.42)' : 'rgba(255,255,255,0.46)';
+}
+/* Armour pips, the thing that makes a record sheet read as a record sheet. Drawn
+   as a staggered tile clipped by each plate's own path, so they fill any shape
+   without hand-placing a single circle. */
+function pipFill(colour,defs,seen){
+    const id='pip-'+colour.slice(1);
+    if(!seen.has(id)){
+        seen.add(id);
+        const c=pipStroke(colour);
+        defs.push(`<pattern id="${id}" width="22" height="22" patternUnits="userSpaceOnUse">`
+            + `<circle cx="6" cy="6" r="3.1" fill="none" stroke="${c}" stroke-width="1.1"/>`
+            + `<circle cx="17" cy="17" r="3.1" fill="none" stroke="${c}" stroke-width="1.1"/>`
+            + `</pattern>`);
+    }
+    return `url(#${id})`;
+}
+
+function buildPaintPlan(){
+    const svg=document.getElementById('paint-plan');
+    if(!svg) return;
+    /* One alpha-only gradient reused by every plate, so shading costs a single def
+       and stays correct whatever colour the user picks. */
+    const defs=[`<linearGradient id="bevel" x1="0" y1="0" x2="0.35" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0.24"/>
+        <stop offset="0.42" stop-color="#fff" stop-opacity="0.05"/>
+        <stop offset="0.60" stop-color="#000" stop-opacity="0.06"/>
+        <stop offset="1" stop-color="#000" stop-opacity="0.32"/></linearGradient>`],
+        seen=new Set(),body=[],labels=[];
+
+    LOC.forEach((l,i)=>{
+        const zone=planMap[i], colour=scheme[zone]||'#7a7a7a';
+        const zl=(ZONES.find(z=>z.id===zone)||{}).label||zone;
+        body.push(
+            `<g class="plate${i===planSel?' selected':''}" data-i="${i}" role="button" tabindex="0"`
+          + ` aria-label="${l.label}, currently ${zl}">`
+          + `<path class="plate-fill" d="${l.d}" fill="${planFill(colour,defs,seen)}"`
+          + ` stroke="rgba(170,170,170,0.34)" stroke-width="1.6" stroke-linejoin="round"/>`
+          + (planShade ? `<path d="${l.d}" fill="url(#bevel)" pointer-events="none"/>` : '')
+          + (planPips  ? `<path d="${l.d}" fill="${pipFill(colour,defs,seen)}" pointer-events="none"/>` : '')
+          + `</g>`);
+        labels.push(`<text class="plate-label${i===planSel?' on':''}" x="${l.lx}" y="${l.ly}"`
+          + ` text-anchor="middle" data-i="${i}">${l.label}</text>`);
+    });
+
+    ENGRAVE.forEach(([x1,y1,x2,y2])=>body.push(
+        `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.32)" stroke-width="1.5"/>`));
+
+    DETAIL.forEach(d=>{
+        const colour=scheme[d.z]||'#7a7a7a';
+        body.push(`<path d="${chamfer(d.x,d.y,d.w,d.h,d.c)}" fill="${colour}"`
+            + ` stroke="rgba(0,0,0,0.5)" stroke-width="1" pointer-events="none"/>`);
+    });
+
+    svg.innerHTML=`<defs>${defs.join('')}</defs>${body.join('')}${labels.join('')}`;
+    svg.querySelectorAll('.plate, .plate-label').forEach(g=>{
+        const i=+g.dataset.i;
+        g.addEventListener('click',()=>selectPlate(i));
+        g.addEventListener('keydown',e=>{
+            if(e.key==='Enter'||e.key===' '){e.preventDefault();selectPlate(i);}
+        });
+    });
+}
+
+function selectPlate(i){
+    planSel=i;
+    document.getElementById('plan-sel-name').textContent=LOC[i].label;
+    buildPaintPlan();
+    buildPlanChips();
+    selectZone(planMap[i]);   // so the wheel is already on that colour
+}
+
+function assignZone(zid){
+    planMap[planSel]=zid;
+    buildPaintPlan();buildPlanChips();
+    selectZone(zid);
+    updateSchemeName('Custom Scheme');
+}
+
+function buildPlanChips(){
+    const el=document.getElementById('plan-chips');if(!el)return;
+    el.innerHTML='';
+    ZONES.forEach(z=>{
+        const b=document.createElement('button');
+        b.className='zone-chip'+(planMap[planSel]===z.id?' on':'');
+        b.innerHTML=`<span class="chip-dot" style="background:${scheme[z.id]||z.default};"></span>${z.label.replace(' Armour','')}`;
+        b.onclick=()=>assignZone(z.id);
+        el.appendChild(b);
+    });
+}
+function buildPatternChips(){
+    const el=document.getElementById('plan-patterns');if(!el)return;
+    el.innerHTML='';
+    PATTERNS.forEach(p=>{
+        const b=document.createElement('button');
+        b.className='zone-chip'+(planPattern===p.id?' on':'');
+        b.textContent=p.label;
+        b.onclick=()=>{planPattern=p.id;buildPaintPlan();buildPatternChips();};
+        el.appendChild(b);
+    });
+    const t=document.createElement('button');
+    t.className='zone-chip'+(planShade?' on':'');
+    t.textContent=planShade?'Shading on':'Shading off';
+    t.title='Turn shading off to judge the true colour against a paint pot';
+    t.onclick=()=>{planShade=!planShade;buildPaintPlan();buildPatternChips();};
+    el.appendChild(t);
+    const q=document.createElement('button');
+    q.className='zone-chip'+(planPips?' on':'');
+    q.textContent=planPips?'Pips on':'Pips off';
+    q.title='Armour pips, as on a record sheet';
+    q.onclick=()=>{planPips=!planPips;buildPaintPlan();buildPatternChips();};
+    el.appendChild(q);
+}
+function buildLayoutChips(){
+    const el=document.getElementById('plan-layouts');if(!el)return;
+    el.innerHTML='';
+    LAYOUTS.forEach(L=>{
+        const b=document.createElement('button');
+        b.className='zone-chip';
+        b.textContent=L.label;
+        b.onclick=()=>{planMap=L.map.slice();buildPaintPlan();buildPlanChips();};
+        el.appendChild(b);
+    });
+}
+
 function defaultScheme(){const s={};ZONES.forEach(z=>s[z.id]=z.default);return s;}
 
 window.addEventListener('DOMContentLoaded',()=>{
@@ -405,6 +734,10 @@ window.addEventListener('DOMContentLoaded',()=>{
     buildZoneButtons();
     buildFactionGrid();
     buildSchemeDisplay();
+    buildPaintPlan();
+    buildPlanChips();
+    buildPatternChips();
+    buildLayoutChips();
     initWheel();
     syncPickerToZone();
 });
@@ -491,11 +824,13 @@ function setActiveColour(hex,updateHex=true){
         ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
         : '<span style="color:#444;">—</span>';
     updateSchemeName('Custom Scheme');
+    buildPaintPlan();buildPlanChips();
 }
 
 function applyFaction(f){
     Object.assign(scheme,f.c);
     buildZoneButtons();buildSchemeDisplay();
+    buildPaintPlan();buildPlanChips();
     syncPickerToZone();
     updateSchemeName(f.name+' Scheme');
 }
@@ -506,7 +841,10 @@ function updateSchemeName(name){
 
 function resetScheme(){
     scheme=defaultScheme();
+    planMap=LOC.map(l=>l.z); planPattern='flat'; planShade=true; planPips=true; planSel=2;
+    document.getElementById('plan-sel-name').textContent=LOC[planSel].label;
     buildZoneButtons();buildSchemeDisplay();
+    buildPaintPlan();buildPlanChips();buildPatternChips();
     syncPickerToZone();
     updateSchemeName('Custom Scheme');
 }
@@ -514,6 +852,10 @@ function resetScheme(){
 function copySchemeURL(){
     const p=new URLSearchParams();
     ZONES.forEach(z=>{if(scheme[z.id])p.set(z.id,scheme[z.id].replace('#',''));});
+    p.set('map',planMap.map(z=>ZCODE[z]||'p').join(''));
+    if(planPattern!=='flat')p.set('pat',planPattern);
+    if(!planShade)p.set('sh','0');
+    if(!planPips)p.set('pip','0');
     const url=location.origin+location.pathname+'?'+p.toString();
     navigator.clipboard.writeText(url).then(()=>{
         const btn=event.target;const orig=btn.textContent;
@@ -526,6 +868,13 @@ function loadFromURL(){
     scheme=defaultScheme();
     const p=new URLSearchParams(location.search);
     ZONES.forEach(z=>{if(p.has(z.id))scheme[z.id]='#'+p.get(z.id);});
+    const m=p.get('map');
+    if(m&&m.length===LOC.length&&[...m].every(ch=>ZFROM[ch]))
+        planMap=[...m].map(ch=>ZFROM[ch]);
+    const pat=p.get('pat');
+    if(pat&&PATTERNS.some(x=>x.id===pat))planPattern=pat;
+    if(p.get('sh')==='0')planShade=false;
+    if(p.get('pip')==='0')planPips=false;
 }
 </script>
 </body>
