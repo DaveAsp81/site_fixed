@@ -1204,6 +1204,10 @@ function normalise(raw){
         d:[bd.short|0,bd.medium|0,bd.long|0,bd.extreme|0],
         a:v.bf_armor|0,s:v.bf_structure|0,o:v.bf_overheat|0,
         b:v.bf_abilities||'',m:mp(v.movement),pv:v.pv|0,bv:v.bv|0,
+        /* Tech has to come off the variant. Plenty of chassis are filed as
+           "Mixed" while individual variants are pure Clan, and reading the
+           chassis would hand those Inner Sphere range bands. */
+        tech:(v.technology||c.technology||'').includes('Clan')?'C':'IS',
         e:eraOfVariant(v),f:(v.factions||c.factions||[]),
         w:(v.weapons||[]),hs:v.heatsinks||''});
     }
@@ -1261,7 +1265,7 @@ function buildPVariant(){
    TMM inputs (movement is on the variant), and a live damage state. No
    persona, no orders — these are never given orders. */
 function mkPlayer(c,v,pilot){
-  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,
+  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,
     pilot:String(pilot||'').slice(0,60),
     arm:v.a,str:v.s,manualCond:'fresh',forceCrip:false,moved:'moved',dead:false,manual:true};
 }
@@ -1270,7 +1274,7 @@ function mkPlayer(c,v,pilot){
 function mkUnit(c,v,opts){
   if(typeof opts==='string'||opts==null) opts={pilot:opts||''};
   const num=x=>Number.isFinite(x)?x:null;
-  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:c.tech,v,pilot:String(opts.pilot||'').slice(0,60),
+  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     persona:opts.persona||'balanced',rollVal:null,flanked:false,collapsed:false,
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
@@ -1337,11 +1341,15 @@ function eraIdxOfYear(y){
   return y<ERAS[0][1] ? 0 : ERAS.length-1;
 }
 const eraOfYear=y=>ERAORD[eraIdxOfYear(y)];
-/* Only for the handful of variants with no introduction year: map the older
-   ten-era label onto the first year of the matching MUL era. */
+/* Only for the handful of variants with no introduction year: map an era
+   label onto the first year of the matching MUL era. The catalogue uses the
+   current twelve-era names, so those have to be here too; without them these
+   variants resolve to no era and vanish whenever an era filter is applied. */
 const OLDERA={'Age of War':2005,'Star League':2571,'Early Succession Wars':2781,
   'Late Succession Wars':2901,'Clan Invasion':3050,'Civil War':3062,'Jihad':3068,
-  'Early Republic':3081,'Dark Ages':3101,'ilClan':3131};
+  'Early Republic':3081,'Dark Ages':3101,'ilClan':3131,
+  'Early Succession War':2781,'Late Succession War - LosTech':2901,
+  'Late Succession War - Renaissance':3020,'Late Republic':3101,'Dark Age':3131};
 function eraOfVariant(v){
   const m=/(\d{4})/.exec(String(v.date_introduced||''));
   if(m) return eraOfYear(+m[1]);
@@ -1367,9 +1375,57 @@ const FACTION_FOUNDED={
   ClanWolf:3050, ClanJadeFalcon:3050, ClanGhostBear:3050, ClanSmokeJaguar:3050,
   ClanDiamondShark:3050, ClanNovacat:3050, ClanSteelViper:3050, ClanStarAdder:3050,
   ClanHellsHorses:3050, ClanIceHellion:3050, ClanBloodSpirit:3050, ClanCoyote:3050,
-  ClanFireMandrill:3050, ClanGoliathScorpion:3050
+  ClanFireMandrill:3050, ClanGoliathScorpion:3050,
+  /* Periphery and later states. Without these the gate defaults them to
+     2005 and they turn up centuries before they existed. Sourced: Taurian
+     Concordat 2335, Illyrian Palatinate 24th century, Tortuga Dominions
+     2593, Circinus Federation 2775, Republic of the Sphere 3081. */
+  Illyrian:2300, Taurian:2335, Tortuga:2593, Circinus:2775,
+  RepublicOfSphere:3081,
+  /* Same Invasion-contact convention as the other Clans. */
+  ClanSnowRaven:3050, ClanCloudCobra:3050,
+  /* PROVISIONAL - confirm against sourcebooks before trusting these.
+     Society surfaces in the Wars of Reaving. Stone Lion is formed from the
+     Homeworld remnant of Hell's Horses during those same wars. Wild Cat has
+     no units later than 2830 in the catalogue, so it is treated as an early
+     Clan on the same footing as the Wolverines rather than a late one.
+     Solaris VII only reads as a faction once the games matter. Pirates are
+     deliberately left ungated, they fit any era. */
+  Society:3067, ClanStoneLion:3075, ClanWildCat:2807, Solaris7:2900, RimWorlds:2250,
+  Pirates:2005
+};
+/* Last era each faction can validly appear in. The catalogue keeps tagging
+   dead states onto later units, so without this Smoke Jaguar turns up in the
+   Dark Age ninety years after it was Annihilated. Only factions that actually
+   stopped existing are listed; everything absent runs to ilClan.
+   Sourced: Clan Wolverine Annihilated 2823, Rim Worlds Republic destroyed
+   2780, Clan Smoke Jaguar Annihilated 3060, St Ives Compact reabsorbed 3063,
+   Illyrian Palatinate annexed 3063, Federated Commonwealth ends 3067, Clan
+   Fire Mandrill and Clan Steel Viper Annihilated 3075, Word of Blake and the
+   Circinus Federation both end 3081, Clan Nova Cat destroyed 3143, Republic
+   of the Sphere dissolved 3151.
+   Deliberately NOT listed: StarLeague, because the tag covers the original
+   SLDF, the SLDF in exile and the Second Star League of 3058-3067, so any
+   single end year would be wrong. ComStar is also left open pending a call
+   on whether the post-Jihad remnant counts.
+   PROVISIONAL, confirm before trusting: Ice Hellion, Blood Spirit, Society,
+   Stone Lion, Free Rasalhague, Outworlds.
+   Known limitation: there is no revival concept, so Clan Smoke Jaguar being
+   reconstituted under Alaric Ward in 3151 is not modelled. The catalogue has
+   no ilClan Jaguar units, so nothing is lost today. */
+const FACTION_ENDED={
+  RimWorlds:2780, ClanWolverine:2823,
+  ClanSmokeJaguar:3060, StIvesCompact:3063, Illyrian:3063, FedCom:3067,
+  ClanFireMandrill:3075, ClanSteelViper:3075, Society:3075,
+  ClanIceHellion:3072, ClanBloodSpirit:3084,
+  WordOfBlake:3081, Circinus:3081, ClanStoneLion:3085,
+  FreeRasalhague:3103, Outworlds:3084,
+  ClanNovacat:3143, RepublicOfSphere:3151
 };
 const factionMinEra=f=>eraIdxOfYear(FACTION_FOUNDED[f]??ERAS[0][1]);
+const factionMaxEra=f=>FACTION_ENDED[f]!==undefined?eraIdxOfYear(FACTION_ENDED[f]):ERAS.length-1;
+/* True when the faction existed for at least part of the given era. */
+const factionAlive=(f,i)=>i===null||(factionMinEra(f)<=i&&factionMaxEra(f)>=i);
 function buildGenFilters(){
   const fs=new Map(), es=new Set();
   for(const c of DB) for(const v of c.v){
@@ -1397,7 +1453,7 @@ function paintFactions(){
     if(era && v.e!==era) continue;
     for(const f of (v.f||[])){
       const key=FACTION_DUPE[f]||f;
-      if(eraIdx!==null && factionMinEra(key)>eraIdx) continue;
+      if(!factionAlive(key,eraIdx)) continue;
       fs.set(key,(fs.get(key)||0)+1);
     }
   }
@@ -1411,8 +1467,8 @@ function paintFactions(){
 function pool(fac,era,weight){
   if(fac&&FACTION_DUPE[fac]) fac=FACTION_DUPE[fac];
   const eraIdx=era?ERAORD.indexOf(era):null;
-  // A faction cannot field anything in an era before it existed.
-  if(fac && eraIdx!==null && factionMinEra(fac)>eraIdx) return [];
+  // A faction cannot field anything before it existed or after it was gone.
+  if(fac && !factionAlive(fac,eraIdx)) return [];
   const out=[];
   for(const c of DB){
     if(weight&&weight!=='Mixed'&&cls(c.t)!==weight) continue;
