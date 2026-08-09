@@ -478,7 +478,9 @@ function objectiveFor(u,fixedRoll){
   const act=activeObjectives();
   if(!act.length) return null;
   const r=Number.isFinite(fixedRoll)?fixedRoll:(d6()+d6());
-  // ~45% pulled toward the mission, else the fight in front of them
+  // 2d6 of 7+ pulls a unit toward the mission, which is 21 in 36, so about 58%.
+  // Below that it fights whatever is in front of it. Note this is the same roll
+  // that sets the pilot's nerve, so mission-runners skew bold by construction.
   if(r<7) return null;
   return act[(r+ (u.uid||0)) % act.length];
 }
@@ -992,6 +994,11 @@ function generateOrder(u,fixedRoll){
         :`Take the shortest line to ${BAND_HEX[dest]}, terrain be damned.`,
       inPlace?'Do not give ground, even for a better firing position.'
              :'Speed matters more than cover on this one. Get there.'];
+    /* Manner steps say HOW to move, never WHERE. An objective replaces the
+       destination, so only these survive the overlay below. */
+    o.manner=[jj?'Kick the jump jets and drop into the best firing arc you can reach.'
+                :'Speed matters more than cover on this one. Take the shortest line you can.',
+      'You will eat some return fire on the way. Take it and keep going.'];
   } else if(intent==='close'){
     o.headline='Close your range';
     o.want= RS==='as' ? `Wants ${pb} · ${best} dmg` : `Wants ${pb}`;
@@ -1004,6 +1011,9 @@ function generateOrder(u,fixedRoll){
       slow?'You are not quick. Move cover to cover, do not stroll across the open.'
           :'Watch yourself on the way, they will be gunning for you the moment you commit.',
       jj?'Jump it if the ground gets in your way.':'Stay off open ground unless it is genuinely the quicker route in.'];
+    o.manner=[slow?'You are not quick. Move cover to cover, do not stroll across the open.'
+                  :'Watch yourself on the way, they will be gunning for you the moment you commit.',
+      jj?'Jump it if the ground gets in your way.':'Stay off open ground unless it is genuinely the quicker route in.'];
   } else if(intent==='open'){
     o.headline='Open the range, now';
     o.want= RS==='as' ? `Wants ${pb} · ${best} dmg` : `Wants ${pb}`;
@@ -1014,6 +1024,8 @@ function generateOrder(u,fixedRoll){
       : `Same damage either way, so take the safer ground. Fewer of their guns can reach you out at ${db}.`;
     o.steps=[`Fall back to ${BAND_HEX[dest]}, and keep your face to them the whole way.`,
       'Do not turn your back on them, not for a second.',
+      'If a shot is not worth the exposure, break line of sight and keep moving.'];
+    o.manner=['Keep your face to them the whole way, do not turn your back.',
       'If a shot is not worth the exposure, break line of sight and keep moving.'];
   } else {
     const pressing=(score>=10);
@@ -1029,6 +1041,8 @@ function generateOrder(u,fixedRoll){
     o.steps=['Hold this line. Shift only if it buys you a cleaner shot.',
       'Get behind whatever cover does not cost you the shot.',
       'Keep your exposure down, the fewer of them that can see you, the better.'];
+    o.manner=['Get behind whatever cover does not cost you the shot.',
+      'Keep your exposure down, the fewer of them that can see you, the better.'];
   }
 
   /* Overlay the objective on the combat order it just built. The unit still
@@ -1042,19 +1056,19 @@ function generateOrder(u,fixedRoll){
     if(obj.type==='vip'){
       o.headline='Go after the marked target';
       o.why=`Orders are to hunt ${tgt}. Press toward it and put your fire on it over easier targets.`;
-      o.steps=[`Close on ${tgt} and keep the pressure on it.`, ...o.steps.slice(0,2)];
+      o.steps=[`Close on ${tgt} and keep the pressure on it.`, ...o.manner];
     } else if(obj.type==='recon'){
       o.headline='Break off and scan';
       o.why=`This turn the mission comes first. Get to ${tgt} and run the scan instead of pressing the attack.`;
-      o.steps=[`Move onto ${tgt} and hold fire once you are in range, the scan is the job this turn.`, o.steps[0]];
+      o.steps=[`Move onto ${tgt} and hold fire once you are in range, the scan is the job this turn.`, o.manner[0]];
     } else if(obj.type==='destroy'){
       o.headline='Push for the objective';
       o.why=`Orders are to destroy ${tgt}. Advance on it and bring it down once you are in range.`;
-      o.steps=[`Advance on ${tgt} and put your fire on it the moment it is in range.`, ...o.steps.slice(0,2)];
+      o.steps=[`Advance on ${tgt} and put your fire on it the moment it is in range.`, ...o.manner];
     } else { // hold
       o.headline='Take and hold the ground';
       o.why=`Orders are to reach and hold ${tgt}. Get onto it and stay, do not get drawn off chasing kills.`;
-      o.steps=[`Move onto ${tgt} and hold there, face the enemy but do not chase them off it.`, ...o.steps.slice(0,2)];
+      o.steps=[`Move onto ${tgt} and hold there, face the enemy but do not chase them off it.`, ...o.manner];
     }
   }
 
@@ -1063,7 +1077,8 @@ function generateOrder(u,fixedRoll){
   if(has(u,'ECM')) o.notes.push('Keep your ECM close enough to cover the rest of the lance, that is worth more than the extra ground.');
   if(has(u,'TAG')) o.notes.push('You are on TAG duty. Paint the target, let someone else land the killing blow.');
   if(has(u,'RCN')) o.notes.push('You are the eyes out here. Push forward for the spot even if the numbers are not in your favour.');
-  if(wantsContact && cur===0) o.notes.push('You are in their face now, throw the punch.');
+  if(wantsContact && cur===0 && !(obj && obj.type==='recon'))
+    o.notes.push('You are in their face now, throw the punch.');
   if(has(u,'AMS')) o.notes.push('Your AMS has your back against their missiles, do not let that dictate where you go.');
   if(RS==='as' && has(u,'ENE')) o.notes.push('All energy on this one, you will never run dry. Keep the trigger down.');
   const ht=abilVal(u,'HT',cur);
