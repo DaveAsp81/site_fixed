@@ -395,6 +395,9 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
     <button class="btn ghost sm" id="btnExport">Export JSON</button>
     <button class="btn ghost sm" id="btnExportCsv">Export CSV</button>
     <button class="btn ghost sm" id="btnImport">Import force</button>
+    <button class="btn ghost sm" id="btnRollPilots">Roll pilots</button>
+    <button class="btn ghost sm" id="btnRollPersona">Roll temperaments</button>
+    <button class="btn ghost sm" id="btnMoveOrder">Roll move order</button>
     <button class="btn ghost sm" id="btnClear">Clear all</button>
     <input type="file" id="fileIn" accept=".json,.csv,application/json,text/csv" class="hide">
   </div>
@@ -877,7 +880,61 @@ const TARGETS={
   Ambusher:['whoever has not clocked you yet','whoever is already hurting','once you are seen, take the closest and make it count']
 };
 
+/* Clan warriors do not talk like Inner Sphere mercenaries. Rather than fork
+   every order string, the base generator stays neutral and this pass re-voices
+   the output for Clan units: formal register, no contractions, Clan vocabulary,
+   and the zellbrigen reminder that actually changes how the turn is played. */
+const CLAN_HEADLINE={
+  'Sit tight, you are cooking':'Stand fast, your machine burns',
+  'Get up, now':'Rise, warrior',
+  'Pull out, you are done here':'Withdraw, this trial is ended',
+  'Dig in and trade':'Hold this ground and trade fire',
+  'Go, go, go':'Close and engage, do not falter',
+  'Close your range':'Close to your killing range',
+  'Open the range, now':'Open the range, fight at your strength',
+  'Hold your ground':'Hold, you are well placed',
+  'Go after the marked target':'The marked target is your trial',
+  'Break off and scan':'Break off, the scan is the trial',
+  'Push for the objective':'Take the objective',
+  'Take and hold the ground':'Seize that ground and hold it',
+};
+const CLAN_WORDS=[
+  [/\byou've\b/gi,'you have'],[/\byou're\b/gi,'you are'],[/\bdon't\b/gi,'do not'],
+  [/\bcan't\b/gi,'cannot'],[/\bwon't\b/gi,'will not'],[/\bit's\b/gi,'it is'],
+  [/\bthat's\b/gi,'that is'],[/\bthey're\b/gi,'they are'],[/\bthere's\b/gi,'there is'],
+  [/\bhave got\b/g,'have'],[/\bhas got\b/g,'has'],
+  [/\blance\b/g,'Star'],[/\bLance\b/g,'Star'],
+  [/\bpilots\b/g,'warriors'],[/\bpilot\b/g,'warrior'],
+  [/\bPilots\b/g,'Warriors'],[/\bPilot\b/g,'Warrior'],
+];
+function clanText(t){
+  if(typeof t!=='string') return t;
+  for(const [re,to] of CLAN_WORDS) t=t.replace(re,to);
+  return t;
+}
+function clanVoice(o,u){
+  if(!o) return o;
+  if(CLAN_HEADLINE[o.headline]) o.headline=CLAN_HEADLINE[o.headline];
+  o.headline=clanText(o.headline);
+  o.why=clanText(o.why); o.fire=clanText(o.fire);
+  o.target=clanText(o.target); o.want=clanText(o.want);
+  o.steps=(o.steps||[]).map(clanText);
+  o.notes=(o.notes||[]).map(clanText);
+  o.alts=(o.alts||[]).map(clanText);
+  /* Zellbrigen is not decoration. It changes target selection for the whole
+     turn, so it goes last where the player will read it before rolling. */
+  o.notes.push('Zellbrigen applies. Announce your target, engage one warrior at a time, '
+    + 'and do not fire on an opponent another warrior has already engaged. '
+    + 'If they fight dishonourably, the code is void and you may fire at will.');
+  return o;
+}
+
 function generateOrder(u,fixedRoll){
+  const o=generateOrderBase(u,fixedRoll);
+  return (u && u.tech==='C') ? clanVoice(o,u) : o;
+}
+
+function generateOrderBase(u,fixedRoll){
   const v=u.v, cur=u.band, clan=(u.tech==='C');
   const pref=preferredBand(v,clan);
   const prof=bandProfile(v,clan);
@@ -1286,12 +1343,51 @@ function mkPlayer(c,v,pilot){
 }
 
 /* ---------- unit factory ---------- */
+
+/* ---------------- Pilot flavour ----------------
+   Name and background tables ported from the Lance Builder so the two tools
+   name warriors the same way. Clan and Inner Sphere are picked per unit from
+   its own tech rather than from a faction dropdown, which is more accurate for
+   a mixed force. Backgrounds are not decoration: each one implies a
+   temperament, so rolling a pilot also sets how they will fight. */
+const IS_FIRST_NAMES=['Aiden','Alexei','Brynn','Callum','Cassandra','Cole','Dana','Derek','Elena','Fiona','Galen','Hank','Ingrid','James','Kira','Lars','Mara','Nathan','Nessa','Owen','Pavel','Quinn','Regan','Seth','Tara','Victor','Wade','Yuki','Zara','Marcus','Lena','Donal','Petra','Rafe','Suki','Tobias','Valeria','Wyatt','Xander','Yolanda','Zeke','Anton','Britta','Carlos','Diana','Ethan','Freya','Grant','Hana','Ivan','Jade'];
+const IS_LAST_NAMES=['Acheson','Bauer','Calloway','Decker','Eriksson','Fontaine','Greene','Harlow','Innis','Jarvis','Kessler','Lawson','Malone','Navarro','Ortega','Parrish','Quinn','Rashid','Sterling','Thorne','Ueda','Vasquez','Wren','Xiao','Yates','Zimmer','Albright','Brennan','Castillo','Dubois','Espinoza','Frost','Gallagher','Holt','Ingram','Johansson','Kwan','Lindqvist','MacLeod','Nakamura','Okafor','Petrov'];
+const IS_CALLSIGNS=['Ace','Anvil','Banshee','Blackout','Blaze','Blindside','Bloodhound','Boomer','Breach','Brimstone','Bulldog','Burnout','Buzzsaw','Cipher','Cobalt','Colt','Crash','Crusher','Dagger','Deadshot','Deuce','Dice','Diesel','Dispatch','Dreadnought','Drifter','Drumroll','Eclipse','Eight-Ball','Ember','Enforcer','Exile','Falcon','Fang','Firebrand','Firestorm','Flash','Flint','Foxhound','Frostbite','Ghost','Glacier','Gravel','Grimm','Grinder','Gunslinger','Hammer','Hardcase','Havoc','Hazard','Highball','Hotshot','Hound','Hurricane','Icepick','Ignite','Impactor','Ironside','Jackknife','Jinx','Joker','Jolt','Judge','Juggernaut','Killswitch','Kingpin','Knuckle','Lancer','Leadfoot','Leadsinger','Lockjaw','Lucky','Magnum','Maverick','Mayhem','Mirage','Mongoose','Nailgun','Nightfall','Nomad','Oddball','Onyx','Outlaw','Overload','Padlock','Pariah','Patchwork','Payback','Pilgrim','Piston','Pitfall','Plague','Predator','Prophet','Quickdraw','Railgun','Rampage','Rattler','Reaper','Reckless','Redline','Ricochet','Riddler','Riptide','Roughneck','Roundhouse','Rubble','Runaway','Rusty','Sabre','Sandstorm','Savage','Scorch','Scrambler','Scrapyard','Shockwave','Shrapnel','Sidewinder','Siege','Sixgun','Slammer','Slapshot','Sledge','Slipstream','Slowburn','Smokescreen','Snakebite','Specter','Spike','Spitfire','Stalker','Static','Steelhorse','Stonewall','Stormfront','Striker','Tailspin','Tempest','Throttle','Thunder','Tombstone','Torque','Tracer','Triage','Trigger','Tripwire','Tumbler','Typhoon','Undertaker','Venom','Vertigo','Viking','Viper','Voltage','Vortex','Warpath','Warthog','Widowmaker','Wildcard','Wildfire','Wipeout','Wraith','Wrecker','Zero','Zipline'];
+const CLAN_FIRST_NAMES=['Aidan','Aleksandr','Alaric','Anastasia','Bjorn','Brett','Caden','Callandre','Chandra','Conal','Dagmar','Damon','Dante','Diana','Dirk','Drake','Eleyna','Erik','Ethan','Falko','Freya','Galen','Garth','Gerd','Gideon','Gunnar','Hanse','Helga','Henrik','Ingrid','Ivan','Jal','Jana','Jarek','Jasmine','Jez','Jonas','Kael','Karyn','Kerensky','Kira','Klaus','Kristoff','Lars','Lena','Lexa','Liam','Loremaster','Lucien','Maddox','Marit','Mira','Morgan','Naomi','Natasha','Nicolai','Niels','Nina','Niko','Odin','Olga','Oskar','Pavel','Petr','Petra','Pilar','Ranna','Raven','Rex','Rhys','Rolf','Romulus','Rosalind','Ruark','Sable','Sacha','Samira','Sanne','Sara','Selene','Seth','Sigrid','Soren','Strana','Sven','Tasha','Tomas','Torren','Ulric','Unn','Valdis','Valten','Viktor','Vivi','Wulfgar','Xander','Yael','Ymir','Zane','Zara','Zeta'];
+const CLAN_BLOODNAMES=['Amirault','Bekker','Carns','Crichell','Danforth','Devereaux','Drummond','Fetladral','Folkner','Furey','Gabrowski','Hazen','Heller','Icaza','Jewel','Jorgensson','Kerensky','Koga','Labov','Laren','Malthus','Mattlov','McKibben','Mehta','Nishoko','Osis','Phan','Pryde','Radick','Showers','Snuka','Taney','Tcherenkoff','Truscott','Uhl','Ulric','Vickers','Ward','Winson','Yeh','Zalman'];
+const CLAN_CALLSIGNS=['Bane','Bloodfang','Bowman','Burrock','Carew','Claw','Deathstrike','Desolator','Dire Wolf','Doomseeker','Dusk','Embattled','Executioner','Fastpaw','Firehawk','Gatekeeper','Ghostbear','Grimclaw','Huntmaster','Iceprowl','Ironjaw','Jadewing','Jaguar','Killfury','Kinslayer','Kraken','Lair','Mastiff','Nightstrike','Northwind','Novaprowl','Overlord','Packmaster','Prowl','Razorclaw','Reaver','Sandpiper','Seeker','Shadowbane','Skullsplitter','Smokejag','Stalker','Starfang','Stormcrow','Sunhawk','Swiftkill','Talon','Timberwolf','Trothkin','Turkina','Viper','Warbird','Widowfang','Windclaw','Wolfhound','Wolvesfire','Zellbrigen'];
+const IS_BACKGROUNDS=['Former House Regular','Mercenary Veteran','Dispossessed Noble','ComStar Adept','Periphery Raider','Bounty Hunter','Federated Suns Loyalist','Draconis Combine Samurai','Lyran Hauptmann','Capellan Warrior House','Free Worlds Irregulars','Wolf\'s Dragoons Veteran','Star League Remnant','Young Hotshot','Grizzled Veteran','Solaris Gladiator','Ex-Pirate','NAIS Graduate'];
+const CLAN_BACKGROUNDS=['Decorated Sibko Graduate','Trial of Position: Three Kills','Trial of Position: Two Kills','Trial of Position: One Kill, Hard Won','Bloodnamed Warrior','Freeborn Fighter','Elemental Cross-Trained','Veteran of the Invasion','Tukayyid Survivor','Home Cluster Warrior','Zellbrigen Purist','Star Captain','Galaxy Commander\'s Protege','Trial of Grievance Veteran','Dezgra Redemption'];
+const BG_LEAN={"Young Hotshot": "reckless", "Periphery Raider": "aggressive", "Bounty Hunter": "aggressive", "Solaris Gladiator": "aggressive", "Ex-Pirate": "timid", "Mercenary Veteran": "cautious", "Grizzled Veteran": "cautious", "Dispossessed Noble": "aggressive", "Draconis Combine Samurai": "aggressive", "Lyran Hauptmann": "cautious", "ComStar Adept": "cautious", "NAIS Graduate": "cautious", "Star League Remnant": "balanced", "Former House Regular": "balanced", "Federated Suns Loyalist": "balanced", "Capellan Warrior House": "balanced", "Free Worlds Irregulars": "balanced", "Wolf's Dragoons Veteran": "balanced", "Trial of Position: Three Kills": "aggressive", "Decorated Sibko Graduate": "aggressive", "Bloodnamed Warrior": "aggressive", "Freeborn Fighter": "aggressive", "Trial of Grievance Veteran": "aggressive", "Dezgra Redemption": "reckless", "Trial of Position: One Kill, Hard Won": "reckless", "Home Cluster Warrior": "timid", "Tukayyid Survivor": "cautious", "Veteran of the Invasion": "cautious", "Zellbrigen Purist": "balanced", "Trial of Position: Two Kills": "balanced", "Elemental Cross-Trained": "balanced", "Star Captain": "balanced", "Galaxy Commander's Protege": "balanced"};
+
+function pickFrom(a){ return a[Math.floor(Math.random()*a.length)]; }
+function rollPilotName(clan){
+  if(clan){
+    /* Clan warriors carry one name. A Bloodname is earned in a Trial of
+       Bloodright, so only a minority have one. */
+    const first=pickFrom(CLAN_FIRST_NAMES);
+    const name=Math.random()<0.15 ? first+' '+pickFrom(CLAN_BLOODNAMES) : first;
+    return name+' "'+pickFrom(CLAN_CALLSIGNS)+'"';
+  }
+  return pickFrom(IS_FIRST_NAMES)+' '+pickFrom(IS_LAST_NAMES)+' "'+pickFrom(IS_CALLSIGNS)+'"';
+}
+function rollPilotBackground(clan){ return pickFrom(clan?CLAN_BACKGROUNDS:IS_BACKGROUNDS); }
+function rollPilot(u){
+  const clan = u.tech==='C';
+  u.pilot = rollPilotName(clan);
+  u.background = rollPilotBackground(clan);
+  u.persona = BG_LEAN[u.background] || 'balanced';
+  return u;
+}
+
+
 function mkUnit(c,v,opts){
   if(typeof opts==='string'||opts==null) opts={pilot:opts||''};
   const num=x=>Number.isFinite(x)?x:null;
   return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
-    persona:opts.persona||'balanced',rollVal:null,flanked:false,collapsed:false,
+    persona:opts.persona||'balanced',background:opts.background||'',
+    rollVal:null,flanked:false,collapsed:false,
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
     band:2,enemyMoved:false,prone:false,dead:false,order:null,lastHeadline:null,cooledBy:0};
 }
@@ -1528,8 +1624,9 @@ function rollForce(append){
     return;
   }
   // Roll temperaments too, so a generated force does not all think alike.
-  const units=picks.map(([c,v])=>mkUnit(c,v,{
-    persona:PERSONA_ROLL[Math.floor(Math.random()*PERSONA_ROLL.length)]}));
+  // Names and backgrounds too. The background sets the temperament, so this
+  // replaces the old blind persona roll rather than sitting alongside it.
+  const units=picks.map(([c,v])=>rollPilot(mkUnit(c,v,{})));
   force = append ? force.concat(units) : units;
   const usingBV=RS==='classic';
   const pv=units.reduce((a,u)=>a+(usingBV?(u.bv??u.v.bv??0):(u.v.pv||0)),0);
@@ -1636,7 +1733,8 @@ function ingest(list,meta,source){
     const [c,v,exact]=hit;
     if(!exact) loose.push(label);
     if(Number.isFinite(e.tonnage)&&e.tonnage!==c.t) tonWarn.push(`${label} reads ${e.tonnage}t, roster says ${c.t}t`);
-    const u=mkUnit(c,v,{pilot:e.pilot,gun:e.gun,pil:e.pil,bv:e.bv,adj:e.adj});
+    const u=mkUnit(c,v,{pilot:e.pilot,gun:e.gun,pil:e.pil,bv:e.bv,adj:e.adj,
+      background:e.background,persona:e.persona});
     if(Number.isFinite(e.heat)) u.heat=Math.max(0,Math.min(HEATMAX(),e.heat));
     if(Number.isFinite(e.armour)) u.arm=Math.max(0,Math.min(v.a,e.armour));
     if(Number.isFinite(e.structure)) u.str=Math.max(0,Math.min(v.s,e.structure));
@@ -1820,7 +1918,7 @@ function renderLance(){
     <div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        <div class="unit-meta">${u.moveOrder?'Moves #'+u.moveOrder+' · ':''}${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
         ${vitalsHTML(u)}
       </div><button class="btn ghost sm" data-del="${u.uid}">Remove</button></div>
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
@@ -2016,7 +2114,7 @@ function renderOrders(){
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}</div>
+        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
         ${vitalsHTML(u)}
         ${turn>1&&u.lastHeadline?`<div class="last-turn">Last turn: ${esc(u.lastHeadline)}</div>`:''}
       </div><div class="hd-btns">
@@ -2166,6 +2264,11 @@ document.getElementById('btnAdd').onclick=()=>{
   if(!DB[i]||!DB[i].v[j]) return;      // nothing matched the filter
   force.push(mkUnit(DB[i],DB[i].v[j],document.getElementById('inpPilot').value.trim()));
   document.getElementById('inpPilot').value='';
+  /* People add several different chassis in a row, so clear the filter and hand
+     the cursor back rather than making them select and delete the last one. */
+  const find=document.getElementById('chassisFind');
+  find.value=''; buildChassis();
+  try{ find.focus({preventScroll:true}); }catch(_){}
   renderLance(); renderOrders();};
 document.getElementById('pBtnAdd').onclick=()=>{
   const i=+document.getElementById('pSelChassis').value;
@@ -2173,6 +2276,9 @@ document.getElementById('pBtnAdd').onclick=()=>{
   if(!DB[i]||!DB[i].v[j]) return;
   players.push(mkPlayer(DB[i],DB[i].v[j],document.getElementById('pInpPilot').value.trim()));
   document.getElementById('pInpPilot').value='';
+  const pfind=document.getElementById('pChassisFind');
+  pfind.value=''; buildPChassis();
+  try{ pfind.focus({preventScroll:true}); }catch(_){}
   renderPlayers(); refreshAllOrders(); renderOrders();};
 document.getElementById('btnEndTurn').onclick=()=>{
   turn++; document.getElementById('turnNo').textContent=turn;
@@ -2194,6 +2300,42 @@ document.getElementById('btnEndTurn').onclick=()=>{
   for(const p of players) p.moved='moved';
   renderLance(); renderPlayers(); renderOrders();
   window.scrollTo({top:0,behavior:'smooth'});};
+/* Names, backgrounds and the temperament each background implies. */
+document.getElementById('btnRollPilots').onclick=()=>{
+  const live=force.filter(u=>!u.dead);
+  if(!live.length) return;
+  for(const u of live){
+    rollPilot(u);
+    if(u.order){ u.dmg=condOf(u); u.order=generateOrder(u,u.rollVal); }
+  }
+  renderLance(); renderOrders();};
+
+/* Generated forces already roll temperaments. This is for hand-built ones,
+   where every unit otherwise sits on Balanced because nobody remembers. */
+document.getElementById('btnRollPersona').onclick=()=>{
+  const live=force.filter(u=>!u.dead);
+  if(!live.length) return;
+  for(const u of live){
+    u.persona=PERSONA_ROLL[Math.floor(Math.random()*PERSONA_ROLL.length)];
+    // keep the 2d6, only the modifier changes, so nerve does not silently re-roll
+    if(u.order){ u.dmg=condOf(u); u.order=generateOrder(u,u.rollVal); }
+  }
+  renderLance(); renderOrders();};
+
+/* Movement order within the side, not initiative against the player. Solo
+   players roll their own initiative, they just want the OpFor sequenced. */
+document.getElementById('btnMoveOrder').onclick=()=>{
+  const live=force.filter(u=>!u.dead);
+  if(!live.length) return;
+  const seq=live.slice();
+  for(let i=seq.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [seq[i],seq[j]]=[seq[j],seq[i]];
+  }
+  seq.forEach((u,i)=>u.moveOrder=i+1);
+  for(const u of force) if(u.dead) u.moveOrder=null;
+  renderLance(); renderOrders();};
+
 document.getElementById('btnClear').onclick=()=>{
   if(force.length&&!confirm('Remove every unit from the force?')) return;
   force=[];turn=1;objectives=[];players=[];document.getElementById('turnNo').textContent=1;
@@ -2203,6 +2345,7 @@ document.getElementById('btnExport').onclick=()=>{
   if(!force.length) return;
   const payload={tool:'opfor-command',version:2,ruleset:RS,turn,
     force:force.map(u=>({chassis:u.chassis,variant:u.v.n,pilot:u.pilot,
+      background:u.background,persona:u.persona,
       gun:u.gun,pil:u.pil,bv:u.bv,adj:u.adj,
       heat:u.heat,armour:u.arm,structure:u.str,dead:u.dead}))};
   const a=document.createElement('a');
