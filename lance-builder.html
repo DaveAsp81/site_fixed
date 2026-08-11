@@ -434,7 +434,8 @@ let currentLance = [];
 // ── Clan Star support ─────────────────────────────────────────────────────────
 function isClanFaction() {
     const faction = document.getElementById('faction-filter')?.value || 'ALL';
-    return faction.startsWith('Clan');
+    // The Society sits in Clan space and reads as Clan despite the name.
+    return faction.startsWith('Clan') || faction === 'Society';
 }
 
 function getMaxUnits()  { return isClanFaction() ? 5 : 4; }
@@ -960,7 +961,10 @@ function addSelectedVariant() {
         name: `${c.chassis} ${v.name}`,
         chassis: c.chassis,
         tons: c.tons,
-        technology: c.technology || 'Inner Sphere',
+        /* Read tech off the variant. Plenty of chassis are filed as Mixed while
+           individual variants are pure Clan or pure Inner Sphere, and the
+           chassis value mislabels those. */
+        technology: v.technology || c.technology || 'Inner Sphere',
         bv: v.bv,
         pv: v.pv || Math.round(v.bv / 40),
         role: v.role,
@@ -1128,7 +1132,7 @@ function randomizeThemedLance() {
                 name: `${mech.chassis} ${variant.name}`,
                 chassis: mech.chassis,
                 tons: mech.tons,
-                technology: mech.technology || 'Inner Sphere',
+                technology: variant.technology || mech.technology || 'Inner Sphere',
                 bv: variant.bv,
                 pv: variant.pv || Math.round(variant.bv / 40),
                 role: variant.role,
@@ -1359,7 +1363,11 @@ window.onload = () => {
         chassisGrid.innerHTML = '<p style="color:#aaa;padding:2rem;text-align:center;">Loading mech database...</p>';
     }
 
-    fetch('mechs.json')
+    /* Bump CATALOGUE_V whenever mechs.json changes. Without a version key a
+       returning visitor can sit on a cached copy indefinitely, which is how the
+       old floored Run MP values survived a data fix. v2 = run rounding fix. */
+    const CATALOGUE_V = '2';
+    fetch('mechs.json?v=' + CATALOGUE_V)
         .then(r => {
             if (!r.ok) throw new Error('Failed to load mechs.json (' + r.status + ')');
             return r.json();
@@ -2091,7 +2099,7 @@ function checkSharedForce() {
             const { m, v } = hit;
             return {
                 id: v.id, name: `${m.chassis} ${v.name}`, chassis: m.chassis, tons: m.tons,
-                technology: m.technology || 'Inner Sphere',
+                technology: v.technology || m.technology || 'Inner Sphere',
                 bv: v.bv, pv: v.pv || Math.round(v.bv / 40), role: v.role,
                 movement: v.movement, heatsinks: v.heatsinks, weapons: v.weapons,
                 bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },

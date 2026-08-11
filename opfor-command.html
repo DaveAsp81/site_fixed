@@ -931,7 +931,7 @@ function clanVoice(o,u){
 
 function generateOrder(u,fixedRoll){
   const o=generateOrderBase(u,fixedRoll);
-  return (u && u.tech==='C') ? clanVoice(o,u) : o;
+  return clanPilotOf(u) ? clanVoice(o,u) : o;
 }
 
 function generateOrderBase(u,fixedRoll){
@@ -1361,6 +1361,15 @@ const CLAN_BACKGROUNDS=['Decorated Sibko Graduate','Trial of Position: Three Kil
 const BG_LEAN={"Young Hotshot": "reckless", "Periphery Raider": "aggressive", "Bounty Hunter": "aggressive", "Solaris Gladiator": "aggressive", "Ex-Pirate": "timid", "Mercenary Veteran": "cautious", "Grizzled Veteran": "cautious", "Dispossessed Noble": "aggressive", "Draconis Combine Samurai": "aggressive", "Lyran Hauptmann": "cautious", "ComStar Adept": "cautious", "NAIS Graduate": "cautious", "Star League Remnant": "balanced", "Former House Regular": "balanced", "Federated Suns Loyalist": "balanced", "Capellan Warrior House": "balanced", "Free Worlds Irregulars": "balanced", "Wolf's Dragoons Veteran": "balanced", "Trial of Position: Three Kills": "aggressive", "Decorated Sibko Graduate": "aggressive", "Bloodnamed Warrior": "aggressive", "Freeborn Fighter": "aggressive", "Trial of Grievance Veteran": "aggressive", "Dezgra Redemption": "reckless", "Trial of Position: One Kill, Hard Won": "reckless", "Home Cluster Warrior": "timid", "Tukayyid Survivor": "cautious", "Veteran of the Invasion": "cautious", "Zellbrigen Purist": "balanced", "Trial of Position: Two Kills": "balanced", "Elemental Cross-Trained": "balanced", "Star Captain": "balanced", "Galaxy Commander's Protege": "balanced"};
 
 function pickFrom(a){ return a[Math.floor(Math.random()*a.length)]; }
+/* Culture comes from the force, not the machine. A Kurita warrior in a salvaged
+   Puma is still a Kurita warrior, and a Clan warrior who has taken an Inner
+   Sphere 'Mech as isorla is still a Clan warrior. Only fall back to the chassis
+   tech when there is no faction to go on, which is hand-built forces. */
+const CLAN_FACTIONS=/^(Clan|Society$)/;
+function isClanFaction(fac){ return !!fac && CLAN_FACTIONS.test(fac); }
+function clanPilotOf(u){
+  return (u && u.clanPilot!=null) ? !!u.clanPilot : !!(u && u.tech==='C');
+}
 function rollPilotName(clan){
   if(clan){
     /* Clan warriors carry one name. A Bloodname is earned in a Trial of
@@ -1373,7 +1382,7 @@ function rollPilotName(clan){
 }
 function rollPilotBackground(clan){ return pickFrom(clan?CLAN_BACKGROUNDS:IS_BACKGROUNDS); }
 function rollPilot(u){
-  const clan = u.tech==='C';
+  const clan = clanPilotOf(u);
   u.pilot = rollPilotName(clan);
   u.background = rollPilotBackground(clan);
   u.persona = BG_LEAN[u.background] || 'balanced';
@@ -1387,6 +1396,7 @@ function mkUnit(c,v,opts){
   return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     persona:opts.persona||'balanced',background:opts.background||'',
+    clanPilot:(opts.clanPilot!=null?!!opts.clanPilot:null),
     rollVal:null,flanked:false,collapsed:false,
     heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
     band:2,enemyMoved:false,prone:false,dead:false,order:null,lastHeadline:null,cooledBy:0};
@@ -1626,7 +1636,8 @@ function rollForce(append){
   // Roll temperaments too, so a generated force does not all think alike.
   // Names and backgrounds too. The background sets the temperament, so this
   // replaces the old blind persona roll rather than sitting alongside it.
-  const units=picks.map(([c,v])=>rollPilot(mkUnit(c,v,{})));
+  const clanForce=isClanFaction(fac);
+  const units=picks.map(([c,v])=>rollPilot(mkUnit(c,v,{clanPilot:clanForce})));
   force = append ? force.concat(units) : units;
   const usingBV=RS==='classic';
   const pv=units.reduce((a,u)=>a+(usingBV?(u.bv??u.v.bv??0):(u.v.pv||0)),0);
@@ -1734,7 +1745,7 @@ function ingest(list,meta,source){
     if(!exact) loose.push(label);
     if(Number.isFinite(e.tonnage)&&e.tonnage!==c.t) tonWarn.push(`${label} reads ${e.tonnage}t, roster says ${c.t}t`);
     const u=mkUnit(c,v,{pilot:e.pilot,gun:e.gun,pil:e.pil,bv:e.bv,adj:e.adj,
-      background:e.background,persona:e.persona});
+      background:e.background,persona:e.persona,clanPilot:e.clanPilot});
     if(Number.isFinite(e.heat)) u.heat=Math.max(0,Math.min(HEATMAX(),e.heat));
     if(Number.isFinite(e.armour)) u.arm=Math.max(0,Math.min(v.a,e.armour));
     if(Number.isFinite(e.structure)) u.str=Math.max(0,Math.min(v.s,e.structure));
@@ -2345,7 +2356,7 @@ document.getElementById('btnExport').onclick=()=>{
   if(!force.length) return;
   const payload={tool:'opfor-command',version:2,ruleset:RS,turn,
     force:force.map(u=>({chassis:u.chassis,variant:u.v.n,pilot:u.pilot,
-      background:u.background,persona:u.persona,
+      background:u.background,persona:u.persona,clanPilot:u.clanPilot,
       gun:u.gun,pil:u.pil,bv:u.bv,adj:u.adj,
       heat:u.heat,armour:u.arm,structure:u.str,dead:u.dead}))};
   const a=document.createElement('a');
