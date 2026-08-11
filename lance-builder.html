@@ -432,6 +432,15 @@ let currentMode = "classic";   // "classic" or "alpha"
 let currentLance = [];
 
 // ── Clan Star support ─────────────────────────────────────────────────────────
+/* Cameo. Valtteri has done more to shake bugs out of these tools than anyone,
+   so he turns up now and then as an Inner Sphere pilot. Excluded from the random
+   background pool so the background only ever arrives attached to him. */
+const CAMEO_PILOT = { name: 'Valtteri Hyvärinen "Redline"', background: 'Rasalhague Shakedown Pilot', rate: 0.02 };
+function cameoInLance() {
+    return (typeof currentLance !== 'undefined' && currentLance)
+        ? currentLance.some(u => u.pilotName === CAMEO_PILOT.name) : false;
+}
+
 function isClanFaction() {
     const faction = document.getElementById('faction-filter')?.value || 'ALL';
     // The Society sits in Clan space and reads as Clan despite the name.
@@ -496,6 +505,7 @@ function updateFormationUI() {
 // ==================== PILOT BACKGROUNDS ====================
 // ── Inner Sphere pilot backgrounds ──────────────────────────────────────────
 const IS_PILOT_BACKGROUNDS = {
+    "Rasalhague Shakedown Pilot": "Free Rasalhague test pilot who runs new machines to destruction before they ever reach a line unit. Reads a heat curve better than the technicians who built it and has a habit of finding the one fault nobody else noticed. Methodical to the point of irritating, and usually right.",
     "Former House Regular": "A loyal soldier who served in one of the Great Houses for many years. Experienced in standard military doctrine and large-scale operations, but often disillusioned by the endless Succession Wars politics and betrayals.",
     "Mercenary Veteran": "Hardened fighter who has battled across the Inner Sphere for the highest bidder. Knows every dirty trick in the book, values loyalty only to the contract, and has survived more drops than most pilots see in a lifetime.",
     "Dispossessed Noble": "A fallen aristocrat whose family 'Mech was lost in the wars. Now fights to reclaim honour and fortune, bringing refined tactics and a burning sense of entitlement to every battlefield.",
@@ -793,6 +803,16 @@ function generatePilotName(index) {
             ? `${firstName} ${randomFrom(CLAN_BLOODNAMES)}`
             : firstName;
         callsign = randomFrom(CLAN_CALLSIGNS);
+    } else if (Math.random() < CAMEO_PILOT.rate && !cameoInLance()) {
+        // the cameo arrives whole, name and background together
+        if (currentLance[index]) {
+            currentLance[index].pilotName = CAMEO_PILOT.name;
+            currentLance[index].background = CAMEO_PILOT.background;
+        }
+        const inp = document.getElementById(`pilot-name-${index}`);
+        if (inp) inp.value = CAMEO_PILOT.name;
+        renderLance();
+        return CAMEO_PILOT.name;
     } else {
         // IS: full name + callsign
         name = `${randomFrom(IS_FIRST_NAMES)} ${randomFrom(IS_LAST_NAMES)}`;
@@ -953,7 +973,7 @@ function addSelectedVariant() {
     const v = c ? c.variants.find(x => x.id === vId) : null;
     if (!v || currentLance.length >= getMaxUnits()) return;
 
-    const bgKeys = Object.keys(pilotBackgrounds());
+    const bgKeys = Object.keys(pilotBackgrounds()).filter(k => k !== CAMEO_PILOT.background);
     const randomBackground = bgKeys[Math.floor(Math.random() * bgKeys.length)];
 
     currentLance.push({
@@ -1126,7 +1146,7 @@ function randomizeThemedLance() {
             // Prefer role variety, but don't get stuck — loosen after attempt 20
             if (usedCategories.has(category) && currentLance.length < (getMaxUnits() - 1) && attempt < 20) continue;
 
-            const bgKeys = Object.keys(pilotBackgrounds());
+            const bgKeys = Object.keys(pilotBackgrounds()).filter(k => k !== CAMEO_PILOT.background);
             currentLance.push({
                 id: variant.id,
                 name: `${mech.chassis} ${variant.name}`,

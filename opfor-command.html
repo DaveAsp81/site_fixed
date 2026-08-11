@@ -1381,8 +1381,22 @@ function rollPilotName(clan){
   return pickFrom(IS_FIRST_NAMES)+' '+pickFrom(IS_LAST_NAMES)+' "'+pickFrom(IS_CALLSIGNS)+'"';
 }
 function rollPilotBackground(clan){ return pickFrom(clan?CLAN_BACKGROUNDS:IS_BACKGROUNDS); }
-function rollPilot(u){
+
+/* Cameo. Valtteri has done more to shake bugs out of this tool than anyone, so
+   he turns up now and then as an Inner Sphere pilot. Rasalhague because the
+   Republic was founded by Scandinavians, and a shakedown pilot because that is
+   what he actually does. Deliberately kept out of the random background table
+   so he only ever appears as the whole pilot, never as a stray background. */
+const CAMEO={ name:'Valtteri Hyvärinen "Redline"', background:'Rasalhague Shakedown Pilot', persona:'cautious', rate:0.02 };
+function cameoAvailable(cohort,self){
+  return (cohort||[]).every(x=>x===self || x.pilot!==CAMEO.name);
+}
+function rollPilot(u,cohort){
   const clan = clanPilotOf(u);
+  if(!clan && Math.random()<CAMEO.rate && cameoAvailable(cohort||force,u)){
+    u.pilot=CAMEO.name; u.background=CAMEO.background; u.persona=CAMEO.persona;
+    return u;
+  }
   u.pilot = rollPilotName(clan);
   u.background = rollPilotBackground(clan);
   u.persona = BG_LEAN[u.background] || 'balanced';
@@ -1637,7 +1651,8 @@ function rollForce(append){
   // Names and backgrounds too. The background sets the temperament, so this
   // replaces the old blind persona roll rather than sitting alongside it.
   const clanForce=isClanFaction(fac);
-  const units=picks.map(([c,v])=>rollPilot(mkUnit(c,v,{clanPilot:clanForce})));
+  const units=picks.map(([c,v])=>mkUnit(c,v,{clanPilot:clanForce}));
+  units.forEach(u=>rollPilot(u,units));
   force = append ? force.concat(units) : units;
   const usingBV=RS==='classic';
   const pv=units.reduce((a,u)=>a+(usingBV?(u.bv??u.v.bv??0):(u.v.pv||0)),0);
@@ -2316,7 +2331,7 @@ document.getElementById('btnRollPilots').onclick=()=>{
   const live=force.filter(u=>!u.dead);
   if(!live.length) return;
   for(const u of live){
-    rollPilot(u);
+    rollPilot(u,live);
     if(u.order){ u.dmg=condOf(u); u.order=generateOrder(u,u.rollVal); }
   }
   renderLance(); renderOrders();};
