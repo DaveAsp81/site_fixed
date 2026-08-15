@@ -271,6 +271,36 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 </style>
 </head>
 <body>
+<style>
+  .bt-nav { background:#0d0d0d; border-bottom:1px solid #222; padding:10px 16px; }
+  .bt-nav .header-content { max-width:1200px; margin:0 auto; display:flex;
+      align-items:center; gap:18px; flex-wrap:wrap; }
+  .bt-nav .logo { color:#ff8c00; font-weight:700; text-decoration:none;
+      font-family:'Rajdhani',sans-serif; letter-spacing:0.04em; font-size:1rem; }
+  .bt-nav nav ul { list-style:none; display:flex; gap:14px; margin:0; padding:0;
+      flex-wrap:wrap; }
+  .bt-nav nav a { color:#999; text-decoration:none; font-size:0.8rem;
+      font-family:'Rajdhani',sans-serif; letter-spacing:0.04em;
+      text-transform:uppercase; }
+  .bt-nav nav a:hover { color:#ff8c00; }
+  .bt-back { display:inline-block; margin:14px 0 0 0; color:#ff8c00;
+      text-decoration:underline; font-size:0.85rem; }
+</style>
+<header class="bt-nav">
+    <div class="header-content">
+        <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#Getting-started">Getting Started</a></li>
+                <li><a href="index.html#painting">Painting &amp; Hobby</a></li>
+                <li><a href="index.html#gameplay">Gameplay</a></li>
+                <li><a href="index.html#lore">Lore</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="wrap">
 
 <header class="mast">
