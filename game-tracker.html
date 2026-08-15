@@ -171,7 +171,32 @@
       <button class="gt-btn danger" onclick="resetGame()">Reset Game</button>
     </div>
   </div>
-  <div id="app"></div>
+  <style>
+.imp-hide{display:none}
+.imp-b{font:600 12px/1 'Rajdhani',sans-serif;letter-spacing:.05em;text-transform:uppercase;
+  padding:9px 13px;border:1px solid currentColor;border-radius:4px;background:transparent;
+  color:inherit;opacity:.75;cursor:pointer}
+.imp-b:hover{opacity:1}
+.imp-ta{width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:12px;
+  padding:8px;border:1px solid currentColor;border-radius:4px;background:transparent;color:inherit}
+.imp-note{font-size:12px;opacity:.75}
+.imp-ok{color:#2e7d32}.imp-warn{color:#b3261e}
+</style>
+<div id="imp-bar" style="margin:0 0 12px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+  <button id="imp-file-btn" class="imp-b">Import .mul or JSON</button>
+  <button id="imp-paste-btn" class="imp-b">Paste a force</button>
+  <input type="file" id="imp-file" accept=".mul,.json,application/xml,text/xml,application/json" style="display:none">
+  <span id="imp-status" class="imp-note"></span>
+</div>
+<div id="imp-paste-wrap" class="imp-hide" style="margin:0 0 12px 0">
+  <textarea id="imp-paste" rows="6" spellcheck="false" class="imp-ta"
+    placeholder="Paste a MegaMek .mul file, a JSON force, or one 'Mech per line:&#10;Atlas AS7-D&#10;Warhammer WHM-6R"></textarea>
+  <div style="margin-top:6px;display:flex;gap:8px">
+    <button id="imp-paste-go" class="imp-b">Load these units</button>
+    <button id="imp-paste-cancel" class="imp-b">Cancel</button>
+  </div>
+</div>
+<div id="app"></div>
 
   <!-- support strip -->
   <div class="support-strip">
@@ -208,6 +233,127 @@ let gs = [];   // per-unit state: {a,s,h,dead} (AS) + {ch, pilot, notes, fired, 
 let mode = localStorage.getItem('battletechTrackerMode') || 'as';
 
 const BLANK = () => ({a:0,s:0,h:0,dead:false, ch:0, pilot:0, notes:'', fired:{}, move:'none', extra:0, pod:false, pwing:false, rhs:false, ammo:{}, ammoMax:{}, gator:{open:false,g:null,tmm:0,tjump:false,imm:false,range:'s',other:0}});
+
+
+/* ---------------- Force import ----------------
+   The tracker has only ever been fed by the Lance Builder through
+   localStorage. That is a closed door: a player who built their force in
+   MegaMek, MegaMekLab or anywhere else could not get it in here at all.
+   .mul is the interchange format those tools share, so accepting it (plus a
+   plain paste) opens the tracker to any force from any source.
+   Units arrive without card stats; hydrateMissing() looks those up from
+   mechs.json by name exactly as it already does for older saved forces. */
+function isMulXML(text){
+  return /^\s*(<\?xml|<!--|<unit\b|<record\b|<entities\b)/i.test(text)
+      && /<entity\b/i.test(text);
+}
+function mulToUnits(text){
+  let doc;
+  try{ doc = new DOMParser().parseFromString(text,'application/xml'); }
+  catch(_){ return {units:[],err:'That file could not be read as XML.'}; }
+  if(doc.getElementsByTagName('parsererror').length)
+    return {units:[],err:'That .mul file is malformed XML.'};
+  const ents = Array.from(doc.getElementsByTagName('entity'));
+  if(!ents.length) return {units:[],err:'No entity elements found in that .mul file.'};
+  const units=[], skipped=[];
+  for(const en of ents){
+    const type=(en.getAttribute('type')||'').trim();
+    if(type && !/^(mek|mech|biped|quad|tripod|lam)/i.test(type)){
+      skipped.push((en.getAttribute('chassis')||'unnamed')+' ('+type+')');
+      continue;
+    }
+    const chassis=(en.getAttribute('chassis')||'').trim();
+    const model=(en.getAttribute('model')||'').trim();
+    if(!chassis && !model) continue;
+    const p=en.getElementsByTagName('pilot')[0];
+    let pilotName='', gunnery=4, piloting=5;
+    if(p){
+      const nm=(p.getAttribute('name')||'').trim();
+      const nick=(p.getAttribute('nick')||'').trim();
+      pilotName = nick ? (nm ? nm+' "'+nick+'"' : '"'+nick+'"') : nm;
+      const g=parseInt(p.getAttribute('gunnery'),10);
+      const q=parseInt(p.getAttribute('piloting'),10);
+      if(Number.isFinite(g)) gunnery=g;
+      if(Number.isFinite(q)) piloting=q;
+    }
+    units.push({ name:(chassis+' '+model).trim(), chassis:chassis||model,
+                 pilotName:pilotName, gunnery:gunnery, piloting:piloting });
+  }
+  return {units,skipped};
+}
+/* One 'Mech per line, the way people paste a list into chat or a forum post. */
+function linesToUnits(text){
+  return text.split(/\r?\n/).map(l=>l.trim())
+    .filter(l=>l && !/^[#/]/.test(l))
+    .map(l=>{
+      const m=/^(.*?)[,;|\t]/.exec(l);
+      const name=(m?m[1]:l).trim();
+      if(!name) return null;
+      return { name, chassis:name.split(/\s+/).slice(0,-1).join(' ')||name,
+               pilotName:'', gunnery:4, piloting:5 };
+    }).filter(Boolean);
+}
+function importForceText(text, label){
+  const st=document.getElementById('imp-status');
+  const say=(cls,msg)=>{ if(st){ st.className=cls; st.textContent=msg; } };
+  text=(text||'').trim();
+  if(!text){ say('imp-warn','Nothing to import yet.'); return; }
+  let units=[], skipped=[];
+  if(isMulXML(text)){
+    const r=mulToUnits(text);
+    if(!r.units.length){ say('imp-warn', r.err||'No BattleMechs found in that .mul file.'); return; }
+    units=r.units; skipped=r.skipped||[];
+  } else {
+    try{
+      const j=JSON.parse(text);
+      const arr=Array.isArray(j)?j:(j.units||j.force||j.lance||j.mechs);
+      if(Array.isArray(arr)) units=arr.map(u=>({
+        name:u.name||((u.chassis||'')+' '+(u.variant||u.model||'')).trim(),
+        chassis:u.chassis||u.name||'', pilotName:u.pilotName||u.pilot||'',
+        gunnery:u.gunnery??4, piloting:u.piloting??5 })).filter(u=>u.name);
+    }catch(_){}
+    if(!units.length) units=linesToUnits(text);
+  }
+  if(!units.length){ say('imp-warn','Could not read that. Try a .mul file, JSON, or one unit per line.'); return; }
+  /* Replaces the roster rather than appending: importing a force is starting a
+     new game, and silently merging with a half-played one loses the state. */
+  force=[{ name:'Imported force', type:'Lance', units }];
+  safeSave('battletechForce', force);
+  localStorage.removeItem('battletechGameState');
+  localStorage.removeItem('battletechGameStateFp');
+  loadState();
+  say('imp-ok','Loaded '+units.length+" 'Mech"+(units.length===1?'':'s')+' from '+label
+      + (skipped.length ? '. Skipped '+skipped.length+' non-\u2019Mech unit'
+         +(skipped.length===1?'':'s')+': '+skipped.slice(0,4).join(', ')
+         +(skipped.length>4?'\u2026':'') : '') + '.');
+  const w=document.getElementById('imp-paste-wrap'); if(w) w.classList.add('imp-hide');
+  const b=document.getElementById('imp-paste'); if(b) b.value='';
+  hydrateMissing().then(render).catch(()=>render());
+}
+function wireImport(){
+  const fi=document.getElementById('imp-file');
+  if(fi) fi.onchange=ev=>{
+    const f=ev.target.files[0]; if(!f) return;
+    const rd=new FileReader();
+    rd.onload=()=>{ importForceText(String(rd.result||''), f.name); ev.target.value=''; };
+    rd.readAsText(f);
+  };
+  const bf=document.getElementById('imp-file-btn');
+  if(bf) bf.onclick=()=>fi&&fi.click();
+  const bp=document.getElementById('imp-paste-btn');
+  if(bp) bp.onclick=()=>{
+    const w=document.getElementById('imp-paste-wrap');
+    w.classList.toggle('imp-hide');
+    if(!w.classList.contains('imp-hide')) document.getElementById('imp-paste').focus();
+  };
+  const go=document.getElementById('imp-paste-go');
+  if(go) go.onclick=()=>importForceText(document.getElementById('imp-paste').value,'a pasted force');
+  const cx=document.getElementById('imp-paste-cancel');
+  if(cx) cx.onclick=()=>{
+    document.getElementById('imp-paste-wrap').classList.add('imp-hide');
+    document.getElementById('imp-paste').value='';
+  };
+}
 
 function loadForce() {
     try { force = JSON.parse(localStorage.getItem('battletechForce') || '[]'); }
@@ -695,6 +841,7 @@ function idxToUnit(i){ let n=0; for (const L of force) for (const u of L.units) 
     await hydrateMissing();
     loadState();
     setMode(mode);
+    wireImport();
 })();
 </script>
 </body>

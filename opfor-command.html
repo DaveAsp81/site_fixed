@@ -395,11 +395,23 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
     <button class="btn ghost sm" id="btnExport">Export JSON</button>
     <button class="btn ghost sm" id="btnExportCsv">Export CSV</button>
     <button class="btn ghost sm" id="btnImport">Import force</button>
+    <button class="btn ghost sm" id="btnPaste">Paste a force</button>
     <button class="btn ghost sm" id="btnRollPilots">Roll pilots</button>
     <button class="btn ghost sm" id="btnRollPersona">Roll temperaments</button>
     <button class="btn ghost sm" id="btnMoveOrder">Roll move order</button>
     <button class="btn ghost sm" id="btnClear">Clear all</button>
-    <input type="file" id="fileIn" accept=".json,.csv,application/json,text/csv" class="hide">
+    <input type="file" id="fileIn" accept=".mul,.json,.csv,application/xml,text/xml,application/json,text/csv" class="hide">
+  </div>
+  <div id="pasteWrap" class="hide" style="margin-top:10px">
+    <textarea id="pasteBox" rows="6" spellcheck="false"
+      style="width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:12px;
+             padding:8px;border:1px solid var(--line,#444);border-radius:4px;
+             background:transparent;color:inherit"
+      placeholder="Paste a MegaMek .mul file, a CSV, a JSON force, or just one 'Mech per line:&#10;Atlas AS7-D&#10;Warhammer WHM-6R"></textarea>
+    <div style="margin-top:6px">
+      <button class="btn ghost sm" id="btnPasteGo">Load these units</button>
+      <button class="btn ghost sm" id="btnPasteCancel">Cancel</button>
+    </div>
   </div>
   <div class="status" id="impStatus"></div>
 </section>
@@ -1276,6 +1288,10 @@ function normalise(raw){
         d:[bd.short|0,bd.medium|0,bd.long|0,bd.extreme|0],
         a:v.bf_armor|0,s:v.bf_structure|0,o:v.bf_overheat|0,
         b:v.bf_abilities||'',m:mp(v.movement),pv:v.pv|0,bv:v.bv|0,
+        /* Tonnage can differ per variant: the Blackjack BJ-1 is 45 tons while
+           the BJ2-O OmniMech under the same chassis name is 50. Falls back to
+           the chassis figure when a variant does not carry its own. */
+        t:(v.tons!=null?v.tons:c.tons)|0,
         /* Tech has to come off the variant. Plenty of chassis are filed as
            "Mixed" while individual variants are pure Clan, and reading the
            chassis would hand those Inner Sphere range bands. */
@@ -1337,7 +1353,7 @@ function buildPVariant(){
    TMM inputs (movement is on the variant), and a live damage state. No
    persona, no orders — these are never given orders. */
 function mkPlayer(c,v,pilot){
-  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,
+  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),v,
     pilot:String(pilot||'').slice(0,60),
     arm:v.a,str:v.s,manualCond:'fresh',forceCrip:false,moved:'moved',dead:false,manual:true};
 }
@@ -1407,7 +1423,7 @@ function rollPilot(u,cohort){
 function mkUnit(c,v,opts){
   if(typeof opts==='string'||opts==null) opts={pilot:opts||''};
   const num=x=>Number.isFinite(x)?x:null;
-  return {uid:uidSeq++,chassis:c.c,tons:c.t,tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
+  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     persona:opts.persona||'balanced',background:opts.background||'',
     clanPilot:(opts.clanPilot!=null?!!opts.clanPilot:null),
@@ -1803,6 +1819,10 @@ function payloadToList(raw){
     }catch(_){}
     return null;
   };
+  if(isMulXML(text)){
+    const m=mulToEntries(text);
+    if(m.list.length) return {list:m.list,meta:{},skipped:m.skipped};
+  }
   let r=asJSON(text); if(r) return r;
   try{
     const b=atob(raw.replace(/-/g,'+').replace(/_/g,'/'));
@@ -2362,6 +2382,40 @@ document.getElementById('btnMoveOrder').onclick=()=>{
   for(const u of force) if(u.dead) u.moveOrder=null;
   renderLance(); renderOrders();};
 
+/* A paste box matters as much as the file picker: plenty of people have a force
+   as text in a forum post or a chat message, not as a file on disk. */
+document.getElementById('btnPaste').onclick=()=>{
+  const w=document.getElementById('pasteWrap');
+  w.classList.toggle('hide');
+  if(!w.classList.contains('hide')) document.getElementById('pasteBox').focus();
+};
+document.getElementById('btnPasteCancel').onclick=()=>{
+  document.getElementById('pasteWrap').classList.add('hide');
+  document.getElementById('pasteBox').value='';
+};
+document.getElementById('btnPasteGo').onclick=()=>{
+  const st=document.getElementById('impStatus');
+  const text=document.getElementById('pasteBox').value.trim();
+  if(!text){ st.className='status warn'; st.textContent='Nothing pasted yet.'; return; }
+  let list=null,meta={},skipped=[];
+  if(isMulXML(text)){
+    const m=mulToEntries(text);
+    if(!m.list.length){ st.className='status warn';
+      st.textContent=m.err||'No BattleMechs found in that .mul data.'; return; }
+    list=m.list; skipped=m.skipped||[];
+  } else {
+    const r=payloadToList(text);
+    if(!r||!r.list||!r.list.length){ st.className='status warn';
+      st.textContent='Could not read that. Try a .mul file, CSV, JSON, or one unit per line.'; return; }
+    list=r.list; meta=r.meta||{};
+  }
+  ingest(list,meta,'a pasted force');
+  document.getElementById('pasteWrap').classList.add('hide');
+  document.getElementById('pasteBox').value='';
+  if(skipped.length){ st.className='status warn';
+    st.textContent='Skipped '+skipped.length+' non-\u2019Mech unit'+(skipped.length===1?'':'s')+'.'; }
+};
+
 document.getElementById('btnClear').onclick=()=>{
   if(force.length&&!confirm('Remove every unit from the force?')) return;
   force=[];turn=1;objectives=[];players=[];document.getElementById('turnNo').textContent=1;
@@ -2386,6 +2440,58 @@ document.getElementById('btnImport').onclick=()=>document.getElementById('fileIn
 
 /* tolerant importer: accepts this tool's export, or a list of units from
    another builder, as objects or plain "Chassis Variant" strings. */
+
+/* ---------------- MegaMek .mul import ----------------
+   .mul is the interchange format of the BattleTech tool ecosystem: MegaMek and
+   MegaMekLab both read and write it, and our own Lance Builder exports it. Any
+   force a player has built anywhere can therefore be played against here.
+   Parsed with DOMParser rather than regex so entity attributes in any order,
+   self-closing tags and XML entities all behave. Note this is NOT the Master
+   Unit List website, despite the shared three letters. */
+function isMulXML(text){
+  return /^\s*(<\?xml|<!--|<unit\b|<record\b|<entities\b)/i.test(text)
+      && /<entity\b/i.test(text);
+}
+function mulToEntries(text){
+  let doc;
+  try{ doc=new DOMParser().parseFromString(text,'application/xml'); }
+  catch(_){ return {list:[],err:'That file could not be read as XML.'}; }
+  if(doc.getElementsByTagName('parsererror').length)
+    return {list:[],err:'That .mul file is malformed XML.'};
+  const ents=Array.from(doc.getElementsByTagName('entity'));
+  if(!ents.length) return {list:[],err:'No entity elements found in that .mul file.'};
+  const list=[],skipped=[];
+  for(const en of ents){
+    /* MegaMek writes non-'Mech units into the same file. We only field 'Mechs,
+       so name what was dropped rather than silently losing it. */
+    const type=(en.getAttribute('type')||'').trim();
+    if(type && !/^(mek|mech|biped|quad|tripod|lam)/i.test(type)){
+      skipped.push((en.getAttribute('chassis')||'unnamed')+' ('+type+')');
+      continue;
+    }
+    const chassis=(en.getAttribute('chassis')||'').trim();
+    const model=(en.getAttribute('model')||'').trim();
+    if(!chassis && !model) continue;
+    const p=en.getElementsByTagName('pilot')[0];
+    let pilot='', gun=null, pil=null;
+    if(p){
+      const nm=(p.getAttribute('name')||'').trim();
+      const nick=(p.getAttribute('nick')||'').trim();
+      pilot = nick ? (nm ? nm+' "'+nick+'"' : '"'+nick+'"') : nm;
+      const g=parseInt(p.getAttribute('gunnery'),10);
+      const q=parseInt(p.getAttribute('piloting'),10);
+      if(Number.isFinite(g)) gun=g;
+      if(Number.isFinite(q)) pil=q;
+    }
+    const e={chassis:chassis||model, variant:chassis?model:''};
+    if(pilot) e.pilot=unguard(pilot);
+    if(gun!=null) e.gun=gun;
+    if(pil!=null) e.pil=pil;
+    list.push(e);
+  }
+  return {list,skipped};
+}
+
 function parseEntry(e){
   if(typeof e==='string') return {raw:e};
   if(e&&typeof e==='object'){
@@ -2413,6 +2519,21 @@ document.getElementById('fileIn').onchange=ev=>{
   const rd=new FileReader();
   rd.onload=()=>{
     const text=String(rd.result||'').trim();
+    /* .mul is checked first: it is XML, so the CSV heuristic below would
+       otherwise claim it and produce a roster of nonsense rows. */
+    if(/\.mul$/i.test(f.name)||isMulXML(text)){
+      const m=mulToEntries(text);
+      if(!m.list.length){ st.className='status warn';
+        st.textContent=m.err||'No BattleMechs found in that .mul file.'; return; }
+      ingest(m.list,{},'a MegaMek .mul file');
+      if(m.skipped&&m.skipped.length){
+        st.className='status warn';
+        st.textContent='Imported '+m.list.length+" 'Mech"+(m.list.length===1?'':'s')
+          +'. Skipped '+m.skipped.length+' non-\u2019Mech unit'+(m.skipped.length===1?'':'s')
+          +': '+m.skipped.slice(0,4).join(', ')+(m.skipped.length>4?'\u2026':'')+'.';
+      }
+      ev.target.value=''; return;
+    }
     const isCSV=/\.csv$/i.test(f.name)||!/^[[{]/.test(text);
     // Lance Builder names its files lance_classic_… / lance_alpha_…
     if(/alpha/i.test(f.name)) setRuleset('as');

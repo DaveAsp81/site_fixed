@@ -321,6 +321,8 @@
     <button onclick="addLanceToForce()" style="flex:2; min-width:220px; background:#ff8c00; color:#000; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">➕ Add This Lance to Force</button>
     <a href="game-tracker.html" style="flex:1; min-width:160px; display:flex; align-items:center; justify-content:center; background:#d32f2f; color:#fff; text-decoration:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; border-radius:4px;">⚔ Game Tracker</a>
     <button onclick="playAgainstLance()" style="flex:1; min-width:180px; background:#455a64; color:#fff; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;" title="Send this lance to OpFor Command and play against it solo">🎯 Play Against This</button>
+    <button id="veh-toggle" onclick="toggleVehicles()" disabled
+        style="flex:1; min-width:160px; background:transparent; color:#888; border:1px dashed #555; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">+ COMBAT VEHICLES</button>
     <button onclick="toggleCustomPanel()" style="flex:1; min-width:160px; background:transparent; color:#ff8c00; border:1px dashed #ff8c00; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">🔧 Custom 'Mech</button>
 </div>
 
@@ -396,6 +398,11 @@
 <script>
 // ==================== COMPLETE SUCCESSION WARS DATABASE ====================
 let mechDatabase = [];
+/* Combat vehicles are held separately so nothing about 'Mech behaviour changes
+   when they are switched off, and merged into the browsable pool only when the
+   user asks for them. */
+let vehicleDatabase = [];
+let includeVehicles = false;
 
 // ==================== SAFETY HELPERS ====================
 // Escape user-controlled strings before HTML interpolation. Matters because
@@ -965,10 +972,94 @@ function printTextSheet() {
     printWin.print();
 }
 
+// ==================== COMBAT VEHICLES ====================
+/* Pulled from the Master Unit List QuickList endpoint, which serves the full
+   Alpha Strike block as JSON: armour, structure, size, TMM, movement, damage
+   at every range band, overheat and abilities. So vehicles are as complete as
+   'Mechs here, with one exception noted below.
+
+   Vehicle movement encodes motive type as a suffix: 8"t tracked, 12"h hover,
+   16"w wheeled, 24"v VTOL, plus g WiGE, n naval, s submarine, j jump. That
+   matters for play, so it is surfaced rather than buried. */
+const MOTIVE = { t:'Tracked', h:'Hover', w:'Wheeled', v:'VTOL',
+                 g:'WiGE', n:'Naval', s:'Submarine', j:'Jump' };
+function motiveOf(bfMove) {
+    const m = /([a-z])\s*$/.exec(String(bfMove || ''));
+    return m ? (MOTIVE[m[1]] || '') : 'Tracked';
+}
+
+const VEH_ERAS = [
+    ['Age of War', 2005, 2570], ['Star League', 2571, 2780],
+    ['Early Succession War', 2781, 2900],
+    ['Late Succession War - LosTech', 2901, 3019],
+    ['Late Succession War - Renaissance', 3020, 3049],
+    ['Clan Invasion', 3050, 3061], ['Civil War', 3062, 3067],
+    ['Jihad', 3068, 3080], ['Early Republic', 3081, 3100],
+    ['Late Republic', 3101, 3130], ['Dark Age', 3131, 3150],
+    ['ilClan', 3151, 9999]
+];
+function eraOfYear(y) {
+    if (!y) return '';
+    for (const [name, lo, hi] of VEH_ERAS) if (y >= lo && y <= hi) return name;
+    return y < 2005 ? VEH_ERAS[0][0] : 'ilClan';
+}
+
+function loadVehicles() {
+    const CATALOGUE_V = '1';
+    fetch('vehicles.json?v=' + CATALOGUE_V)
+        .then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)))
+        .then(data => {
+            vehicleDatabase = (data || []).map(c => ({
+                ...c,
+                isVehicle: true,
+                era: eraOfYear(Math.min(...c.variants
+                        .map(v => v.date_introduced || 9999))),
+                variants: c.variants.map(v => ({
+                    ...v,
+                    isVehicle: true,
+                    motive: motiveOf(v.bf_move),
+                    // map the MUL field names onto what this tool already reads
+                    bf_armor: v.bf_armor, bf_structure: v.bf_structure,
+                    bf_damage: v.bf_damage, bf_overheat: v.bf_overheat,
+                    bf_abilities: v.bf_abilities
+                }))
+            }));
+            const btn = document.getElementById('veh-toggle');
+            if (btn) btn.disabled = false;
+            updateVehicleToggleLabel();
+        })
+        .catch(() => {
+            const btn = document.getElementById('veh-toggle');
+            if (btn) btn.style.display = 'none';
+        });
+}
+
+function unitPool() {
+    return includeVehicles ? mechDatabase.concat(vehicleDatabase) : mechDatabase;
+}
+
+function updateVehicleToggleLabel() {
+    const btn = document.getElementById('veh-toggle');
+    if (!btn) return;
+    const n = vehicleDatabase.length;
+    btn.textContent = includeVehicles
+        ? `\u2713 COMBAT VEHICLES (${n})` : `+ COMBAT VEHICLES (${n})`;
+    btn.style.borderColor = includeVehicles ? '#ff8c00' : '#555';
+    btn.style.color = includeVehicles ? '#ff8c00' : '#888';
+    const note = document.getElementById('veh-note');
+    if (note) note.style.display = includeVehicles ? 'block' : 'none';
+}
+
+function toggleVehicles() {
+    includeVehicles = !includeVehicles;
+    updateVehicleToggleLabel();
+    filterChassis();
+}
+
 // ==================== ADD & RANDOMIZE ====================
 function addSelectedVariant() {
     const chassis = document.getElementById('chassis-select').value;
-    const c = mechDatabase.find(m => m.chassis === chassis);
+    const c = unitPool().find(m => m.chassis === chassis);
     const vId = document.getElementById('variant-select').value;
     const v = c ? c.variants.find(x => x.id === vId) : null;
     if (!v || currentLance.length >= getMaxUnits()) return;
@@ -978,9 +1069,12 @@ function addSelectedVariant() {
 
     currentLance.push({
         id: v.id,
-        name: `${c.chassis} ${v.name}`,
+        // the MUL's own display name; do not reassemble it from parts
+        name: v.full_name || `${c.chassis} ${v.name}`,
         chassis: c.chassis,
-        tons: c.tons,
+        /* Variant tonnage wins: same-named designs genuinely differ, e.g.
+           Blackjack BJ-1 at 45t versus the BJ2-O Omni at 50t. */
+        tons: (v.tons != null ? v.tons : c.tons),
         /* Read tech off the variant. Plenty of chassis are filed as Mixed while
            individual variants are pure Clan or pure Inner Sphere, and the
            chassis value mislabels those. */
@@ -992,6 +1086,8 @@ function addSelectedVariant() {
         heatsinks: v.heatsinks,
         weapons: v.weapons,
         bf: { armor: v.bf_armor, structure: v.bf_structure, damage: v.bf_damage, overheat: v.bf_overheat, abilities: v.bf_abilities },
+        isVehicle: !!v.isVehicle,
+        motive: v.motive || '',
         gunnery: 4,
         piloting: 5,
         background: randomBackground,
@@ -1256,7 +1352,7 @@ function updateDisplay() {
 // ==================== REST OF THE FUNCTIONS ====================
 function updateVariants() {
     const chassis = document.getElementById('chassis-select').value;
-    const c = mechDatabase.find(m => m.chassis === chassis);
+    const c = unitPool().find(m => m.chassis === chassis);
     const varSelect = document.getElementById('variant-select');
     varSelect.innerHTML = '';
 
@@ -1274,7 +1370,7 @@ function updateVariants() {
 
 function syncPreview() {
     const chassis = document.getElementById('chassis-select').value;
-    const c = mechDatabase.find(m => m.chassis === chassis);
+    const c = unitPool().find(m => m.chassis === chassis);
     const vId = document.getElementById('variant-select').value;
     const v = c ? c.variants.find(x => x.id === vId) : null;
     document.getElementById('preview-label').innerText = v ? `${c.chassis} ${v.name} | ${c.tons}t | ${v.bv} BV` : "AWAITING TARGET DATA";
@@ -1282,7 +1378,7 @@ function syncPreview() {
 
 function openModal() {
     const chassis = document.getElementById('chassis-select').value;
-    const c = mechDatabase.find(m => m.chassis === chassis);
+    const c = unitPool().find(m => m.chassis === chassis);
     const vId = document.getElementById('variant-select').value;
     const v = c ? c.variants.find(x => x.id === vId) : null;
     if (!v) return;
@@ -1394,6 +1490,7 @@ window.onload = () => {
         })
         .then(data => {
             mechDatabase = data;
+            loadVehicles();
 
             // Populate era dropdown from database
             const eraSelect = document.getElementById('era-filter');
@@ -1650,7 +1747,7 @@ function filterChassis() {
     updateFactionLogo(faction);
     updateFormationUI();
 
-    let filtered = mechDatabase;
+    let filtered = unitPool();
 
     // Era and Faction filtering
     // Note: 'era' in the database reflects when a chassis was introduced,
@@ -1661,6 +1758,11 @@ function filterChassis() {
     if (faction !== "ALL") {
         const isClanFaction = faction.startsWith("Clan");
         filtered = filtered.filter(m => {
+            /* The MUL exposes vehicle faction availability only through a
+               separate per-faction query we have not pulled yet, so vehicles
+               carry no faction list. Keep them visible and say so in the note
+               rather than silently emptying the list. */
+            if (m.isVehicle) return true;
             const factions = m.factions || [];
             // Must list this faction
             if (!factions.includes("ALL") && !factions.includes(faction)) return false;
@@ -1703,7 +1805,9 @@ function filterChassis() {
     filtered.forEach(m => {
         let opt = document.createElement('option');
         opt.value = m.chassis;
-        opt.textContent = `${m.chassis} (${m.tons}t)`;
+        opt.textContent = m.isVehicle
+            ? `${m.chassis} (${m.tons}t) \u2013 ${m.variants[0].motive || 'vehicle'}`
+            : `${m.chassis} (${m.tons}t)`;
         select.appendChild(opt);
     });
 
