@@ -941,8 +941,48 @@ function clanVoice(o,u){
   return o;
 }
 
+/* Vehicles are crewed, not piloted, and they fight differently enough that the
+   order text has to change. What does NOT change is range banding and target
+   selection, so this re-voices and re-advises the finished order rather than
+   forking the generator. */
+function vehicleVoice(o,u){
+  if(!o) return o;
+  /* Heat is meaningless on a vehicle: almost none carry heat sinks, so any
+     heat advice is noise at best and misleading at worst. */
+  o.notes=(o.notes||[]).filter(t=>!/heat|cook|hot weapons|shutdown/i.test(t));
+  if(o.fire) o.fire=o.fire.replace(/\s*You have heat to spare\.?/i,'');
+  o.steps=(o.steps||[]).map(t=>t
+    .replace(/\bjump jets\b/gi,'throttle')
+    .replace(/\bKick the throttle and drop into/gi,'Push hard and swing into')
+    .replace(/\bJump it if the ground gets in your way\.?/gi,
+             'Go around bad ground rather than through it.'));
+  /* Motive damage has no 'Mech equivalent and changes how the crew should
+     play the turn, so it goes on every vehicle order. */
+  const mot=u.motive||'Vehicle';
+  if(mot==='Hover'||mot==='WiGE')
+    o.notes.push('Hover. Fast over clear ground, but water and rough terrain '
+      + 'will stop you. A motive hit costs you the speed you rely on.');
+  else if(mot==='VTOL')
+    o.notes.push('VTOL. Stay above the fight and use your speed. You are '
+      + 'fragile, and a motive hit brings you down.');
+  else if(mot==='Wheeled')
+    o.notes.push('Wheeled. Keep to open ground where you can; rough terrain '
+      + 'slows you badly.');
+  else
+    o.notes.push('Tracked. Slower than the rest but you will cross ground '
+      + 'they cannot.');
+  o.notes.push('No heat to manage. Fire everything that reaches, every turn.');
+  return o;
+}
+
 function generateOrder(u,fixedRoll){
+  /* Vehicles carry no heat sinks and have no heat scale. Force it to zero here
+     rather than filtering heat advice out afterwards: otherwise the high-heat
+     override upstream replaces the whole order with heat management, and no
+     amount of post-processing recovers the real order. */
+  if(u && u.veh && u.heat) u.heat=0;
   const o=generateOrderBase(u,fixedRoll);
+  if(u && u.veh) return vehicleVoice(o,u);
   return clanPilotOf(u) ? clanVoice(o,u) : o;
 }
 
@@ -1306,6 +1346,60 @@ function normalise(raw){
   out.sort((a,b)=>sortKey(a.c).localeCompare(sortKey(b.c))||a.t-b.t);
   return out;
 }
+/* Combat vehicles. Their Alpha Strike block comes from the Master Unit List
+   and is complete, so they are fully playable here, but they are NOT 'Mechs
+   and the order model has to know it: no heat, no jump, and a motive system
+   that degrades movement when hit instead of a critical. */
+const MOTIVE = { t:'Tracked', h:'Hover', w:'Wheeled', v:'VTOL',
+                 g:'WiGE', n:'Naval', s:'Submarine' };
+function motiveOf(bfMove){
+  const m=/([a-z])\s*$/.exec(String(bfMove||''));
+  return m ? (MOTIVE[m[1]]||'') : '';
+}
+/* Alpha Strike move is in inches; the rest of this tool thinks in Classic MP,
+   which is inches / 2. Vehicles have no jump, so the third slot stays 0. */
+function vehMP(bfMove){
+  const g=/(\d+)\s*"/.exec(String(bfMove||''));
+  const walk=g?Math.max(1,Math.round(parseInt(g[1],10)/2)):0;
+  return [walk, Math.ceil(walk*1.5), 0];
+}
+function normaliseVehicles(raw){
+  const out=[];
+  for(const c of raw||[]){
+    const vs=[];
+    for(const v of c.variants||[]){
+      const d=v.bf_damage||{};
+      if(!(d.short||d.medium||d.long||d.extreme)) continue;   // unarmed transports
+      vs.push({
+        n:v.full_name||((c.chassis+' '+v.name).trim()),
+        r:v.role||'Skirmisher',
+        d:[d.short|0,d.medium|0,d.long|0,d.extreme|0],
+        b:v.bf_abilities||'', m:vehMP(v.bf_move), pv:v.pv|0, bv:v.bv|0,
+        t:(v.tons!=null?v.tons:c.tons)|0,
+        tech:(v.technology||c.technology||'').includes('Clan')?'C':'IS',
+        e:eraOfVariant(v), f:(v.factions||c.factions||[]),
+        w:[], hs:'',
+        veh:true, motive:motiveOf(v.bf_move), bfMove:v.bf_move||''
+      });
+    }
+    if(vs.length) out.push({c:c.chassis,t:c.tons,veh:true,
+      tech:(c.technology||'').includes('Clan')?'C':'IS',v:vs});
+  }
+  return out;
+}
+async function loadVehicles(){
+  try{
+    const r=await fetch('vehicles.json?v=1',{cache:'force-cache'});
+    if(!r.ok) return;
+    const vs=normaliseVehicles(await r.json());
+    if(!vs.length) return;
+    DB=DB.concat(vs).sort((a,b)=>a.c.localeCompare(b.c));
+    const st=document.getElementById('dataStatus');
+    if(st) st.textContent += ` Plus ${vs.length} vehicle chassis.`;
+    buildChassis(); buildGenFilters();
+  }catch(e){ /* vehicles.json is optional */ }
+}
+
 async function loadData(){
   const st=document.getElementById('dataStatus');
   try{
@@ -1319,11 +1413,13 @@ async function loadData(){
       if(n.length>FALLBACK.length){
         DB=n;
         st.textContent=`Full roster loaded. ${DB.length} chassis, ${DB.reduce((a,x)=>a+x.v.length,0)} variants.`;
-        return afterData();
+        afterData();
+        return loadVehicles();
       }
     }
   }catch(e){}
   DB=FALLBACK;
+  await loadVehicles();
   st.textContent=`Core roster: ${DB.length} chassis, ${DB.reduce((a,x)=>a+x.v.length,0)} variants. Sits beside mechs.json for the full catalogue.`;
   afterData();
 }
@@ -1353,7 +1449,7 @@ function buildPVariant(){
    TMM inputs (movement is on the variant), and a live damage state. No
    persona, no orders — these are never given orders. */
 function mkPlayer(c,v,pilot){
-  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),v,
+  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),veh:!!v.veh,motive:v.motive||'',v,
     pilot:String(pilot||'').slice(0,60),
     arm:v.a,str:v.s,manualCond:'fresh',forceCrip:false,moved:'moved',dead:false,manual:true};
 }
@@ -1408,6 +1504,15 @@ function cameoAvailable(cohort,self){
   return (cohort||[]).every(x=>x===self || x.pilot!==CAMEO.name);
 }
 function rollPilot(u,cohort){
+  /* Vehicle crews are not MechWarriors: no Bloodnames, no sibko backgrounds,
+     no zellbrigen. Give them a name and a neutral temperament rather than a
+     'Mech pilot's history. */
+  if(u && u.veh){
+    u.pilot = pickFrom(IS_FIRST_NAMES)+' '+pickFrom(IS_LAST_NAMES);
+    u.background = 'Vehicle Crew';
+    u.persona = 'cautious';
+    return u;
+  }
   const clan = clanPilotOf(u);
   if(!clan && Math.random()<CAMEO.rate && cameoAvailable(cohort||force,u)){
     u.pilot=CAMEO.name; u.background=CAMEO.background; u.persona=CAMEO.persona;
@@ -1423,12 +1528,12 @@ function rollPilot(u,cohort){
 function mkUnit(c,v,opts){
   if(typeof opts==='string'||opts==null) opts={pilot:opts||''};
   const num=x=>Number.isFinite(x)?x:null;
-  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),v,pilot:String(opts.pilot||'').slice(0,60),
+  return {uid:uidSeq++,chassis:c.c,tons:(v.t||c.t),tech:(v.tech||c.tech),veh:!!v.veh,motive:v.motive||'',v,pilot:String(opts.pilot||'').slice(0,60),
     gun:num(opts.gun),pil:num(opts.pil),bv:num(opts.bv),adj:num(opts.adj),
     persona:opts.persona||'balanced',background:opts.background||'',
     clanPilot:(opts.clanPilot!=null?!!opts.clanPilot:null),
     rollVal:null,flanked:false,collapsed:false,
-    heat:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
+    heat:0,motiveHits:0,arm:v.a,str:v.s,forceCrip:false,manualCond:'fresh',
     band:2,enemyMoved:false,prone:false,dead:false,order:null,lastHeadline:null,cooledBy:0};
 }
 function condOf(u){
@@ -1939,6 +2044,18 @@ function trackHTML(u){
     fx=bits.join(' · ');
   } else if(u.heat>=4) fx='Shutdown · no move or attack next turn · enemies get −4 to hit it';
   else if(u.heat>0) fx=`+${u.heat} to hit · −${u.heat*2}" ground move · cools to 0 if it does not attack`;
+  if(u.veh){
+    const mo=Math.min(3,u.motiveHits||0);
+    const MOT=['Undamaged','Motive hit, \u22122\" move','Motive hit x2, \u22124\" move','Immobilised, no move, +2 to be hit'];
+    return `<div class="track">${body}
+      <div class="trk-row"><span class="trk-l">Motive</span>
+        <button class="btn ghost sm" data-motive="${u.uid}:-1">\u2212</button>
+        <span class="trk-n">${mo}/3</span>
+        <button class="btn ghost sm" data-motive="${u.uid}:1">+</button></div>
+      <div class="heat-fx">${MOT[mo]}</div>
+      <div class="heat-cooled">No heat track. Vehicles carry no heat sinks, so fire everything that reaches.</div>
+    ${trackTail(u)}`;
+  }
   return `<div class="track">${body}
     <div class="trk-row"><span class="trk-l">Heat</span><div class="hpips">${hp}</div>
       <button class="btn ghost sm" data-heat="${u.uid}:-1">−</button>
@@ -1946,7 +2063,11 @@ function trackHTML(u){
       <button class="btn ghost sm" data-heat="${u.uid}:1">+</button></div>
     ${fx?`<div class="heat-fx">${fx}</div>`:''}
     ${u.cooledBy?`<div class="heat-cooled">Cooled ${u.cooledBy} from last turn's dissipation. Nudge it if you vented more or less.</div>`:''}
-    <div class="trk-row" style="margin-top:9px">
+    ${trackTail(u)}`;
+}
+/* Condition controls, shared by the heat and motive variants of the track. */
+function trackTail(u){
+  return `<div class="trk-row" style="margin-top:9px">
       <button class="btn ghost sm" data-crip="${u.uid}">${u.forceCrip?'Undo crippled':'Mark crippled'}</button>
       <button class="btn ghost sm" data-repair="${u.uid}">Reset</button>
     </div></div>`;
@@ -1964,7 +2085,7 @@ function renderLance(){
     <div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.moveOrder?'Moves #'+u.moveOrder+' · ':''}${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
+        <div class="unit-meta">${u.moveOrder?'Moves #'+u.moveOrder+' · ':''}${u.tons}t ${cls(u.tons)} · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''} · ${u.tech==='C'?'Clan':'Inner Sphere'}${RS==='classic'?((u.bv??u.v.bv)?' · '+(u.bv??u.v.bv)+' BV':''):(u.v.pv?' · '+u.v.pv+' PV':'')}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.veh&&u.motive?' · '+esc(u.motive):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
         ${vitalsHTML(u)}
       </div><button class="btn ghost sm" data-del="${u.uid}">Remove</button></div>
       <div class="unit-bd">${ladderHTML(u)}${RS==='classic'?loadoutHTML(u):''}
@@ -2160,7 +2281,7 @@ function renderOrders(){
     return `<div class="unit${u.dead?' dead':''}">
       <div class="unit-hd"><div>
         <div class="unit-name">${u.chassis} <span class="unit-var">${u.v.n}</span></div>
-        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
+        <div class="unit-meta">${u.tons}t · ${u.v.r}${moveStr(u.v)?' · '+(RS==='as'?'':'MP ')+moveStr(u.v):''}${RS==='as'?' · TMM '+tmmLabel(u):''}${u.gun!=null?' · G'+u.gun+(u.pil!=null?'/P'+u.pil:'')+' '+skillName(u.gun):''}${u.veh&&u.motive?' · '+esc(u.motive):''}${u.pilot?' · '+esc(u.pilot):''}${u.background?' · '+esc(u.background):''}</div>
         ${vitalsHTML(u)}
         ${turn>1&&u.lastHeadline?`<div class="last-turn">Last turn: ${esc(u.lastHeadline)}</div>`:''}
       </div><div class="hd-btns">
@@ -2246,6 +2367,7 @@ function renderOrders(){
   bind('[data-fl]',  (u,v)=>{u.flanked=v==='1';});
   bind('[data-fold]',u=>{u.collapsed=!u.collapsed;});
   bind('[data-heat]',(u,v)=>{u.heat=Math.max(0,Math.min(HEATMAX(),u.heat+ +v));u.cooledBy=0;});
+  bind('[data-motive]',(u,v)=>{u.motiveHits=Math.max(0,Math.min(3,(u.motiveHits||0)+ +v));});
   bind('[data-gen]', u=>{u.dmg=condOf(u);u.order=generateOrder(u);u.rollVal=u.order.roll;});
   el.querySelectorAll('[data-persona]').forEach(sel=>sel.onchange=()=>{
     const u=force.find(x=>x.uid===+sel.dataset.persona); if(!u) return;
@@ -2257,7 +2379,7 @@ function renderOrders(){
   });
   bind('[data-kill]',u=>{u.dead=true;u.order=null;});
   bind('[data-crip]',u=>{u.forceCrip=!u.forceCrip;});
-  bind('[data-repair]',u=>{u.arm=u.v.a;u.str=u.v.s;u.heat=0;u.forceCrip=false;u.manualCond='fresh';u.cooledBy=0;});
+  bind('[data-repair]',u=>{u.arm=u.v.a;u.str=u.v.s;u.heat=0;u.motiveHits=0;u.forceCrip=false;u.manualCond='fresh';u.cooledBy=0;});
   bind('[data-cond]',(u,v)=>{u.manualCond=v;u.forceCrip=false;});
   bind('[data-arm]', (u,v)=>{const i=+v;u.arm = u.arm>i ? i : i+1;});
   bind('[data-str]', (u,v)=>{const i=+v;u.str = u.str>i ? i : i+1;});
@@ -2465,7 +2587,10 @@ function mulToEntries(text){
     /* MegaMek writes non-'Mech units into the same file. We only field 'Mechs,
        so name what was dropped rather than silently losing it. */
     const type=(en.getAttribute('type')||'').trim();
-    if(type && !/^(mek|mech|biped|quad|tripod|lam)/i.test(type)){
+    /* Vehicles are playable now, so keep them. Everything else (infantry,
+       aerospace, battle armour) still has no order model here and is named
+       rather than silently dropped. */
+    if(type && !/^(mek|mech|biped|quad|tripod|lam|tank|vtol|hover|wheel|track|naval|vehicle|support)/i.test(type)){
       skipped.push((en.getAttribute('chassis')||'unnamed')+' ('+type+')');
       continue;
     }

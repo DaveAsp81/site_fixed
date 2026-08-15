@@ -376,29 +376,85 @@ function loadState() {
 }
 function saveState() { safeSave('battletechGameState', gs); }
 
-/* Older saved forces (pre bf-patch) lack card stats — look them up from mechs.json by name */
+/* Motive type sits in the vehicle's Alpha Strike move string as a suffix:
+   8"t tracked, 12"h hover, 16"w wheeled, 24"v VTOL, g WiGE, n naval,
+   s submarine. It decides which Motive Hit results apply, so it is read out
+   rather than left buried in the string. */
+const MOTIVE = { t:'Tracked', h:'Hover', w:'Wheeled', v:'VTOL',
+                 g:'WiGE', n:'Naval', s:'Submarine' };
+function motiveOf(bfMove) {
+    const m = /([a-z])\s*$/.exec(String(bfMove || ''));
+    return m ? (MOTIVE[m[1]] || '') : '';
+}
+
+/* Older saved forces lack card stats. Look them up by name from mechs.json,
+   and from vehicles.json for combat vehicles, which are keyed on the MUL's own
+   full name rather than chassis plus variant. */
 async function hydrateMissing() {
     const missing = force.some(L => L.units.some(u => !u.bf && !u.custom));
     if (!missing) return;
+    const lookup = {};
     try {
         const res = await fetch('mechs.json');
         const db = await res.json();
-        const lookup = {};
-        db.forEach(m => m.variants.forEach(v => { lookup[`${m.chassis} ${v.name}`] = v; }));
-        force.forEach(L => L.units.forEach(u => {
-            if (!u.bf) {
-                const v = lookup[u.name];
-                if (v) {
-                    u.bf = { armor:v.bf_armor, structure:v.bf_structure, damage:v.bf_damage, overheat:v.bf_overheat, abilities:v.bf_abilities };
-                    u.movement = u.movement || v.movement;
-                }
-            }
+        db.forEach(m => m.variants.forEach(v => {
+            lookup[`${m.chassis} ${v.name}`] = { v, vehicle:false };
         }));
-    } catch(e) { /* offline or fetch blocked — cards render without stats */ }
+    } catch(e) { /* offline; cards render without stats */ }
+    try {
+        const res = await fetch('vehicles.json');
+        const db = await res.json();
+        db.forEach(m => m.variants.forEach(v => {
+            const key = v.full_name || `${m.chassis} ${v.name}`;
+            lookup[key] = { v, vehicle:true, tons:v.tons || m.tons };
+            // also key without the bracketed variant, for looser matches
+            if (v.name === 'Standard') lookup[m.chassis] = { v, vehicle:true, tons:v.tons || m.tons };
+        }));
+    } catch(e) { /* vehicles.json is optional */ }
+
+    force.forEach(L => L.units.forEach(u => {
+        if (u.bf) return;
+        const hit = lookup[u.name];
+        if (!hit) return;
+        const v = hit.v;
+        u.bf = { armor:v.bf_armor, structure:v.bf_structure, damage:v.bf_damage,
+                 overheat:v.bf_overheat, abilities:v.bf_abilities };
+        u.movement = u.movement || v.movement || v.bf_move || '';
+        if (hit.vehicle) {
+            u.isVehicle = true;
+            u.bfMove = v.bf_move || '';
+            u.motive = motiveOf(v.bf_move);
+            u.tons = u.tons || hit.tons;
+        }
+    }));
 }
 
-/* AS Move from Classic MP string: inches = MP x 2 */
+/* Vehicles have no heat track. Most carry no heat sinks at all, so showing a
+   heat scale on a tank is not a cosmetic issue, it invites a player to apply
+   penalties that do not exist. */
+function hasHeat(u) { return !u.isVehicle; }
+
+/* Motive Hit results, Alpha Strike. Vehicles take these where a 'Mech would
+   take a critical, and they degrade movement rather than systems. */
+const MOTIVE_STEPS = [
+    { n:0, label:'Undamaged',      eff:'Full movement.' },
+    { n:1, label:'Motive hit',     eff:'Move reduced by 2". Cannot use special moves.' },
+    { n:2, label:'Motive hit x2',  eff:'Move reduced by 4".' },
+    { n:3, label:'Immobilised',    eff:'Move 0". Attacks against it gain +2 to hit and it has no TMM.' }
+];
+function motiveEffect(st) {
+    const n = Math.min(3, st.motive || 0);
+    return MOTIVE_STEPS[n];
+}
+
+/* AS Move. Vehicles arrive with the Alpha Strike figure already in inches
+   (e.g. 8"t), so use it directly rather than deriving it from a Classic
+   Walk/Run string they do not have. */
 function asMove(u) {
+    if (u.isVehicle && u.bfMove) {
+        const g = /(\d+)\s*"/.exec(u.bfMove);
+        return { ground: g ? parseInt(g[1]) : null, jump: 0 };
+    }
     const m = /Walk (\d+)/.exec(u.movement || '');
     const j = /Jump (\d+)/.exec(u.movement || '');
     return { ground: m ? parseInt(m[1]) * 2 : null, jump: j ? parseInt(j[1]) * 2 : 0 };
@@ -410,6 +466,12 @@ function heatEffects(u, st) {
     const mv = asMove(u);
     const g = mv.ground != null ? Math.max(0, mv.ground - st.h * 2) : null;
     return { cls:'hot', txt:`+${st.h} to attack TN · Move ${g != null ? g + '"' : '−' + st.h*2 + '"'}${mv.jump ? ' / ' + mv.jump + '"j (jump unaffected)' : ''}` };
+}
+
+function setMotive(i, n) {
+    const st = gs[i]; if (!st) return;
+    st.motive = (st.motive === n) ? 0 : n;   // tap the current step to clear it
+    saveState(); render();
 }
 
 function setMode(m) {
@@ -454,7 +516,7 @@ function renderAS() {
                 `<button class="pip ${type} ${idx < (total-lost) ? 'on' : 'off'}" onclick="tapPip(${i},'${type==='armor'?'a':'s'}',${idx},${total})" title="${type} ${idx+1}"></button>`;
             html += `<div class="card ${st.dead?'dead':''} ${st.h>=4?'shut':''}">
                 <h3>${esc(u.name)}</h3>
-                <div class="meta">MV <b>${mv.ground!=null? mv.ground+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b> · OV <b>${bf.overheat ?? '—'}</b> · ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
+                <div class="meta">MV <b>${mv.ground!=null? Math.max(0, mv.ground - (u.isVehicle ? (st.motive||0)*2 : 0))+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b>${u.isVehicle ? ` \u00b7 <b>${esc(u.motive||'Vehicle')}</b>` : ` \u00b7 OV <b>${bf.overheat ?? '\u2014'}</b>`} \u00b7 ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
                 <div style="font-size:0.62rem; color:#666; letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;">Damage dealt at range</div>
                 <div class="dmg-table">
                     <div class="dmg-cell"><div class="v">${dmg.short ?? '—'}</div><div class="l">SHORT 0–6"</div></div>
@@ -464,11 +526,16 @@ function renderAS() {
                 </div>
                 <div class="pip-row"><span class="lbl">ARMOR</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#555;font-size:0.75rem;">no card data</span>'}</span></div>
                 <div class="pip-row"><span class="lbl">STRUCT</span><span class="pips">${bf.structure ? Array.from({length:bf.structure},(_,x)=>pip('struct',bf.structure,st.s,x)).join('') : ''}</span></div>
+                ${hasHeat(u) ? `
                 <div class="heat-row"><span class="lbl">HEAT</span><span class="heat-steps">
                     ${[0,1,2,3].map(h=>`<button class="hstep ${st.h===h?'cur':''}" onclick="setHeat(${i},${h})">${h}</button>`).join('')}
                     <button class="hstep s ${st.h>=4?'cur':''}" onclick="setHeat(${i},4)">S</button>
                 </span></div>
-                <div class="effects ${fx.cls}">${fx.txt}</div>
+                <div class="effects ${fx.cls}">${fx.txt}</div>` : `
+                <div class="heat-row"><span class="lbl">MOTIVE</span><span class="heat-steps">
+                    ${[0,1,2,3].map(h=>`<button class="hstep ${(st.motive||0)===h?'cur':''}" onclick="setMotive(${i},${h})">${h===3?'IM':h}</button>`).join('')}
+                </span></div>
+                <div class="effects ${(st.motive||0)>=3?'down':((st.motive||0)?'hot':'ok')}">${esc(motiveEffect(st).label)} \u00b7 ${esc(motiveEffect(st).eff)}</div>`}
                 ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${esc(bf.abilities)} <span style="color:#555;">${st.abilOpen?'▾':'ⓘ'}</span></div>
                 ${st.abilOpen ? `<div class="abil-defs">${expandAbilities(bf.abilities).map(a=>`<div><b>${esc(a.tok)}</b> · ${esc(a.def.replace(/^[^—]+—\s*/,''))}</div>`).join('')}</div>` : ''}` : ''}
                 <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
