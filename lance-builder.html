@@ -274,6 +274,15 @@
     <div id="preview-label" style="background:#222; padding:10px; text-align:center; color:#ff8c00; font-weight:bold;">TARGET DATA LINKED</div>
 
     <!-- NEW: Search + Sort -->
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:15px 0 0 0;">
+      <button id="veh-toggle" onclick="toggleVehicles()" disabled
+        style="background:transparent; color:#888; border:1px dashed #555; padding:8px 12px;
+               font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em;
+               text-transform:uppercase; font-size:0.78em; cursor:pointer; border-radius:4px;">+ COMBAT VEHICLES</button>
+      <span id="veh-note" style="display:none; font-size:0.75em; color:#777; line-height:1.4;">
+        Vehicles have no faction availability data, so they show under every faction.
+      </span>
+    </div>
     <input type="text" id="chassis-search" placeholder="🔍 Search chassis..." 
            style="margin:15px 0 8px 0; padding:12px;">
     
@@ -321,8 +330,6 @@
     <button onclick="addLanceToForce()" style="flex:2; min-width:220px; background:#ff8c00; color:#000; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">➕ Add This Lance to Force</button>
     <a href="game-tracker.html" style="flex:1; min-width:160px; display:flex; align-items:center; justify-content:center; background:#d32f2f; color:#fff; text-decoration:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; border-radius:4px;">⚔ Game Tracker</a>
     <button onclick="playAgainstLance()" style="flex:1; min-width:180px; background:#455a64; color:#fff; border:none; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;" title="Send this lance to OpFor Command and play against it solo">🎯 Play Against This</button>
-    <button id="veh-toggle" onclick="toggleVehicles()" disabled
-        style="flex:1; min-width:160px; background:transparent; color:#888; border:1px dashed #555; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">+ COMBAT VEHICLES</button>
     <button onclick="toggleCustomPanel()" style="flex:1; min-width:160px; background:transparent; color:#ff8c00; border:1px dashed #ff8c00; padding:14px; font-weight:700; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; border-radius:4px;">🔧 Custom 'Mech</button>
 </div>
 
@@ -1028,9 +1035,20 @@ function loadVehicles() {
             if (btn) btn.disabled = false;
             updateVehicleToggleLabel();
         })
-        .catch(() => {
+        .catch(err => {
+            /* Say what went wrong rather than disappearing. A missing
+               vehicles.json is a deployment mistake, and a button that
+               silently vanishes gives nobody anything to act on. */
             const btn = document.getElementById('veh-toggle');
-            if (btn) btn.style.display = 'none';
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'COMBAT VEHICLES UNAVAILABLE';
+                btn.title = 'vehicles.json could not be loaded. It needs to sit '
+                          + 'in the same folder as this page.';
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+            console.warn('Lance Builder: vehicles.json failed to load.', err);
         });
 }
 
