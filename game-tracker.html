@@ -212,6 +212,18 @@
 .imp-note{font-size:12px;opacity:.75}
 .imp-ok{color:#2e7d32}.imp-warn{color:#b3261e}
 </style>
+<div id="mission-bar" class="imp-hide" style="margin:0 0 12px 0;padding:12px 14px;
+     border:1px solid #8a1b12;border-radius:6px;background:rgba(138,27,18,0.10)">
+  <div style="font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.05em;font-size:1.02rem"
+       id="mission-title">MISSION</div>
+  <div class="imp-note" id="mission-obj" style="margin-top:2px"></div>
+  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+    <button id="btn-complete" class="imp-b"
+      style="border-color:#8a1b12;color:#e08a80;opacity:1">Mission complete</button>
+    <button id="btn-withdraw" class="imp-b">Withdraw</button>
+  </div>
+  <div class="imp-note" id="mission-hint" style="margin-top:8px"></div>
+</div>
 <div id="imp-bar" style="margin:0 0 12px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
   <button id="imp-file-btn" class="imp-b">Import .mul or JSON</button>
   <button id="imp-paste-btn" class="imp-b">Paste a force</button>
@@ -360,6 +372,62 @@ function importForceText(text, label){
   const b=document.getElementById('imp-paste'); if(b) b.value='';
   hydrateMissing().then(render).catch(()=>render());
 }
+/* ---------------- Campaign hand-back ----------------
+   The Campaign Tracker sends a lance here with a mission attached. When the
+   mission ends we write the surviving state back for the campaign to pick up:
+   armour and structure taken per unit, and who died.
+
+   Mission complete and Withdraw are deliberately BOTH available. Gating the
+   end of a mission on completing the objective sounds tidy but traps a player
+   who is getting mauled and wants to pull out, and choosing to withdraw with a
+   damaged lance rather than push on is exactly the decision a campaign should
+   be asking for. */
+let MISSION = null;
+function loadMission(){
+    try { MISSION = JSON.parse(localStorage.getItem('battletechMission') || 'null'); }
+    catch(e) { MISSION = null; }
+    const bar = document.getElementById('mission-bar');
+    if (!bar || !MISSION) return;
+    bar.classList.remove('imp-hide');
+    document.getElementById('mission-title').textContent =
+        ('MISSION ' + MISSION.mission + ': ' + MISSION.type).toUpperCase();
+    document.getElementById('mission-obj').textContent =
+        MISSION.campaign + ' \u00b7 objective: ' + MISSION.objective +
+        (MISSION.target ? ' \u00b7 ' + MISSION.target : '');
+    document.getElementById('mission-hint').textContent =
+        'Ending the mission sends damage and losses back to the campaign.';
+}
+function endMission(outcome){
+    if (!MISSION) return;
+    const units = [];
+    let i = 0;
+    force.forEach(L => L.units.forEach(u => {
+        const st = gs[i] || {};
+        units.push({ campaignUid: u.campaignUid || null, name: u.name,
+                     a: st.a|0, s: st.s|0, dead: !!st.dead });
+        i++;
+    }));
+    const lost = units.filter(u => u.dead).length;
+    const word = outcome === 'won' ? 'complete' : 'a withdrawal';
+    if (!confirm('End the mission as ' + word + '?' +
+        (lost ? ' ' + lost + ' unit' + (lost===1?'':'s') + ' destroyed.' : '') +
+        '\n\nDamage and losses go back to the campaign.')) return;
+    try {
+        localStorage.setItem('battletechMissionResult', JSON.stringify({
+            mission: MISSION.mission, outcome, units }));
+        localStorage.removeItem('battletechMission');
+        localStorage.removeItem('battletechGameState');
+        localStorage.removeItem('battletechGameStateFp');
+        location.href = 'campaign.html';
+    } catch(e) { alert('Could not write the result back.'); }
+}
+function wireMission(){
+    const c = document.getElementById('btn-complete');
+    const w = document.getElementById('btn-withdraw');
+    if (c) c.onclick = () => endMission('won');
+    if (w) w.onclick = () => endMission('withdrew');
+}
+
 function wireImport(){
   const fi=document.getElementById('imp-file');
   if(fi) fi.onchange=ev=>{
@@ -400,7 +468,16 @@ function loadState() {
     const savedFp = localStorage.getItem('battletechGameStateFp');
     // Reset if the roster changed shape OR composition — length alone can match
     // while every unit's state belongs to a different 'Mech (edited force).
-    if (gs.length !== n || (savedFp !== null && savedFp !== fp)) gs = Array.from({length:n}, BLANK);
+    if (gs.length !== n || (savedFp !== null && savedFp !== fp)) {
+        gs = Array.from({length:n}, BLANK);
+        /* A campaign unit that limped out of the last mission limps into this
+           one, so seed the tracker with the damage it is already carrying. */
+        let k = 0;
+        force.forEach(L => L.units.forEach(u => {
+            if (u.startDamage) { gs[k].a = u.startDamage.a|0; gs[k].s = u.startDamage.s|0; }
+            k++;
+        }));
+    }
     gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing newer fields
     localStorage.setItem('battletechGameStateFp', fp);
 }
@@ -939,6 +1016,8 @@ function idxToUnit(i){ let n=0; for (const L of force) for (const u of L.units) 
     loadState();
     setMode(mode);
     wireImport();
+    loadMission();
+    wireMission();
 })();
 </script>
 </body>

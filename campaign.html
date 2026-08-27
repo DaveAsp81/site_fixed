@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campaign Tracker — Alpha Strike | BattleTech Hub</title>
+<meta name="description" content="Generate and run a BattleTech Alpha Strike campaign solo. Persistent company roster, salvage, repairs and pilot casualties across a series of missions.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  :root { --or:#ff8c00; --ink:#e8e4da; --dim:#8b8578; --line:#242424; --pan:#141414; --bg:#0d0d0d; }
+  body { background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; margin:0; }
+  .bt-nav { background:#0d0d0d; border-bottom:1px solid #222; padding:10px 16px; }
+  .bt-nav .header-content { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .bt-nav .logo { color:var(--or); font-weight:700; text-decoration:none; font-family:'Rajdhani',sans-serif; letter-spacing:.04em; }
+  .bt-nav nav ul { list-style:none; display:flex; gap:14px; margin:0; padding:0; flex-wrap:wrap; }
+  .bt-nav nav a { color:#999; text-decoration:none; font-size:.8rem; font-family:'Rajdhani',sans-serif; letter-spacing:.04em; text-transform:uppercase; }
+  .bt-nav nav a:hover { color:var(--or); }
+  .wrap { max-width:1100px; margin:0 auto; padding:18px 16px 60px; }
+  h1 { font-family:'Rajdhani',sans-serif; font-size:1.9rem; margin:14px 0 2px; letter-spacing:.02em; }
+  h1 em { color:var(--or); font-style:normal; }
+  .sub { color:var(--dim); font-size:.82rem; margin-bottom:18px; }
+  .panel { background:var(--pan); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:14px; }
+  .lbl { font-family:'Share Tech Mono',ui-monospace,monospace; font-size:.68rem; color:var(--dim); letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
+  .btn { background:transparent; color:var(--ink); border:1px solid #3a3a3a; border-radius:4px; padding:9px 14px;
+         font-family:'Rajdhani',sans-serif; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+         font-size:.8rem; cursor:pointer; }
+  .btn:hover { border-color:var(--or); color:var(--or); }
+  .btn.pri { background:#8a1b12; border-color:#8a1b12; color:#fff; }
+  .btn.pri:hover { background:#a52216; color:#fff; }
+  .btn:disabled { opacity:.4; cursor:not-allowed; border-color:#2a2a2a; color:#666; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  select,input[type=text],input[type=number] { background:#0d0d0d; color:var(--ink); border:1px solid #333;
+    border-radius:4px; padding:9px; font-family:inherit; font-size:.85rem; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
+  .unit { background:#111; border:1px solid var(--line); border-radius:6px; padding:11px; }
+  .unit.sel { border-color:var(--or); }
+  .unit.dead { opacity:.45; }
+  .unit.nocrew { opacity:.6; border-style:dashed; }
+  .unit.nofit { opacity:.4; }
+  .unit h4 { margin:0 0 3px; font-family:'Rajdhani',sans-serif; font-size:1rem; letter-spacing:.02em; }
+  .meta { font-family:'Share Tech Mono',ui-monospace,monospace; font-size:.68rem; color:var(--dim); line-height:1.7; }
+  .tag { display:inline-block; padding:1px 6px; border-radius:3px; font-size:.62rem; letter-spacing:.08em;
+         font-family:'Share Tech Mono',monospace; text-transform:uppercase; }
+  .t-ok { background:#1c3b1c; color:#8fd08f; } .t-dmg { background:#4a3a10; color:#e3bd63; }
+  .t-dead { background:#4a1512; color:#e08a80; } .t-new { background:#12324a; color:#7fc0e8; }
+  .sp { color:var(--or); font-weight:700; }
+  .missions { display:flex; flex-direction:column; gap:6px; }
+  .m { display:flex; gap:10px; align-items:center; padding:9px 11px; background:#111; border:1px solid var(--line); border-radius:5px; }
+  .m.cur { border-color:var(--or); }
+  .m .n { font-family:'Share Tech Mono',monospace; color:var(--dim); width:28px; }
+  .hint { color:var(--dim); font-size:.75rem; line-height:1.6; }
+  .warn { color:#e3bd63; }
+  .hide { display:none; }
+  /* Faction backdrop. Low opacity with a hard fade so it reads as texture
+     behind the numbers rather than competing with them. */
+  #banner { position:relative; overflow:hidden; }
+  #banner > * { position:relative; z-index:1; }
+  #banner.crest::before {
+    content:''; position:absolute; inset:0; z-index:0;
+    background-image:var(--crest); background-repeat:no-repeat;
+    background-position:right -20px center; background-size:auto 190%;
+    opacity:.14; filter:grayscale(.3);
+    -webkit-mask-image:linear-gradient(to left, #000 0%, transparent 72%);
+    mask-image:linear-gradient(to left, #000 0%, transparent 72%);
+  }
+  @media (max-width:600px){ #banner.crest::before{ background-size:auto 140%; opacity:.10; } }
+</style>
+</head>
+<body>
+
+<header class="bt-nav">
+  <div class="header-content">
+    <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
+    <nav><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#tools">Tools</a></li>
+      <li><a href="index.html#getting-started">Getting Started</a></li>
+      <li><a href="index.html#painting">Painting &amp; Hobby</a></li>
+      <li><a href="index.html#gameplay">Gameplay</a></li>
+      <li><a href="index.html#lore">Lore</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>Campaign <em>Tracker</em></h1>
+  <div class="sub">Alpha Strike. Your company persists between missions: damage carries, salvage pays for repairs, and pilots can die.</div>
+
+  <!-- ============ no campaign yet ============ -->
+  <div class="panel" id="setup">
+    <div class="lbl">Start a campaign</div>
+    <div class="row" style="margin-bottom:10px">
+      <select id="c-era"></select>
+      <select id="c-faction"></select>
+      <label class="hint">Company size
+        <select id="c-size"><option value="8">8 units</option><option value="12" selected>12 units (company)</option><option value="16">16 units</option></select>
+      </label>
+      <label class="hint">Missions
+        <select id="c-missions"><option>5</option><option selected>8</option><option>10</option></select>
+      </label>
+      <span class="hint" id="era-note"></span>
+    </div>
+    <div class="row">
+      <button class="btn pri" id="btn-new">Roll a campaign</button>
+      <button class="btn" id="btn-load">Load campaign file</button>
+      <input type="file" id="file-in" accept=".json,application/json" class="hide">
+    </div>
+    <p class="hint" style="margin-bottom:0">
+      Your campaign lives in this browser. Save the file if you want it on another device, or if you clear your browsing data.
+    </p>
+    <div class="hint" id="setup-status" style="margin-top:8px"></div>
+  </div>
+
+  <!-- ============ running campaign ============ -->
+  <div id="live" class="hide">
+    <div class="panel" id="banner">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div class="lbl" style="margin:0">Campaign</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.25rem" id="c-name">—</div>
+          <div class="meta" id="c-line">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="lbl" style="margin:0">Salvage points</div>
+          <div style="font-size:1.6rem" class="sp" id="c-sp">0</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="btn-save">Save campaign file</button>
+        <button class="btn" id="btn-abandon">Abandon campaign</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="lbl">Missions</div>
+      <div class="missions" id="mission-list"></div>
+    </div>
+
+    <div class="panel" id="brief-panel">
+      <div class="lbl">Next mission</div>
+      <div id="brief"></div>
+      <div class="lbl" style="margin-top:16px">Pick your lance</div>
+      <div class="hint" style="margin-bottom:8px" id="lance-hint"></div>
+      <div class="grid" id="roster-pick"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn pri" id="btn-launch">Launch into OpFor Command</button>
+        <button class="btn" id="btn-tracker">Send lance to Game Tracker</button>
+      </div>
+      <p class="hint">
+        Both open in a new tab so this page stays put. Play the mission in the Game
+        Tracker, clicking armour and structure as they are lost; a unit dies when its
+        structure is gone. When it is over hit <b>Mission complete</b> or
+        <b>Withdraw</b> in the tracker and the damage, losses and salvage come back
+        here on their own. Record mission result below is only for games you tracked
+        on paper.
+      </p>
+      <div class="row" style="margin-top:6px">
+        <button class="btn" id="btn-result">Record mission result</button>
+      </div>
+    </div>
+
+    <div class="panel hide" id="salvage-panel">
+      <div class="lbl">Battlefield salvage</div>
+      <div class="hint" style="margin-bottom:8px">
+        These were on the field in missions you won. Take only what you actually
+        destroyed. Recovering a hull gives you the machine, damaged and without a
+        pilot; scrapping pays salvage points instead.
+        <button class="btn" style="font-size:.7rem;padding:4px 8px;margin-left:6px" id="btn-leave">Leave the rest</button>
+      </div>
+      <div class="hint" id="salvage-body"></div>
+    </div>
+
+    <div class="panel">
+      <div class="lbl">Buy a replacement</div>
+      <div class="hint" style="margin-bottom:8px">
+        A new machine costs its full PV in salvage points. It arrives without a pilot.
+      </div>
+      <div class="row">
+        <select id="buy-pick" style="flex:1;min-width:220px"></select>
+        <button class="btn" id="btn-buy">Buy</button>
+      </div>
+    </div>
+
+    <div class="panel" id="reserve-panel">
+      <div class="lbl">Crew</div>
+      <div class="hint" id="reserve-body"></div>
+    </div>
+
+    <div class="panel">
+      <div class="lbl">Company roster</div>
+      <div class="grid" id="roster"></div>
+    </div>
+  </div>
+  <div style="margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
+              font-size:.78rem;color:var(--dim);line-height:1.9">
+    <a href="lance-builder.html" style="color:var(--or)">Lance Builder</a> ·
+    <a href="opfor-command.html" style="color:var(--or)">OpFor Command</a> ·
+    <a href="game-tracker.html" style="color:var(--or)">Game Tracker</a> ·
+    <a href="paint-tool.html" style="color:var(--or)">Paint Tool</a><br>
+    <a href="index.html" style="color:var(--dim)">Home</a> ·
+    <a href="about.html" style="color:var(--dim)">About</a> ·
+    <a href="contact.html" style="color:var(--dim)">Contact</a> ·
+    <a href="privacy.html" style="color:var(--dim)">Privacy</a> ·
+    <a href="affiliate-disclosure.html" style="color:var(--dim)">Affiliate Disclosure</a>
+    <p style="margin-top:12px">
+      BattleTech Hub is an unofficial fan resource, not affiliated with Catalyst Game Labs
+      or Topps. Follow along at
+      <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:var(--or)">BattleTech Down Under</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   Campaign Tracker
+
+   A campaign is a single JSON document. It lives in localStorage for
+   convenience and downloads as a file for safety, because losing an eight
+   mission campaign to a cleared browser cache is the kind of thing that makes
+   someone stop using a tool.
+
+   Alpha Strike only for now. AS damage is two numbers, armour and structure,
+   which carry between missions cleanly. Classic damage is per location with
+   criticals and none of the tools model it, so pretending to support it would
+   be worse than saying plainly that it is not supported yet.
+   ========================================================================== */
+
+const SCHEMA = 1;
+const KEY = 'btCampaign';
+
+/* --- economy -------------------------------------------------------------
+   Salvage is PV divided by 5. A standard lance is roughly 120 PV, so beating
+   an even force pays about 24 SP. Repairs run 1 SP per point of damage, so
+   patching a mauled lance costs 8 to 16. A good mission nets 8 to 16 SP and a
+   rough one nets nothing, which is the intent: growth is possible but slow.
+   These numbers want table testing, they are a starting point not gospel. */
+/* Tuned by simulation across 400 campaigns at a range of damage rates and
+   focus-fire concentrations. At PV/5 salvage outran every expense and you
+   finished rich with a nearly intact company. At PV/9 you could never replace
+   anything and went out damaged most missions. PV/7 lands attrition at 8 to 10
+   survivors of 12, replaces about a third of losses, and makes repairs
+   occasionally unaffordable, which is what turns them into a decision. */
+const SALVAGE_DIV = 7;      // enemy PV -> SP
+const REPAIR_PER_PT = 1;    // SP per point of armour or structure
+const WITHDRAW_MULT = 0.5;  // pulling out still pays, at half
+/* 2d6, 5+ and the pilot walks away, so roughly one loss in six kills them
+   (6/36 = 16.7%). Enough that losing a machine is frightening, rare enough
+   that a campaign is not constantly rebuilding its roster. Alpha Strike has
+   no ejection rules, so this is invented and wants table testing. */
+const EJECT_TN = 5;
+
+const ERAS = ['Star League','Early Succession War','Late Succession War - LosTech',
+  'Late Succession War - Renaissance','Clan Invasion','Civil War','Jihad',
+  'Early Republic','Late Republic','Dark Age','ilClan'];
+
+/* The full roster the Lance Builder offers, with the display name, the icon in
+   assets/images/factions, and the years the faction existed. Dates are the same
+   founding and dissolution tables used by OpFor Command, so the two tools agree
+   about who exists when. Playing Clan Wolf in the Star League was possible
+   before this: the Clans do not exist until 2807 and do not reach the Inner
+   Sphere until 3050.
+
+   icon: null means we have no art for that faction, and the picker falls back
+   to no background rather than a broken image. */
+const FACTION_INFO = {
+  // Great Houses and successors
+  Davion:        { name:'Federated Suns (Davion)', icon:'davion',        from:2317 },
+  Steiner:       { name:'Lyran Commonwealth (Steiner)', icon:'steiner',  from:2340 },
+  Kurita:        { name:'Draconis Combine (Kurita)', icon:'kurita',      from:2319 },
+  Liao:          { name:'Capellan Confederation (Liao)', icon:'liao',    from:2366 },
+  Marik:         { name:'Free Worlds League (Marik)', icon:'marik',      from:2271 },
+  FedCom:        { name:'Federated Commonwealth', icon:'davion',         from:3040, to:3067 },
+  LyranAlliance: { name:'Lyran Alliance', icon:'steiner',                from:3057 },
+  StIvesCompact: { name:'St. Ives Compact', icon:'stives',               from:3029, to:3063 },
+  FreeRasalhague:{ name:'Free Rasalhague Republic', icon:'rasalhague',   from:3034, to:3103 },
+  // Star League and its heirs
+  StarLeague:    { name:'Star League (SLDF)', icon:'starleague',         from:2571 },
+  ComStar:       { name:'ComStar', icon:'comstar',                       from:2788 },
+  WordOfBlake:   { name:'Word of Blake', icon:'comstar',                 from:3052, to:3081 },
+  RepublicOfSphere:{ name:'Republic of the Sphere', icon:null,           from:3081, to:3151 },
+  // Periphery
+  Taurian:       { name:'Taurian Concordat', icon:'taurian',             from:2335 },
+  Canopus:       { name:'Magistracy of Canopus', icon:'canopus',         from:2530 },
+  Outworlds:     { name:'Outworlds Alliance', icon:'outworlds',          from:2680, to:3084 },
+  Marian:        { name:'Marian Hegemony', icon:'marian',                from:2920 },
+  Illyrian:      { name:'Illyrian Palatinate', icon:'illyrian',          from:2300, to:3063 },
+  Circinus:      { name:'Circinus Federation', icon:'circinuis',         from:2775, to:3081 },
+  Tortuga:       { name:'Tortuga Dominions', icon:'tortuga',             from:2593 },
+  RimWorlds:     { name:'Rim Worlds Republic', icon:null,                from:2250, to:2780 },
+  /* Clans use 3050, not their 2807 founding. They spend those 243 years in
+     the Homeworlds where nobody in the Inner Sphere can see them, so a
+     Succession Wars campaign against Clan Wolf is not a thing that could
+     happen. First contact is the useful boundary for this tool.
+     The Wolverines and Widowmakers are the exception: both were destroyed
+     long before the invasion, so they only make sense as Homeworld-era
+     opponents and are excluded rather than misdated. */
+  ClanWolf:            { name:'Clan Wolf', icon:'clanwolf',                     from:3050 },
+  ClanJadeFalcon:      { name:'Clan Jade Falcon', icon:'clanjadefalcon',        from:3050 },
+  ClanGhostBear:       { name:'Clan Ghost Bear', icon:'clanghostbear',          from:3050 },
+  ClanSmokeJaguar:     { name:'Clan Smoke Jaguar', icon:'clansmokejaguar',      from:3050, to:3060 },
+  ClanNovacat:         { name:'Clan Nova Cat', icon:'clannovacat',              from:3050, to:3143 },
+  ClanDiamondShark:    { name:'Clan Diamond Shark', icon:'clandiamondshark',    from:3050 },
+  ClanSteelViper:      { name:'Clan Steel Viper', icon:'clansteelviper',        from:3050, to:3075 },
+  ClanBloodSpirit:     { name:'Clan Blood Spirit', icon:'clanbloodspirit',      from:3050, to:3084 },
+  ClanCoyote:          { name:'Clan Coyote', icon:'clancoyote',                 from:3050 },
+  ClanFireMandrill:    { name:'Clan Fire Mandrill', icon:'clanfiremandrill',    from:3050, to:3075 },
+  ClanGoliathScorpion: { name:'Clan Goliath Scorpion', icon:'clangoliathscorpion', from:3050 },
+  ClanHellsHorses:     { name:"Clan Hell's Horses", icon:'clanhellshorses',     from:3050 },
+  ClanIceHellion:      { name:'Clan Ice Hellion', icon:'clanicehellion',        from:3050, to:3072 },
+  ClanStarAdder:       { name:'Clan Star Adder', icon:'clanstaradder',          from:3050 },
+  ClanSnowRaven:       { name:'Clan Snow Raven', icon:null,                     from:3050 },
+  ClanCloudCobra:      { name:'Clan Cloud Cobra', icon:null,                    from:3050 },
+  // Independents
+  Mercenaries:   { name:'Mercenaries', icon:'mercenary',                 from:2300 },
+  Pirates:       { name:'Pirates', icon:'pirates',                       from:2005 }
+};
+const FACTIONS = Object.keys(FACTION_INFO);
+
+/* An era is a window, not a point, so a faction counts as playable if it
+   existed for any part of it. */
+function eraWindow(era) {
+  const i = ERAS.indexOf(era);
+  const starts = [2571,2781,2901,3020,3050,3062,3068,3081,3101,3131,3151];
+  const ends   = [2780,2900,3019,3049,3061,3067,3080,3100,3130,3150,9999];
+  return i < 0 ? [2005, 9999] : [starts[i], ends[i]];
+}
+function factionsInEra(era) {
+  const [lo, hi] = eraWindow(era);
+  return FACTIONS.filter(k => {
+    const f = FACTION_INFO[k];
+    return f.from <= hi && (!f.to || f.to >= lo);
+  });
+}
+/* Dates say a faction existed; the catalogue says whether it had anything to
+   field. A faction with no units on record for an era cannot run a campaign in
+   it, so it is not offered. Before the catalogue loads this falls back to
+   dates alone, which is fine because the picker is rebuilt afterwards. */
+function playableFactions(era) {
+  const dated = factionsInEra(era);
+  if (!CATALOGUE.length) return dated;
+  return dated.filter(k => CATALOGUE.some(u => fieldedBy(u, era, k)));
+}
+function factionName(k) { return (FACTION_INFO[k] || {}).name || k; }
+function factionIcon(k) {
+  const f = FACTION_INFO[k];
+  return f && f.icon ? `assets/images/factions/${f.icon}.jpg` : null;
+}
+
+/* Who each faction actually borders and fights. Picking an opponent at random
+   produced a Davion campaign against Clan Ghost Bear in 3025, and because the
+   old filter read C?.faction before C existed, it could also send you to fight
+   yourself. Order matters: the first entries are the likelier enemies. */
+const RIVALS = {
+  Davion:  ['Kurita','Liao','Marik'],
+  Steiner: ['Kurita','Marik','Liao'],
+  Kurita:  ['Davion','Steiner','ComStar'],
+  Liao:    ['Davion','Marik','Canopus'],
+  Marik:   ['Steiner','Liao','Davion','Canopus'],
+  ComStar: ['Kurita','Davion','Steiner','Marik','Liao'],
+  Taurian: ['Davion','Canopus'],
+  Canopus: ['Marik','Liao','Taurian'],
+  ClanWolf:       ['Steiner','Kurita','ClanJadeFalcon'],
+  ClanJadeFalcon: ['Steiner','ClanWolf','Kurita'],
+  ClanGhostBear:  ['Kurita','Steiner','ClanWolf'],
+  // mercenaries take contracts anywhere, so everyone is fair game
+  Mercenaries: ['Kurita','Davion','Steiner','Liao','Marik','Canopus','Taurian']
+};
+/* Third parties who turn up anywhere and belong to nobody. A campaign is more
+   convincing with the occasional raid that is not the main war. */
+const INTERLOPERS = ['Pirates','a rival mercenary command','Bandit Caste'];
+
+/* Who the invading Clans actually hit in 3050. Steiner took Jade Falcon and
+   Wolf across the Lyran border, Kurita took Smoke Jaguar, Nova Cat and Ghost
+   Bear. Without this a Lyran campaign in the Clan Invasion never once meets a
+   Clan, which is the wrong way round. */
+const CLAN_FRONTS = {
+  Steiner: ['ClanJadeFalcon','ClanWolf'],
+  Kurita:  ['ClanGhostBear','ClanWolf'],
+  ComStar: ['ClanWolf','ClanJadeFalcon','ClanGhostBear'],
+  Davion:  ['ClanJadeFalcon']
+};
+
+function plausibleEnemies(faction, era) {
+  const eraIdx = ERAS.indexOf(era);
+  const clanEra = eraIdx >= ERAS.indexOf('Clan Invasion');
+  const inEra = playableFactions(era);
+  let list = (RIVALS[faction] || inEra).filter(f => f !== faction && inEra.includes(f));
+  if (clanEra) {
+    // the invasion opens a second front rather than replacing the old wars
+    list = list.concat(CLAN_FRONTS[faction] || []);
+  } else {
+    list = list.filter(f => !isClanFaction(f));
+  }
+  return list.length ? list : inEra.filter(f => f !== faction);
+}
+
+/* One primary opponent for the whole campaign, with the odd third party. Eight
+   missions against eight different randomly chosen factions reads as eight
+   unrelated skirmishes; a campaign needs a front and a front needs an enemy. */
+function pickPrimaryEnemy(faction, era) {
+  const list = plausibleEnemies(faction, era);
+  // weight the first entries, which are the closest borders
+  const weighted = [];
+  list.forEach((f, i) => { for (let k = list.length - i; k > 0; k--) weighted.push(f); });
+  return pick(weighted);
+}
+
+/* Mission flavour. The first pass produced "Two forces walked into each other
+   near . No plan survives this one. the water plant." — the placeholder was
+   stripped and the target bolted on afterwards. Rebuilt as a briefing with an
+   employer, a place, a situation and a complication, assembled from parts so
+   two missions rarely read the same. */
+const MISSION_TYPES = [
+  { t:'Recon in Force', obj:'recon',
+    line:'Command wants eyes on {tgt} and is not paying for guesswork. Get in, get the scan, get out.' },
+  { t:'Objective Raid', obj:'destroy',
+    line:'{tgt} comes down this week. Put it out of action and do not get drawn into a stand-up fight.' },
+  { t:'Hold the Line', obj:'hold',
+    line:'You are holding {tgt} until relief arrives. Ground given is ground you will pay for twice.' },
+  { t:'Extraction', obj:'vip', targets:'people',
+    line:'{tgt} has to come out with you. Everything else on this rock is secondary.' },
+  { t:'Meeting Engagement', obj:'destroy',
+    line:'Two columns walked into each other near {tgt}. Nobody planned this one and nobody is backing off.' },
+  { t:'Denial', obj:'destroy',
+    line:'If we cannot hold {tgt}, nobody gets to use it. Wreck it and withdraw.' },
+  { t:'Screen', obj:'hold',
+    line:'Sit between {tgt} and whatever is coming. You are buying time, not glory.' }
+];
+
+const TARGETS = ['the comms relay at Hazen Ridge','the supply depot outside Kelso',
+  'the airfield on the salt flats','a downed DropShip in the Tarn valley',
+  'the water reclamation plant','the rail junction at Mile 40',
+  'the listening post on Kestrel Hill','the ammunition dump at Grey Creek',
+  'the bridgehead over the Lethe','the ore processor at Pit Nine',
+  'the fuel farm south of the wire','the mag-lev terminus'];
+
+/* Extraction needs someone to extract. Using the location list produced
+   "a downed DropShip has to come out with you", which is nonsense. */
+const PEOPLE = ['A stranded survey team','The employer\u2019s daughter and her staff',
+  'A defecting technician and the data she carries','Two downed aerospace pilots',
+  'A field hospital that cannot move itself','The last of a shattered militia company',
+  'A ComStar adept nobody will explain','A prisoner the other side wants back'];
+
+/* Who hands down the mission depends on who you are. A mercenary has an
+   employer and a contract. A House regiment has orders from its own chain of
+   command and no invoice. A Clan has a Star Colonel, a bid and a trial, and
+   would never speak of being paid. Using one framing for all three made a
+   Davion company read like a hired gun. */
+const ORDERS = {
+  merc: [
+    '{who} is paying, and the contract is thin on detail.',
+    '{who} is paying. The terms are better than they should be.',
+    '{who} signed the contract this morning and wants movement by nightfall.',
+    'Liaison from {who} has handed down the tasking. Salvage rights are yours.'
+  ],
+  house: [
+    'Regimental command has tasked you. {who} signed the order.',
+    'The tasking came down from {who} overnight. No discussion invited.',
+    '{who} wants this done quietly and wants it done this week.',
+    'Orders from {who}. The regiment has been given the sector and told to hold it.'
+  ],
+  clan: [
+    '{who} has assigned this trial to your Star. Bid well and do not shame the Cluster.',
+    'The bidding is finished. {who} won the honour for your Star, at cost.',
+    '{who} has named the objective. Your Star will take it or it will not return.',
+    '{who} watches this action. Perform accordingly.'
+  ]
+};
+/* Stored lower case because these land mid-sentence as often as they start
+   one. Capitalisation is applied when the line is assembled, which is how
+   "Orders from A staff officer" happened. */
+/* Ranks by faction, from the comparative rank table in Field Manual: Lyran
+   Alliance, Field Manual: Capellan Confederation and Field Manual: Periphery.
+   Each House kept its own structure after the Star League fell, so a Kurita
+   officer is a Tai-sa and a Steiner one is a Hauptmann-General. "The Khan's
+   deputy" is a saKhan and should be called one.
+
+   These are senior ranks only, since the person handing down a mission is a
+   regimental or district commander rather than a lance leader. Sarna's style
+   note: non-English ranks are italicised except Federated Suns and Lyran ones,
+   which is why the Kurita and Liao entries carry <i> tags. */
+const RANKS = {
+  Kurita:   ['<i>Tai-sa</i>','<i>Chu-sa</i>','<i>Sho-sho</i>','<i>Tai-sho</i>','<i>Tai-shu</i>','the Warlord'],
+  Davion:   ['Colonel','Leftenant Colonel','Major General','Marshal','Field Marshal'],
+  Steiner:  ['Colonel','Hauptmann-General','Leutnant-General','Kommandant-General','General'],
+  Liao:     ['<i>Sang-shao</i>','<i>Zhong-shao</i>','<i>Jiang-jun</i>','<i>Sang-jiang-jun</i>'],
+  Marik:    ['Colonel','Force Commander','Lieutenant Colonel','General'],
+  ComStar:  ['Precentor','Demi-Precentor','the Precentor Martial'],
+  Taurian:  ['Colonel','Brigadier','Marshal'],
+  Canopus:  ['Colonel','Force Major','General'],
+  Clan:     ['Star Colonel','Galaxy Commander','the saKhan','the Khan','the Loremaster','your Star Captain'],
+  Mercenaries: []
+};
+/* Surnames split by sphere. Kerensky, Ward and Mattlov are Clan Bloodnames and
+   read absurdly on a Davion marshal, so the pools are kept apart. */
+const SURNAMES = {
+  IS:   ['Vaughn','Halloran','Osei','Drozd','Tarrant','Weiss','Bhatt','Lindqvist',
+         'Moreau','Castellan','Sorenson','Beckett','Ferrara','Kowal'],
+  Clan: ['Kerensky','Ward','Mattlov','Roshak','Hazen','Showers','Tseng','Bekker',
+         'Radick','Fetladral','Nostra','Vickers']
+};
+
+function rankHolder(faction) {
+  const key = isClanFaction(faction) ? 'Clan' : faction;
+  const list = RANKS[key] || [];
+  if (!list.length) return null;
+  const r = pick(list);
+  // titles that already read as definite do not take a surname
+  const pool = isClanFaction(faction) ? SURNAMES.Clan : SURNAMES.IS;
+  return /^(the|your)\b/.test(r) ? r : r + ' ' + pick(pool);
+}
+
+const EMPLOYERS = {
+
+  merc: ['a local mining combine','the planetary militia','a merchant house',
+    'a garrison commander with more problems than troops','a noble family in a hurry',
+    'an off-world shipping concern','the provincial governor',
+    'a ComStar factor who will not say why'],
+  house: ['district command','the March Militia liaison','Strategic Operations',
+    'the garrison commander','regional intelligence'],
+  clan: []
+};
+function commandStyle(faction) {
+  if (isClanFaction(faction)) return 'clan';
+  if (faction === 'Mercenaries') return 'merc';
+  return 'house';
+}
+
+const WORLDS = ['a wet, cold world of pine and granite','a dust world under a red sun',
+  'a tidal-locked rock where the terminator never moves','farmland gone to seed',
+  'an industrial world under permanent haze','a jungle world that eats equipment',
+  'high desert, thin air, brutal nights','a cratered moon with no atmosphere'];
+
+const COMPLICATIONS = [
+  'Local sensors are unreliable, so expect contact sooner than you would like.',
+  'Salvage rights are yours if you hold the field. That is most of the fee.',
+  'There is civilian traffic in the area and the employer has noticed you noticing.',
+  'Weather is closing in. Visibility will not improve.',
+  'Your employer has understated the opposition before.',
+  'Relief is twelve hours out and nobody believes that number.',
+  'The ground is bad for anything that is not tracked.',
+  'Somebody has been here before you and left wreckage.',
+  'Ammunition resupply is not happening before this is over.',
+  'The opposition knows the terrain and you do not.'
+];
+
+let C = null;               // the campaign document
+let picked = new Set();     // uids selected for the next mission
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s??'').replace(/[&<>"']/g, m =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+/* Rank names carry <i> tags, because non-English ranks are italicised. A
+   campaign file is loaded from disk and could hold anything, so escape it all
+   and then restore only that one tag rather than trusting the string. */
+const escItalic = s => esc(s).replace(/&lt;(\/?)i&gt;/g, '<$1i>');
+const d6 = () => 1 + Math.floor(Math.random()*6);
+const pick = a => a[Math.floor(Math.random()*a.length)];
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(C)); }
+  catch(e) { $('setup-status').innerHTML = '<span class="warn">Could not save to this browser. Use Save campaign file.</span>'; }
+}
+function load() {
+  try { const raw = localStorage.getItem(KEY); if (raw) C = migrate(JSON.parse(raw)); } catch(e) { C = null; }
+}
+
+/* --- roster --------------------------------------------------------------- */
+let CATALOGUE = [];
+async function loadCatalogue() {
+  let sawNetworkError = false;
+  for (const f of ['mechs.json?v=2','vehicles.json?v=1']) {
+    try {
+      const r = await fetch(f);
+      if (!r.ok) continue;
+      const d = await r.json();
+      d.forEach(c => (c.variants||[]).forEach(v => {
+        const pv = v.pv|0, arm = v.bf_armor|0, str = v.bf_structure|0;
+        if (!pv || !arm) return;                 // needs a usable AS card
+        /* Submarines and naval hulls cannot take the field on a standard
+           ground map, so they have no business in a company roll. Motive type
+           is the last letter of the Alpha Strike move string. */
+        if (/[ns]\s*$/.test(String(v.bf_move || ''))) return;
+        CATALOGUE.push({
+          name: v.full_name || `${c.chassis} ${v.name}`,
+          chassis: c.chassis, variant: v.name,
+          pv, tons: (v.tons!=null?v.tons:c.tons)|0,
+          armor: arm, structure: str,
+          /* The tracker needs the whole card. Sending armour and structure
+             alone produced a unit with no attack values, which looks broken. */
+          damage: v.bf_damage || {}, abilities: v.bf_abilities || '',
+          overheat: v.bf_overheat|0, move: v.bf_move || v.movement || '',
+          role: v.role || 'Skirmisher',
+          tech: (v.technology || c.technology || '').includes('Clan') ? 'C' : 'IS',
+          /* The Master Unit List records, per variant and per era, exactly
+             which factions fielded it. That is a far better gate than
+             introduction year plus tech: an Atlas C is dated 2830 and reads as
+             "Mixed" tech, so a year filter happily put one in a Late
+             Succession Wars Davion company even though the MUL lists it for
+             Clan factions only in that era. */
+          avail: v.availability || null,
+          year: v.date_introduced || null,
+          isVehicle: !!v.bf_move && !v.movement
+        });
+      }));
+    } catch(e) { sawNetworkError = true; }
+  }
+  if (CATALOGUE.length) {
+    $('setup-status').textContent = `${CATALOGUE.length} units available.`;
+  } else if (location.protocol === 'file:') {
+    /* Opening the page straight off disk is the common case here, and the
+       generic "could not load" message sent people hunting for a missing file
+       that was sitting right there. Browsers block fetch on file:// URLs, so
+       no amount of moving mechs.json around will help. */
+    $('setup-status').innerHTML = '<span class="warn">This page is open directly from your '
+      + 'computer, and browsers block pages from reading local files that way. '
+      + 'mechs.json cannot be loaded.</span><br>Serve the folder over HTTP instead. '
+      + 'In a terminal, from the folder holding these files:<br>'
+      + '<code style="color:#ff8c00">python -m http.server 8000</code><br>'
+      + 'then open <code style="color:#ff8c00">http://localhost:8000/campaign.html</code>. '
+      + 'On the live site this works normally.';
+  } else if (sawNetworkError) {
+    $('setup-status').innerHTML = '<span class="warn">Could not reach mechs.json.</span> '
+      + 'It needs to sit in the same folder as this page, alongside vehicles.json.';
+  } else {
+    $('setup-status').innerHTML = '<span class="warn">mechs.json loaded but held no usable '
+      + 'units.</span> Every unit needs a point value and Alpha Strike armour.';
+  }
+  $('btn-new').disabled = !CATALOGUE.length;
+  if (CATALOGUE.length) refreshFactionList();   // now we know who can field what
+}
+
+const FIRST = ['Marcus','Tara','Yuri','Anneke','Duncan','Ivana','Sanjay','Greta','Rafael','Mei',
+  'Owen','Petra','Kaito','Liesel','Diego','Nadia','Bram','Sofia','Aleks','Rhys'];
+const LAST = ['Kell','Navarro','Steiner','Okafor','Vasquez','Lindqvist','Bhatt','Moreau','Ito',
+  'Halloran','Drozd','Nakamura','Weiss','Osei','Castellan','Tarrant'];
+const CALL = ['Redline','Hammer','Ghost','Tinman','Sparrow','Anvil','Vixen','Crowbar','Static',
+  'Bishop','Kestrel','Ladder','Torch','Mongoose','Deadbolt','Pike'];
+
+function newPilot() {
+  return { name:`${pick(FIRST)} ${pick(LAST)}`, callsign:pick(CALL),
+           gunnery:3+Math.floor(Math.random()*2), piloting:4+Math.floor(Math.random()*2),
+           kills:0, missions:0, status:'active' };
+}
+
+/* Introduction year alone is not enough. Clan OmniMechs carry Clan-homeworld
+   introduction dates: a Thor is dated 2872, so a plain year filter happily
+   fields one in the Late Succession Wars. Nobody in the Inner Sphere saw Clan
+   tech until the invasion in 3050, so Clan units are gated on that separately
+   unless the force is itself a Clan. */
+const CLAN_CONTACT = 3050;
+function isClanFaction(f) { return /^Clan/.test(f || ''); }
+
+/* Some campaign faction keys differ from the MUL's, and several are umbrella
+   terms the MUL splits. Map ours onto every MUL name that should count. */
+const AVAIL_ALIASES = {
+  Davion:  ['Davion','FedSuns','FedCom'],
+  Steiner: ['Steiner','LyranAlliance','FedCom'],
+  FedCom:  ['FedCom','Davion','FedSuns','Steiner','LyranAlliance'],
+  LyranAlliance: ['LyranAlliance','Steiner'],
+  ClanNovacat: ['ClanNovacat','ClanNovaCat'],
+  ClanWidowmaker: ['ClanWidowmaker','ClanWildCat'],
+  Pirates: ['Pirates','Bandit Caste','Tortuga','Circinus']
+};
+function availNames(faction) { return AVAIL_ALIASES[faction] || [faction]; }
+
+/* True when the MUL lists this variant for that faction in that era. Falls
+   back to permitting the unit when the era is absent from its map, since a
+   missing entry means "no record" rather than "forbidden". */
+/* A BattleTech company is a 'Mech formation with vehicles in support, not a
+   motor pool. Even once vehicles are era-gated the catalogue is large enough
+   to dominate a random draw, so the mix is set deliberately rather than left
+   to whichever pool happens to be bigger. */
+const VEHICLE_SHARE = 0.25;
+
+function fieldedBy(u, era, faction) {
+  /* Vehicles carry no availability map, and treating "no data" as "permitted"
+     let all 2,318 of them through every filter while 'Mechs were narrowed hard
+     by era and faction. The result was companies that were 71% tanks. Fall back
+     to the introduction year for them so they are at least era-correct. */
+  if (!u.avail) {
+    if (!u.year) return true;
+    const i = ERAS.indexOf(era);
+    const cutoff = [2780,2900,3019,3049,3061,3067,3080,3100,3130,3150,9999][i] || 9999;
+    return u.year <= cutoff;
+  }
+  const list = u.avail[era];
+  if (!list || !list.length) return false;      // present but empty: nobody fielded it
+  const names = availNames(faction);
+  return list.some(f => names.includes(f));
+}
+
+function eligible(era, faction) {
+  const i = ERAS.indexOf(era);
+  const cutoff = [2780,2900,3019,3049,3061,3067,3080,3100,3130,3150,9999][i] || 9999;
+  const fac = faction !== undefined ? faction : (C && C.faction);
+  const clanForce = isClanFaction(fac);
+
+  /* Availability first: it is the authoritative answer and it encodes both
+     era and faction at once. Year and tech stay as a backstop for anything
+     the MUL has no record for. */
+  const byAvail = CATALOGUE.filter(u => fieldedBy(u, era, fac));
+  if (byAvail.length >= 12) return byAvail;
+  /* Zero means the Master Unit List has no record of this faction fielding
+     anything in this era, which is a real answer rather than missing data:
+     the Star League has no units after the Jihad, and the Homeworld Clans
+     have none in the Republic eras. Falling through to the year filter would
+     hand them a full roster and undo the point, so those factions are dropped
+     from the picker instead. See playableFactions. */
+
+  const pool = CATALOGUE.filter(u => {
+    if (u.year && u.year > cutoff) return false;
+    if (u.tech === 'C' && !clanForce && cutoff < CLAN_CONTACT) return false;
+    return true;
+  });
+  /* A Clan force fields Clan machines. Gating alone was not enough: the pool
+     is overwhelmingly Inner Sphere, so random draws gave a Clan Wolf company
+     twelve Inner Sphere 'Mechs. Restrict to Clan tech, allowing a little
+     isorla, which is how a Clan ends up with a captured machine anyway. */
+  if (clanForce) {
+    const clan = pool.filter(u => u.tech === 'C');
+    if (clan.length > 20) {
+      const isorla = pool.filter(u => u.tech !== 'C');
+      // roughly one unit in ten is taken loot
+      return clan.concat(isorla.slice(0, Math.round(clan.length / 9)));
+    }
+    return pool.length ? pool : CATALOGUE;
+  }
+  /* After first contact an Inner Sphere force can field salvaged Clan
+     machines, but they were rare and prized. Left unweighted the pool handed
+     a Kurita lance a quarter Clan tech, which is not what 3050 looked like. */
+  if (cutoff >= CLAN_CONTACT) {
+    const is = pool.filter(u => u.tech !== 'C');
+    const salvage = pool.filter(u => u.tech === 'C');
+    if (is.length > 20 && salvage.length) {
+      return is.concat(salvage.slice(0, Math.round(is.length / 19)));  // ~5%
+    }
+  }
+  return pool.length ? pool : CATALOGUE;
+}
+
+function rollCompany(era, size, faction) {
+  const pool = eligible(era, faction);
+  const mechs = pool.filter(u => !u.isVehicle);
+  const vehicles = pool.filter(u => u.isVehicle);
+  const wantVeh = vehicles.length ? Math.round(size * VEHICLE_SHARE) : 0;
+  const out = [];
+  for (let i=0; i<size; i++) {
+    /* Fill the vehicle slots first so a thin 'Mech pool cannot crowd them out
+       entirely, then 'Mechs for the rest. */
+    const from = i < wantVeh ? vehicles : (mechs.length ? mechs : pool);
+    const u = pick(from);
+    out.push({
+      uid: 'u' + (i+1) + '-' + Math.random().toString(36).slice(2,7),
+      name:u.name, chassis:u.chassis, variant:u.variant, pv:u.pv, tons:u.tons,
+      armor:u.armor, structure:u.structure, role:u.role, isVehicle:!!u.isVehicle,
+      damage:u.damage, abilities:u.abilities, overheat:u.overheat, move:u.move,
+      dmgA:0, dmgS:0, status:'ready', pilot:newPilot(), salvagedOn:null
+    });
+  }
+  return out;
+}
+
+/* The opposition is rolled at campaign creation, not hand-waved. A brief that
+   names four machines is a scenario; a brief that says "roughly 120 PV" is a
+   number. It also makes wreck claiming possible, because the campaign knows
+   what was on the field. */
+function rollEnemyLance(era, targetPV, faction) {
+  const pool = eligible(era, faction);
+  const mechs = pool.filter(u => !u.isVehicle);
+  const vehicles = pool.filter(u => u.isVehicle);
+  const out = [];
+  let pv = 0, guard = 0;
+  while (pv < targetPV * 0.85 && out.length < 8 && guard++ < 200) {
+    // the opposition uses the same mix as the player's own force
+    const useVeh = vehicles.length && Math.random() < VEHICLE_SHARE;
+    const from = useVeh ? vehicles : (mechs.length ? mechs : pool);
+    const u = pick(from);
+    if (pv + u.pv > targetPV * 1.15 && out.length) continue;
+    out.push({ name:u.name, pv:u.pv, tons:u.tons, armor:u.armor,
+               structure:u.structure, role:u.role, claimed:false });
+    pv += u.pv;
+  }
+  return out;
+}
+
+function rollMissions(n, era, faction, primary) {
+  const style = commandStyle(faction);
+  if (!EMPLOYERS[style]) return [];
+  const out = [];
+  for (let i=0;i<n;i++) {
+    const m = pick(MISSION_TYPES);
+    // opposition scales with mission number: the last one should hurt
+    const scale = 0.85 + (i/(n-1||1))*0.55;
+    const target = m.targets === 'people' ? pick(PEOPLE) : pick(TARGETS);
+    out.push({
+      n:i+1, type:m.t, objective:m.obj, target,
+      brief: (t => t.charAt(0).toUpperCase() + t.slice(1))(m.line.replace('{tgt}', target)),
+      // a named officer of the right rank where the faction has one, an
+      // institution otherwise; mercenaries always have an employer
+      /* Clans have no institutions to fall back on: orders come from a named
+         warrior, always. A Clan reading "regional intelligence has named the
+         objective" is worse than no flavour at all. Houses mix named officers
+         with staff bodies; mercenaries always have an employer. */
+      orders: (l => l.charAt(0).toUpperCase() + l.slice(1))(
+                pick(ORDERS[style]).replace('{who}',
+                  style === 'merc' ? pick(EMPLOYERS.merc)
+                  : style === 'clan' ? rankHolder(faction)
+                  : ((Math.random() < 0.7 && rankHolder(faction)) || pick(EMPLOYERS.house)))),
+      world: pick(WORLDS),
+      complication: pick(COMPLICATIONS),
+      // mostly the primary opponent, occasionally somebody else's war
+      /* Exclude our own faction as well as the primary, or a mercenary
+         campaign draws "Mercenaries" and reads as fighting itself. A rival
+         merc command is the same idea, said properly. */
+      enemyFaction: (i > 0 && Math.random() < 0.2)
+        ? pick(INTERLOPERS.concat(plausibleEnemies(faction, era))
+                 .filter(f => f !== primary && f !== faction))
+        : primary,
+      scale: Math.round(scale*100)/100,
+      result:null, spGained:0, lance:[], log:[], enemy:[], fieldHeld:false
+    });
+  }
+  return out;
+}
+
+/* --- rendering ------------------------------------------------------------ */
+function unitCard(u, selectable, m) {
+  const dmg = u.dmgA + u.dmgS;
+  const tag = u.status==='destroyed' ? '<span class="tag t-dead">Destroyed</span>'
+            : dmg ? `<span class="tag t-dmg">Damaged</span>`
+            : '<span class="tag t-ok">Ready</span>';
+  const sal = u.salvagedOn ? ` <span class="tag t-new">Salvaged M${u.salvagedOn}</span>` : '';
+  const p = u.pilot;
+  const dead = u.status==='destroyed';
+  const crewed = u.pilot.status==='active';
+  const wontFit = !!(m && selectable && !picked.has(u.uid) && overBudget(m, u.uid));
+  const canField = !dead && crewed && !wontFit;
+  const cls = 'unit' + (dead?' dead':'') + (!dead&&!crewed?' nocrew':'')
+            + (wontFit?' nofit':'') + (picked.has(u.uid)?' sel':'');
+  return `<div class="${cls}" ${selectable&&canField?`data-pick="${esc(u.uid)}" style="cursor:pointer"`:''}>
+    <h4>${esc(u.name)}</h4>
+    <div class="meta">
+      ${u.tons}t · ${esc(u.role)} · PV ${u.pv} ${tag}${sal}<br>
+      A ${u.armor-u.dmgA}/${u.armor} · S ${u.structure-u.dmgS}/${u.structure}
+      ${dmg?` · repair ${dmg*REPAIR_PER_PT} SP`:''}<br>
+      ${wontFit ? '<span class="warn">Will not fit the deployment limit.</span>'
+        : !crewed ? '<span class="warn">No crew. Assign a pilot before this can deploy.</span>'
+        : `${esc(p.name)} "${esc(p.callsign)}" · G${p.gunnery}/P${p.piloting} · ${p.missions} missions, ${p.kills} kills`}
+    </div>
+    ${dmg && !dead ? `<button class="btn" style="margin-top:8px;font-size:.7rem;padding:5px 9px" data-repair="${esc(u.uid)}">Repair ${dmg*REPAIR_PER_PT} SP</button>`:''}
+  </div>`;
+}
+
+function render() {
+  if (!C) { $('setup').classList.remove('hide'); $('live').classList.add('hide'); return; }
+  $('setup').classList.add('hide'); $('live').classList.remove('hide');
+
+  const banner = $('banner');
+  const crest = factionIcon(C.faction);
+  if (crest) { banner.style.setProperty('--crest', `url('${crest}')`); banner.classList.add('crest'); }
+  else banner.classList.remove('crest');
+
+  $('c-name').textContent = C.name;
+  $('c-line').textContent =
+    `${factionName(C.faction)}${C.primaryEnemy ? ' vs ' + factionName(C.primaryEnemy) : ''}`
+    + ` · ${C.era} · mission ${Math.min(C.mission,C.missions.length)} of ${C.missions.length}`;
+  $('c-sp').textContent = C.sp;
+
+  $('mission-list').innerHTML = C.missions.map(m => {
+    const cur = m.n === C.mission;
+    const res = m.result ? `<span class="tag ${m.result==='won'?'t-ok':m.result==='withdrew'?'t-dmg':'t-dead'}">${m.result}</span>` : '';
+    return `<div class="m ${cur?'cur':''}"><span class="n">${m.n}</span>
+      <span style="flex:1">${esc(m.type)} · ${esc(m.target)}</span>
+      ${m.spGained?`<span class="sp">+${m.spGained} SP</span>`:''} ${res}</div>`;
+  }).join('');
+
+  const m = C.missions[C.mission-1];
+  if (!m) {
+    $('brief-panel').innerHTML = `<div class="lbl">Campaign complete</div>
+      <p class="hint">All ${C.missions.length} missions done.
+      ${C.missions.filter(x=>x.result==='won').length} won,
+      ${C.missions.filter(x=>x.result==='lost').length} lost,
+      ${C.missions.filter(x=>x.result==='withdrew').length} withdrawn.
+      ${C.company.filter(u=>u.status!=='destroyed').length} of ${C.company.length} units still standing.</p>`;
+  } else {
+    $('brief').innerHTML = `<div style="font-family:'Rajdhani',sans-serif;font-size:1.15rem">Mission ${m.n} · ${esc(m.type)}</div>
+      <p class="hint" style="margin:6px 0 0;line-height:1.75">
+        <b style="color:#bbb">${escItalic(m.orders)}</b><br>
+        The place is ${esc(m.world)}.<br>
+        ${esc(m.brief)}<br>
+        <span style="color:#8b8578">${esc(m.complication)}</span><br>
+        Objective type <b>${esc(m.objective)}</b>.
+      </p>
+      <div class="lbl" style="margin-top:12px">Opposition · ${esc(factionName(m.enemyFaction))} · ${m.enemy.reduce((a,e)=>a+e.pv,0)} PV</div>
+      <div class="meta">${m.enemy.map(e=>`${esc(e.name)} <span style="color:#666">(${e.tons}t, ${e.pv} PV)</span>`).join('<br>')}</div>`;
+    /* Salvaged and bought machines arrive without a crew, so an unpiloted
+       'Mech is a normal state now rather than an edge case. It cannot deploy:
+       show it greyed with the reason rather than hiding it, so the player can
+       see what they need to crew. */
+    const ready = C.company.filter(u=>u.status!=='destroyed');
+    const fieldable = ready.filter(u=>u.pilot.status==='active');
+    const grounded = ready.length - fieldable.length;
+    const budget = pvBudget(m);
+    const spent = lancePV();
+    $('lance-hint').innerHTML =
+      `<b style="color:${spent>budget?'#e08a80':'#ff8c00'}">${spent} / ${budget} PV</b> · `
+      + `${picked.size} unit${picked.size===1?'':'s'} picked. Tap to add or remove.`
+      + (spent>budget ? ' <span class="warn">Over the deployment limit.</span>' : '')
+      + (grounded ? ` <span class="warn">${grounded} machine${grounded===1?'':'s'} grounded with no crew. Hire someone in the Crew panel below.</span>` : '');
+    $('roster-pick').innerHTML = ready.map(u=>unitCard(u,true,m)).join('');
+  }
+  $('roster').innerHTML = C.company.map(u=>unitCard(u,false)).join('');
+
+  // unclaimed wrecks from any won mission stay available
+  const wrecks = [];
+  C.missions.forEach(m => {
+    if (m.result !== 'won' || !m.fieldHeld) return;
+    m.enemy.forEach((e,i) => { if (!e.claimed) wrecks.push({ mn:m.n, i, e }); });
+  });
+  const sPanel = $('salvage-panel');
+  if (wrecks.length) {
+    sPanel.classList.remove('hide');
+    $('salvage-body').innerHTML = wrecks.map(w=>`<div style="margin-bottom:6px">
+      ${esc(w.e.name)} <span style="color:#666">(${w.e.tons}t, ${w.e.pv} PV)</span>
+      <button class="btn" style="font-size:.7rem;padding:4px 8px;margin-left:6px"
+        data-claim="${w.mn}:${w.i}">Recover the hull</button>
+      <button class="btn" style="font-size:.7rem;padding:4px 8px"
+        data-scrap="${w.mn}:${w.i}">Scrap for ${Math.round(w.e.pv/SALVAGE_DIV)} SP</button>
+    </div>`).join('');
+  } else sPanel.classList.add('hide');
+
+  // replacements the company can afford
+  const afford = CATALOGUE.filter(u=>u.pv<=C.sp).sort((a,b)=>b.pv-a.pv).slice(0,120);
+  $('buy-pick').innerHTML = afford.length
+    ? afford.map(u=>`<option value="${esc(u.name)}">${esc(u.name)} — ${u.pv} SP (${u.tons}t ${esc(u.role)})</option>`).join('')
+    : '<option value="">Nothing affordable at ' + C.sp + ' SP</option>';
+  $('btn-buy').disabled = !afford.length;
+
+  const res = C.reserve || [], fallen = C.fallen || [];
+  const needy = C.company.filter(u => u.status!=='destroyed' && u.pilot.status==='none');
+  let rb = '';
+  if (res.length) {
+    rb += res.map((p,i)=>`<div style="margin-bottom:6px">
+      ${esc(p.name)} "${esc(p.callsign)}" · G${p.gunnery}/P${p.piloting} ·
+      ${p.missions} missions, ${p.kills} kills
+      ${needy.length?`<select data-assign="${i}" style="margin-left:6px">
+        <option value="">assign to…</option>
+        ${needy.map(u=>`<option value="${esc(u.uid)}">${esc(u.name)}</option>`).join('')}
+      </select>`:''}
+    </div>`).join('');
+  }
+  /* A machine with nobody in it cannot deploy, and survivors only appear when
+     someone ejects. Without hiring, a salvaged or bought 'Mech could sit
+     uncrewed for the whole campaign with no way out of it. Green pilots are
+     free: bodies are cheap, machines are not. */
+  if (needy.length) {
+    rb += `<div style="margin-top:${res.length?'10px':'0'}">`
+       + `<span class="warn">${needy.length} machine${needy.length===1?'':'s'} with no crew:</span><br>`
+       + needy.map(u=>`<div style="margin:5px 0">
+           ${esc(u.name)}
+           <button class="btn" style="font-size:.7rem;padding:4px 8px;margin-left:6px"
+             data-hire="${esc(u.uid)}">Hire a green pilot</button>
+         </div>`).join('')
+       + `<div style="margin-top:4px;color:#666">Green pilots come in at gunnery 4, piloting 5, and improve nothing until they survive a few missions. Veterans only come from the field.</div></div>`;
+  }
+  if (fallen.length)
+    rb += `<div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--line)">
+      <b>Killed in action:</b> ` + fallen.map(f=>
+      `${esc(f.name)} "${esc(f.callsign)}" (M${f.lostOn}, ${f.missions} missions)`).join(' · ') + `</div>`;
+  if (!rb) rb = 'Every machine has a pilot.';
+  $('reserve-body').innerHTML = rb;
+  bind();
+}
+
+function lancePV() {
+  return C ? C.company.filter(u=>picked.has(u.uid)).reduce((a,u)=>a+u.pv,0) : 0;
+}
+/* You own a company, you field a lance. Without a cap you could walk the whole
+   twelve onto the table against four, which makes every mission trivial and
+   removes the only interesting decision on this page. The budget is the
+   opposition's own PV, so a fight is meant to be roughly even, plus a small
+   margin so you are not blocked by awkward arithmetic. */
+function pvBudget(m) {
+  const enemy = (m.enemy||[]).reduce((a,e)=>a+e.pv,0);
+  return Math.round(enemy * 1.1);
+}
+function overBudget(m, extraUid) {
+  const extra = extraUid ? (C.company.find(u=>u.uid===extraUid)||{}).pv||0 : 0;
+  return lancePV() + extra > pvBudget(m);
+}
+
+function bind() {
+  document.querySelectorAll('[data-pick]').forEach(el => el.onclick = () => {
+    const id = el.dataset.pick;
+    const u = C.company.find(x=>x.uid===id);
+    if (u && u.pilot.status!=='active') return;
+    picked.has(id) ? picked.delete(id) : picked.add(id);
+    render();
+  });
+  document.querySelectorAll('[data-hire]').forEach(el => el.onclick = () => {
+    const u = C.company.find(x=>x.uid===el.dataset.hire); if (!u) return;
+    u.pilot = { name:`${pick(FIRST)} ${pick(LAST)}`, callsign:pick(CALL),
+                gunnery:4, piloting:5, kills:0, missions:0, status:'active' };
+    save(); render();
+  });
+  document.querySelectorAll('[data-claim]').forEach(el => el.onclick = () => {
+    const [mn,i] = el.dataset.claim.split(':').map(Number);
+    claimWreck(mn, i, 'claim');
+  });
+  document.querySelectorAll('[data-scrap]').forEach(el => el.onclick = () => {
+    const [mn,i] = el.dataset.scrap.split(':').map(Number);
+    claimWreck(mn, i, 'scrap');
+  });
+  document.querySelectorAll('[data-assign]').forEach(el => el.onchange = () => {
+    const uid = el.value; if (!uid) return;
+    const p = C.reserve.splice(+el.dataset.assign, 1)[0];
+    const u = C.company.find(x=>x.uid===uid);
+    if (u && p) { u.pilot = p; u.pilot.status = 'active'; }
+    save(); render();
+  });
+  document.querySelectorAll('[data-repair]').forEach(el => el.onclick = e => {
+    e.stopPropagation();
+    const u = C.company.find(x=>x.uid===el.dataset.repair);
+    const cost = (u.dmgA+u.dmgS)*REPAIR_PER_PT;
+    if (cost > C.sp) { alert(`Repairing ${u.name} costs ${cost} SP and you have ${C.sp}.`); return; }
+    C.sp -= cost; u.dmgA = 0; u.dmgS = 0; u.status='ready';
+    save(); render();
+  });
+}
+
+/* --- handoffs ------------------------------------------------------------- */
+function lanceUnits() {
+  return C.company.filter(u=>picked.has(u.uid));
+}
+/* Guard both handoffs rather than only the UI. Selection state can survive a
+   pilot dying between missions, and an empty cockpit reaching the tracker
+   would silently produce a unit with a blank pilot name. */
+function lanceReady() {
+  const m = C.missions[C.mission-1];
+  if (m && lancePV() > pvBudget(m)) {
+    alert(`Your lance is ${lancePV()} PV against a limit of ${pvBudget(m)}. Drop something.`);
+    return false;
+  }
+  const bad = lanceUnits().filter(u=>u.pilot.status!=='active');
+  if (bad.length) {
+    alert(`${bad.map(u=>u.name).join(', ')} ${bad.length===1?'has':'have'} no pilot. `
+        + 'Assign one from the pilots panel, or drop it from the lance.');
+    return false;
+  }
+  return true;
+}
+
+/* OpFor Command reads #force= as CSV. The campaign passes its own lance so the
+   tool knows what it is fighting, plus the mission context so the generated
+   opposition is scaled and the objective matches the brief. */
+/* OpFor Command's #force= is the force IT commands, meaning the enemy. The
+   campaign already rolled that lance, so send it rather than making OpFor
+   generate a different one. Our own lance goes as #players= so it can do
+   focus-fire and called shots against real targets. */
+/* Older campaign files predate the objective field. Map the mission type back
+   onto an objective so an in-progress campaign keeps working after an update. */
+const TYPE_TO_OBJ = {
+  'Recon in Force':'recon', 'Objective Raid':'destroy', 'Hold the Line':'hold',
+  'Extraction':'vip', 'Meeting Engagement':'destroy', 'Denial':'destroy',
+  'Screen':'hold'
+};
+function objectiveForType(t) { return TYPE_TO_OBJ[t] || 'destroy'; }
+
+/* Repair anything a campaign from an earlier version is missing, rather than
+   letting it fail quietly later. */
+function migrate(c) {
+  if (!c || !c.missions) return c;
+  c.missions.forEach(m => {
+    if (!m.objective) m.objective = objectiveForType(m.type);
+    if (!m.target) m.target = m.type;
+    if (!Array.isArray(m.enemy)) m.enemy = [];
+    if (!m.scale) m.scale = 0.85 + (m.n - 1) / 10 * 0.55;
+    if (!m.enemyFaction) m.enemyFaction = c.primaryEnemy
+      || pick(plausibleEnemies(c.faction, c.era));
+    if (!Array.isArray(m.lance)) m.lance = [];
+    if (!m.orders && m.employer) m.orders = m.employer + ' is paying.';
+    if (!m.brief && m.hook) m.brief = m.hook;
+  });
+  (c.company || []).forEach(u => {
+    if (!u.pilot) u.pilot = { name:'', callsign:'', gunnery:4, piloting:5,
+                              kills:0, missions:0, status:'none' };
+    if (!u.pilot.status) u.pilot.status = 'active';
+    if (u.dmgA == null) u.dmgA = 0;
+    if (u.dmgS == null) u.dmgS = 0;
+    if (!u.status) u.status = 'ready';
+  });
+  if (c.sp == null) c.sp = 0;
+  if (!c.mission) c.mission = 1;
+  if (!c.primaryEnemy) c.primaryEnemy = c.missions[0] && c.missions[0].enemyFaction;
+  /* An empty enemy lance makes the deployment budget zero, which refuses every
+     launch. Roll one for any mission that has none, sized against the company
+     the same way a new campaign would. */
+  if (CATALOGUE.length) {
+    const nominal = (c.company || []).slice(0,4).reduce((a,u)=>a+(u.pv||0),0) || 120;
+    c.missions.forEach(m => {
+      if (!m.enemy.length && m.result == null) {
+        m.enemy = rollEnemyLance(c.era, Math.round(nominal * m.scale), m.enemyFaction);
+      }
+    });
+  }
+  return c;
+}
+
+function launchOpFor() {
+  if (!picked.size) { alert('Pick at least one unit first.'); return; }
+  if (!lanceReady()) return;
+  const m = C.missions[C.mission-1];
+
+  /* JSON rather than CSV. Pilot names carry quotes, and OpFor's CSV reader
+     collapsed each row to its first field, dropping the variant entirely: a
+     Griffin GRF-1N silently became a GRF-1A. */
+  const enc = list => encodeURIComponent(JSON.stringify(list));
+  const enemyList = m.enemy.map(e => {
+    const p = e.name.split(' ');
+    return { chassis: p.slice(0,-1).join(' ') || e.name, variant: p[p.length-1] };
+  });
+  const mineList = lanceUnits().map(u => ({
+    chassis: u.chassis, variant: u.variant,
+    pilot: `${u.pilot.name} "${u.pilot.callsign}"`,
+    gun: u.pilot.gunnery, pil: u.pilot.piloting
+  }));
+
+  /* A campaign saved before missions carried an objective has none on the
+     mission, and JSON.stringify silently drops undefined, so the URL arrived
+     with a name and no type and OpFor skipped it. Derive one from the mission
+     type rather than sending a broken record. */
+  const obj = [{ type: m.objective || objectiveForType(m.type), name: m.target || m.type }];
+
+  m.lance = [...picked]; save();
+  const url = `opfor-command.html#force=${enc(enemyList)}`
+            + `&players=${enc(mineList)}&obj=${enc(obj)}&rules=as`;
+  openAside(url);
+}
+
+/* Missions are played alongside the campaign, not instead of it. Opening in
+   the same tab meant losing this page and having to navigate back. */
+function openAside(url) {
+  const w = window.open(url, '_blank');
+  if (!w) location.href = url;      // popup blocked, fall back to navigating
+}
+
+/* The Game Tracker gets the lance with its carried damage, so a unit that
+   started the mission hurt starts the tracker hurt. */
+function sendToTracker() {
+  if (!picked.size) { alert('Pick at least one unit first.'); return; }
+  if (!lanceReady()) return;
+  const m = C.missions[C.mission-1];
+  const units = lanceUnits().map(u => ({
+    name:u.name, chassis:u.chassis, pilotName:`${u.pilot.name} "${u.pilot.callsign}"`,
+    gunnery:u.pilot.gunnery, piloting:u.pilot.piloting,
+    campaignUid:u.uid,
+    bf:{ armor:u.armor, structure:u.structure, damage:u.damage||{},
+         overheat:u.overheat|0, abilities:u.abilities||'' },
+    movement:u.move||'', tons:u.tons, pv:u.pv,
+    startDamage:{ a:u.dmgA, s:u.dmgS }
+  }));
+  try {
+    localStorage.setItem('battletechForce', JSON.stringify([{name:`M${m.n}: ${m.type}`, type:'Lance', units}]));
+    localStorage.removeItem('battletechGameState');
+    localStorage.removeItem('battletechGameStateFp');
+    localStorage.setItem('battletechMission', JSON.stringify({
+      campaign:C.name, mission:m.n, type:m.type, objective:m.objective, target:m.target
+    }));
+    m.lance = [...picked]; save();
+    openAside('game-tracker.html');
+  } catch(e) { alert('Could not hand off to the Game Tracker.'); }
+}
+
+/* --- mission resolution --------------------------------------------------- */
+function applyResult(res) {
+  const m = C.missions[C.mission-1];
+  if (!m) return;
+  const lance = C.company.filter(u=>m.lance.includes(u.uid));
+  const log = [];
+
+  // damage and losses come from the tracker if it handed a result back,
+  // otherwise the player tells us
+  const handed = res.units || null;
+  lance.forEach(u => {
+    const r = handed && handed.find(x=>x.campaignUid===u.uid);
+    if (r) { u.dmgA = Math.min(u.armor, r.a|0); u.dmgS = Math.min(u.structure, r.s|0); }
+    const destroyed = r ? !!r.dead : false;
+    u.pilot.missions++;
+    if (destroyed) {
+      u.status = 'destroyed';
+      const roll = d6()+d6();
+      C.reserve = C.reserve || [];
+      if (roll >= EJECT_TN) {
+        /* The pilot survives AS THEMSELVES. They keep their record and go to
+           the reserve pool for reassignment to a salvaged or spare machine.
+           Replacing them with a fresh pilot would quietly erase the campaign
+           history that makes anyone care about them. */
+        log.push(`${u.pilot.name} "${u.pilot.callsign}" punched out of the ${u.chassis} and walked away (${roll} on 2d6). Awaiting reassignment.`);
+        C.reserve.push(u.pilot);
+        u.pilot = { name:'', callsign:'', gunnery:4, piloting:5, kills:0, missions:0, status:'none' };
+      } else {
+        log.push(`${u.pilot.name} "${u.pilot.callsign}" did not get out of the ${u.chassis} (${roll} on 2d6).`);
+        u.pilot.status = 'dead';
+        C.fallen = C.fallen || [];
+        C.fallen.push({ name:u.pilot.name, callsign:u.pilot.callsign,
+                        missions:u.pilot.missions, kills:u.pilot.kills,
+                        lostOn:m.n, in:u.name });
+      }
+    }
+  });
+
+  // salvage. Enemy PV comes from the rolled lance, not an estimate.
+  const enemyPV = m.enemy.reduce((a,e)=>a+e.pv,0) || Math.round(lancePVof(m)*m.scale);
+  const base = Math.round(enemyPV / SALVAGE_DIV);
+  let sp = res.outcome==='won' ? base
+         : res.outcome==='withdrew' ? Math.round(base*WITHDRAW_MULT) : 0;
+  C.sp += sp;
+  m.spGained = sp; m.result = res.outcome; m.log = log;
+  log.unshift(`${res.outcome==='won'?'Mission accomplished':res.outcome==='withdrew'?'Withdrew under fire':'Mission failed'}. ${sp} SP recovered.`);
+
+  /* Wrecks are only claimable if you held the field, which means winning.
+     Withdrawing means leaving them behind, which is part of what makes the
+     withdraw decision cost something beyond salvage. */
+  if (res.outcome === 'won' && m.enemy.length) {
+    /* No prompt for a kill count. Chaining a blocking dialog onto an alert is
+       unpleasant, prompt is disabled in some contexts, and the player already
+       knows what they destroyed. The salvage panel lists the whole enemy lance
+       and they claim what they actually killed. It is their campaign. */
+    m.fieldHeld = true;
+    log.push('You held the field. Claim what you destroyed from the salvage panel.');
+  }
+
+  C.mission++;
+  picked = new Set();
+  save(); render();
+  alert(log.join('\n'));
+}
+/* A claimed wreck joins the company as a damaged machine with no pilot: you
+   recovered the hull, not a crew. Scrapping instead pays the same salvage
+   rate as anything else. */
+function claimWreck(mn, idx, mode) {
+  const m = C.missions.find(x=>x.n===mn); if (!m) return;
+  const e = m.enemy[idx]; if (!e || e.claimed) return;
+  if (mode === 'scrap') {
+    const sp = Math.round(e.pv / SALVAGE_DIV);
+    C.sp += sp; e.claimed = 'scrapped';
+    alert(`${e.name} stripped for ${sp} SP.`);
+  } else {
+    const parts = e.name.split(' ');
+    C.company.push({
+      uid: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+      name: e.name, chassis: parts.slice(0,-1).join(' ') || e.name,
+      variant: parts[parts.length-1], pv: e.pv, tons: e.tons,
+      armor: e.armor, structure: e.structure, role: e.role, isVehicle: false,
+      // recovered hulls come in beaten up; half the armour is gone
+      dmgA: Math.ceil(e.armor/2), dmgS: 0, status: 'ready',
+      pilot: { name:'', callsign:'', gunnery:4, piloting:5, kills:0, missions:0, status:'none' },
+      salvagedOn: mn
+    });
+    e.claimed = 'claimed';
+    alert(`${e.name} recovered. It needs repair and a pilot before it can field.`);
+  }
+  save(); render();
+}
+
+function lancePVof(m) {
+  return C.company.filter(u=>m.lance.includes(u.uid)).reduce((a,u)=>a+u.pv,0);
+}
+
+/* Check whether the Game Tracker left us a result on the way back. */
+function checkReturn() {
+  try {
+    const raw = localStorage.getItem('battletechMissionResult');
+    if (!raw) return false;
+    const r = JSON.parse(raw);
+    localStorage.removeItem('battletechMissionResult');
+    if (!C || r.mission !== C.mission) return false;
+    applyResult(r);
+    return true;
+  } catch(e) { return false; }
+}
+
+function manualResult() {
+  const out = prompt('How did it go? Type: won, lost, or withdrew');
+  if (!out) return;
+  const o = out.trim().toLowerCase();
+  if (!['won','lost','withdrew'].includes(o)) { alert('Type won, lost or withdrew.'); return; }
+  applyResult({ outcome:o });
+}
+
+/* --- setup --------------------------------------------------------------- */
+function newCampaign() {
+  const era = $('c-era').value, faction = $('c-faction').value;
+  const size = +$('c-size').value, n = +$('c-missions').value;
+  C = { schema:SCHEMA, name:`${factionName(faction)} campaign`, primaryEnemy:null, created:new Date().toISOString().slice(0,10),
+        era, faction, rules:'as', sp:0, mission:1, company:[], missions:[] };
+  C.company = rollCompany(era, size, faction);
+  C.primaryEnemy = pickPrimaryEnemy(faction, era);
+  C.missions = rollMissions(n, era, faction, C.primaryEnemy);
+  // a nominal lance is four units; scale opposition against that
+  const nominal = C.company.slice(0,4).reduce((a,u)=>a+u.pv,0) || 120;
+  // the opposition is gated by its OWN faction, not ours
+  C.missions.forEach(m => {
+    m.enemy = rollEnemyLance(era, Math.round(nominal*m.scale), m.enemyFaction);
+  });
+  picked = new Set();
+  save(); render();
+}
+
+function saveFile() {
+  const blob = new Blob([JSON.stringify(C,null,1)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${C.name.replace(/\W+/g,'-').toLowerCase()}-m${C.mission}.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function initSelects() {
+  $('c-era').innerHTML = ERAS.map(e=>`<option${e==='Clan Invasion'?' selected':''}>${e}</option>`).join('');
+  refreshFactionList();
+  $('c-era').onchange = refreshFactionList;
+}
+/* Only offer factions that existed during the chosen era. Clan Wolf in the
+   Star League was selectable before this, which is four centuries early. */
+function refreshFactionList() {
+  const era = $('c-era').value;
+  const keep = $('c-faction').value;
+  const list = playableFactions(era).sort((a,b)=>factionName(a).localeCompare(factionName(b)));
+  $('c-faction').innerHTML = list.map(k =>
+    `<option value="${k}"${k===keep?' selected':''}>${esc(factionName(k))}</option>`).join('');
+  if (!list.includes(keep)) $('c-faction').selectedIndex = 0;
+  const n = document.getElementById('era-note');
+  if (n) n.textContent = `${list.length} factions active in the ${era}.`;
+}
+
+$('btn-leave').onclick = () => {
+  if (!confirm('Write off every remaining wreck? They cannot be recovered later.')) return;
+  C.missions.forEach(m => m.enemy.forEach(e => { if (!e.claimed) e.claimed = 'left'; }));
+  save(); render();
+};
+
+$('btn-buy').onclick = () => {
+  const name = $('buy-pick').value; if (!name) return;
+  const u = CATALOGUE.find(x=>x.name===name); if (!u) return;
+  if (u.pv > C.sp) { alert(`${u.name} costs ${u.pv} SP and you have ${C.sp}.`); return; }
+  C.sp -= u.pv;
+  C.company.push({
+    uid: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+    name:u.name, chassis:u.chassis, variant:u.variant, pv:u.pv, tons:u.tons,
+    armor:u.armor, structure:u.structure, role:u.role, isVehicle:!!u.isVehicle,
+    dmgA:0, dmgS:0, status:'ready',
+    pilot:{ name:'', callsign:'', gunnery:4, piloting:5, kills:0, missions:0, status:'none' },
+    salvagedOn:null
+  });
+  save(); render();
+  alert(`${u.name} bought for ${u.pv} SP. It needs a pilot.`);
+};
+
+$('btn-new').onclick = newCampaign;
+$('btn-save').onclick = saveFile;
+$('btn-launch').onclick = launchOpFor;
+$('btn-tracker').onclick = sendToTracker;
+$('btn-result').onclick = manualResult;
+$('btn-load').onclick = () => $('file-in').click();
+$('btn-abandon').onclick = () => {
+  if (!confirm('This deletes the campaign from this browser. Save the file first if you want to keep it.')) return;
+  localStorage.removeItem(KEY); C=null; render();
+};
+$('file-in').onchange = ev => {
+  const f = ev.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    try {
+      const d = JSON.parse(String(rd.result));
+      if (!d || !d.company || !d.missions) throw new Error('not a campaign file');
+      C = migrate(d); picked = new Set(); save(); render();
+    } catch(e) { $('setup-status').innerHTML = '<span class="warn">That is not a campaign file.</span>'; }
+    ev.target.value = '';
+  };
+  rd.readAsText(f);
+};
+
+initSelects();
+load();
+render();
+loadCatalogue();
+if (C) checkReturn();
+</script>
+</body>
+</html>

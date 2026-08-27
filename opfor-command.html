@@ -129,6 +129,8 @@ select:focus,input:focus{outline:2px solid var(--draft);outline-offset:1px;borde
 .obj-type{font-weight:600;font-size:13.5px}
 .obj-name{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
 .obj-btns{margin-left:auto;display:flex;gap:6px}
+.obj-add-l{font-family:'Share Tech Mono',ui-monospace,monospace;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--dim,#7c7566);align-self:center}
 .obj-add{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;padding-top:9px;border-top:1.2px solid var(--rule)}
 .obj-add select{flex:1;min-width:180px}
 .obj-add input{flex:1;min-width:150px}
@@ -631,7 +633,19 @@ function resolveUnit(chassisName,variantName){
   const c=chassisByName(chassisName); if(!c) return null;
   const vn=(variantName||'').trim().toLowerCase();
   let v=null;
-  if(vn) v=c.v.find(x=>x.n.toLowerCase()===vn)||c.v.find(x=>x.n.toLowerCase().startsWith(vn));
+  if(vn){
+    const cn=(chassisName||'').trim().toLowerCase();
+    /* Vehicle variants are stored under their full Master Unit List name, e.g.
+       "Manticore Heavy Tank (LB-X)", while 'Mech variants are stored bare, e.g.
+       "AS7-D". A caller splitting a full name yields "(LB-X)", which matched
+       neither and fell through to c.v[0] — silently returning the WRONG
+       variant rather than failing. Try both spellings. */
+    const full=(cn+' '+vn).trim();
+    v = c.v.find(x=>x.n.toLowerCase()===vn)
+     || c.v.find(x=>x.n.toLowerCase()===full)
+     || c.v.find(x=>x.n.toLowerCase().startsWith(vn))
+     || c.v.find(x=>x.n.toLowerCase().startsWith(full));
+  }
   return [c,v||c.v[0],!!v];
 }
 
@@ -1393,6 +1407,23 @@ function vehMP(bfMove){
   const walk=g?Math.max(1,Math.round(parseInt(g[1],10)/2)):0;
   return [walk, Math.ceil(walk*1.5), 0];
 }
+/* Accepts an array, an object keyed by era, or nothing, and always returns an
+   array of faction names or null. Defensive because the vehicle catalogue and
+   the 'Mech catalogue disagree about this field's shape. */
+function asFactionList(x){
+  if(Array.isArray(x)) return x.length?x:null;
+  if(x && typeof x==='object'){
+    const out=new Set();
+    for(const k of Object.keys(x)){
+      const v=x[k];
+      if(Array.isArray(v)) v.forEach(n=>out.add(n));
+      else if(typeof v==='string') out.add(v);
+    }
+    return out.size?[...out]:null;
+  }
+  return null;
+}
+
 function normaliseVehicles(raw){
   const out=[];
   for(const c of raw||[]){
@@ -1404,10 +1435,21 @@ function normaliseVehicles(raw){
         n:v.full_name||((c.chassis+' '+v.name).trim()),
         r:v.role||'Skirmisher',
         d:[d.short|0,d.medium|0,d.long|0,d.extreme|0],
+        /* Armour and structure were missing entirely, so every vehicle
+           rendered "ARM undefined/undefined" and had no damage track: the
+           Fresh/Damaged/Crippled state is derived from these. Overheat is
+           always zero because vehicles carry no heat sinks. */
+        a:v.bf_armor|0, s:v.bf_structure|0, o:0,
         b:v.bf_abilities||'', m:vehMP(v.bf_move), pv:v.pv|0, bv:v.bv|0,
         t:(v.tons!=null?v.tons:c.tons)|0,
         tech:(v.technology||c.technology||'').includes('Clan')?'C':'IS',
-        e:eraOfVariant(v), f:(v.factions||c.factions||[]),
+        e:eraOfVariant(v),
+        /* 'Mechs carry factions as an array; the vehicle pull writes an object
+           keyed by era, and an empty one is still truthy. Passing that through
+           made buildGenFilters throw on for...of, which killed afterData and
+           with it readHandoff, so no imported force resolved at all. Coerce to
+           an array whatever shape arrives. */
+        f:asFactionList(v.factions) || asFactionList(c.factions) || [],
         w:[], hs:'',
         veh:true, motive:motiveOf(v.bf_move), bfMove:v.bf_move||''
       });
@@ -1417,6 +1459,7 @@ function normaliseVehicles(raw){
   }
   return out;
 }
+let dataReady=false;
 async function loadVehicles(){
   try{
     const r=await fetch('vehicles.json?v=1',{cache:'force-cache'});
@@ -1426,7 +1469,9 @@ async function loadVehicles(){
     DB=DB.concat(vs).sort((a,b)=>a.c.localeCompare(b.c));
     const st=document.getElementById('dataStatus');
     if(st) st.textContent += ` Plus ${vs.length} vehicle chassis.`;
-    buildChassis(); buildGenFilters();
+    /* afterData rebuilds these straight after us on the main path; on the
+       fallback path it has already run, so rebuild to pick the vehicles up. */
+    if(dataReady){ buildChassis(); buildGenFilters(); }
   }catch(e){ /* vehicles.json is optional */ }
 }
 
@@ -1443,8 +1488,12 @@ async function loadData(){
       if(n.length>FALLBACK.length){
         DB=n;
         st.textContent=`Full roster loaded. ${DB.length} chassis, ${DB.reduce((a,x)=>a+x.v.length,0)} variants.`;
-        afterData();
-        return loadVehicles();
+        /* Vehicles must be in DB BEFORE the hand-off is read. Loading them
+           after afterData() meant readHandoff could not resolve a single
+           vehicle in an incoming force, so a campaign lance containing a tank
+           arrived short. Await them first, then read the hand-off. */
+        await loadVehicles();
+        return afterData();
       }
     }
   }catch(e){}
@@ -1454,6 +1503,7 @@ async function loadData(){
   afterData();
 }
 function afterData(){
+  dataReady=true;
   buildChassis(); buildGenFilters(); readHandoff();
   document.getElementById('chassisFind').oninput=buildChassis;
   buildPChassis();
@@ -1715,7 +1765,10 @@ const factionAlive=(f,i)=>i===null||(factionMinEra(f)<=i&&factionMaxEra(f)>=i);
 function buildGenFilters(){
   const fs=new Map(), es=new Set();
   for(const c of DB) for(const v of c.v){
-    for(const f of (v.f||[])) fs.set(f,(fs.get(f)||0)+1);
+    /* One malformed record must not take out the whole page: this runs
+       inside afterData, and a throw here stops readHandoff from ever running. */
+    const fl=Array.isArray(v.f)?v.f:asFactionList(v.f)||[];
+    for(const f of fl) fs.set(f,(fs.get(f)||0)+1);
     if(v.e) es.add(v.e);
   }
   const eras=[...es].sort((a,b)=>{const i=ERAORD.indexOf(a),j=ERAORD.indexOf(b);
@@ -1971,12 +2024,72 @@ function payloadToList(raw){
 }
 function readHandoff(){
   const h=location.hash||'';
-  const m=/[#&](?:force|lance)=([^&]+)/.exec(h);
-  if(!m) return;
   const rm=/[#&]rules=(classic|as|alpha)/i.exec(h);
   if(rm) setRuleset(/^a/i.test(rm[1])?'as':'classic');
-  const r=payloadToList(m[1]);
-  if(r&&r.list&&r.list.length) ingest(r.list,r.meta,'the Lance Builder');
+
+  const m=/[#&](?:force|lance)=([^&]+)/.exec(h);
+  if(m){
+    const r=payloadToList(m[1]);
+    if(r&&r.list&&r.list.length) ingest(r.list,r.meta,'the Lance Builder');
+  }
+
+  /* The Campaign Tracker sends the mission objective as well. Without it the
+     player arrives at a Hold the Line mission and has to retype the objective
+     they were just briefed on, and until they do the orders describe a
+     straight engagement rather than the mission. */
+  const om=/[#&]obj=([^&]+)/.exec(h);
+  if(om){
+    try{
+      const list=JSON.parse(decodeURIComponent(om[1]));
+      for(const o of (Array.isArray(list)?list:[list])){
+        if(!o) continue;
+        /* An objective with a name but no type comes from a campaign saved
+           before the field existed. Take it as a generic objective rather than
+           dropping it: a named objective with the wrong type is far better
+           than none at all. */
+        if(!o.type && !o.name) continue;
+        objectives.push({ id:objSeq++, type:String(o.type||'destroy').slice(0,20),
+                          name:String(o.name||'Mission objective').slice(0,50), reachable:true });
+      }
+      if(objectives.length) renderOrders();
+    }catch(e){ /* malformed objective, carry on without it */ }
+  }
+
+  /* The Campaign Tracker sends the player's own lance too, so orders can use
+     focus fire and called shots against the machines actually on the table
+     rather than a generic opponent. */
+  const pm=/[#&]players=([^&]+)/.exec(h);
+  if(pm){
+    const r=payloadToList(pm[1]);
+    if(r&&r.list&&r.list.length){
+      let added=0; const lost=[];
+      for(const e of r.list){
+        const hit=resolveEntry(e);
+        /* Say what could not be found. Dropping units silently means a player
+           whose catalogue has not loaded sees three of their four 'Mechs and
+           has no idea why. */
+        if(!hit||!hit[0]||!hit[1]){
+          lost.push([e.chassis,e.variant].filter(Boolean).join(' ')||e.raw||'unnamed');
+          continue;
+        }
+        const p=mkPlayer(hit[0],hit[1],e.pilot||'');
+        if(e.gun!=null) p.gun=e.gun;
+        if(e.pil!=null) p.pil=e.pil;
+        players.push(p);
+        added++;
+      }
+      if(added||lost.length){
+        renderPlayers(); refreshAllOrders();
+        const st=document.getElementById('impStatus');
+        if(st){
+          st.className = lost.length ? 'status warn' : 'status ok';
+          st.textContent = `Imported ${added} of your own units from the Campaign Tracker.`
+            + (lost.length ? ` Could not find ${lost.length}: ${lost.slice(0,4).join(', ')}`
+                + (lost.length>4?'…':'') + '. The full roster may still be loading.' : '');
+        }
+      }
+    }
+  }
 }
 
 /* ---------- render ---------- */
@@ -2165,7 +2278,15 @@ function renderPlayers(){
     const [uid,val]=b.dataset.pmoved.split(':'); const p=players.find(x=>x.uid==uid);
     if(p){ p.moved=val; renderPlayers(); refreshAllOrders(); renderOrders(); }});
 }
+/* Which type the add-form dropdown starts on. It defaulted to the first entry,
+   so an imported "Reach and hold" objective sat directly above a dropdown
+   reading "Destroy a structure or position" and looked like the objective had
+   been set wrongly. Match the most recent objective instead, and label the row
+   so it reads as a form for adding another rather than a display of the
+   current one. */
+let objAddDefault='';
 function renderObjectiveBar(){
+  if(objectives.length) objAddDefault=objectives[objectives.length-1].type;
   const bar=document.getElementById('objectiveBar');
   if(!bar) return;
   const rows=objectives.map(o=>{
@@ -2188,7 +2309,9 @@ function renderObjectiveBar(){
     </div>
     ${rows||'<div class="obj-empty">No objectives. The lance fights a straight engagement.</div>'}
     <div class="obj-add">
-      <select id="objType">${Object.entries(OBJ_TYPES).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}</select>
+      <span class="obj-add-l">${objectives.length?'Add another':'Add an objective'}</span>
+      <select id="objType">${Object.entries(OBJ_TYPES).map(([k,v])=>
+        `<option value="${k}"${k===objAddDefault?' selected':''}>${v.label}</option>`).join('')}</select>
       <input id="objName" type="text" placeholder="Name (optional), e.g. comms tower">
       <button class="btn ghost sm" id="objAdd">+ Add</button>
     </div>
