@@ -271,6 +271,14 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
 </head>
 <body>
 <style>
@@ -2842,5 +2850,39 @@ setRuleset('classic');
 loadData();
 window.addEventListener('hashchange',readHandoff);
 </script>
+
+<style>
+  .nl-box { max-width:1100px; margin:34px auto 8px; padding:18px 20px;
+    border:1px solid rgba(255,140,0,.28); border-radius:10px;
+    background:linear-gradient(135deg, rgba(255,140,0,.06), rgba(20,20,20,.9));
+    display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+  .nl-copy { flex:1; min-width:240px; line-height:1.6; }
+  .nl-copy strong { display:block; color:#ff8c00; font-family:'Rajdhani',sans-serif;
+    font-size:1.02rem; letter-spacing:.02em; }
+  .nl-copy span { color:#8b8578; font-size:.82rem; }
+  .nl-form { display:flex; gap:8px; flex-wrap:wrap; }
+  .nl-form input { background:#111; border:1px solid #333; color:#ddd;
+    padding:11px 14px; border-radius:4px; font-size:.92rem; min-width:200px; }
+  .nl-form button { background:#ff8c00; color:#000; border:none; padding:11px 20px;
+    border-radius:4px; font-weight:700; font-family:'Rajdhani',sans-serif;
+    letter-spacing:.05em; text-transform:uppercase; cursor:pointer; white-space:nowrap; }
+  .nl-form button:hover { background:#ffa333; }
+  @media (max-width:620px){ .nl-form, .nl-form input, .nl-form button { width:100%; } }
+</style>
+
+<!-- ── newsletter ─────────────────────────────────────────────── -->
+<div class="nl-box">
+  <div class="nl-copy">
+    <strong>Built this force? There is more coming.</strong>
+    <span>I email when a tool ships or gets a real update. Roughly monthly, never more.</span>
+  </div>
+  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank">
+    <input type="email" name="EMAIL" required placeholder="Email address" aria-label="Email address">
+    <div style="position:absolute;left:-5000px" aria-hidden="true">
+      <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
+    </div>
+    <button type="submit">Keep me posted</button>
+  </form>
+</div>
 </body>
 </html>
