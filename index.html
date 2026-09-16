@@ -224,6 +224,22 @@
             .tool-hero-preview { display: none; }
             .about-strip { padding: 20px; }
         }
+
+        /* Mech guide cards */
+        .mech-card-image {
+            background-color: #0d0d0d;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .mech-card-meta {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #ff8c00;
+            margin-bottom: 10px !important;
+        }
     </style>
 <link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://battletechhq.com/">
@@ -251,6 +267,7 @@
                 <ul>
                     <li><a href="#getting-started">Getting Started</a></li>
                     <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="mechs.html">Mech Guides</a></li>
                     <li><a href="paint-tool.html">Paint Tool</a></li>
                     <li><a href="#solo">Solo Play</a></li>
                     <li><a href="#painting">Painting</a></li>
@@ -393,6 +410,23 @@
         </div>
 
         <!-- ── GAMEPLAY ──────────────────────────────────────────── -->
+        <div class="section-divider" id="mechs">
+            <h2>&#9881; Mech Guides</h2>
+        </div>
+        <p style="color:#bbb; line-height:1.7; max-width:820px; margin:0 0 26px;">Every variant ranked, with the numbers behind each call. Not just what a mech is, but how it actually plays and what it costs you when it goes wrong.</p>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/marauder-schematic.png');"></div>
+                <div class="article-card-content">
+                    <h3>Marauder</h3>
+                    <p class="mech-card-meta">75 tons &middot; Inner Sphere &middot; 36 variants</p>
+                    <p>The most recognisable heavy in the game, and the one most people play wrong. Every variant ranked, the heat maths behind the 3R, and how to kill one.</p>
+                    <a href="marauder.html" class="read-more">Read More &rarr;</a>
+                </div>
+            </div>
+        </div>
+        <p style="margin:26px 0 50px;"><a href="mechs.html" style="color:#ff8c00; font-weight:bold; text-decoration:none;">All mech guides &rarr;</a></p>
+
         <div class="section-divider" id="gameplay">
             <h2>⚔️ Gameplay & Strategy</h2>
         </div>
@@ -651,6 +685,7 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="mechs.html">Mech Guides</a></li>
                     <li><a href="game-tracker.html">Game Tracker</a></li>
                     <li><a href="opfor-command.html">OpFor Command</a></li>
                     <li><a href="campaign.html">Campaign Tracker</a></li>

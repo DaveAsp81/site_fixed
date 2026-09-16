@@ -29,6 +29,40 @@
             margin: 40px 0 30px;
         }
         .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
         .mech-hero .sub {
             font-family: 'Rajdhani', sans-serif;
             letter-spacing: 0.1em;
@@ -220,12 +254,23 @@
         <div class="mech-hero">
             <h1>Marauder</h1>
             <p class="sub">75 tons &middot; Inner Sphere &middot; 36 variants &middot; 2612 to 3146</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/marauder-schematic.webp" type="image/webp">
+                    <img src="assets/images/marauder-schematic.png"
+                         alt="Front elevation schematic of a Marauder BattleMech, showing the arm-mounted PPC gauntlets and the cockpit slung beneath the torso"
+                         width="356" height="554" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Front elevation. The main guns sit in the arms, which is why an arm hit takes half its output off the field.</figcaption>
+            </figure>
             <div class="verdict-box">
                 <p>Everyone knows what a Marauder looks like. Twin PPCs slung in armoured gauntlets, that hunched forward stance, the cockpit tucked underneath where a head has no business being. It has been on the box art, through the novels, and in more lances than any other heavy in the game. Four centuries of production and 36 variants off the same bones.</p>
                 <p>It is also, in the configuration most of you have actually fielded, a mech that cannot fire its own main guns two turns running without cooking itself. The MAD-3R carries 16 single heat sinks. Its two PPCs generate 20 heat between them. Walk a hex and that is 21 against 16 dissipation, so you are up five every turn you do the one thing the machine was designed for. By turn three you are down three movement points, carrying a to-hit penalty, and rolling to avoid a shutdown.</p>
                 <p>That is not a design failure. That is what happens when you build a machine around Star League heat sinking and then hand the rebuild to techs who have not seen a double heat sink in two hundred years. The MAD-2R, built when the parts were still available, fires both ER PPCs every turn forever and never notices.</p>
                 <p><strong>So what is it good for.</strong> 75 tons, 4/6, no jump on most fits. Long reach, thick plate, slow feet. It is the anchor of a firing line, not a duellist. Pick your ground before the first turn because at that speed you are not walking out of a bad decision. Give it a lane, make the enemy come down it, and keep one PPC in reserve on hot turns instead of alphaing and then spending two turns as an expensive statue.</p>
                 <p><strong>And if you are picking a variant:</strong> the <strong>MAD-3D</strong> drops the autocannon for four more heat sinks and solves the whole problem for 107 BV. The <strong>MAD-5S</strong> is the definitive modern sniper fit. The <strong>MAD-11D</strong> is the strongest late-era Marauder you can field without reaching for a named machine. And the <strong>MAD-4X</strong> with its binary laser cannons is a trap, no matter how good Blazers look on paper.</p>
+            </div>
             </div>
         </div>
 
