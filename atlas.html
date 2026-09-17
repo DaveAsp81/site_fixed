@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Atlas variant ranked by a MechTech. Why the engine matters more than the guns, what walk three actually costs you, how to pilot one and how to kill one.">
+    <meta name="keywords" content="Atlas BattleTech, best Atlas variant, AS7-D, AS7-S3, AS7-K, Atlas II, BattleTech assault mech">
+    <title>Atlas: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/atlas">
+    <meta property="og:title" content="Atlas: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 28 Atlas variants ranked, the engine argument, and what a hundred tons at walk three really means.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/atlas">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/#getting-started">Getting Started</a></li>
+                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Atlas</p>
+
+        <div class="mech-hero">
+            <h1>Atlas</h1>
+            <p class="sub">100 tons &middot; Inner Sphere &middot; 28 variants &middot; 2755 to 3140</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/atlas-schematic.webp" type="image/webp">
+                    <img src="assets/images/atlas-schematic.png"
+                         alt="Technical illustration of an AS7-D Atlas BattleMech, showing the skull-shaped Death’s Head cockpit, the AC/20 barrel in the right torso and the LRM 20 launcher on the left shoulder"
+                         width="480" height="765" loading="eager" decoding="async">
+                </picture>
+                <figcaption>The Death’s Head assembly, antennas and all. They spent a year on the head alone, and the folding satellite dish stows inside it.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Kerensky wrote the brief himself. Not a committee, not a procurement office. In 2755, in the middle of the Cameron Edicts, the commanding general of the SLDF asked for a machine as powerful and impenetrable as could be built and as ugly and foreboding as anyone could conceive, so that fear would be doing half the work before a shot was fired.</p>
+                <p>Here is the part that still makes me uncomfortable when I am up to my elbows in one. It was not built for an enemy. The Star League's own member states were arming themselves, and the Atlas was meant to remind them who was in charge. The most recognisable war machine in history was designed to intimidate its own side.</p>
+                <p>They spent a full year on the head alone. Not the guns, not the engine. The head, getting the balance right between a working cockpit and a skull that would make a veteran sweat. It is roomy in there too. There is a folding satellite dish tucked inside for surface-to-space work, and you stow it before anyone starts shooting.</p>
+                <p><strong>What you have actually got.</strong> A hundred tons on a Foundation Type 10X frame, a Vlar 300 in the chest, nineteen tons of Durallex Special Heavy over the top, and a cruising speed of about thirty-two kilometres an hour. It does not catch anything and it does not escape anything. What it does is arrive, and then decide how the afternoon goes.</p>
+                <p><strong>And here is the one that actually gets people killed.</strong> Every Atlas ever built carries the same armour, all 28 of them. What changes is the engine, and more to the point where they put it.</p>
+                <p>The original carries a standard fusion engine and the whole thing sits in the chest. Blow a side torso clean off an AS7-D and it keeps walking, because there is nothing vital in there. An extralight engine gets you the same power for half the weight, and the way it manages that is by running the other half of itself out through the side torsos. Take one of those and the engine is finished, and so is the pilot.</p>
+                <p>The weight that saves is not small, and it is what pays for the Gauss rifles, the extended range lasers and the ECM on the later fits. That is the trade: about ten tons of engine swapped for bigger guns and a machine that dies to one good side torso hit instead of shrugging it off. 14 of the 28 took that deal. From the front you cannot tell which is which.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Pull the panels off one and the first thing you notice is that almost nothing on it is subtle, and that is deliberate. Kerensky wanted the weapons visible. Not efficient, not tidy, visible. A machine you can see is coming to kill you is a machine that might not have to.</p>
+            <p>The FarFire Maxi-Rack on the left shoulder is a twenty-tube launcher that is not actually twenty tubes. They could not fit them, so it cycles the missiles out in waves of five across about ten seconds. First time you watch one fire you think something has jammed. It has not. That is just how it works, and the bay underneath holds two hundred and forty rounds, which is twelve full salvos and no more.</p>
+            <p>The Defiance 'Mech Hunter AC/20 is the reason anyone respects the machine and it is also the part I swear at most. Ten rounds in the magazine. No cooling jacket. Somebody in the design office decided the weight was better spent elsewhere, so the barrel assembly runs hot and you learn to hear it.</p>
+            <p>Four Defiance B3M mediums, and this is the bit that catches people out: two of them face backwards. They are there to discourage anything that fancies its chances behind you, which at walk three is a reasonable worry. Then a TharHes Maxi six-rack with fifteen reloads for the close work.</p>
+            <p>And the thing every new pilot asks about. There is an aperture between the missile launchers that looks exactly like a gun port. It is not. It is an omnicoupling, power and coolant lines, and the number of people who have asked me what calibre it is would surprise you.</p>
+            <p>Two more things worth knowing. Nineteen tons of Durallex, laid on heaviest across the front chest and the legs, because the design assumes you are walking straight at the problem. And it has hands. Real hand actuators, on a hundred ton machine. There are enough accounts of Atlases picking up mediums and throwing them that I am inclined to believe some of them.</p>
+
+            <div class="heat-callout">
+                <h3>The engine question, which is the whole argument</h3>
+                <p>Armour is what stops the first hits, and every Atlas has the maximum. What differs is how much punishment the frame underneath will take once that armour is gone, and that comes down to where the engine lives.</p>
+                <table class="heat-table">
+                    <tr><th>Engine</th><th>Where it sits</th><th>Lose a side torso</th><th>Frame rating</th></tr>
+                    <tr><td>Standard fusion</td><td>All in the chest</td><td>Keeps walking and keeps shooting</td><td>8</td></tr>
+                    <tr><td>Light fusion</td><td>Mostly chest, some in the sides</td><td>Survives it, hurt</td><td>5</td></tr>
+                    <tr><td>Extralight</td><td>Half of it in the side torsos</td><td class="bad">Engine gone, machine gone</td><td class="bad">4</td></tr>
+                </table>
+                <p style="margin-top:16px;">Every Atlas looks identical from the front. The 14 standard-engine variants do the job the silhouette promises. The rest bought reach, electronics or speed with the survivability, and against anything that can concentrate on a side torso they are a very expensive heavy. Worth noting Kerensky never specified CASE on the D either, so the original has an ammunition problem the later Combine fits went and fixed. If you want the modern guns without the modern risk, the light engine fits, the <strong>AS7-S2</strong> and <strong>AS7-S3</strong>, are the compromise worth making.</p>
+            </div>
+
+                        <h2>Six hundred years of history</h2>
+            <p>It first went to war in the Amaris Civil War, and it did the job it was built for. Everyone knows Kerensky kicked in the Usurper's palace doors, and everyone remembers he did it in an Orion. Fewer people remember who got him to the doors. That was Aaron DeChavilier, Kerensky's own friend, who walked an Atlas through the fire and broke the wall around the complex so the rest could follow. He died later in the Pentagon Worlds, killed by rebels, which is not the ending you would write for him.</p>
+            <p>Then comes the part I find genuinely strange. After a war like that, Kerensky wanted every Atlas going with him on Operation EXODUS. Of the MechWarriors who told him no and stayed behind, two thirds of them were Atlas pilots. Make of that what you like. The machine built to keep the member states in line ended up in the hands of people who would not follow the man who commissioned it.</p>
+            <p>Those machines scattered across the Successor States, and the lines on Al Na'ir, Hesperus II and Quentin kept turning them out right through the Succession Wars. Most commanders would not touch the design. When the Helm Memory Core turned up and everyone else was rebuilding their old designs with recovered tech, the Combine finally produced the AS7-K in 3049, which landed in service just in time for the Clans to arrive.</p>
+            <p>And then look where it finished up. In the Star League era the D was issued to Rim Worlds Republic - Terran Corps, Star League units generally. By the ilClan era the only people listed as fielding one are Periphery forces.</p>
+            <p>Six centuries from SLDF flagship to Periphery salvage. Not because it stopped working. Because everyone who could build something newer did, and the old ones kept getting patched, scavenged and handed down until they ended up with whoever could still keep one running. It says something that they are still running at all.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Atlases available in the same era</strong>, not against the rest of the game. Whether a hundred tons is the right thing to bring at all is a separate question.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 2 of the 28 Atlas variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 28 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-D: still the answer</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 1897 &middot; PV 52 &middot; Juggernaut &middot; 2755<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 20 Single &middot; 300 Fusion Engine<br>
+  4x Medium Laser, 1x LRM 20, 1x SRM 6, 1x AC/20</p>
+  <p>The original and still the answer. AC/20, LRM 20, SRM 6, four mediums, standard engine, and more armour than anything else on the field. Nothing here is clever. That is the point. Every commander who fields an Atlas for the first time fields a D, and most of them should keep fielding it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-K: where it starts arguing with itself</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2175 &middot; PV 45 &middot; Sniper &middot; 3049<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 20 Single &middot; 300 XL Engine<br>
+  2x ER Large Laser, 1x Anti-Missile System, 1x LRM 20, 1x Gauss Rifle, 2x Medium Pulse Laser</p>
+  <p>The Helm Memory Core Atlas, built by the Combine in 3049 and in service just as the Clans arrived. An Imperator Dragon&#x27;s Fire Gauss where the autocannon was, Victory Nickel Alloy ER larges in the arms, and CASE in the side torsos at last. It is also where the chassis starts arguing with itself: the Vlar XL takes the structure from 8 down to 4. They kept twenty single heat sinks too, so working both lasers hard will cook you. Beaten outright by the AS7-C, which costs 12 less BV and gives up nothing it carries.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-S: the D brought forward properly</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 1929 &middot; PV 52 &middot; Juggernaut &middot; 3050<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 15 IS Double &middot; 300 Fusion Engine<br>
+  4x Medium Laser, 1x LRM 20, 1x SRM 6, 2x Streak SRM 2, 1x AC/20</p>
+  <p>The FedCom upgrade: five heat sinks removed and the rest made double, the weight spent on two rear-firing Streak 2s. Crucially the standard engine stays, so structure 8. They stopped building them after the civil war and both halves kept using them anyway, which is the best review a machine can get.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-S3: the best modern fit</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2378 &middot; PV 54 &middot; Sniper &middot; 3062<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 14 IS Double &middot; 300 Light Engine<br>
+  2x PPC, 3x Small Laser, 1x Anti-Missile System, 1x LRM 15, 1x Gauss Rifle</p>
+  <p>PPCs, Gauss, anti-missile, ECM, light engine. The most defensively complete Atlas ever built and the damage is there across every band. If your era allows it, this is the one.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-K3: a hundred tons that jumps</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2346 &middot; PV 45 &middot; Sniper &middot; 3083<br>
+  Walk 4 / Run 6 / Jump 3 &middot; 10 IS Double &middot; 400 XL Engine<br>
+  2x ER Large Laser, 1x Gauss Rifle, 1x Streak SRM 4</p>
+  <p>They pulled the Streak 6 racks off a K2 and put three jump jets in the hole. A hundred tons that jumps changes where an Atlas can stand and what it can threaten, and that is worth more than the numbers suggest. The XL engine is still the risk it always was.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS8-S: the late-era gun</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2789 &middot; PV 56 &middot; Sniper &middot; 3138<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 16 IS Double &middot; 300 XL (Clan) Engine<br>
+  2x ER Large Laser, 1x Streak SRM 6, 1x LRM 5, 2x ER Medium Laser, 1x Improved Heavy Gauss Rifle</p>
+  <p>An Improved Heavy Gauss Rifle, ECM, and the best damage numbers of any Atlas across every range band. A Clan XL keeps the structure at five rather than four. The best late-era Atlas there is.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS8-KE: the sensible late one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2658 &middot; PV 53 &middot; Juggernaut &middot; 3140<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 12 IS Double &middot; 300 Fusion Engine<br>
+  2x ER Large Laser, 1x MML 5, 1x Gauss Rifle</p>
+  <p>The AS8-K&#x27;s sensible cousin: standard fusion engine, full structure, and it gives up almost nothing in damage to get it. If you want a late Atlas that still soaks like an Atlas, this is it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AS7-A: five launchers and a prayer</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 1787 &middot; PV 52 &middot; Juggernaut &middot; 2954<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 20 Single &middot; 300 Fusion Engine<br>
+  2x Medium Laser, 5x SRM 6, 1x LRM 10, 1x AC/5</p>
+  <p>Capellan, 2944, five Ceres Arms six-racks and a Deleon 5 where the big gun should be. Terrifying inside three hexes and useless outside them. They built it twelve years before they lost their last Atlas factory, which tells you something about how the Confederation was doing.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> You are not catching anything and you are not escaping anything, so stop trying. Pick the ground you want the fight to happen on and make the enemy come to it, because they usually have to. Objectives, chokepoints, the line your lighter machines are standing behind. Walk, do not run, unless you have a reason: run five gets you one extra hex and costs you accuracy you cannot spare at a hundred tons.</p>
+            <p><strong>Fighting one.</strong> Do not stand in front of it. Inside the AC/20's reach, an Atlas will take a limb off something the size of a Warhammer in a turn. Stay at long range where it only has the LRM 20 and grind it down, or get behind it, because walk three means it turns slowly and the rear armour is the thinnest thing on the machine. Against any of the XL fits, concentrate on a side torso and the fight ends early.</p>
+            <p><strong>What I see go wrong.</strong> People push an Atlas forward alone because it feels invincible, and it is not, it is just slow to die. An unsupported Atlas gets circled by two mediums and taken apart from behind over six turns. It is an anchor for a line, not a line on its own.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>Worth knowing if you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>. The Atlas is unusual in that it splits almost evenly between two very different role tags, so which variant you field changes the game completely.</p>
+            <ul>
+                <li>Juggernaut fits, including the <strong>AS7-D</strong> itself, get short range weighting and the strongest aggression modifier in the engine. They come straight at you and they do not stop.</li>
+                <li>Sniper fits like the <strong>AS7-K</strong>, <strong>AS7-S2</strong> and <strong>AS8-S</strong> get long range weighting and a negative aggression modifier. Same silhouette, and it will sit at range and shoot rather than close.</li>
+                <li>The <strong>AS7-K4</strong> is the only Atlas tagged Brawler, sitting between the two.</li>
+            </ul>
+            <p>That is a genuinely useful dial for a scenario. An enemy AS7-D forces you to deal with it now. An enemy AS7-S3 makes you go and get it, which is a much harder problem when it is standing on the objective.</p>
+
+                        <h2>All 28 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0. One variant carries no introduction date because the Master Unit List does not record one.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">AS7-D</td><td>2755</td><td>1897</td><td>52</td><td>Juggernaut</td><td class="wpn">4x Medium Laser, 1x LRM 20, 1x SRM 6, 1x AC/20</td><td class="num">5/5/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS7-D-DC</td><td>2776</td><td>1858</td><td>52</td><td>Juggernaut</td><td class="wpn">2x Medium Laser, 1x LRM 20, 1x SRM 6, 1x AC/20</td><td class="num">5/5/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">C</td><td>2830</td><td>2340</td><td>55</td><td>Juggernaut</td><td class="wpn">4x Medium Laser, 1x LRM 20, 1x Streak SRM 6, 1x Ultra AC/20</td><td class="num">6/6/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C 2</td><td>2840</td><td>2736</td><td>57</td><td>Juggernaut</td><td class="wpn">2x ER Large Laser, 1x ER PPC, 1x Streak SRM 6, 2x Medium Pulse Laser, 1x LB 20-X AC</td><td class="num">6/6/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">C 3</td><td>2842</td><td>2606</td><td>62</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Arrow IV, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">AS7-RS</td><td>2892</td><td>1849</td><td>48</td><td>Juggernaut</td><td class="wpn">2x Large Laser, 1x LRM 15, 1x SRM 4, 1x AC/10</td><td class="num">3/4/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">AS7-A</td><td>2954</td><td>1787</td><td>52</td><td>Juggernaut</td><td class="wpn">2x Medium Laser, 5x SRM 6, 1x LRM 10, 1x AC/5</td><td class="num">4/5/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">AS7-WGS (Samsonov)</td><td>3025</td><td>1884</td><td>48</td><td>Juggernaut</td><td class="wpn">2x PPC, 1x AC/20</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS7-D (Danielle)</td><td>3028</td><td>1976</td><td>53</td><td>Juggernaut</td><td class="wpn">6x Medium Laser, 1x LRM 20, 1x AC/20</td><td class="num">5/5/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">AS7-K</td><td>3049</td><td>2175</td><td>45</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Anti-Missile System, 1x LRM 20, 1x Gauss Rifle, 2x Medium Pulse Laser</td><td class="num">3/3/3</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by AS7-C</span></td></tr>
+<tr><td class="vname">AS7-C</td><td>3050</td><td>2163</td><td>51</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Anti-Missile System, 1x LRM 20, 1x Gauss Rifle, 1x Medium Pulse Laser</td><td class="num">3/4/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS7-CM</td><td>3050</td><td>2036</td><td>54</td><td>Sniper</td><td class="wpn">1x Anti-Missile System, 1x C3 Computer (Master), 1x ER Large Laser, 1x LRM 20, 1x Gauss Rifle, 2x Medium Pulse Laser</td><td class="num">3/4/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS7-K-DC</td><td>3050</td><td>2158</td><td>46</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Anti-Missile System, 1x LRM 20, 1x Gauss Rifle, 1x Medium Pulse Laser</td><td class="num">3/3/3</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by AS7-C</span></td></tr>
+<tr><td class="vname">AS7-S</td><td>3050</td><td>1929</td><td>52</td><td>Juggernaut</td><td class="wpn">4x Medium Laser, 1x LRM 20, 1x SRM 6, 2x Streak SRM 2, 1x AC/20</td><td class="num">5/5/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS7-S2</td><td>3061</td><td>2378</td><td>51</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x LRM 15, 1x Heavy Gauss Rifle</td><td class="num">4/5/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">AS7-S3</td><td>3062</td><td>2378</td><td>54</td><td>Sniper</td><td class="wpn">2x PPC, 3x Small Laser, 1x Anti-Missile System, 1x LRM 15, 1x Gauss Rifle</td><td class="num">5/5/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS7-S3-DC</td><td>3064</td><td>2276</td><td>52</td><td>Sniper</td><td class="wpn">2x PPC, 1x Anti-Missile System, 1x LRM 15, 1x Gauss Rifle</td><td class="num">4/5/5</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">AS7-Dr</td><td>3070</td><td>2101</td><td>55</td><td>Juggernaut</td><td class="wpn">4x Medium Laser, 1x LRM 20, 1x Streak SRM 6, 1x Heavy PPC</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS8-D</td><td>3074</td><td>2432</td><td>54</td><td>Juggernaut</td><td class="wpn">2x Small Laser, 2x Light PPC, 1x Rotary AC/5, 2x MML 9, 2x ER Small Laser, 1x Snub-Nose PPC</td><td class="num">5/5/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">AS7-00 (Jurn)</td><td>3081</td><td>2058</td><td>51</td><td>Sniper</td><td class="wpn">2x Light PPC, 1x Thunderbolt 15, 1x HVAC/10, 1x Snub-Nose PPC</td><td class="num">4/4/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">AS7-K2</td><td>3082</td><td>2160</td><td>48</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Gauss Rifle, 2x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS7-K3</td><td>3083</td><td>2346</td><td>45</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Gauss Rifle, 1x Streak SRM 4</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS7-K4</td><td>3098</td><td>2153</td><td>47</td><td>Brawler</td><td class="wpn">2x ER PPC, 1x Rotary AC/5, 2x SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">AS7-S4</td><td>3109</td><td>2568</td><td>55</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">AS8-S</td><td>3138</td><td>2789</td><td>56</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 1x Streak SRM 6, 1x LRM 5, 2x ER Medium Laser, 1x Improved Heavy Gauss Rifle</td><td class="num">6/6/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS8-K</td><td>3140</td><td>2668</td><td>51</td><td>Juggernaut</td><td class="wpn">2x ER Large Laser, 1x Streak SRM 6, 1x MML 5, 1x Gauss Rifle, 2x ER Medium Laser</td><td class="num">5/5/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AS8-KE</td><td>3140</td><td>2658</td><td>53</td><td>Juggernaut</td><td class="wpn">2x ER Large Laser, 1x MML 5, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AS7-K2 (Jedra)</td><td>Unknown</td><td>1971</td><td>47</td><td>Juggernaut</td><td class="wpn">2x Light Gauss Rifle, 5x ER Medium Laser, 2x SRM 4</td><td class="num">4/5/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the AS7-D by era, straight off the Master Unit List. Watch the last two rows.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Rim Worlds Republic - Terran Corps, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>HW Clan General, Inner Sphere General, Magistracy of Canopus, Mercenary, Outworlds Alliance, Star League in Exile, Taurian Concordat</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Draconis Combine, Federated Suns, Lyran Commonwealth, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Periphery General</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>The rest of the family</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Atlas II</h3>
+  <p class="vstats">100 tons &middot; Mixed &middot; 6 variants &middot; BV 2169 to 2777</p>
+  <p>The Star League tried to build a better Atlas and this is what came out. Heavier armament, and rare enough that most people have never seen one on a table.</p>
+</div>
+<div class="fam">
+  <h3>Highlander</h3>
+  <p class="vstats">90 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 1801 to 2682</p>
+  <p>The other iconic assault of the era, and the one that jumps. If the Atlas is the thing that arrives, the Highlander is the thing that lands on you.</p>
+</div>
+<div class="fam">
+  <h3>BattleMaster</h3>
+  <p class="vstats">85 tons &middot; Mixed &middot; 32 variants &middot; BV 1441 to 3025</p>
+  <p>Eighty-five tons and the most-produced assault in the Inner Sphere. A command machine where the Atlas is a siege weapon.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Atlas in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Atlas variant?</h3>
+                <p>For most games the AS7-D at BV 1897 is still the right answer, because the standard engine keeps the structure at 8 and that is what an Atlas is for. If your era allows it, the AS7-S3 is the most complete modern fit and the AS8-KE is the best late one that keeps a standard engine.</p>
+
+                <h3>Why is the Atlas so slow?</h3>
+                <p>Walk three, run five, on every variant except the four hundred rated XL fits. That is standard for a hundred ton machine and it is the design's central compromise: the tonnage went into armour and guns rather than an engine. It means the Atlas cannot choose its engagements, only what happens inside them.</p>
+
+                <h3>Does the Atlas overheat?</h3>
+                <p>Far less than people expect. Its weapons work at different ranges, so you are rarely firing everything at once. The AS7-D has an overheat value of zero on the Alpha Strike card. The variants that do run hot are the energy-heavy rebuilds like the C 2 and the AS7-K2.</p>
+
+                <h3>Is the XL engine Atlas worth it?</h3>
+                <p>Usually not, and this is the main thing to get right about the chassis. Every Atlas carries armour 10, but a standard engine gives you 8 structure and an XL gives you 4. You are giving away the survivability the machine exists for. The light engine variants, the AS7-S2 and AS7-S3, are the sensible middle ground.</p>
+
+                <h3>Who can field an Atlas?</h3>
+                <p>Almost everyone, for most of history. The AS7-D appears in all 11 eras on the Master Unit List, from Star League general issue down to Periphery forces by the ilClan. The table above has the full breakdown.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Atlas variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "For most games the AS7-D at BV 1897 is still the right answer, because the standard engine keeps the structure at 8 and that is what an Atlas is for. If your era allows it, the AS7-S3 is the most complete modern fit and the AS8-KE is the best late one that keeps a standard engine."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Atlas so slow?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Walk three, run five, on every variant except the four hundred rated XL fits. That is standard for a hundred ton machine and it is the design's central compromise: the tonnage went into armour and guns rather than an engine. It means the Atlas cannot choose its engagements, only what happens inside them."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Atlas overheat?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Far less than people expect. Its weapons work at different ranges, so you are rarely firing everything at once. The AS7-D has an overheat value of zero on the Alpha Strike card. The variants that do run hot are the energy-heavy rebuilds like the C 2 and the AS7-K2."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the XL engine Atlas worth it?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Usually not, and this is the main thing to get right about the chassis. Every Atlas carries armour 10, but a standard engine gives you 8 structure and an XL gives you 4. You are giving away the survivability the machine exists for. The light engine variants, the AS7-S2 and AS7-S3, are the sensible middle ground."}
+    },
+    {
+      "@type": "Question",
+      "name": "Who can field an Atlas?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Almost everyone, for most of history. The AS7-D appears in all 11 eras on the Master Unit List, from Star League general issue down to Periphery forces by the ilClan. The table above has the full breakdown."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'atlas';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
