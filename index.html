@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Rajdhani:wght@500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/hq.css">
+    <link rel="stylesheet" href="assets/css/hq-home.css">
     <link rel="canonical" href="https://battletechhq.com/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://battletechhq.com/">
@@ -23,10 +24,6 @@
     <meta property="og:description" content="A lance-first builder for actual games, a weapon-aware solo opponent, and the guides I wish I'd had in 1997.">
     <meta property="og:image" content="https://battletechhq.com/assets/images/og-default.jpg">
     <meta property="og:site_name" content="BattleTech HQ">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BattleTech HQ — Guides, Tools & Lore for MechWarriors">
-    <meta name="twitter:description" content="A lance-first builder for actual games, a weapon-aware solo opponent, and the guides I wish I'd had in 1997.">
-    <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
 </head>
 <body>
 <header class="hq-built">
@@ -111,20 +108,30 @@
     </div>
 </section>
 <section class="hq-wrap" id="mechs" style="padding-top:0;">
-    <div class="hq-split">
-        <div class="hq-split-art"><img src="assets/images/marauder-schematic.png" alt="Line schematic of a Marauder"></div>
-        <div class="hq-split-copy">
-            <p class="hq-kicker">Mech guide · 75 tons · Inner Sphere</p>
-            <h2>Marauder</h2>
-            <p>The most recognisable heavy in the game, and the one most people play wrong. Every variant ranked, the heat maths behind the 3R, and how to kill one.</p>
-            <p class="hq-meta" style="margin-top:1rem;">36 variants · S-tier · MAD-3R</p>
-            <div class="hq-actions"><a class="hq-btn hq-btn-ghost" href="marauder.html">Read the ranking</a><a class="hq-more" href="warhammer.html">Warhammer</a></div>
+    <div class="hq-section-head">
+        <div>
+            <p class="hq-kicker">Mech guides</p>
+            <h2>One chassis. Click through.</h2>
         </div>
+        <a class="hq-more" href="mechs.html">All rankings</a>
     </div>
+    <a class="hq-mech" id="hq-mech" href="marauder.html">
+        <div class="hq-mech-art">
+            <img id="hq-mech-img" src="assets/images/marauder-schematic.png" alt="Line schematic of a Marauder">
+        </div>
+        <div class="hq-mech-copy">
+            <p class="hq-kicker" id="hq-mech-kicker">75 tons \u00b7 Inner Sphere</p>
+            <h2 id="hq-mech-name">Marauder</h2>
+            <p id="hq-mech-blurb">The most recognisable heavy in the game, and the one most people play wrong. Every variant ranked, the heat maths behind the 3R, and how to kill one.</p>
+            <p class="hq-meta" id="hq-mech-meta" style="margin-top:1rem;">36 variants \u00b7 S-tier \u00b7 MAD-3R</p>
+            <div class="hq-actions"><span class="hq-btn hq-btn-ghost">Open the ranking</span></div>
+        </div>
+    </a>
+    <div class="hq-mech-dots" id="hq-mech-dots" role="tablist" aria-label="Chassis"></div>
 </section>
 <section class="hq-wrap" id="lore" style="padding-top:0;">
     <article class="hq-lore">
-        <p class="hq-kicker">Lore · 14 min read</p>
+        <p class="hq-kicker">Lore \u00b7 14 min read</p>
         <h2>The Succession Wars: How Humanity Burned Its Future</h2>
         <p>Three centuries of civil war that turned a golden age into lostech and grudges. Words on a dark field — no generated cityscapes.</p>
         <div class="hq-actions">
@@ -152,11 +159,11 @@
 <section class="hq-wrap" id="gear" style="padding-top:0;padding-bottom:4rem;">
     <div class="hq-section-head"><div><p class="hq-kicker">Gear</p><h2>What I actually put on the table.</h2></div></div>
     <div class="product-strip">
-        <div class="product-card"><h4>A Game of Armored Combat</h4><p>The best entry point for most new players. Eight 'Mechs, complete rules, maps.</p><a href="https://amzn.to/4w6KaH3" target="_blank" class="buy-link">View on Amazon ~$60</a></div>
-        <div class="product-card"><h4>The Beginner Box</h4><p>Two 'Mechs and simplified rules. Good if you want to try before committing.</p><a href="https://amzn.to/4eYAuZ6" target="_blank" class="buy-link">View on Amazon ~$25</a></div>
-        <div class="product-card"><h4>Army Painter Speed Paint 2.0</h4><p>One coat over white primer. Tabletop result in minutes per model.</p><a href="https://amzn.to/3R5TpXX" target="_blank" class="buy-link">View on Amazon</a></div>
-        <div class="product-card"><h4>Vallejo Game Color Set</h4><p>Better control than speedpaints. Covers the first year.</p><a href="https://amzn.to/4neVpJA" target="_blank" class="buy-link">View on Amazon</a></div>
-        <div class="product-card"><h4>BattleTech Battle Mat</h4><p>Replaces paper maps with a durable neoprene surface.</p><a href="https://amzn.to/49dIa62" target="_blank" class="buy-link">View on Amazon</a></div>
+        <div class="product-card"><h4>A Game of Armored Combat</h4><p>The best entry point for most new players. Eight 'Mechs, complete rules, maps.</p><a href="https://amzn.to/4w6KaH3" target="_blank" rel="noopener" class="buy-link">Amazon ~$60</a></div>
+        <div class="product-card"><h4>The Beginner Box</h4><p>Two 'Mechs and simplified rules. Good if you want to try before committing.</p><a href="https://amzn.to/4eYAuZ6" target="_blank" rel="noopener" class="buy-link">Amazon ~$25</a></div>
+        <div class="product-card"><h4>Army Painter Speed Paint 2.0</h4><p>One coat over white primer. Tabletop result in minutes per model.</p><a href="https://amzn.to/3R5TpXX" target="_blank" rel="noopener" class="buy-link">View on Amazon</a></div>
+        <div class="product-card"><h4>Vallejo Game Color Set</h4><p>Better control than speedpaints. Covers the first year.</p><a href="https://amzn.to/4neVpJA" target="_blank" rel="noopener" class="buy-link">View on Amazon</a></div>
+        <div class="product-card"><h4>BattleTech Battle Mat</h4><p>Replaces paper maps with a durable neoprene surface.</p><a href="https://amzn.to/49dIa62" target="_blank" rel="noopener" class="buy-link">View on Amazon</a></div>
     </div>
     <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases. <a href="affiliate-disclosure.html">Full disclosure.</a></p>
 </section>
