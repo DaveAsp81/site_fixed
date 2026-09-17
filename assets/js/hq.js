@@ -83,6 +83,7 @@
     if (!root || !MECHS.length) return;
     var img = document.getElementById("hq-mech-img");
     var kicker = document.getElementById("hq-mech-kicker");
+    var heading = document.getElementById("hq-mech-heading");
     var name = document.getElementById("hq-mech-name");
     var blurb = document.getElementById("hq-mech-blurb");
     var meta = document.getElementById("hq-mech-meta");
@@ -95,6 +96,7 @@
       var m = MECHS[index];
       root.href = prefix + m.href;
       if (img) { img.src = prefix + m.img; img.alt = m.alt; }
+      if (heading) heading.textContent = m.name;
       if (kicker) kicker.textContent = m.kicker;
       if (name) name.textContent = m.name;
       if (blurb) blurb.textContent = m.blurb;
