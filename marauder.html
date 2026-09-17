@@ -157,8 +157,32 @@
         .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
         .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
 
-        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }
-        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
         .vtable th {
             text-align: left;
             font-family: 'Rajdhani', sans-serif;
@@ -182,6 +206,15 @@
         .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
         .vtable td.wpn { color: #999; font-size: 0.82rem; }
         .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
 
         .fam {
             background: rgba(20,20,20,0.98);
@@ -297,6 +330,28 @@
             <p>So the Warhammer is cheaper, runs cooler, and carries an SRM 6 for close work. The Marauder is better armoured (6 against 5 on the Alpha Strike card) and hits harder at long range. That is the trade. If you want a twin-PPC mech that can keep shooting, take the Warhammer. If you want one that can absorb the return fire and reach further out, take the Marauder.</p>
             <p>Worth naming the third option too. The Black Knight BL-6-KNT is the same 75 tons at BV 1551 with 20 single heat sinks and no ammunition anywhere on the chassis. It is the better sustained energy platform. It just cannot match the Marauder's reach.</p>
 
+            <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Marauders available in the same era</strong>, not against the rest of the game. Whether a Marauder beats a Warhammer is a real question and it has its own section above.</p>
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 3 of the 36 Marauder variants fail the Trap test. <a href="rating-scale.html" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
             <h2>The variants worth arguing about</h2>
             <p>All 36 are in the table further down. These are the ones that change how you play.</p>
 
@@ -352,13 +407,13 @@
 </div>
             <div class="vcard">
   <div class="vcard-head">
-    <h3>MAD-7D: the workhorse</h3>
+    <h3>MAD-5R: the Jihad pick</h3>
     <span class="tier tier-pick">Worth it</span>
   </div>
-  <p class="vstats">75 tons &middot; BV 1986 &middot; PV 38 &middot; Brawler &middot; 3068<br>
-  Walk 4 / Run 6 / Jump 0 &middot; 16 IS Double &middot; 300 XL Engine<br>
-  2x ER Large Laser, 2x ER Medium Laser, 1x Rotary AC/5</p>
-  <p>ER large lasers, ER mediums, rotary AC/5, ECM. The Federated Suns workhorse and probably the most generally useful Jihad-era Marauder.</p>
+  <p class="vstats">75 tons &middot; BV 1877 &middot; PV 41 &middot; Brawler &middot; 3068<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 300 XL Engine<br>
+  2x ER PPC, 2x Medium Laser, 1x Rotary AC/5</p>
+  <p>Rotary AC/5, ECM, CASE and a C3 slave, and it undercuts the 7D on Battle Value while giving up none of what the 7D carries. The pick of the Jihad Marauders whether or not you run a C3 network.</p>
 </div>
             <div class="vcard">
   <div class="vcard-head">
@@ -378,7 +433,7 @@
   <p class="vstats">75 tons &middot; BV 1453 &middot; PV 33 &middot; Brawler &middot; 3039<br>
   Walk 4 / Run 6 / Jump 0 &middot; 18 Single &middot; 300 Fusion Engine<br>
   2x Binary Laser (Blazer) Cannon, 2x SRM 6</p>
-  <p>Binary laser cannons. Enormous heat for large laser damage, and no long-range punch at all on the Alpha Strike card. The experiment that proves why nobody else fitted Blazers.</p>
+  <p>Binary laser cannons. Enormous heat for large laser damage, and no long-range punch at all on the Alpha Strike card. The experiment that proves why nobody else fitted Blazers. Beaten outright by the MAD-SD (Douglass), which costs 6 more BV but gives up nothing it carries.</p>
 </div>
 
             <h2>On the table</h2>
@@ -412,11 +467,11 @@
 <tr><td class="vname">MAD-3D</td><td>2834</td><td>1470</td><td>35</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 1x Large Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
 <tr><td class="vname">MAD-3M</td><td>2873</td><td>1335</td><td>34</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Medium Laser, 1x AC/5</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
 <tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
-<tr><td class="vname">MAD-3L</td><td>2905</td><td>1369</td><td>35</td><td>Brawler</td><td class="wpn">1x Large Laser, 2x Medium Laser, 1x PPC, 1x AC/5</td><td class="num">3/3/2</td><td><span class="tier tier-trap">Trap</span></td></tr>
+<tr><td class="vname">MAD-3L</td><td>2905</td><td>1369</td><td>35</td><td>Brawler</td><td class="wpn">1x Large Laser, 2x Medium Laser, 1x PPC, 1x AC/5</td><td class="num">3/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
 <tr><td class="vname">(Bounty Hunter-3015)</td><td>3015</td><td>1919</td><td>45</td><td>Juggernaut</td><td class="wpn">3x PPC, 5x Medium Laser</td><td class="num">4/5/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
 <tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
 <tr><td class="vname">MAD-SD (Douglass)</td><td>3025</td><td>1459</td><td>39</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Medium Laser, 2x SRM 4</td><td class="num">4/4/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
-<tr><td class="vname">MAD-4X</td><td>3039</td><td>1453</td><td>33</td><td>Brawler</td><td class="wpn">2x Binary Laser (Blazer) Cannon, 2x SRM 6</td><td class="num">3/3/0</td><td><span class="tier tier-trap">Trap</span></td></tr>
+<tr><td class="vname">MAD-4X</td><td>3039</td><td>1453</td><td>33</td><td>Brawler</td><td class="wpn">2x Binary Laser (Blazer) Cannon, 2x SRM 6</td><td class="num">3/3/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-SD (Douglass)</span></td></tr>
 <tr><td class="vname">(Bounty Hunter-3044)</td><td>3044</td><td>2103</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 3x Medium Laser, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
 <tr><td class="vname">MAD-5D</td><td>3047</td><td>1787</td><td>37</td><td>Skirmisher</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x Streak SRM 2, 1x Large Pulse Laser</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
 <tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
@@ -427,9 +482,9 @@
 <tr class="era-row"><th colspan="8">Civil War</th></tr>
 <tr><td class="vname">MAD-5L</td><td>3067</td><td>2244</td><td>42</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x ER PPC</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
 <tr class="era-row"><th colspan="8">Jihad</th></tr>
-<tr><td class="vname">MAD-5R</td><td>3068</td><td>1877</td><td>41</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-5R</td><td>3068</td><td>1877</td><td>41</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
 <tr><td class="vname">MAD-5T</td><td>3068</td><td>1750</td><td>37</td><td>Brawler</td><td class="wpn">2x Large Pulse Laser, 2x Medium Pulse Laser, 1x Rotary AC/5</td><td class="num">5/5/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
-<tr><td class="vname">MAD-7D</td><td>3068</td><td>1986</td><td>38</td><td>Brawler</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-7D</td><td>3068</td><td>1986</td><td>38</td><td>Brawler</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-5R</span></td></tr>
 <tr><td class="vname">MAD-9M</td><td>3068</td><td>1704</td><td>40</td><td>Brawler</td><td class="wpn">4x ER Large Laser, 2x Streak SRM 6, 1x TAG</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
 <tr><td class="vname">MAD-9M2</td><td>3068</td><td>1875</td><td>43</td><td>Brawler</td><td class="wpn">2x Heavy PPC, 2x Streak SRM 6, 1x TAG</td><td class="num">5/5/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
 <tr><td class="vname">MAD-9S</td><td>3068</td><td>1786</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 1x LB 10-X AC, 1x Flamer</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
@@ -443,7 +498,7 @@
 <tr><td class="vname">MAD-2T</td><td>3092</td><td>1646</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 1x LB 5-X AC</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
 <tr class="era-row"><th colspan="8">Late Republic</th></tr>
 <tr><td class="vname">MAD-7C</td><td>3103</td><td>1810</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Light Gauss Rifle</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
-<tr><td class="vname">MAD-7R</td><td>3103</td><td>1832</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Light Gauss Rifle</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-7R</td><td>3103</td><td>1832</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Light Gauss Rifle</td><td class="num">3/4/3</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-7C</span></td></tr>
 <tr><td class="vname">MAD-9D</td><td>3125</td><td>1967</td><td>38</td><td>Brawler</td><td class="wpn">2x ER Large Laser, 3x Medium X-Pulse Laser, 1x Silver Bullet Gauss Rifle</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
 <tr class="era-row"><th colspan="8">Dark Age</th></tr>
 <tr><td class="vname">(Bounty Hunter-3138)</td><td>3138</td><td>2708</td><td>45</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Gauss Rifle</td><td class="num">5/5/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
@@ -591,6 +646,68 @@
     }
   ]
 }
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'marauder';
+    var TOOLS = {
+        'lance-builder.html': 'lance-builder',
+        'opfor-command.html': 'opfor-command',
+        'game-tracker.html': 'game-tracker',
+        'campaign.html': 'campaign-tracker',
+        'paint-tool.html': 'paint-tool'
+    };
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = href.split('?')[0].split('#')[0].split('/').pop();
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
 </script>
 
 <script>

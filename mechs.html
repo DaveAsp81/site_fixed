@@ -95,6 +95,7 @@
 
         <p class="mech-intro">Stat blocks are easy to find. What is harder to find is someone telling you which variant is worth the Battle Value, which one is a trap, and what happens when the thing you are piloting runs out of heat sinks halfway through turn three.</p>
         <p class="mech-intro">That is what these are. Every guide covers the full variant list with Battle Value and Alpha Strike figures, per-era faction availability off the Master Unit List, how to pilot the chassis, how to kill one, and how our <a href="opfor-command.html" style="color:#ff8c00;">AI opponent</a> handles it in a solo game.</p>
+        <p class="mech-intro">Every variant gets a verdict. If you want to know exactly what those verdicts mean and how the Trap rating is calculated, <a href="rating-scale.html" style="color:#ff8c00;">the rating scale is written down here</a>.</p>
 
         <div class="articles-grid" style="margin-top:36px;">
             <div class="article-card">
@@ -136,6 +137,7 @@
                 <ul>
                     <li><a href="lance-builder.html">Lance Builder</a></li>
                     <li><a href="mechs.html">Mech Guides</a></li>
+                    <li><a href="rating-scale.html">Rating Scale</a></li>
                     <li><a href="game-tracker.html">Game Tracker</a></li>
                     <li><a href="opfor-command.html">OpFor Command</a></li>
                     <li><a href="campaign.html">Campaign Tracker</a></li>
@@ -162,6 +164,28 @@
             <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
         </div>
     </footer>
+
+<script>
+/* Which guide cards actually get clicked, so the index earns its place. */
+(function () {
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var card = el.closest('.article-card');
+        if (!card) return;
+        var a = card.querySelector('a[href]');
+        if (!a) return;
+        var h3 = card.querySelector('h3');
+        if (typeof gtag !== 'function') return;
+        try {
+            gtag('event', 'guide_click', {
+                chassis: (h3 ? h3.textContent : 'unknown').toLowerCase(),
+                source: 'mech-index'
+            });
+        } catch (err) { /* never block */ }
+    }, true);
+})();
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

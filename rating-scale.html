@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How BattleTech Hub rates mech variants: the four tiers, the calculated Trap test in full, what the ratings deliberately do not measure, and how to challenge one.">
+    <title>How We Rate Mech Variants | BattleTech Hub</title>
+    <link rel="canonical" href="https://battletechhq.com/rating-scale.html">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .rs-body h2 {
+            color: #ff8c00;
+            font-size: 1.4rem;
+            margin: 44px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .rs-body h3 { color: #e8e8e8; font-size: 1.05rem; margin: 28px 0 10px; }
+        .rs-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .rs-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .rs-body li { margin-bottom: 10px; }
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 28px;
+        }
+        .rubric-row {
+            display: flex; gap: 18px; align-items: flex-start;
+            padding: 16px 0; border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .tier {
+            font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 3px 11px; border-radius: 20px; white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+        .worked {
+            background: rgba(176,58,36,0.08);
+            border: 1px solid rgba(176,58,36,0.35);
+            border-radius: 8px; padding: 22px 26px; margin: 20px 0;
+        }
+        .worked h3 { margin-top: 0; color: #e07a5f; }
+        .challenge {
+            background: rgba(255,140,0,0.07);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px; border-radius: 0 8px 8px 0; margin: 20px 0;
+        }
+        .challenge p { margin: 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">&#9876;&#65039; BattleTech Hub</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html#getting-started">Getting Started</a></li>
+                    <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="mechs.html">Mech Guides</a></li>
+                    <li><a href="paint-tool.html">Paint Tool</a></li>
+                    <li><a href="index.html#solo">Solo Play</a></li>
+                    <li><a href="index.html#gameplay">Gameplay</a></li>
+                    <li><a href="index.html#lore">Lore</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <p style="font-family:'Rajdhani',sans-serif; font-size:0.8rem; letter-spacing:0.06em; text-transform:uppercase; color:#777; margin:24px 0 0;"><a href="index.html" style="color:#ff8c00; text-decoration:none;">Home</a> &rsaquo; <a href="mechs.html" style="color:#ff8c00; text-decoration:none;">Mech Guides</a> &rsaquo; Rating Scale</p>
+
+        <div class="rs-body">
+            <h1 style="color:#ff8c00; margin:20px 0 10px;">How we rate mech variants</h1>
+            <p>Short version: every rating compares a variant against <strong>other variants of the same chassis, available in the same era</strong>. Not against the rest of the game.</p>
+            <p>"Which Marauder should I take" and "is a Marauder better than a Warhammer" are different questions. Mixing them is how variant ratings turn to mush, so they are kept apart. The second question gets its own section on each chassis page.</p>
+
+            <h2>The four tiers</h2>
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money. If you are fielding this chassis in this era and have no specific reason to do otherwise, take this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is nothing wrong with this one and no reason to talk you out of it if you own the model.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. A C3 network, stealth armour, a command console, flak capability, jump jets. Correct when you need that thing, overpriced when you do not.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Strictly beaten. Another variant gives you everything this one does and more, for no more money. This is the only tier that is calculated rather than judged.</p>
+                </div>
+            </div>
+
+            <h2>The Trap test, in full</h2>
+            <p>A variant is a Trap if another variant of the same chassis, available in the same era, meets all of these:</p>
+            <ul>
+                <li>Costs no more than 3 percent above its Battle Value</li>
+                <li>Matches or beats it on every Alpha Strike damage band</li>
+                <li>Matches or beats it on armour</li>
+                <li>Matches or beats it on structure</li>
+                <li>Carries every special ability it has (ECM, C3, CASE, TAG, stealth and so on)</li>
+                <li>Does not lose jump capability it has</li>
+                <li>Is better on at least one of those, or simply cheaper</li>
+            </ul>
+            <p>The 3 percent tolerance exists because a six point Battle Value gap is noise, and without it a variant can dodge the test on a rounding difference.</p>
+            <p>This tier is computed from the variant data when the page is built. I do not assign it by hand, which means I cannot quietly spare a variant I happen to like.</p>
+
+            <div class="worked">
+                <h3>Worked example</h3>
+                <p>The <strong>MAD-7D</strong> at BV 1986 is rated a Trap. The <strong>MAD-5R</strong> costs 109 less Battle Value, matches it on every damage band, matches it on armour and structure, keeps CASE and ECM, and adds a C3 slave and a command module on top.</p>
+                <p style="margin-bottom:0;">There is no configuration of a force where the MAD-7D is the better buy. I originally rated it the pick of its era by feel. The test caught me, and the rating changed.</p>
+            </div>
+
+            <h2>What this does not measure</h2>
+            <ul>
+                <li><strong>It uses Alpha Strike card values.</strong> Damage bands, armour, structure and special abilities are a coarse summary of a Classic BattleTech machine. They are good enough to catch a variant that is strictly beaten. They are not good enough to rank two close variants, which is why the other three tiers are judgement and not maths.</li>
+                <li><strong>It ignores the pilot.</strong> Gunnery and piloting skill change Battle Value and change what a machine can do. Everything here assumes a regular pilot on both sides.</li>
+                <li><strong>It ignores the scenario.</strong> Terrain, objectives, map size and range bands at deployment matter enormously. A long-range variant rated highly here can be the wrong pick on a city map.</li>
+                <li><strong>It ignores quirks and rules level.</strong> Design quirks, and whether your group plays with Advanced or Experimental rules, will move some of these calls.</li>
+                <li><strong>It compares within one chassis.</strong> Every rating answers 'which Marauder', never 'is a Marauder any good'. That second question gets its own section on each page.</li>
+            </ul>
+
+            <h2>How to challenge a rating</h2>
+            <div class="challenge">
+                <p>The Trap tier is deliberately falsifiable. To argue with one, name something the cheaper variant gives up: a damage band, armour, structure, an ability, jump capability. If you can name it, the rating is wrong and I will change it. If you cannot, the rating stands even if the variant is a favourite. That is the whole point of writing the test down instead of going on feel.</p>
+            </div>
+            <p>Corrections to the underlying data are just as welcome. Battle Value, introduction dates and per-era faction availability are reconciled against the Master Unit List, and if something is wrong there it is wrong on the page too. <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a> and I will fix it.</p>
+
+            <p style="margin-top:40px;"><a href="mechs.html" style="color:#ff8c00; font-weight:bold; text-decoration:none;">Back to the mech guides &rarr;</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech Hub</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="lance-builder.html">Lance Builder</a></li>
+                    <li><a href="mechs.html">Mech Guides</a></li>
+                    <li><a href="rating-scale.html">Rating Scale</a></li>
+                    <li><a href="opfor-command.html">OpFor Command</a></li>
+                    <li><a href="paint-tool.html">Paint Tool</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="affiliate-disclosure.html">Affiliate Disclosure</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BattleTech Hub. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
