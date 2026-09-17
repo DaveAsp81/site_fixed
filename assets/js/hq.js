@@ -78,6 +78,10 @@
     }
   }
 
+  function norm(s) {
+    return (s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  }
+
   function initMechRotate() {
     var root = document.getElementById("hq-mech");
     if (!root || !MECHS.length) return;
@@ -87,10 +91,14 @@
     var name = document.getElementById("hq-mech-name");
     var blurb = document.getElementById("hq-mech-blurb");
     var meta = document.getElementById("hq-mech-meta");
-    var dots = document.getElementById("hq-mech-dots");
+    var search = document.getElementById("hq-mech-search");
+    var results = document.getElementById("hq-mech-results");
     var index = 0;
     var timer = null;
+    var active = -1;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var rotate = MECHS.length > 1 && MECHS.length <= 8;
+
     function show(i) {
       index = (i + MECHS.length) % MECHS.length;
       var m = MECHS[index];
@@ -101,42 +109,124 @@
       if (name) name.textContent = m.name;
       if (blurb) blurb.textContent = m.blurb;
       if (meta) meta.textContent = m.meta;
-      if (dots) {
-        var buttons = dots.querySelectorAll("button");
-        for (var b = 0; b < buttons.length; b++) {
-          buttons[b].setAttribute("aria-selected", b === index ? "true" : "false");
-          buttons[b].classList.toggle("is-active", b === index);
-        }
-      }
     }
+
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function start() {
       stop();
-      if (reduce || MECHS.length < 2) return;
-      timer = setInterval(function () { show(index + 1); }, 7000);
+      if (reduce || !rotate) return;
+      timer = setInterval(function () { show(index + 1); }, 8000);
     }
-    if (dots) {
-      dots.innerHTML = MECHS.map(function (m, i) {
-        return '<button type="button" role="tab" aria-selected="' + (i === 0 ? "true" : "false") + '" aria-label="' + m.name + '"></button>';
+
+    function go(m) {
+      location.href = prefix + m.href;
+    }
+
+    function hideResults() {
+      if (!results) return;
+      results.hidden = true;
+      results.innerHTML = "";
+      active = -1;
+    }
+
+    function matches(q) {
+      var n = norm(q);
+      if (!n) return [];
+      return MECHS.filter(function (m) {
+        return norm(m.name).indexOf(n) !== -1;
+      }).slice(0, 8);
+    }
+
+    function renderResults(list) {
+      if (!results) return;
+      if (!list.length) {
+        results.innerHTML = '<li class="hq-mech-empty">No guide yet. Try All Guides.</li>';
+        results.hidden = false;
+        active = -1;
+        return;
+      }
+      results.innerHTML = list.map(function (m, i) {
+        return '<li><button type="button" data-i="' + MECHS.indexOf(m) + '" class="' + (i === 0 ? "is-active" : "") + '">' + m.name + "<small>" + m.kicker + "</small></button></li>";
       }).join("");
-      dots.addEventListener("click", function (ev) {
+      results.hidden = false;
+      active = 0;
+    }
+
+    if (search && results) {
+      search.addEventListener("input", function () {
+        var q = search.value;
+        if (!q.trim()) { hideResults(); return; }
+        renderResults(matches(q));
+      });
+      search.addEventListener("keydown", function (ev) {
+        var buttons = results.querySelectorAll("button");
+        if (ev.key === "Escape") { hideResults(); search.blur(); return; }
+        if (ev.key === "ArrowDown" && buttons.length) {
+          ev.preventDefault();
+          active = Math.min(active + 1, buttons.length - 1);
+          buttons.forEach(function (b, i) { b.classList.toggle("is-active", i === active); });
+        }
+        if (ev.key === "ArrowUp" && buttons.length) {
+          ev.preventDefault();
+          active = Math.max(active - 1, 0);
+          buttons.forEach(function (b, i) { b.classList.toggle("is-active", i === active); });
+        }
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          var list = matches(search.value);
+          if (!list.length) return;
+          var pick = buttons.length && active >= 0 ? MECHS[parseInt(buttons[active].getAttribute("data-i"), 10)] : list[0];
+          if (pick) go(pick);
+        }
+      });
+      results.addEventListener("click", function (ev) {
         var btn = ev.target.closest("button");
         if (!btn) return;
-        var i = Array.prototype.indexOf.call(dots.querySelectorAll("button"), btn);
-        if (i < 0) return;
-        show(i);
-        start();
+        var i = parseInt(btn.getAttribute("data-i"), 10);
+        if (!isNaN(i) && MECHS[i]) go(MECHS[i]);
+      });
+      document.addEventListener("click", function (ev) {
+        if (!ev.target.closest(".hq-mech-find")) hideResults();
       });
     }
+
     root.addEventListener("mouseenter", stop);
     root.addEventListener("mouseleave", start);
     root.addEventListener("focusin", stop);
     root.addEventListener("focusout", start);
-    show(0);
+
+    if (MECHS.length > 8) show(Math.floor(Math.random() * MECHS.length));
+    else show(0);
     start();
   }
 
-  function boot() { buildHeader(); initMechRotate(); }
+  function initMechCatalog() {
+    var grid = document.querySelector(".articles-grid");
+    if (!grid) return;
+    if (document.getElementById("hq-mech-catalog-search")) return;
+    var wrap = document.createElement("div");
+    wrap.className = "hq-mech-find hq-mech-catalog";
+    wrap.innerHTML = '<label class="hq-kicker" for="hq-mech-catalog-search">Find a chassis</label><input id="hq-mech-catalog-search" type="search" placeholder="Atlas, Timber Wolf, Locust…" autocomplete="off">';
+    grid.parentNode.insertBefore(wrap, grid);
+    var input = wrap.querySelector("input");
+    var cards = grid.querySelectorAll(".article-card");
+    input.addEventListener("input", function () {
+      var q = norm(input.value);
+      var shown = 0;
+      cards.forEach(function (card) {
+        var h3 = card.querySelector("h3");
+        var hit = !q || norm(h3 ? h3.textContent : "").indexOf(q) !== -1;
+        card.style.display = hit ? "" : "none";
+        if (hit) shown++;
+      });
+    });
+  }
+
+  function boot() {
+    buildHeader();
+    initMechRotate();
+    initMechCatalog();
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
