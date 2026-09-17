@@ -1,23 +1,33 @@
-/* BattleTech Hub - Bold Gaming-Focused Design */
-/* Dark theme with dramatic red/blue accents inspired by BattleTech universe */
+/* BattleTech HQ - Bold Gaming-Focused Design */
+/* Dark theme, single orange accent, matching the tool interfaces */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght:300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-red: #d32f2f;
-    --primary-blue: #1976d2;
-    --accent-red: #ff1744;
-    --accent-blue: #00b0ff;
-    --accent-gold: #ffc107;
+    /* One palette: Solaris orange, matching the tools and the HUD idea.
+       The legacy --*-red / --*-blue names are kept so none of the 37 rules
+       below need editing; only these values changed. Reverting the theme
+       means restoring this block and nothing else. */
+    --accent-orange: #ff8c00;       /* primary: borders, headings, logo    */
+    --accent-orange-bright: #ffb300; /* links, hovers, emphasis text        */
+    --accent-orange-deep: #ff6a00;   /* gradient depth                      */
+
+    --primary-red: var(--accent-orange);
+    --accent-red: var(--accent-orange-bright);
+    --primary-blue: var(--accent-orange);
+    --accent-blue: var(--accent-orange-bright);
+    --accent-gold: #ffc107;          /* buttons stay gold so they still read
+                                        as the thing you click              */
+
     --dark-bg: #0a0a0a;
     --dark-bg-secondary: #141414;
     --dark-bg-tertiary: #1e1e1e;
     --dark-card: #1a1a1a;
     --text-light: #e0e0e0;
     --text-muted: #999;
-    --border-glow: rgba(211, 47, 47, 0.3);
-    --shadow-red: rgba(211, 47, 47, 0.5);
-    --shadow-blue: rgba(25, 118, 210, 0.5);
+    --border-glow: rgba(255, 140, 0, 0.3);
+    --shadow-red: rgba(255, 140, 0, 0.45);
+    --shadow-blue: rgba(255, 140, 0, 0.35);
 }
 
 * {
@@ -30,7 +40,7 @@ body {
     background-color: #121212;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9l30-17.3 30 17.3v34.7z' fill='none' stroke='%231f1f1f' stroke-width='2'/%3E%3Cpath d='M0 34.6L0 0l30-17.3L60 0v34.6L30 51.9z' fill='none' stroke='%231f1f1f' stroke-width='2'/%3E%3C/svg%3E");
     color: #e0e0e0;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -60,7 +70,7 @@ header {
     font-family: 'Orbitron', monospace;
     font-size: 1.8rem;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-red));
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 45%, var(--accent-orange) 55%, var(--accent-orange-bright) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -100,7 +110,7 @@ nav a::after {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent-red), var(--accent-blue));
+    background: linear-gradient(90deg, var(--accent-orange-deep), var(--accent-orange-bright));
     transition: width 0.3s ease;
 }
 
@@ -302,7 +312,7 @@ article strong {
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(45deg, var(--accent-red), var(--primary-red), var(--accent-blue));
+    background: linear-gradient(45deg, var(--accent-orange-deep), var(--accent-orange), var(--accent-orange-bright));
     border-radius: 12px;
     z-index: -1;
     opacity: 0.3;
@@ -378,7 +388,7 @@ article strong {
 }
 
 .comparison-table th {
-    background: linear-gradient(135deg, var(--primary-red), #b71c1c);
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-deep));
     color: #fff;
     padding: 18px;
     text-align: left;
