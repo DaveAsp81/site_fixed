@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Warhammer variant ranked by a MechTech who has had them in the bay. The heat maths, why the 2515 original is still in service, how to pilot one, how to kill one.">
+    <meta name="keywords" content="Warhammer BattleTech, best Warhammer variant, WHM-6R, WHM-6D, WHM-9D, Warhammer IIC, BattleTech heavy mech">
+    <title>Warhammer: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/warhammer">
+    <meta property="og:title" content="Warhammer: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="632 years of production, 31 variants ranked, and why nobody ever managed to replace the original.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/warhammer">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/#getting-started">Getting Started</a></li>
+                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Warhammer</p>
+
+        <div class="mech-hero">
+            <h1>Warhammer</h1>
+            <p class="sub">70 tons &middot; Inner Sphere &middot; 31 variants &middot; 2515 to 3147</p>
+            <div class="mech-hero-grid">
+            <div class="verdict-box">
+                <p>I have had more of these through my bay than anything else, and I will tell you the thing nobody puts on the recruitment posters first. The Warhammer you are about to climb into was designed in 2515. Not a variant of something from 2515. That exact configuration. The Star League had not been founded yet. It would be another 84 years before anyone even built a better one, and they still could not make it stick.</p>
+                <p>632 years of production. 31 variants off the same bones. And the 6R turns up in all 11 eras on the availability tables, from the Star League to the ilClan, because every time somebody built an improved Warhammer the improved one went to the elites and the 6R went everywhere else and just kept working.</p>
+                <p><strong>What you have got.</strong> 70 tons, walk four run six, no jump. Twin PPCs in the arms, two mediums, two smalls, machine guns for infantry and a six-rack for when somebody gets inside. That last part is the bit that matters. This is not a sniper. 24 of the 31 variants are tagged Brawler and the guns tell you why: it wants to shoot you at range on the way in, and then still be useful when you close.</p>
+                <p><strong>The heat.</strong> Two PPCs is 20 heat. Walk a hex, that is 21, and you dissipate 18. So you are up 3 a turn firing your main guns, which is better than a Marauder and it is still not free. Two or three turns of both barrels and you will feel it. Fire one and walk and you can do that all day.</p>
+                <p><strong>If you are picking a variant:</strong> the <strong>WHM-6D</strong> is the one I would sign out, because it drops the ammunition entirely and gets you to 20 sinks and the thickest armour of the old fits. The <strong>WHM-6Rb</strong> is flatly better if your era allows it. The <strong>WHM-9D</strong> is where the design finally stops fighting itself. And the <strong>WHM-9K</strong> is the best late-era Warhammer nobody talks about.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Here is the thing about seventy tons. It is enough to carry two particle cannons and still have room for a fight at close range, and it is light enough to keep a 280 engine at walk four without the weight bill getting silly. Most heavies pick a lane. This one refused to.</p>
+            <p>Look at what is actually bolted to a 6R. Twin PPCs for reach. Two medium lasers and two smalls for the middle distance. Two machine guns, which exist for exactly one reason and that reason is people on foot. And a six-rack of short range missiles for the moment somebody gets under your guns. There is a weapon on that machine for every range band on the board.</p>
+            <p>That is why it lasted. A Marauder is a specialist and it is a very good one, but if the enemy closes it has a bad afternoon. A Warhammer just changes which trigger it is pulling.</p>
+
+            <div class="heat-callout">
+                <h3>What the heat actually does to you</h3>
+                <p>Two PPCs cost 20 heat between them. Walking costs one more. A 6R runs 18 single heat sinks, so you are 3 over every turn you fire both and move.</p>
+                <table class="heat-table">
+                    <tr><th>Turn</th><th>What you did</th><th>End heat</th><th>What it costs</th></tr>
+                    <tr><td>1</td><td>Both PPCs, walk</td><td>3</td><td>Nothing yet</td></tr>
+                    <tr><td>2</td><td>Both PPCs, walk</td><td>6</td><td class="bad">Minus one walking MP</td></tr>
+                    <tr><td>3</td><td>Both PPCs, walk</td><td>9</td><td class="bad">Minus two MP, plus one to hit</td></tr>
+                    <tr><td>4</td><td>Both PPCs, walk</td><td>12</td><td class="bad">Minus three MP, plus two to hit, shutdown checks</td></tr>
+                </table>
+                <p style="margin-top:16px;">So you get three good turns of both barrels before it starts taking your legs off you, and a Marauder gets two. That is the whole of the Warhammer's famous heat advantage, and it is real but it is not a licence. The <strong>WHM-6D</strong> gets you to 20 sinks and a surplus of 1, which is near enough to free that you will never think about it again.</p>
+            </div>
+
+            <figure class="mech-plate">
+                <picture>
+                    <source srcset="assets/images/warhammer-schematic.webp" type="image/webp">
+                    <img src="assets/images/warhammer-schematic.png" alt="Cutaway technical schematic of a Warhammer BattleMech showing the twin PPC arm assemblies, the SRM 6 launcher in the left torso, cockpit layout, internal structure and leg actuators"
+                         width="1100" height="1424"
+                         loading="lazy" decoding="async">
+                </picture>
+                <figcaption>Cutaway of the 6R, armoured exterior on the left and internals on the right. Worth noticing where everything sits: the particle cannons are the arms, the missile six-rack is shoulder-mounted above the ammunition housing, and the machine guns and lasers cluster low on the torso. There is a weapon covering every range band on the board, which is the whole argument for this machine. See our <a href="/image-credits" style="color:#ff8c00;">image credits</a>.</figcaption>
+            </figure>
+
+                        <h2>Warhammer or Marauder?</h2>
+            <p>You will have this argument eventually so let us have it now. Both are twin-PPC heavies from the same era. On our <a href="/marauder" style="color:#ff8c00;">Marauder page</a> I said the Warhammer is the cheaper, cooler one and the Marauder is the tougher, longer-ranged one. That is still true and here are the numbers again from the other side.</p>
+            <p>A 6R is 70 tons at BV 1299 with 18 single heat sinks. A MAD-3R is 75 tons at BV 1363 with 16 single heat sinks. You save 64 Battle Value, you run 2 degrees cooler a turn, and you get short range missiles and machine guns the Marauder does not have.</p>
+            <p>What you give up is armour, 5 against 6 on the Alpha Strike card, and a point of long range damage. The Marauder hits harder further out and soaks more on the way in.</p>
+            <p>My honest answer after years of patching both: take the Warhammer if you expect the fight to close, and take the Marauder if you can dictate the range. And if you genuinely cannot decide, take a <strong>WHM-6D</strong>, which fixes the armour complaint and the heat complaint at the same time and costs less than a Marauder anyway.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Warhammers available in the same era</strong>, not against the rest of the game. Whether a Warhammer beats a Marauder is a real question and it has its own section above.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 1 of the 31 Warhammer variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 31 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-6R: the one nobody replaced</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1299 &middot; PV 32 &middot; Brawler &middot; 2515<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 18 Single &middot; 280 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 2x Small Laser, 2x Machine Gun, 1x SRM 6</p>
+  <p>The original, from 2515, and still the one you will meet most often a thousand years later. Twin PPCs, a brace of lasers, machine guns for anything on foot and an SRM 6 for when it gets close. It is not the best Warhammer. It is the one nobody ever needed to replace, which is a different and rarer thing.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-6Rb: the better one that lost</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1431 &middot; PV 38 &middot; Brawler &middot; 2599<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 280 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 2x Small Laser, 2x Machine Gun, 1x SRM 6</p>
+  <p>The Royal. Double heat sinks and Artemis on the missiles, and it is better than the 6R on every line of the card. Zero overheat value, better damage at short and medium. If you can field it, field it. 132 BV for a machine that never has to think about heat.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-6D: the one I would sign out</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1471 &middot; PV 36 &middot; Brawler &middot; 2835<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 20 Single &middot; 280 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 2x Small Laser</p>
+  <p>Traded the SRM launcher and the machine guns for four tons of armour and two more sinks. Energy only, nothing to cook off, 20 heat sinks, and the best armour on the card of any Succession Wars Warhammer. This is the one I would take.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-8D: the networked one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1744 &middot; PV 43 &middot; Brawler &middot; 3066<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 280 Fusion Engine<br>
+  2x ER PPC, 2x ER Medium Laser, 2x ER Small Laser, 1x Streak SRM 6</p>
+  <p>C3 slave, CASE, a command module and good armour, and it does not cost the earth. If you run a C3 network this is the Warhammer that plugs into it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-9D: the one that solved it</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 2152 &middot; PV 43 &middot; Sniper &middot; 3067<br>
+  Walk 5 / Run 8 / Jump 3 &middot; 18 IS Double &middot; 350 XL Engine<br>
+  2x ER PPC, 2x ER Medium Laser</p>
+  <p>Walk 5, jump 3, twin ER PPCs, energy only, zero overheat. This is the Warhammer that finally solved heat and mobility at the same time. It is also tagged Sniper rather than Brawler, and it plays like it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-9K: the late-era pick</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1744 &middot; PV 40 &middot; Brawler &middot; 3105<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 16 IS Double &middot; 280 Light Engine<br>
+  2x Heavy PPC, 1x MML 9</p>
+  <p>Twin heavy PPCs and an MML 9, four damage across every band out to long, indirect fire, CASE II. Late-era Kurita and one of the best-balanced Warhammers ever built.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-10T: seven jump jets</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1891 &middot; PV 46 &middot; Skirmisher &middot; 3073<br>
+  Walk 5 / Run 8 / Jump 7 &middot; 11 IS Double &middot; 350 XL Engine<br>
+  2x PPC, 2x ER Medium Laser</p>
+  <p>Jump 7. Seven. On a seventy tonner. Eleven heat sinks and two damage at short range, so it is a repositioning tool rather than a gun platform, but nothing else in the chassis can do what it does.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>WHM-X7 &#x27;The Lich&#x27;: the odd one</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">70 tons &middot; BV 1807 &middot; PV 35 &middot; Brawler &middot; 3077<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 13 IS Double &middot; 280 Light Engine(IS)<br>
+  2x Snub-Nose PPC, 4x ER Medium Laser, 1x Streak SRM 6</p>
+  <p>Snub-nose PPCs in Marauder-style arm pods, which is a joke somebody at the factory clearly enjoyed. No long-range damage at all on the card. A close-in specialist wearing the wrong silhouette.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Do not play it like a Marauder. The temptation with twin PPCs is to sit at range and plink, and you can, but you are leaving half the machine in the bay when you do. The Warhammer wants to open at long range, walk in taking two or three turns of PPC fire, and then still have lasers and a six-rack when it arrives. Watch the heat on the approach, because arriving hot with three movement points missing is how these come back to me in pieces.</p>
+            <p><strong>Fighting one.</strong> Stay out or get past. The worst place to be is the middle distance where everything it carries works at once. If you can stay at extreme range it only has two guns and it has to overheat to use them. If you can get inside PPC minimum range the twin cannons are dead weight, though mind the missiles and the machine guns. Against the XL fits, the 6Rk and the 7CS and the 4L, go for a side torso and the fight is over.</p>
+            <p><strong>What I see go wrong.</strong> People alpha on turn one out of nerves, then spend turns two and three at walking pace with a to-hit penalty while the enemy closes on their terms. And people forget the machine guns exist right up until infantry is climbing the legs.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, this is the part worth knowing. The engine reads the role tag on each variant, not the chassis name, and the Warhammer is overwhelmingly tagged Brawler.</p>
+            <ul>
+                <li>Brawler fits, which is most of them including the <strong>WHM-6R</strong>, get short-range weighting and a strong positive aggression modifier. They will close. They will not sit and trade at range while you set up.</li>
+                <li>The <strong>WHM-9D</strong>, <strong>WHM-8M</strong> and <strong>WHM-8K</strong> are tagged Sniper and behave in the opposite way: long-range weighting, negative aggression, holding distance for a clean shot.</li>
+                <li>Skirmisher fits like the <strong>WHM-10T</strong> and <strong>WHM-5L</strong> sit in between and go after whatever is already hurt or cut off.</li>
+            </ul>
+            <p>That is the useful contrast with the Marauder, which is mostly Sniper. Put a lance of Warhammers against a lance of Marauders in OpFor Command and the AI will drive them at each other from opposite directions, which makes for a far better game than either mirror match.</p>
+
+                        <h2>All 31 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">WHM-6R</td><td>2515</td><td>1299</td><td>32</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser, 2x Machine Gun, 1x SRM 6</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">WHM-6Rb</td><td>2599</td><td>1431</td><td>38</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser, 2x Machine Gun, 1x SRM 6</td><td class="num">5/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-6Rk</td><td>2745</td><td>1621</td><td>42</td><td>Skirmisher</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser, 2x Machine Gun, 1x SRM 6</td><td class="num">5/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-7A</td><td>2761</td><td>1679</td><td>40</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x Medium Laser, 2x Small Pulse Laser, 1x SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">C</td><td>2825</td><td>1728</td><td>37</td><td>Brawler</td><td class="wpn">2x Large Pulse Laser, 2x ER Medium Laser, 2x ER Small Laser, 2x Machine Gun, 1x Streak SRM 6</td><td class="num">4/4/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-6L</td><td>2825</td><td>1311</td><td>31</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser, 2x Flamer, 1x SRM 6</td><td class="num">3/2/2</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by WHM-6K</span></td></tr>
+<tr><td class="vname">WHM-6K</td><td>2830</td><td>1305</td><td>32</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser, 1x SRM 6</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-6D</td><td>2835</td><td>1471</td><td>36</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Small Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">C 3</td><td>2862</td><td>2772</td><td>49</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Streak SRM 6, 2x ER Medium Laser, 2x Medium Pulse Laser</td><td class="num">6/6/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">WHM-6K (Olesko)</td><td>3023</td><td>1338</td><td>40</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-7M</td><td>3047</td><td>1487</td><td>35</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Anti-Missile System, 1x SRM 6, 1x Machine Gun</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">WHM-7S</td><td>3050</td><td>1477</td><td>36</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 2x Streak SRM 2, 2x Small Laser</td><td class="num">5/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C 2</td><td>3052</td><td>2157</td><td>43</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 2x ER Small Laser, 2x Small Pulse Laser, 1x Streak SRM 6</td><td class="num">6/6/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-7CS</td><td>3052</td><td>1751</td><td>37</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x Medium Laser, 3x Streak SRM 2</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">WHM-7M-DC</td><td>3052</td><td>1402</td><td>35</td><td>Brawler</td><td class="wpn">2x ER PPC, 1x Medium Laser, 1x SRM 6, 1x Machine Gun</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-7K</td><td>3054</td><td>1651</td><td>39</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 2x Small Pulse Laser, 2x Streak SRM 2, 1x TAG</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">WHM-8D</td><td>3066</td><td>1744</td><td>43</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 2x ER Small Laser, 1x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-4L</td><td>3067</td><td>1743</td><td>41</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x Medium Pulse Laser, 1x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-9D</td><td>3067</td><td>2152</td><td>43</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-9S</td><td>3067</td><td>1653</td><td>38</td><td>Brawler</td><td class="wpn">2x ER PPC, 1x Streak SRM 6, 2x ER Medium Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">WHM-8M</td><td>3069</td><td>1631</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 1x Light Gauss Rifle</td><td class="num">3/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-10T</td><td>3073</td><td>1891</td><td>46</td><td>Skirmisher</td><td class="wpn">2x PPC, 2x ER Medium Laser</td><td class="num">2/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-8K</td><td>3073</td><td>1748</td><td>43</td><td>Sniper</td><td class="wpn">2x Heavy PPC, 1x Streak SRM 4</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">WHM-X7 &#x27;The Lich&#x27;</td><td>3077</td><td>1807</td><td>35</td><td>Brawler</td><td class="wpn">2x Snub-Nose PPC, 4x ER Medium Laser, 1x Streak SRM 6</td><td class="num">4/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">WHM-5L</td><td>3081</td><td>1896</td><td>39</td><td>Skirmisher</td><td class="wpn">2x Plasma Rifle, 2x ER Medium Laser, 1x SRM 4</td><td class="num">4/4/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">WHM-11T</td><td>3084</td><td>1698</td><td>35</td><td>Skirmisher</td><td class="wpn">2x Snub-Nose PPC, 2x Light PPC, 2x ER Medium Laser, 1x MML 5</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">WHD-10CT</td><td>3085</td><td>1758</td><td>39</td><td>Brawler</td><td class="wpn">2x Snub-Nose PPC, 2x ER Medium Laser, 2x Medium Pulse Laser, 1x Streak SRM 6</td><td class="num">4/4/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">WHM-8D2</td><td>3087</td><td>1654</td><td>45</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 2x ER Small Laser, 1x Thunderbolt 5</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">WHM-8R</td><td>3090</td><td>1697</td><td>40</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 2x ER Small Laser, 2x Machine Gun, 1x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">WHM-9K</td><td>3105</td><td>1744</td><td>40</td><td>Brawler</td><td class="wpn">2x Heavy PPC, 1x MML 9</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">WHM-10K</td><td>3147</td><td>2033</td><td>39</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 2x ER Small Laser, 2x Machine Gun, 1x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the WHM-6R by era, straight off the Master Unit List. Note that it is the only entry on this site so far that appears in every single era. Other variants are far narrower, and the Lance Builder filters this properly if you are building to a specific year.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Federated Suns, Free Worlds League (Duchy of Andurien), Free Worlds League (Non-Aligned Worlds), Free Worlds League (Oriente Protectorate), Free Worlds League (Regulan Fiefs), Free Worlds League (Rim Commonality), Lyran Commonwealth, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Mercenary, Periphery General, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>The rest of the family</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Warhammer IIC</h3>
+  <p class="vstats">80 tons &middot; Clan &middot; 12 variants &middot; BV 2021 to 2915</p>
+  <p>Clan Wolf&#x27;s rebuild on Clan technology. Ten tons heavier and a substantially more dangerous machine that happens to share a silhouette.</p>
+</div>
+<div class="fam">
+  <h3>Marauder</h3>
+  <p class="vstats">75 tons &middot; Inner Sphere &middot; 36 variants &middot; BV 1335 to 2708</p>
+  <p>The other twin-PPC heavy of the era, and the one you will spend the most time arguing about. Longer ranged, better armoured, worse in a brawl.</p>
+</div>
+<div class="fam">
+  <h3>Archer</h3>
+  <p class="vstats">70 tons &middot; Mixed &middot; 26 variants &middot; BV 1269 to 2408</p>
+  <p>The same seventy tons doing the opposite job. Missiles instead of particle cannons, and a lance with one of each covers a lot of ground.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Warhammer in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Warhammer variant?</h3>
+                <p>Depends on your era. For the Succession Wars the WHM-6D at BV 1471 is the one I would sign out, because it drops all the ammunition, carries 20 single heat sinks and has the best armour of the old fits. The Royal WHM-6Rb is flatly better again if Star League tech is on the table. Later on, the WHM-9D and the WHM-9K are the two worth the money.</p>
+
+                <h3>Does the Warhammer overheat?</h3>
+                <p>Less than people think, and more than nothing. A 6R runs 18 single heat sinks against 20 heat from its two PPCs, so firing both and walking leaves you 3 over each turn. That is three solid turns before it bites. The WHM-6D gets that down to 1 and effectively removes the problem.</p>
+
+                <h3>Is the Warhammer better than the Marauder?</h3>
+                <p>Cheaper, cooler and better armed for close work. The Marauder is better armoured and hits harder at long range. Take the Warhammer if the fight is going to close, take the Marauder if you can control the range.</p>
+
+                <h3>Why is the original 2515 model still in service?</h3>
+                <p>Because nobody managed to replace it. The Royal WHM-6Rb from 2599 is better on every line of the card, and it went to Star League elite units rather than into general production. The 6R is on the availability tables for all 11 eras, which is about as strong a statement as that data can make.</p>
+
+                <h3>What is the difference between the Warhammer and the Warhammer IIC?</h3>
+                <p>The Warhammer is the 70 ton Inner Sphere original. The Warhammer IIC is Clan Wolf's 80 ton rebuild on Clan technology, and it is a substantially more dangerous machine that happens to share a silhouette.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Warhammer variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Depends on your era. For the Succession Wars the WHM-6D at BV 1471 is the one I would sign out, because it drops all the ammunition, carries 20 single heat sinks and has the best armour of the old fits. The Royal WHM-6Rb is flatly better again if Star League tech is on the table. Later on, the WHM-9D and the WHM-9K are the two worth the money."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Warhammer overheat?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Less than people think, and more than nothing. A 6R runs 18 single heat sinks against 20 heat from its two PPCs, so firing both and walking leaves you 3 over each turn. That is three solid turns before it bites. The WHM-6D gets that down to 1 and effectively removes the problem."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Warhammer better than the Marauder?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Cheaper, cooler and better armed for close work. The Marauder is better armoured and hits harder at long range. Take the Warhammer if the fight is going to close, take the Marauder if you can control the range."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the original 2515 model still in service?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Because nobody managed to replace it. The Royal WHM-6Rb from 2599 is better on every line of the card, and it went to Star League elite units rather than into general production. The 6R is on the availability tables for all 11 eras, which is about as strong a statement as that data can make."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between the Warhammer and the Warhammer IIC?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Warhammer is the 70 ton Inner Sphere original. The Warhammer IIC is Clan Wolf's 80 ton rebuild on Clan technology, and it is a substantially more dangerous machine that happens to share a silhouette."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'warhammer';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

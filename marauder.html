@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Marauder variant ranked, with the heat maths that decides how the 3R actually plays, how to pilot one, how to kill one, and which factions can field it in your era.">
+    <meta name="keywords" content="Marauder BattleTech, best Marauder variant, MAD-3R, MAD-5S, Marauder II, Marauder IIC, BattleTech heavy mech">
+    <title>Marauder: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/marauder">
+    <meta property="og:title" content="Marauder: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="The heat maths behind the 3R, all 36 variants ranked, and how the Marauder plays on the table.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/marauder">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/#getting-started">Getting Started</a></li>
+                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Marauder</p>
+
+        <div class="mech-hero">
+            <h1>Marauder</h1>
+            <p class="sub">75 tons &middot; Inner Sphere &middot; 36 variants &middot; 2612 to 3146</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/marauder-schematic.webp" type="image/webp">
+                    <img src="assets/images/marauder-schematic.png"
+                         alt="Front elevation schematic of a Marauder BattleMech, showing the arm-mounted PPC gauntlets and the cockpit slung beneath the torso"
+                         width="356" height="554" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Front elevation. The main guns sit in the arms, which is why an arm hit takes half its output off the field.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Everyone knows what a Marauder looks like. Twin PPCs slung in armoured gauntlets, that hunched forward stance, the cockpit tucked underneath where a head has no business being. It has been on the box art, through the novels, and in more lances than any other heavy in the game. Four centuries of production and 36 variants off the same bones.</p>
+                <p>It is also, in the configuration most of you have actually fielded, a mech that cannot fire its own main guns two turns running without cooking itself. The MAD-3R carries 16 single heat sinks. Its two PPCs generate 20 heat between them. Walk a hex and that is 21 against 16 dissipation, so you are up five every turn you do the one thing the machine was designed for. By turn three you are down three movement points, carrying a to-hit penalty, and rolling to avoid a shutdown.</p>
+                <p>That is not a design failure. That is what happens when you build a machine around Star League heat sinking and then hand the rebuild to techs who have not seen a double heat sink in two hundred years. The MAD-2R, built when the parts were still available, fires both ER PPCs every turn forever and never notices.</p>
+                <p><strong>So what is it good for.</strong> 75 tons, 4/6, no jump on most fits. Long reach, thick plate, slow feet. It is the anchor of a firing line, not a duellist. Pick your ground before the first turn because at that speed you are not walking out of a bad decision. Give it a lane, make the enemy come down it, and keep one PPC in reserve on hot turns instead of alphaing and then spending two turns as an expensive statue.</p>
+                <p><strong>And if you are picking a variant:</strong> the <strong>MAD-3D</strong> drops the autocannon for four more heat sinks and solves the whole problem for 107 BV. The <strong>MAD-5S</strong> is the definitive modern sniper fit. The <strong>MAD-11D</strong> is the strongest late-era Marauder you can field without reaching for a named machine. And the <strong>MAD-4X</strong> with its binary laser cannons is a trap, no matter how good Blazers look on paper.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Most heavies in this weight class are built to trade damage inside medium range. The Marauder is not. Everything about the design points at fighting people who cannot reach back: twin PPCs in armoured arm gauntlets, an autocannon for chip damage between volleys, and enough armour to survive the walk if someone closes anyway.</p>
+            <p>That is a genuinely useful role and there are not many mechs that fill it well. The problem is that General Motors built the original around Star League heat sinking, and the Succession Wars rebuild did not get it. What you are left with in the MAD-3R is a long-range platform whose long-range weapons it cannot actually sustain.</p>
+
+            <div class="heat-callout">
+                <h3>The heat maths nobody tells you</h3>
+                <p>The MAD-3R runs 16 single heat sinks. Two PPCs cost 20 heat. Walking costs one more. That is 21 heat against 16 dissipation, so you are up five a turn just doing the thing the mech was designed to do.</p>
+                <table class="heat-table">
+                    <tr><th>Turn</th><th>Action</th><th>End heat</th><th>What it costs you</th></tr>
+                    <tr><td>1</td><td>Both PPCs, walk</td><td>5</td><td class="bad">Minus one walking MP</td></tr>
+                    <tr><td>2</td><td>Both PPCs, walk</td><td>10</td><td class="bad">Minus two MP, plus one to hit</td></tr>
+                    <tr><td>3</td><td>Both PPCs, walk</td><td>15</td><td class="bad">Minus three MP, plus two to hit, shutdown checks</td></tr>
+                </table>
+                <p style="margin-top:16px;">In practice that means a two on, one off firing pattern, or one PPC plus the autocannon and lasers as your sustainable output. Plan for it before the game rather than discovering it on turn three. It is also the single best reason to take the <strong>MAD-3D</strong> instead: it drops the autocannon, adds four heat sinks, and lands within one point of heat neutral on the same guns for 107 more BV.</p>
+            </div>
+
+                        <h2>Is it better than a Warhammer?</h2>
+            <p>This is the comparison that actually matters in a 3025 game, because both are twin-PPC platforms in the same bracket. There is a <a href="/warhammer" style="color:#ff8c00;">full Warhammer write-up</a> if you want the other side of it. Straight off the data: the Warhammer WHM-6R is 70 tons at BV 1299 with 18 single heat sinks. The Marauder MAD-3R is 75 tons at BV 1363 with 16 single heat sinks.</p>
+            <p>So the Warhammer is cheaper, runs cooler, and carries an SRM 6 for close work. The Marauder is better armoured (6 against 5 on the Alpha Strike card) and hits harder at long range. That is the trade. If you want a twin-PPC mech that can keep shooting, take the Warhammer. If you want one that can absorb the return fire and reach further out, take the Marauder.</p>
+            <p>Worth naming the third option too. The Black Knight BL-6-KNT is the same 75 tons at BV 1551 with 20 single heat sinks and no ammunition anywhere on the chassis. It is the better sustained energy platform. It just cannot match the Marauder's reach.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Marauders available in the same era</strong>, not against the rest of the game. Whether a Marauder beats a Warhammer is a real question and it has its own section above.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 3 of the 36 Marauder variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 36 are in the table further down. These are the ones that change how you play.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-2R: the one without the flaw</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1630 &middot; PV 40 &middot; Sniper &middot; 2760<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 16 IS Double &middot; 300 Fusion Engine<br>
+  2x ER PPC, 2x Medium Laser, 1x AC/5</p>
+  <p>Double heat sinks and ER PPCs. This is the one Marauder that can fire its main guns every single turn without consequence. Best of the family before the Clans turn up.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-3R: the icon</h3>
+    <span class="tier tier-solid">Solid</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1363 &middot; PV 35 &middot; Sniper &middot; 2819<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 16 Single &middot; 300 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 1x AC/5</p>
+  <p>The icon. Also the compromise. Tough, well shaped, and permanently one turn away from a heat problem. Field it knowing what it is.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-3D: the fix</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1470 &middot; PV 35 &middot; Brawler &middot; 2834<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 20 Single &middot; 300 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 1x Large Laser</p>
+  <p>Drops the autocannon for a large laser and adds four sinks. No ammo to cook off and nearly heat neutral on the main guns. Mechanically the better Succession Wars Marauder.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-5S: the modern sniper</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1799 &middot; PV 36 &middot; Sniper &middot; 3051<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 16 IS Double &middot; 300 XL Engine<br>
+  2x ER PPC, 2x Medium Pulse Laser, 1x Gauss Rifle</p>
+  <p>Twin ER PPCs and a Gauss rifle. The best pure sniper in the family for the Clan Invasion, and the build most people picture when they say modern Marauder.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-5L: the one that survives</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 2244 &middot; PV 42 &middot; Sniper &middot; 3067<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 18 IS Double &middot; 300 Fusion Engine<br>
+  2x ER Large Laser, 2x ER Medium Laser, 1x ER PPC</p>
+  <p>Stealth armour, ECM, triple-strength myomer, and a standard fusion engine so it actually survives a side torso hit. Expensive, and worth it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-5R: the Jihad pick</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1877 &middot; PV 41 &middot; Brawler &middot; 3068<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 300 XL Engine<br>
+  2x ER PPC, 2x Medium Laser, 1x Rotary AC/5</p>
+  <p>Rotary AC/5, ECM, CASE and a C3 slave, and it undercuts the 7D on Battle Value while giving up none of what the 7D carries. The pick of the Jihad Marauders whether or not you run a C3 network.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-11D: the late-era pick</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 2263 &middot; PV 41 &middot; Sniper &middot; 3140<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 300 XL Engine(IS)<br>
+  2x ER PPC, 2x Medium X-Pulse Laser, 1x Silver Bullet Gauss Rifle</p>
+  <p>Silver Bullet Gauss, X-pulse lasers, CASE II. The strongest late-era Marauder you can field without reaching for a named machine.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MAD-4X: the trap</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">75 tons &middot; BV 1453 &middot; PV 33 &middot; Brawler &middot; 3039<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 18 Single &middot; 300 Fusion Engine<br>
+  2x Binary Laser (Blazer) Cannon, 2x SRM 6</p>
+  <p>Binary laser cannons. Enormous heat for large laser damage, and no long-range punch at all on the Alpha Strike card. The experiment that proves why nobody else fitted Blazers. Beaten outright by the MAD-SD (Douglass), which costs 6 more BV but gives up nothing it carries.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> The Marauder wants a long firing lane and a reason for the enemy to come to it. Pick your ground first, because at 4/6 you are not repositioning out of a bad decision. Keep one PPC in reserve on hot turns rather than alphaing and then spending two turns useless. Partial cover suits it well given the armour already on the chassis.</p>
+            <p><strong>Fighting one.</strong> Close the distance and make it move. Every hex it walks is heat it cannot spend on guns, and inside short range the twin PPC fit is doing less work than almost anything it is facing. The arms are the target: both main guns are mounted there, so an arm hit takes half the mech's output off the field. Against XL-engined fits from the Clan Invasion onward, the side torso is the kill.</p>
+            <p><strong>Common mistakes.</strong> Running it forward with the rest of the lance, treating the autocannon as a real weapon rather than incidental damage, and alphaing on turn one. The 3R in particular punishes all three.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>Worth knowing if you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>: the Marauder does not have one behaviour, it has several, because the engine reads each variant's role tag rather than the chassis name.</p>
+            <ul>
+                <li>The <strong>MAD-3R</strong> and the other Sniper fits are weighted toward long range and given a negative aggression modifier. They hold distance, favour clean shots, and will not walk into a brawl to take one.</li>
+                <li>The <strong>MAD-3D</strong>, <strong>MAD-7D</strong> and the other Brawler fits are weighted the opposite way and get a strong positive aggression modifier. Same chassis, and they will come at you.</li>
+                <li>Skirmisher fits like the <strong>MAD-5D</strong> sit in the middle and prioritise targets that are already damaged or cut off from support.</li>
+            </ul>
+            <p>The practical upshot is that swapping a 3R for a 3D in an enemy lance changes the whole shape of the game, not just the damage numbers. If a scenario is feeling static, that is the dial to turn.</p>
+
+                        <h2>All 36 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">MAD-1R</td><td>2612</td><td>1420</td><td>37</td><td>Sniper</td><td class="wpn">2x PPC, 2x Medium Laser, 1x AC/5</td><td class="num">2/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-2R</td><td>2760</td><td>1630</td><td>40</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x AC/5</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">MAD-3R</td><td>2819</td><td>1363</td><td>35</td><td>Sniper</td><td class="wpn">2x PPC, 2x Medium Laser, 1x AC/5</td><td class="num">2/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C</td><td>2827</td><td>1711</td><td>36</td><td>Sniper</td><td class="wpn">2x Large Pulse Laser, 2x Medium Laser, 1x Ultra AC/5</td><td class="num">3/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-3D</td><td>2834</td><td>1470</td><td>35</td><td>Brawler</td><td class="wpn">2x PPC, 2x Medium Laser, 1x Large Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-3M</td><td>2873</td><td>1335</td><td>34</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Medium Laser, 1x AC/5</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">MAD-3L</td><td>2905</td><td>1369</td><td>35</td><td>Brawler</td><td class="wpn">1x Large Laser, 2x Medium Laser, 1x PPC, 1x AC/5</td><td class="num">3/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">(Bounty Hunter-3015)</td><td>3015</td><td>1919</td><td>45</td><td>Juggernaut</td><td class="wpn">3x PPC, 5x Medium Laser</td><td class="num">4/5/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">MAD-SD (Douglass)</td><td>3025</td><td>1459</td><td>39</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Medium Laser, 2x SRM 4</td><td class="num">4/4/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-4X</td><td>3039</td><td>1453</td><td>33</td><td>Brawler</td><td class="wpn">2x Binary Laser (Blazer) Cannon, 2x SRM 6</td><td class="num">3/3/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-SD (Douglass)</span></td></tr>
+<tr><td class="vname">(Bounty Hunter-3044)</td><td>3044</td><td>2103</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 3x Medium Laser, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-5D</td><td>3047</td><td>1787</td><td>37</td><td>Skirmisher</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x Streak SRM 2, 1x Large Pulse Laser</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">MAD-5M</td><td>3051</td><td>1471</td><td>33</td><td>Skirmisher</td><td class="wpn">2x Large Pulse Laser, 2x Medium Pulse Laser, 1x LB 10-X AC</td><td class="num">4/4/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-5S</td><td>3051</td><td>1799</td><td>36</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-5CS</td><td>3052</td><td>1648</td><td>36</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x LB 10-X AC</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-5D-DC</td><td>3055</td><td>1787</td><td>35</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x Large Pulse Laser, 1x Small Pulse Laser</td><td class="num">3/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">MAD-5L</td><td>3067</td><td>2244</td><td>42</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x ER PPC</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">MAD-5R</td><td>3068</td><td>1877</td><td>41</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-5T</td><td>3068</td><td>1750</td><td>37</td><td>Brawler</td><td class="wpn">2x Large Pulse Laser, 2x Medium Pulse Laser, 1x Rotary AC/5</td><td class="num">5/5/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-7D</td><td>3068</td><td>1986</td><td>38</td><td>Brawler</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x Rotary AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-5R</span></td></tr>
+<tr><td class="vname">MAD-9M</td><td>3068</td><td>1704</td><td>40</td><td>Brawler</td><td class="wpn">4x ER Large Laser, 2x Streak SRM 6, 1x TAG</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-9M2</td><td>3068</td><td>1875</td><td>43</td><td>Brawler</td><td class="wpn">2x Heavy PPC, 2x Streak SRM 6, 1x TAG</td><td class="num">5/5/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-9S</td><td>3068</td><td>1786</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 1x LB 10-X AC, 1x Flamer</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-6L</td><td>3070</td><td>2322</td><td>41</td><td>Brawler</td><td class="wpn">2x Plasma Rifle, 1x PPC</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-7D (Von Staskov)</td><td>3070</td><td>2150</td><td>40</td><td>Skirmisher</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Light AC/5</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">MAD-9W</td><td>3071</td><td>1788</td><td>42</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x Medium Pulse Laser, 1x Snub-Nose PPC</td><td class="num">4/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-7M</td><td>3074</td><td>1908</td><td>36</td><td>Brawler</td><td class="wpn">2x Heavy PPC, 2x ER Medium Laser, 1x LB 5-X AC</td><td class="num">3/4/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-9W2</td><td>3080</td><td>1868</td><td>43</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x Medium Pulse Laser, 1x Snub-Nose PPC</td><td class="num">4/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">MAD-7S</td><td>3086</td><td>1903</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Gauss Rifle</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-2T</td><td>3092</td><td>1646</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser, 1x LB 5-X AC</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">MAD-7C</td><td>3103</td><td>1810</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Light Gauss Rifle</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">MAD-7R</td><td>3103</td><td>1832</td><td>38</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Light Gauss Rifle</td><td class="num">3/4/3</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by MAD-7C</span></td></tr>
+<tr><td class="vname">MAD-9D</td><td>3125</td><td>1967</td><td>38</td><td>Brawler</td><td class="wpn">2x ER Large Laser, 3x Medium X-Pulse Laser, 1x Silver Bullet Gauss Rifle</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">(Bounty Hunter-3138)</td><td>3138</td><td>2708</td><td>45</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Laser, 1x Gauss Rifle</td><td class="num">5/5/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">MAD-11D</td><td>3140</td><td>2263</td><td>41</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium X-Pulse Laser, 1x Silver Bullet Gauss Rifle</td><td class="num">5/5/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">(Red Hunter-3146)</td><td>3146</td><td>2509</td><td>44</td><td>Juggernaut</td><td class="wpn">2x Snub-Nose PPC, 2x ER Medium Laser, 1x Ultra AC/10</td><td class="num">5/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the MAD-3R by era, straight off the Master Unit List. Other variants differ, and the Lance Builder filters this properly if you are building to a specific year.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Taurian Concordat</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Federated Suns, Lyran Commonwealth, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Mercenary, Periphery General</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>The rest of the family</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Marauder II</h3>
+  <p class="vstats">100 tons &middot; Mixed &middot; 18 variants &middot; BV 2024 to 3767</p>
+  <p>The 100 ton assault rebuild. Same silhouette, far more of it, and the Bounty Hunter fit is one of the most expensive machines in the game.</p>
+</div>
+<div class="fam">
+  <h3>Marauder IIC</h3>
+  <p class="vstats">85 tons &middot; Clan &middot; 9 variants &middot; BV 2358 to 3447</p>
+  <p>Clan Wolf built their own from the ground up on Clan tech. Lighter than the Marauder II and considerably nastier than either Inner Sphere version.</p>
+</div>
+<div class="fam">
+  <h3>OmniMarauder</h3>
+  <p class="vstats">75 tons &middot; Inner Sphere &middot; 2 variants &middot; BV 2127 to 2836</p>
+  <p>The Dark Age omni conversion. Two configurations, both late and both rare.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Marauder in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Marauder variant?</h3>
+                <p>It depends on era. Before the Clans arrive, the MAD-3D at BV 1470 solves the heat problem that limits the 3R. The MAD-2R at BV 1630 is better still if Star League tech is on the table. For the Clan Invasion and later, the MAD-5S is the definitive sniper fit, and the MAD-11D is the strongest Dark Age option.</p>
+
+                <h3>Why does the Marauder overheat?</h3>
+                <p>The MAD-3R carries 16 single heat sinks and its two PPCs generate 20 heat between them. Add a point for walking and you are running a five point surplus every turn you fire both. The Star League MAD-2R had double heat sinks and does not have this problem at all.</p>
+
+                <h3>What is the difference between the Marauder, the Marauder II and the Marauder IIC?</h3>
+                <p>The Marauder is the 75 ton original. The Marauder II is a 100 ton assault-weight rebuild on the same silhouette. The Marauder IIC is Clan Wolf's 85 ton version built on Clan technology, and it is the most dangerous of the three. There are 65 variants across the whole family.</p>
+
+                <h3>Which factions can field a Marauder?</h3>
+                <p>The 3R is close to universal through the Succession Wars, appearing across the Inner Sphere, the Periphery and the major mercenary commands. Late-era variants narrow considerably. The table above has the full per-era breakdown.</p>
+
+                <h3>Is the Marauder good for new players?</h3>
+                <p>Yes, with one caveat. It is forgiving in the sense that it is well armoured and does not ask you to make fast movement decisions. It is unforgiving in that the heat management is real and you will feel it in your first game. That is arguably a good thing to learn early.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Marauder variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It depends on era. Before the Clans arrive, the MAD-3D at BV 1470 solves the heat problem that limits the 3R. The MAD-2R at BV 1630 is better still if Star League tech is on the table. For the Clan Invasion and later, the MAD-5S is the definitive sniper fit, and the MAD-11D is the strongest Dark Age option."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Marauder overheat?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The MAD-3R carries 16 single heat sinks and its two PPCs generate 20 heat between them. Add a point for walking and you are running a five point surplus every turn you fire both. The Star League MAD-2R had double heat sinks and does not have this problem at all."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between the Marauder, the Marauder II and the Marauder IIC?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Marauder is the 75 ton original. The Marauder II is a 100 ton assault-weight rebuild on the same silhouette. The Marauder IIC is Clan Wolf's 85 ton version built on Clan technology, and it is the most dangerous of the three. There are 65 variants across the whole family."}
+    },
+    {
+      "@type": "Question",
+      "name": "Which factions can field a Marauder?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The 3R is close to universal through the Succession Wars, appearing across the Inner Sphere, the Periphery and the major mercenary commands. Late-era variants narrow considerably. The table above has the full per-era breakdown."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Marauder good for new players?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes, with one caveat. It is forgiving in the sense that it is well armoured and does not ask you to make fast movement decisions. It is unforgiving in that the heat management is real and you will feel it in your first game. That is arguably a good thing to learn early."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'marauder';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
