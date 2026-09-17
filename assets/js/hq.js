@@ -62,7 +62,7 @@
       '<span class="logo-stack"><small>BATTLETECH</small><strong>HQ</strong></span></a>' +
       '<button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">MENU</button>' +
       '<nav class="hq-nav" aria-label="Primary"><ul>' +
-      '<li class="hq-drop"><a href="' + prefix + 'lance-builder.html">Tools</a>' +
+      '<li class="hq-drop"><a href="' + prefix + 'tools.html">Tools</a>' +
       '<div class="hq-drop-panel"><div class="hq-drop-inner">' + toolItems + "</div></div></li>" +
       navLinks +
       "</ul></nav>" +
@@ -212,12 +212,10 @@
     var cards = grid.querySelectorAll(".article-card");
     input.addEventListener("input", function () {
       var q = norm(input.value);
-      var shown = 0;
       cards.forEach(function (card) {
         var h3 = card.querySelector("h3");
         var hit = !q || norm(h3 ? h3.textContent : "").indexOf(q) !== -1;
         card.style.display = hit ? "" : "none";
-        if (hit) shown++;
       });
     });
   }
