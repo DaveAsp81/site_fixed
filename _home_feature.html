@@ -1,0 +1,45 @@
+        <div class="section-divider" id="mechs">
+            <h2>Mech Guides</h2>
+        </div>
+        <p style="color:#bbb; line-height:1.7; max-width:820px; margin:0 0 26px;">Every variant ranked, with the numbers behind each call. Not just what a mech is, but how it actually plays and what it costs you when it goes wrong.</p>
+
+        <a class="mech-feature" id="mechFeature" href="__HREF__">
+            <div class="mech-feature-img" id="mechFeatureImg" style="background-image: url('__IMAGE__');"></div>
+            <div class="mech-feature-body">
+                <span class="mech-feature-tag">Featured guide</span>
+                <h3 id="mechFeatureName">__CHASSIS__</h3>
+                <p class="mech-feature-meta" id="mechFeatureMeta">__META__</p>
+                <p id="mechFeatureBlurb">__BLURB__</p>
+                <span class="read-more">Read the guide &rarr;</span>
+            </div>
+        </a>
+
+        <p class="mech-feature-all">More guides: __OTHERS__ &middot; <a href="mechs.html">all mech guides &rarr;</a></p>
+
+<script>
+/* Shuffle the featured guide on each load. The card above is already filled
+   in server-side, so this only ever swaps one real guide for another: with
+   JavaScript off, or before this runs, the page still shows a guide and a
+   working link. Every guide also keeps a link in the row underneath, so the
+   shuffle never costs any of them an internal link. */
+(function () {
+    var guides = __DATA__;
+    if (!guides.length) return;
+    var g = guides[Math.floor(Math.random() * guides.length)];
+    function set(id, fn) {
+        var el = document.getElementById(id);
+        if (el) { fn(el); }
+    }
+    set('mechFeature', function (el) { el.setAttribute('href', g.href); });
+    set('mechFeatureImg', function (el) {
+        el.style.backgroundImage = "url('" + g.image + "')";
+    });
+    set('mechFeatureName', function (el) { el.textContent = g.chassis; });
+    set('mechFeatureMeta', function (el) {
+        el.textContent = g.tons + ' tons \u00b7 ' + g.tech + ' \u00b7 '
+                       + g.variants + ' variants';
+    });
+    set('mechFeatureBlurb', function (el) { el.textContent = g.blurb; });
+})();
+</script>
+

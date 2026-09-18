@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Locust variant ranked by a MechTech. Why nobody wanted to pilot one and everybody fielded one anyway, what four tons of armour really means, and how to use twenty tons properly.">
+    <meta name="keywords" content="Locust BattleTech, best Locust variant, LCT-1V, LCT-3M, LCT-5M, Locust IIC, BattleTech light mech, BattleTech scout mech">
+    <title>Locust: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/locust">
+    <meta property="og:title" content="Locust: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 24 Locust variants ranked, and why the cheapest mech in the game outlasted almost everything.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/locust">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/#getting-started">Getting Started</a></li>
+                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Locust</p>
+
+        <div class="mech-hero">
+            <h1>Locust</h1>
+            <p class="sub">20 tons &middot; Inner Sphere &middot; 24 variants &middot; 2499 to 3128</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/locust-schematic.webp" type="image/webp">
+                    <img src="assets/images/locust-schematic.png"
+                         alt="Illustration of an LCT-1V Locust BattleMech at speed, showing the chin-mounted medium laser, the machine guns on either flank and the digitigrade legs"
+                         width="560" height="674" loading="eager" decoding="async">
+                </picture>
+                <figcaption>An LCT-1V at a run, which is where it is meant to be. Note the chin turret for the medium laser, and the legs, which the quirk list politely calls weak.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Here is the line from the old technical readouts that tells you everything. Few MechWarriors enjoyed piloting Locusts. Not that they were bad. That nobody wanted to be in one.</p>
+                <p>And yet Bergan Industries has been building them since 2499 without a break, out of eight factories during the Star League and close to a dozen during the Succession Wars, Periphery plants included. The parts are everywhere and they are cheap. Pirates field Locusts. Corporate security fields Locusts. The Great Houses eventually stopped caring about the design entirely and the Periphery just kept building them anyway.</p>
+                <p>That is the whole machine in one sentence. Nobody wants it and everybody has it, and the reason is economics rather than tactics. A 1V is BV 432. An Atlas is 1897. You can put 4.4 Locusts on the table for one Atlas and still have change.</p>
+                <p><strong>What you have got.</strong> One Martell medium laser in a chin turret. Two Sperry Browning machine guns, one either side, sharing a single two hundred round magazine. Four tons of plate and an LTV 160 that pushes it to about 130 kilometres an hour. That is the entire specification and there is nothing hidden in it.</p>
+                <p><strong>What it costs you.</strong> It has no hands. None of them do. So anything that closes to punching range is doing something to you that you cannot do back. The official quirk list says compact, narrow profile, cramped cockpit, minimal arms and weak legs, and the last two are not flavour text. Four tons of armour means a direct hit from something serious ends the conversation.</p>
+                <p><strong>If you are choosing one:</strong> the <strong>LCT-1V</strong> is still correct and always was. The <strong>LCT-3M</strong> adds an anti-missile system, which matters more than another gun on something this fragile. The <strong>LCT-5M</strong> is where it stops feeling slow. And the <strong>LCT-7V</strong> is the one where somebody actually picked the engine to keep the pilot alive.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Twenty tons does not buy you very much, so the question is what you spend it on, and Bergan answered that in 2499 by spending almost all of it on the engine. The LTV 160 gets a cruising speed of about 86 kilometres an hour and a top end near 130, and at the time that was enough to outrun most things it would meet.</p>
+            <p>Everything else is what was left over. A single Martell medium laser, mounted in a chin turret so it can actually point at things without the whole machine turning. Two Sperry Brownings on the flanks, sharing one two hundred round magazine between them, and they are there for exactly one reason: infantry go for the legs on something this size, and machine guns discourage that.</p>
+            <p>Then four tons of StarSlab and that is the budget gone.</p>
+            <p>The thing that catches people out is the hands, or rather the absence of them. A Locust has no hand actuators. It is on the quirk list as minimal arms and it means that in a physical fight you have nothing. Something walks into you and punches, and all you can do is be somewhere else next turn. Which, to be fair, is the plan.</p>
+
+            <div class="heat-callout">
+                <h3>What it is actually for</h3>
+                <p>The old readouts are blunt about the job: when a Locust ends up in a fight, it is usually fighting a holding action until something heavier turns up. That is not a criticism, that is the design brief.</p>
+                <p>The other use is the one people forget. Three Locusts working together can swarm a single machine that has got separated from its support. Individually they are a nuisance. In threes they are a real problem, and at BV 432 apiece you can afford three of them for less than one proper heavy.</p>
+                <p style="margin-top:16px;">What you should not do is fight fair with one. 15 of the 24 variants run at the classic 8/12, and that speed is the entire defensive system. Standing still in a Locust is the same as being dead in a Locust, just with extra steps.</p>
+            </div>
+
+                        <h2>Six centuries of being everywhere</h2>
+            <p>The economics are the history here. Bergan ran Locusts out of eight factories through the Star League era and supplied the League and its member states right up to the Amaris Civil War. During the Succession Wars the number of plants went up rather than down, to nearly a dozen, Periphery ones included.</p>
+            <p>That did something unusual. Because so many places built them, the price stayed low and the parts stayed available, and the result is that everybody ended up with Locusts. Pirates could afford them. Corporate defence forces bought them in numbers. Periphery plants were largely limited to the original 1V, so that is what they built, over and over, for centuries.</p>
+            <p>When the Successor States started rebuilding old designs with recovered technology, the Locust got its share. The Capellans converted the Ares facility to build the 1L with a triple-strength myomer that, and this is the detail I enjoy, would not catch fire. Which tells you something about the versions that came before it.</p>
+            <p>The Word of Blake wanted their own, and went to Corean Enterprises to have it built. Corean had misgivings, so Blake agreed to buy the entire first production run up front to settle them. That is how the 5M happened, and every Level III unit ended up with at least one.</p>
+            <p>And then the part that should be sad and somehow is not. None of the Great Houses were much interested in keeping the line going. The Periphery, which had always relied on it, carried on building and upgrading Locusts on its own, and they are still turning them out into the thirty-second century. One of the most common machines ever built, kept alive by the people everyone else looks down on.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Locusts available in the same era</strong>, not against the rest of the game. On twenty tons the margins are small and the choices are stark, which makes the ranking more useful here than on a heavy.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 2 of the 24 Locust variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 24 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-1V: the one everybody has</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 432 &middot; PV 18 &middot; Scout &middot; 2499<br>
+  Walk 8 / Run 12 / Jump 0 &middot; 10 Single &middot; 160 Fusion Engine<br>
+  2x Machine Gun, 1x Medium Laser</p>
+  <p>The original from 2499, and still the one you will meet most often six centuries later. One Martell medium laser in a chin turret, two Sperry Browning machine guns sharing a two hundred round magazine, four tons of plate and an engine that does the rest. At BV 432 it is the cheapest useful thing you can put on a table.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-1S: the upgrade that was not</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 440 &middot; PV 18 &middot; Scout &middot; 2567<br>
+  Walk 8 / Run 12 / Jump 0 &middot; 10 Single &middot; 160 Fusion Engine<br>
+  2x SRM 2, 1x Medium Laser</p>
+  <p>Lyran, 2567, and they swapped the machine guns for a pair of SRM 2 racks. It cost them a ton of armour on a machine that did not have a ton of armour spare. Somebody in the Commonwealth wanted a light mech with a punch and this is what happened. Beaten outright by the LCT-1V, which costs 8 less BV and gives up nothing it carries.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-1Vb: the Royal</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 642 &middot; PV 23 &middot; Striker &middot; 2610<br>
+  Walk 8 / Run 12 / Jump 0 &middot; 10 IS Double &middot; 160 XL Engine<br>
+  2x Medium Pulse Laser, 2x Small Pulse Laser, 1x Medium Laser</p>
+  <p>The SLDF Royal. XL engine, endo steel, ferro-fibrous, double heat sinks and pulse lasers in both arms. Everything the original could not have, all at once. If your era allows it there is nothing here to argue about.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-3M: the sensible one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 522 &middot; PV 20 &middot; Scout &middot; 3050<br>
+  Walk 8 / Run 12 / Jump 0 &middot; 10 Single &middot; 160 Fusion Engine<br>
+  4x Small Laser, 1x Anti-Missile System, 1x Medium Laser</p>
+  <p>Free Worlds League, 3050. Keeps the Martell, swaps the machine guns for four small lasers, and adds an anti-missile system, which on a machine this fragile is worth more than another gun. Endo steel and ferro-fibrous underneath.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-5M: the fast one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 719 &middot; PV 26 &middot; Striker &middot; 3066<br>
+  Walk 12 / Run 18 / Jump 0 &middot; 10 Single &middot; 240 XL Engine<br>
+  4x ER Small Laser, 1x ER Medium Laser</p>
+  <p>Word of Blake, ER lasers throughout and a Hermes 240 XL that takes it to 194 kilometres an hour. Every Level III unit had at least one. This is the Locust that finally stops feeling slow.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-6M: 300 kilometres an hour</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 956 &middot; PV 31 &middot; Striker &middot; 3071<br>
+  Walk 14 / Run 21 / Jump 0 &middot; 10 IS Double &middot; 280 XL Engine<br>
+  2x ER Medium Laser, 1x ER Small Laser</p>
+  <p>A Hermes 280 XL in a twenty ton chassis. Two hundred and twenty-six kilometres an hour, and over three hundred with the MASC lit. They fitted a small cockpit to save the weight, which makes it harder to pilot, and you are still made of four tons of plate. Beaten outright by the LCT-5V, which costs 291 less BV and gives up nothing it carries.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-7V: the survivable one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 585 &middot; PV 25 &middot; Scout &middot; 3102<br>
+  Walk 10 / Run 15 / Jump 0 &middot; 10 IS Double &middot; 200 Light Engine<br>
+  2x Magshot, 1x Medium X-Pulse Laser</p>
+  <p>A light engine instead of an XL, which on a chassis this fragile is the right call, plus heavy ferro-fibrous and a Magshot Gauss rifle in each arm. The light engine was chosen specifically to improve survivability, which is not a sentence you get to write about many Locusts.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>LCT-3D: no close range weapons at all</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">20 tons &middot; BV 436 &middot; PV 16 &middot; Missile Boat &middot; 3049<br>
+  Walk 8 / Run 12 / Jump 0 &middot; 10 Single &middot; 160 Fusion Engine<br>
+  2x LRM 5</p>
+  <p>Two LRM 5s and nothing else. No close-range weapons at all, ferro-fibrous plate and an endo steel frame. It harasses from distance and runs, and if anything gets near it you have no answer whatsoever.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Speed is your armour. Every turn you spend not moving at full pace is a turn you are just a small target with thin plate. Get behind things. Rear armour is where a medium laser actually matters, and you are one of the few machines that can reliably get there. Do not trade shots with anything. You will lose, and it will not be close.</p>
+            <p><strong>Fighting one.</strong> Do not chase it, because you will not catch it and you will disorder your own line trying. Make it come to you, or ignore it and accept that it is spotting for somebody. If it does get close, punch it. It has no hands and it has weak legs on the quirk list, and physical attacks are how Locusts actually die.</p>
+            <p><strong>What I see go wrong.</strong> People play them like small heavies and try to contribute damage. That is not the job. The job is information, rear arcs, and being somewhere inconvenient. And people forget three of them together are a completely different proposition to one on its own.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Locust is the clearest example on the site of role tags mattering more than the chassis name. 14 of the 24 variants are tagged Scout and 7 are Strikers, and the engine drives those very differently.</p>
+            <ul>
+                <li>Scout fits, including the <strong>LCT-1V</strong> itself, get the most negative aggression weighting in the engine. They will not close. They will hang about at the edge of the fight being annoying, which is exactly right.</li>
+                <li>Striker fits like the <strong>LCT-5V</strong> and <strong>LCT-6M</strong> get a positive modifier and will actually commit, usually to something already hurt.</li>
+                <li>The <strong>LCT-7V2</strong> is the only one tagged Sniper, and the two missile boats, the <strong>LCT-1M</strong> and <strong>LCT-3D</strong>, sit at the back and throw LRMs.</li>
+            </ul>
+            <p>Worth knowing because an enemy lance with three Scout Locusts plays nothing like one with three Strikers, and the two groups overlap heavily on Battle Value.</p>
+
+                        <h2>All 24 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">LCT-1V</td><td>2499</td><td>432</td><td>18</td><td>Scout</td><td class="wpn">2x Machine Gun, 1x Medium Laser</td><td class="num">1/1/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">LCT-1S</td><td>2567</td><td>440</td><td>18</td><td>Scout</td><td class="wpn">2x SRM 2, 1x Medium Laser</td><td class="num">1/1/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by LCT-1V</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">LCT-1M</td><td>2571</td><td>424</td><td>21</td><td>Missile Boat</td><td class="wpn">2x LRM 5, 1x Medium Laser</td><td class="num">1/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">LCT-1Vb</td><td>2610</td><td>642</td><td>23</td><td>Striker</td><td class="wpn">2x Medium Pulse Laser, 2x Small Pulse Laser, 1x Medium Laser</td><td class="num">3/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">LCT-1E</td><td>2811</td><td>553</td><td>19</td><td>Scout</td><td class="wpn">2x Medium Laser, 2x Small Laser</td><td class="num">2/1/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C</td><td>2832</td><td>672</td><td>23</td><td>Striker</td><td class="wpn">2x ER Small Laser, 1x Medium Pulse Laser</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">LCT-3V</td><td>3004</td><td>490</td><td>19</td><td>Scout</td><td class="wpn">2x Machine Gun, 2x Medium Laser</td><td class="num">2/1/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">LCT-1L</td><td>3030</td><td>474</td><td>19</td><td>Scout</td><td class="wpn">2x Machine Gun, 1x Medium Laser</td><td class="num">1/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">LCT-3D</td><td>3049</td><td>436</td><td>16</td><td>Missile Boat</td><td class="wpn">2x LRM 5</td><td class="num">0/1/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">LCT-3S</td><td>3049</td><td>483</td><td>20</td><td>Striker</td><td class="wpn">2x Streak SRM 2, 1x Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">LCT-3M</td><td>3050</td><td>522</td><td>20</td><td>Scout</td><td class="wpn">4x Small Laser, 1x Anti-Missile System, 1x Medium Laser</td><td class="num">2/1/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">LCT-1V2</td><td>3065</td><td>568</td><td>19</td><td>Scout</td><td class="wpn">4x Rocket Launcher 10, 1x Medium Laser</td><td class="num">1/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">LCT-5M</td><td>3066</td><td>719</td><td>26</td><td>Striker</td><td class="wpn">4x ER Small Laser, 1x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">LCT-5V</td><td>3068</td><td>665</td><td>24</td><td>Striker</td><td class="wpn">2x Rocket Launcher 10, 2x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">LCT-5T</td><td>3070</td><td>520</td><td>22</td><td>Scout</td><td class="wpn">6x Light Machine Gun, 2x Light Machine Gun Array, 1x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">LCT-6M</td><td>3071</td><td>956</td><td>31</td><td>Striker</td><td class="wpn">2x ER Medium Laser, 1x ER Small Laser</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by LCT-5V</span></td></tr>
+<tr><td class="vname">LCT-5S</td><td>3073</td><td>509</td><td>21</td><td>Striker</td><td class="wpn">2x MML 3, 1x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">LCT-5W</td><td>3076</td><td>695</td><td>23</td><td>Scout</td><td class="wpn">2x ER Medium Laser, 1x TAG</td><td class="num">1/1/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">LCT-5W2</td><td>3079</td><td>787</td><td>24</td><td>Scout</td><td class="wpn">2x ER Medium Laser, 1x TAG</td><td class="num">1/1/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">LCT-5M2</td><td>3087</td><td>693</td><td>25</td><td>Scout</td><td class="wpn">2x Medium Pulse Laser, 1x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">LCT-5M3</td><td>3088</td><td>929</td><td>23</td><td>Scout</td><td class="wpn">2x ER Medium Laser, 1x ER Large Laser</td><td class="num">2/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">LCT-7V</td><td>3102</td><td>585</td><td>25</td><td>Scout</td><td class="wpn">2x Magshot, 1x Medium X-Pulse Laser</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">LCT-7V2</td><td>3112</td><td>634</td><td>25</td><td>Sniper</td><td class="wpn">2x ER Small Laser, 1x Light PPC</td><td class="num">1/2/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">LCT-7S</td><td>3128</td><td>706</td><td>21</td><td>Scout</td><td class="wpn">2x Machine Gun, 1x ER Medium Laser</td><td class="num">2/1/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the LCT-1V by era, straight off the Master Unit List. It appears in all 11 of them, which almost nothing does.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Capellan Confederation, Draconis Combine, Federated Suns, Free Worlds League, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General, Rasalhague Dominion, Raven Alliance</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General, Rasalhague Dominion, Raven Alliance</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Inner Sphere General, Mercenary, Periphery General, Scorpion Empire</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>The rest of the Locust family</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Locust IIC</h3>
+  <p class="vstats">25 tons &middot; Clan &middot; 9 variants &middot; BV 776 to 1248</p>
+  <p>The Clans took Locusts with them on the Exodus and built their own version. Clan technology on the same twenty tons, and a substantially nastier machine for it.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Commando</h3>
+  <p class="vstats">25 tons &middot; Inner Sphere &middot; 24 variants &middot; BV 458 to 1105</p>
+  <p>No relation. Slower, and it carries missiles worth respecting where a Locust carries a laser and an apology. The other light everyone owns.</p>
+</div>
+<div class="fam">
+  <h3>Jenner</h3>
+  <p class="vstats">35 tons &middot; Inner Sphere &middot; 14 variants &middot; BV 702 to 1269</p>
+  <p>What a scout looks like when somebody spends the money. Jump jets, four medium lasers, and it costs accordingly.</p>
+</div>
+<div class="fam">
+  <h3>Spider</h3>
+  <p class="vstats">30 tons &middot; Inner Sphere &middot; 16 variants &middot; BV 503 to 1007</p>
+  <p>The one that beats a Locust at its own job, because it jumps. Worse guns, far better at staying alive.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Locust in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Locust variant?</h3>
+                <p>For most games the LCT-1V at BV 432 is still the right answer, because the whole point of a Locust is that it is cheap and fast and you can afford several. If you want more from it, the LCT-3M adds an anti-missile system, the LCT-5M is much faster, and the LCT-7V uses a light engine specifically to improve survivability.</p>
+
+                <h3>Why does everyone field Locusts if nobody likes them?</h3>
+                <p>Because they were built almost everywhere. Bergan ran eight factories in the Star League era and there were close to a dozen plants during the Succession Wars, Periphery included. That kept the price down and the spare parts available, so everyone from pirates to corporate security bought them in quantity.</p>
+
+                <h3>How fast is a Locust?</h3>
+                <p>The standard LCT-1V cruises at about 86 kilometres an hour and tops out near 130. Later variants go considerably further: the LCT-5M reaches 194, and the LCT-6M hits 226 with bursts over 300 using MASC.</p>
+
+                <h3>Why is the Locust so easy to kill?</h3>
+                <p>Four tons of armour and no hand actuators. It cannot take a direct hit from anything serious and it cannot defend itself in a physical fight. Its design quirks include weak legs and minimal arms, which is the rulebook agreeing with every tech who has worked on one.</p>
+
+                <h3>Is the Locust worth taking?</h3>
+                <p>Yes, but not as a fighter. It is a scout and a nuisance, and three working together can swarm something that has lost its support. At around a quarter the Battle Value of a heavy, the question is never whether a Locust beats a Marauder. It is what else you can afford to bring alongside it.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Locust variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "For most games the LCT-1V at BV 432 is still the right answer, because the whole point of a Locust is that it is cheap and fast and you can afford several. If you want more from it, the LCT-3M adds an anti-missile system, the LCT-5M is much faster, and the LCT-7V uses a light engine specifically to improve survivability."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does everyone field Locusts if nobody likes them?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Because they were built almost everywhere. Bergan ran eight factories in the Star League era and there were close to a dozen plants during the Succession Wars, Periphery included. That kept the price down and the spare parts available, so everyone from pirates to corporate security bought them in quantity."}
+    },
+    {
+      "@type": "Question",
+      "name": "How fast is a Locust?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The standard LCT-1V cruises at about 86 kilometres an hour and tops out near 130. Later variants go considerably further: the LCT-5M reaches 194, and the LCT-6M hits 226 with bursts over 300 using MASC."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Locust so easy to kill?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Four tons of armour and no hand actuators. It cannot take a direct hit from anything serious and it cannot defend itself in a physical fight. Its design quirks include weak legs and minimal arms, which is the rulebook agreeing with every tech who has worked on one."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Locust worth taking?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes, but not as a fighter. It is a scout and a nuisance, and three working together can swarm something that has lost its support. At around a quarter the Battle Value of a heavy, the question is never whether a Locust beats a Marauder. It is what else you can afford to bring alongside it."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'locust';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
