@@ -229,6 +229,18 @@
             .about-strip { padding: 20px; }
         }
 
+        .section-more {
+            margin: 4px 0 50px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+        }
+        .section-more a {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .section-more a:hover { text-decoration: underline; }
+
         /* Featured mech guide card, shuffled on load */
         .mech-feature {
             display: flex;
@@ -333,9 +345,9 @@
                 <ul>
                     <li><a href="/lance-builder">Lance Builder</a></li>
                     <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
                     <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/guides">Articles</a></li>
                     <li><a href="/about">About</a></li>
                 </ul>
             </nav>
@@ -370,7 +382,7 @@
         <!-- ── LANCE BUILDER ─────────────────────────────────────── -->
         <div class="tool-hero" id="tools">
             <div class="tool-hero-text">
-                <h2>⚙ Lance Command Console</h2>
+                <h2>Lance Command Console</h2>
                 <p>The lance builder built for the table, not the wiki. Filter by faction and era, track Battle Value and tonnage in real time, preview 'Mech loadouts, and print your roster sheet. Over 600 chassis and 3,700 variants from the full MUL database.</p>
                 <div class="tool-hero-features">
                     <span class="tool-pill">620 Chassis</span>
@@ -401,7 +413,7 @@
 
         <!-- ── SOLO PLAY ─────────────────────────────────────────── -->
         <div class="section-divider" id="solo">
-            <h2>🎲 Playing Solo</h2>
+            <h2>Playing Solo</h2>
         </div>
         <p class="solo-note">No opponent, no problem. Run a whole campaign on your own, or play a one off with a tool that thinks for the enemy.</p>
 
@@ -434,7 +446,7 @@
 
         <!-- ── GETTING STARTED ───────────────────────────────────── -->
         <div class="section-divider" id="getting-started">
-            <h2>🎯 Getting Started</h2>
+            <h2>Getting Started</h2>
         </div>
         <div class="articles-grid">
             <div class="article-card">
@@ -461,18 +473,11 @@
                     <a href="articles/best-beginner-mechs.html" class="read-more">Read More →</a>
                 </div>
             </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/starter-set.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>Building a Force on a Budget</h3>
-                    <p>How to get a complete, playable BattleTech collection for under $100, with the right priorities in the right order.</p>
-                    <a href="articles/budget-battletech-army.html" class="read-more">Read More →</a>
-                </div>
-            </div>
         </div>
 
         <!-- ── GAMEPLAY ──────────────────────────────────────────── -->
-        <div class="section-divider" id="mechs">
+        
+        <p class="section-more"><a href="guides.html#getting-started">All 4 getting started articles &rarr;</a></p><div class="section-divider" id="mechs">
             <h2>Mech Guides</h2>
         </div>
         <p style="color:#bbb; line-height:1.7; max-width:820px; margin:0 0 26px;">Every variant ranked, with the numbers behind each call. Not just what a mech is, but how it actually plays and what it costs you when it goes wrong.</p>
@@ -518,7 +523,7 @@
 </script>
 
         <div class="section-divider" id="gameplay">
-            <h2>⚔️ Gameplay & Strategy</h2>
+            <h2>Gameplay & Strategy</h2>
         </div>
         <div class="articles-grid">
             <div class="article-card">
@@ -545,35 +550,12 @@
                     <a href="articles/heat-management-guide.html" class="read-more">Read More →</a>
                 </div>
             </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/gator.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>GATOR: How To-Hit Numbers Work</h3>
-                    <p>The calculation you'll do more than any other. Gunnery, movement, terrain and range, explained with worked examples and the 2d6 odds that actually matter.</p>
-                    <a href="articles/gator-to-hit-guide.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/locust.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>Best Light 'Mechs (3025 Era)</h3>
-                    <p>Which scouts and harassers are worth fielding and why — from the Locust to the Jenner.</p>
-                    <a href="articles/best-light-mechs.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/battlemaster.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>Best Heavy 'Mechs (3025 Era)</h3>
-                    <p>The workhorses of any serious lance — which heavies earn their tonnage and which disappoint.</p>
-                    <a href="articles/best-heavy-mechs.html" class="read-more">Read More →</a>
-                </div>
-            </div>
         </div>
 
         <!-- ── LORE ──────────────────────────────────────────────── -->
-        <div class="section-divider" id="lore">
-            <h2>📚 Lore & Universe</h2>
+        
+        <p class="section-more"><a href="guides.html#gameplay">All 6 gameplay & strategy articles &rarr;</a></p><div class="section-divider" id="lore">
+            <h2>Lore & Universe</h2>
         </div>
         <div class="articles-grid">
             <div class="article-card">
@@ -600,67 +582,12 @@
                     <a href="articles/dark-age.html" class="read-more">Read More →</a>
                 </div>
             </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image:url('assets/images/articles/lore.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>The ilClan Era: The Return to Terra</h3>
-                    <p>Alaric Ward. The Battle of Terra. Clan Wolf's claim to supremacy. The payoff of a storyline thirty years in the making.</p>
-                    <a href="articles/ilclan.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/jihad.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>The Jihad: The War That Broke Everything Again</h3>
-                    <p>Simultaneous nuclear strikes on every capital, the Manei Domini, Devlin Stone, and twelve years of warfare that made the Succession Wars look restrained.</p>
-                    <a href="articles/jihad-deep-dive.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/lore.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>BattleTech Lore: A Beginner's Guide</h3>
-                    <p>A thousand years of future history explained without requiring you to read a hundred sourcebooks first.</p>
-                    <a href="articles/battletech-lore-explained.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/great-houses.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>The Five Great Houses</h3>
-                    <p>House Davion, Steiner, Kurita, Liao, Marik — what makes each one distinct and which one you might want to fight for.</p>
-                    <a href="articles/great-houses-guide.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/oprevival.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>The Clan Invasion: Operation Revival</h3>
-                    <p>The five invading Clans, the shock of first contact, Tukayyid, and the destruction of Clan Smoke Jaguar. The full story.</p>
-                    <a href="articles/clan-invasion.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/emptythrone.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>The Succession Wars Explained</h3>
-                    <p>Three centuries of grinding warfare that shaped the Inner Sphere and destroyed most of what made the Star League great.</p>
-                    <a href="articles/succession-wars-explained.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/fedcom-civil-war.jpg'); background-size: cover; background-position: center;"></div>
-                <div class="article-card-content">
-                    <h3>The FedCom Civil War: When the Alliance Destroyed Itself</h3>
-                    <p>Melissa's assassination, Katherine's power grab, Victor's long march home — five years of the Inner Sphere's mightiest military tearing itself apart.</p>
-                    <a href="articles/fedcom-civil-war.html" class="read-more">Read More →</a>
-                </div>
-            </div>
         </div>
 
         <!-- ── PAINTING ──────────────────────────────────────────── -->
-        <div class="section-divider" id="painting">
-            <h2>🎨 Painting & Hobby</h2>
+        
+        <p class="section-more"><a href="guides.html#lore">All 10 lore & universe articles &rarr;</a></p><div class="section-divider" id="painting">
+            <h2>Painting & Hobby</h2>
         </div>
         <div class="articles-grid">
             <div class="article-card">
@@ -685,22 +612,6 @@
                     <h3>Best Paints for BattleTech Miniatures</h3>
                     <p>Army Painter, Vallejo, Citadel — which brands are worth the money and what you actually need to get started.</p>
                     <a href="articles/best-battletech-paints.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/factioncolours.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>Faction Colour Schemes</h3>
-                    <p>The canonical colours for every major House and Clan, with notes on how to mix and match for your own colour scheme.</p>
-                    <a href="articles/faction-color-schemes.html" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="article-card">
-                <div class="article-card-image" style="background-image: url('assets/images/articles/battletech-terrain.jpg');"></div>
-                <div class="article-card-content">
-                    <h3>Building Terrain on a Budget</h3>
-                    <p>DIY terrain that looks good without costing a fortune. Foamcore, filler, and a few evenings gets you a solid table.</p>
-                    <a href="articles/battletech-terrain-building.html" class="read-more">Read More →</a>
                 </div>
             </div>
         </div>
@@ -730,8 +641,9 @@
         </div>
 
         <!-- ── GEAR / BUYING GUIDE ───────────────────────────────── -->
-        <div class="section-divider" id="gear">
-            <h2>🛒 Recommended Gear</h2>
+        
+        <p class="section-more"><a href="guides.html#painting">All 5 painting & hobby articles &rarr;</a></p><div class="section-divider" id="gear">
+            <h2>Recommended Gear</h2>
         </div>
         <p style="color:#888; margin-bottom:24px;">These are products I actually use and recommend. Prices are approximate and vary by retailer.</p>
         <div class="product-strip">
