@@ -19,6 +19,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="../assets/css/style.css">
 <link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://battletechhq.com/articles/battletech-beginner-guide.html">
@@ -36,31 +39,39 @@
     <meta name="twitter:description" content="Complete beginner&#x27;s guide to BattleTech 2026. Learn what to buy, how to play, and everything you need to start your journey into the Inner Sphere.">
     <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BattleTech Beginner Guide: How to Start Playing in 2026 | BattleTech HQ", "description": "Complete beginner's guide to BattleTech 2026. Learn what to buy, how to play, and everything you need to start your journey into the Inner Sphere.", "url": "https://battletechhq.com/articles/battletech-beginner-guide.html", "author": {"@type": "Person", "name": "David White"}, "publisher": {"@type": "Organization", "name": "BattleTech HQ", "url": "https://battletechhq.com"}, "datePublished": "2026-05-03", "dateModified": "2026-07-13"}</script>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
     <header>
-        <div class="header-content">
-            <a href="../index.html" class="logo">BattleTech HQ</a>
-            <button class="nav-toggle" aria-label="Menu">☰ MENU</button>
-<nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="header-content">
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
     <div class="container">
         <div class="content-wrapper">
-            <main class="main-content">
-                <div class="article-hero" style="background-image: url('../assets/images/articles/intro.jpg"></div>
+            <main id="main" class="main-content">
+                <div class="article-hero"><img src="../assets/images/articles/intro-800.webp" srcset="../assets/images/articles/intro-480.webp 480w, ../assets/images/articles/intro-800.webp 800w, ../assets/images/articles/intro-1280.webp 1280w, ../assets/images/articles/intro-1600.webp 1600w" sizes="(min-width: 900px) 820px, calc(100vw - 60px)" width="2028" height="1139" alt="" loading="eager" decoding="async" fetchpriority="high"></div>
                     <article>
                     <h1>So You Want to Play BattleTech</h1>
+<p class="article-meta"><span>By David White</span><span class="meta-updated">Updated 13 July 2026</span><span>First published 3 May 2026</span></p>
+<nav class="guide-toc" data-toc data-toc-scope="article" hidden aria-labelledby="toc-title"></nav>
+
                     
                     <p>Someone handed you a miniature, or you stumbled across a YouTube video of giant robots blasting each other on a hex grid, or a friend kept going on about their Atlas until you finally gave in. However you got here — welcome. You've found one of the best tabletop wargames ever made.</p>
 
@@ -109,8 +120,8 @@
 
                     <div class="product-recommendation">
                         <h4>Where to Buy</h4>
-                        <p><a href="https://www.amazon.com/dp/B0D3M6JBY1?tag=battletechhq-20" target="_blank">Amazon</a> usually has it for $55–60. Your local game store is worth checking too — supporting them keeps BattleTech nights happening.</p>
-                        <a href="https://www.amazon.com/dp/B0D3M6JBY1?tag=battletechhq-20" class="buy-button" target="_blank">Check Current Price on Amazon →</a>
+                        <p><a href="https://www.amazon.com/dp/B0D3M6JBY1?tag=battletechhq-20" target="_blank" rel="sponsored nofollow noopener">Amazon</a> usually has it for $55–60. Your local game store is worth checking too — supporting them keeps BattleTech nights happening.</p>
+                        <a href="https://www.amazon.com/dp/B0D3M6JBY1?tag=battletechhq-20" class="buy-button" target="_blank" rel="sponsored nofollow noopener">Check Current Price on Amazon →</a>
                     </div>
 
                     <h3>Alpha Strike Starter — $50 to $60</h3>
@@ -226,7 +237,7 @@
 
                     <p>Your local game store is the first stop. Ask if they run BattleTech nights or whether there's a group — the community tends to self-organise around game stores and is genuinely welcoming to newcomers. People want more players. You're an asset.</p>
 
-                    <p>Online, the <a href="https://www.reddit.com/r/battletech" target="_blank">r/battletech</a> community is active and helpful. <a href="https://www.sarna.net" target="_blank">Sarna.net</a> is the wiki you'll end up on constantly. And <a href="https://megamek.games" target="_blank">MegaMek</a> is a free digital implementation of Classic BattleTech if you want to play online or solo against the AI.</p>
+                    <p>Online, the <a href="https://www.reddit.com/r/battletech" target="_blank" rel="noopener">r/battletech</a> community is active and helpful. <a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net</a> is the wiki you'll end up on constantly. And <a href="https://megamek.games" target="_blank" rel="noopener">MegaMek</a> is a free digital implementation of Classic BattleTech if you want to play online or solo against the AI.</p>
 
                     <h2>Common Questions</h2>
 
@@ -237,6 +248,16 @@
                     <p><strong>Can I play solo?</strong> Yes. MegaMek has solo AI, and the community has developed various solo scenario frameworks. It's not the primary way people play but it's a real option.</p>
 
                     <p><strong>What era should I start in?</strong> The 3025 era — the Third Succession War — is where most starter products are set and it's the right starting point. Once you know the game you can explore the Clan Invasion period (3050s) or later eras. But 3025 is where BattleTech's character lives.</p>
+
+<div class="related-guides">
+    <h2>More in Getting Started</h2>
+    <ul>
+            <li><a href="/articles/battletech-vs-warhammer">BattleTech vs Warhammer 40K</a></li>
+            <li><a href="/articles/best-beginner-mechs">Best &#x27;Mechs for Beginners</a></li>
+            <li><a href="/articles/budget-battletech-army">Building a Force on a Budget</a></li>
+    </ul>
+    <p style="margin:14px 0 0;"><a class="read-more" href="/guides">All guides and articles &rarr;</a></p>
+</div>
 </article>
             </main>
 
@@ -245,11 +266,11 @@
                     <div style="background:#141414;border:1px solid rgba(211,47,47,0.3);border-radius:8px;padding:16px 18px;margin:20px 0;"><p style="margin:0;"><strong style="color:#ff8c00;">Free Tools to Get You Started</strong> — build your first lance with the <a href="../lance-builder.html" style="color:#ff8c00;">Lance Builder</a>, plan a paint scheme with the <a href="../paint-tool.html" style="color:#ff8c00;">Paint Planner</a>, and track your first game with the <a href="../game-tracker.html" style="color:#ff8c00;">Game Tracker</a>.</p></div>
                 <h3 style="color:#ff8c00; margin-bottom:8px;">📬 Stay in the Loop</h3>
                     <p style="color:#999; font-size:0.85rem; margin-bottom:16px; line-height:1.5;">New guides, lore deep-dives, and lance builder updates — straight to your inbox. No spam, unsubscribe any time.</p>
-                    <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank" style="display:flex; flex-direction:column; gap:8px;">
-                        <input type="text" name="FNAME" placeholder="First name (optional)"
-                               style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;">
-                        <input type="email" name="EMAIL" placeholder="Your email address" required
-                               style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;">
+                    <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" style="display:flex; flex-direction:column; gap:8px;" data-mc-ajax>
+                        <label class="sr-only" for="nl-fname-1">First name</label><input type="text" name="FNAME" placeholder="First name (optional)"
+                               style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;" id="nl-fname-1" autocomplete="given-name">
+                        <label class="sr-only" for="nl-email-1">Email address</label><input type="email" name="EMAIL" placeholder="Your email address" required
+                               style="background:#111; border:1px solid #2a2a2a; color:#ddd; padding:9px 12px; border-radius:4px; font-size:0.85rem; font-family:inherit;" id="nl-email-1" autocomplete="email">
                         <!-- Mailchimp bot protection -->
                         <div style="position:absolute;left:-5000px;" aria-hidden="true">
                             <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
@@ -259,17 +280,17 @@
                             Subscribe Free →
                         </button>
                     </form>
-                    <p style="margin-top:10px; font-size:0.75rem; color:#555; text-align:center;">
-                        <a href="https://mailchimp.com/legal/privacy/" target="_blank" style="color:#444;">Privacy Policy</a>
+                    <p style="margin-top:10px; font-size:0.75rem; color:#8b8b8b; text-align:center;">
+                        <a href="https://mailchimp.com/legal/privacy/" target="_blank" rel="noopener">Privacy Policy</a>
                     </p>
                 </div>
                 <div class="sidebar-widget newsletter-box" style="margin-top:16px;">
                     <h3>📺 BattleTech Down Under</h3>
                     <p>Video lore, battle reports, and painting guides.</p>
-                    <a href="https://www.youtube.com/@BattleTechDownUnder" target="_blank"
+                    <a href="https://www.youtube.com/@DaveAsp81" target="_blank"
                        style="display:block; background:#c00; color:#fff; text-align:center;
                               padding:10px; border-radius:4px; text-decoration:none;
-                              font-weight:bold; margin-top:10px;">▶ Watch on YouTube</a>
+                              font-weight:bold; margin-top:10px;" rel="noopener">▶ Watch on YouTube</a>
                     <p style="margin-top:12px; font-size:0.8rem; color:#888;">
                         Questions? <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Drop me a line.</a>
                     </p>
@@ -288,9 +309,9 @@
                 <div class="sidebar-widget">
                     <h3>⚡ Quick Links</h3>
                     <ul>
-                        <li><a href="https://www.sarna.net" target="_blank">Sarna.net Wiki</a></li>
-                        <li><a href="https://store.catalystgamelabs.com" target="_blank">Official Store</a></li>
-                        <li><a href="https://megamek.org" target="_blank">MegaMek Software</a></li>
+                        <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net Wiki</a></li>
+                        <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Official Store</a></li>
+                        <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek Software</a></li>
                     </ul>
                 </div>
             </aside>
@@ -298,45 +319,55 @@
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About BattleTech HQ</h4>
-                <p>Your trusted source for BattleTech guides, reviews, and strategies.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="../about.html">About Us</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="../privacy.html">Privacy Policy</a></li>
-                    <li><a href="../affiliate-disclosure.html">Affiliate Disclosure</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li>
-                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
-                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
-                </ul>
-            </div>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 BattleTech HQ. This is an unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-            <p>We are a participant in affiliate advertising programs designed to provide a means for sites to earn advertising fees.</p>
-                    <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
         </div>
-    </footer>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var toggle = document.querySelector('.nav-toggle');
-    var navUl = document.querySelector('nav ul');
-    if (toggle && navUl) {
-        toggle.addEventListener('click', function() {
-            navUl.classList.toggle('open');
-        });
-    }
-});
-</script>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+
+# Local preview config for the Claude Code browser pane.
+.claude/

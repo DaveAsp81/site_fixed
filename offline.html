@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Offline | BattleTech HQ</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+        /* No webfonts here on purpose: this page has to render with no
+           network at all, so it uses the local fallback stack. */
+        .offline {
+            max-width: 60ch;
+            margin: 60px auto;
+            text-align: left;
+        }
+        .offline h1 {
+            color: #ff8c00;
+            font-size: 2rem;
+            margin: 0 0 14px;
+            letter-spacing: 1px;
+        }
+        .offline p {
+            color: #c8c8c8;
+            line-height: 1.75;
+            margin: 0 0 20px;
+        }
+        .offline ul {
+            list-style: none;
+            margin: 0 0 26px;
+            padding: 0;
+            display: grid;
+            gap: 10px;
+        }
+        .offline ul a {
+            display: block;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #262626;
+            border-left: 3px solid rgba(255, 140, 0, 0.5);
+            border-radius: 0 8px 8px 0;
+            color: #dcdcdc;
+            text-decoration: none;
+            min-height: 48px;
+        }
+        .offline ul a:hover,
+        .offline ul a:focus-visible {
+            border-left-color: #ff8c00;
+            color: #fff;
+        }
+        .offline button {
+            background: #ff8c00;
+            color: #000;
+            border: 0;
+            padding: 14px 26px;
+            min-height: 48px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="offline">
+        <h1>No connection</h1>
+        <p>You are offline and this page is not in the cache. The tools you have opened before
+        will still work &mdash; they run entirely on your device.</p>
+        <ul>
+            <li><a href="/lance-builder">Lance Builder</a></li>
+            <li><a href="/game-tracker">Game Tracker</a></li>
+            <li><a href="/opfor-command">OpFor Command</a></li>
+            <li><a href="/campaign">Campaign Tracker</a></li>
+            <li><a href="/paint-tool">Paint Tool</a></li>
+        </ul>
+        <p>Anything you had in progress is stored locally and will still be there.</p>
+        <button type="button" onclick="location.reload()">Try again</button>
+    </div>
+</div>
+</body>
+</html>

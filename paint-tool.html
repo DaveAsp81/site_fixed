@@ -19,6 +19,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
 <link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
 
@@ -36,6 +39,8 @@
     <meta name="twitter:title" content="BattleTech Paint Scheme Planner: Faction Colors & Paint Matching | BattleTech HQ">
     <meta name="twitter:description" content="Plan your BattleTech &#x27;Mech paint scheme. Pick faction presets or build your own, get matching Citadel and Vallejo paint names.">
     <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
 <style>
 .pt-wrap {
@@ -54,7 +59,7 @@
     padding: 18px;
 }
 .pt-label {
-    font-size: 0.68rem; color: #555; letter-spacing: 0.12em;
+    font-size: 0.68rem; color:#8b8b8b; letter-spacing: 0.12em;
     text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
     margin: 14px 0 7px;
 }
@@ -66,7 +71,7 @@
     margin-bottom: 5px; font-size: 0.82rem; font-family: inherit;
     transition: border-color 0.12s; text-align: left;
 }
-.zone-btn:hover { border-color: #555; }
+.zone-btn:hover { border-color:#8b8b8b; }
 .zone-btn.active { border-color: #ff8c00; border-width: 2px; color: #fff; }
 .zone-swatch { width: 20px; height: 20px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
 .wheel-wrap {
@@ -74,7 +79,7 @@
     padding: 12px; background: #141414; border: 1px solid #222; border-radius: 8px;
 }
 .brightness-row { display: flex; align-items: center; gap: 8px; width: 100%; }
-.brightness-row label { font-size: 0.7rem; color: #555; width: 18px; flex-shrink: 0; }
+.brightness-row label { font-size: 0.7rem; color:#8b8b8b; width: 18px; flex-shrink: 0; }
 #brightness-slider { flex: 1; accent-color: #ff8c00; }
 .hex-row { display: flex; align-items: center; gap: 8px; width: 100%; }
 #current-swatch { width: 36px; height: 36px; border-radius: 4px; border: 1px solid #333; flex-shrink: 0; }
@@ -103,15 +108,15 @@
     background: #141414; border: 1px solid #222; border-radius: 6px;
     cursor: pointer; transition: border-color 0.12s;
 }
-.scheme-swatch-large:hover { border-color: #444; }
+.scheme-swatch-large:hover { border-color:#8b8b8b; }
 .scheme-swatch-large.active { border-color: #ff8c00; }
 .swatch-block {
     width: 48px; height: 48px; border-radius: 5px; border: 1px solid #333; flex-shrink: 0;
 }
 .swatch-info { flex: 1; }
-.swatch-zone { font-size: 0.7rem; color: #555; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; }
+.swatch-zone { font-size: 0.7rem; color:#8b8b8b; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; }
 .swatch-hex { font-family: monospace; font-size: 0.82rem; color: #888; margin-top: 2px; }
-.swatch-paint { font-size: 0.75rem; color: #666; margin-top: 3px; line-height: 1.4; }
+.swatch-paint { font-size: 0.75rem; color:#8b8b8b; margin-top: 3px; line-height: 1.4; }
 .action-btn {
     background: #1a1a1a; border: 1px solid #2a2a2a; color: #888;
     padding: 7px 14px; border-radius: 4px; cursor: pointer;
@@ -148,31 +153,36 @@
     font-size: 0.72rem; font-family: 'Rajdhani', sans-serif; font-weight: 600;
     letter-spacing: 0.04em; transition: border-color 0.12s, color 0.12s;
 }
-.zone-chip:hover { border-color: #555; color: #ddd; }
+.zone-chip:hover { border-color:#8b8b8b; color: #ddd; }
 .zone-chip.on { border-color: #ff8c00; color: #fff; }
 .chip-dot { width: 13px; height: 13px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
-.plan-hint { font-size: 0.72rem; color: #555; line-height: 1.5; }
+.plan-hint { font-size: 0.72rem; color:#8b8b8b; line-height: 1.5; }
 .plan-hint b { color: #ff8c00; font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
     .plate .plate-fill, .zone-chip, .action-btn, .zone-btn, .scheme-swatch-large { transition: none; }
 }
 </style>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header>
-        <div class="header-content">
-            <a href="index.html" class="logo">BattleTech HQ</a>
-            <button class="nav-toggle" aria-label="Menu">☰ MENU</button>
-<nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
-        </div>
+    <div class="header-content">
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools" aria-current="page">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main id="main">
     
 
 <div class="pt-wrap">
@@ -182,7 +192,7 @@
     <div>
         <div class="pt-panel">
             <div style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.12em; margin-bottom:4px;">⬡ PAINT SCHEME PLANNER</div>
-            <div style="font-size:0.75rem; color:#555; margin-bottom:14px; line-height:1.5;">Build your colour scheme, get matching paint names</div>
+            <div style="font-size:0.75rem; color:#8b8b8b; margin-bottom:14px; line-height:1.5;">Build your colour scheme, get matching paint names</div>
 
             <div class="pt-label">Colour Zones</div>
             <div id="zone-buttons"></div>
@@ -217,7 +227,7 @@
         <div class="pt-panel">
             <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:16px;">
                 <div id="scheme-name" style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:0.08em; font-size:1.1rem;">CUSTOM SCHEME</div>
-                <div style="font-size:0.72rem; color:#444;">Click a zone to edit it</div>
+                <div style="font-size:0.72rem; color:#8b8b8b;">Click a zone to edit it</div>
             </div>
             <div class="pt-label">Paint Plan</div>
             <div class="plan-wrap">
@@ -238,7 +248,7 @@
             <div class="pt-label">Colours &amp; Paint Matches</div>
             <div class="scheme-display" id="scheme-display"></div>
 
-            <div style="margin-top:20px; padding:14px 16px; background:#141414; border:1px solid #1a1a1a; border-radius:6px; font-size:0.78rem; color:#555; line-height:1.6;">
+            <div style="margin-top:20px; padding:14px 16px; background:#141414; border:1px solid #1a1a1a; border-radius:6px; font-size:0.78rem; color:#8b8b8b; line-height:1.6;">
                 <strong style="color:#888; font-family:'Rajdhani',sans-serif; letter-spacing:0.06em; font-size:0.7rem;">HOW TO USE</strong><br>
                 Pick a zone on the left, choose a colour on the wheel, and the plan updates in real time.
                 Click any armour panel to change which colour it wears, so you can work out where the
@@ -260,6 +270,8 @@
 </div>
 <!-- ================== END SUPPORT STRIP ================= -->
 
+</main>
+
 <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -278,9 +290,9 @@
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li>
-                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
-                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
                 </ul>
             </div>
         </div>
@@ -759,12 +771,86 @@ function buildZoneButtons(){
     });
 }
 
+/* ---------------- Readable faction chips ----------------
+   Each faction carries an authored background/foreground pair, and several
+   of them sat under the 4.5:1 AA minimum at this text size: white on Steiner
+   blue measured 3.72:1, and Wolf's Dragoons red on near-black 3.41:1.
+
+   The chip colour is the whole point of the control, so the background is
+   left alone and only the label is adjusted: keep the authored hue and walk
+   its lightness away from the background until it clears the threshold. If
+   the hue cannot get there at any lightness, fall back to black or white,
+   whichever reads better. In practice that keeps Dragoons red recognisably
+   red, just lighter. */
+function _srgb(c){ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4); }
+function _lum(rgb){ return 0.2126*_srgb(rgb[0])+0.7152*_srgb(rgb[1])+0.0722*_srgb(rgb[2]); }
+function _ratio(a,b){
+    const l1=_lum(a), l2=_lum(b);
+    return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+}
+function _parseColor(str){
+    const s=String(str||'').trim();
+    let m=/^#([0-9a-f]{3})$/i.exec(s);
+    if(m) return m[1].split('').map(h=>parseInt(h+h,16));
+    m=/^#([0-9a-f]{6})$/i.exec(s);
+    if(m) return [0,2,4].map(i=>parseInt(m[1].slice(i,i+2),16));
+    m=/^rgba?\(([^)]+)\)$/i.exec(s);
+    if(m) return m[1].split(',').slice(0,3).map(v=>Math.round(parseFloat(v)));
+    return null;
+}
+function _rgbToHsl(r,g,b){
+    r/=255; g/=255; b/=255;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b), d=max-min;
+    let h=0;
+    if(d){
+        if(max===r) h=((g-b)/d)%6;
+        else if(max===g) h=(b-r)/d+2;
+        else h=(r-g)/d+4;
+        h*=60; if(h<0) h+=360;
+    }
+    const l=(max+min)/2;
+    const s=d ? d/(1-Math.abs(2*l-1)) : 0;
+    return [h,s,l];
+}
+function _hslToRgb(h,s,l){
+    const c=(1-Math.abs(2*l-1))*s, hp=h/60, x=c*(1-Math.abs(hp%2-1));
+    let r=0,g=0,b=0;
+    if(hp<1){r=c;g=x;} else if(hp<2){r=x;g=c;} else if(hp<3){g=c;b=x;}
+    else if(hp<4){g=x;b=c;} else if(hp<5){r=x;b=c;} else {r=c;b=x;}
+    const m=l-c/2;
+    return [r,g,b].map(v=>Math.round(Math.min(255,Math.max(0,(v+m)*255))));
+}
+function _toHex(rgb){
+    return '#'+rgb.map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+
+function readableOn(bg, fg, target){
+    target = target || 4.5;
+    const bgRgb=_parseColor(bg), fgRgb=_parseColor(fg);
+    if(!bgRgb || !fgRgb) return fg;
+    if(_ratio(bgRgb,fgRgb) >= target) return fg;
+
+    const [h,s]=_rgbToHsl(fgRgb[0],fgRgb[1],fgRgb[2]);
+    // Move away from the background: lighten on a dark chip, darken on a light one.
+    const up = _lum(bgRgb) < 0.5;
+    for(let step=1; step<=50; step++){
+        const l0=_rgbToHsl(fgRgb[0],fgRgb[1],fgRgb[2])[2];
+        const l = up ? Math.min(1, l0 + step*0.02) : Math.max(0, l0 - step*0.02);
+        const cand=_hslToRgb(h,s,l);
+        if(_ratio(bgRgb,cand) >= target) return _toHex(cand);
+        if(l===0 || l===1) break;
+    }
+    // The hue cannot reach the target at any lightness; use plain black or white.
+    return _ratio(bgRgb,[255,255,255]) >= _ratio(bgRgb,[0,0,0]) ? '#ffffff' : '#000000';
+}
+
 function buildFactionGrid(){
     const el=document.getElementById('faction-grid');
     FACTIONS.forEach(f=>{
         const btn=document.createElement('button');
         btn.className='faction-btn';
-        btn.style.cssText=`background:${f.bg};color:${f.fg};border-color:${f.bg};`;
+        const label=readableOn(f.bg, f.fg);
+        btn.style.cssText=`background:${f.bg};color:${label};border-color:${f.bg};`;
         btn.textContent=f.name;
         btn.onclick=()=>applyFaction(f);
         el.appendChild(btn);
@@ -787,7 +873,7 @@ function buildSchemeDisplay(){
                 <div class="swatch-hex" id="hex-${z.id}">${col}</div>
                 <div class="swatch-paint" id="paint-${z.id}">${match
                     ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
-                    : '<span style="color:#444;">—</span>'}</div>
+                    : '<span style="color:#8b8b8b;">—</span>'}</div>
             </div>`;
         el.appendChild(div);
     });
@@ -827,7 +913,7 @@ function setActiveColour(hex,updateHex=true){
     const paintEl=document.getElementById('paint-'+currentZone);
     if(paintEl)paintEl.innerHTML=match
         ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
-        : '<span style="color:#444;">—</span>';
+        : '<span style="color:#8b8b8b;">—</span>';
     updateSchemeName('Custom Scheme');
     buildPaintPlan();buildPlanChips();
 }
@@ -882,5 +968,58 @@ function loadFromURL(){
     if(p.get('pip')==='0')planPips=false;
 }
 </script>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
+
 </body>
 </html>

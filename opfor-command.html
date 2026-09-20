@@ -283,8 +283,11 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
       gtag('js', new Date());
       gtag('config', 'G-T2794K8B9W');
     </script>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
-<body>
+<body data-wake-lock>
+<a class="skip-link" href="#main">Skip to main content</a>
 <style>
   .bt-nav { background:#0d0d0d; border-bottom:1px solid #222; padding:10px 16px; }
   .bt-nav .header-content { max-width:1200px; margin:0 auto; display:flex;
@@ -297,24 +300,78 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
       font-family:'Rajdhani',sans-serif; letter-spacing:0.04em;
       text-transform:uppercase; }
   .bt-nav nav a:hover { color:#ff8c00; }
+  /* Site links, scoped: this page carries its own theme. */
+  .bt-foot { max-width:1200px; margin:24px auto 40px; padding:16px 16px 0;
+      border-top:1px solid var(--rule-2); display:flex; flex-wrap:wrap;
+      gap:8px 18px; align-items:center; }
+  .bt-foot a { color:var(--ink-2); text-decoration:none; font-size:0.82rem;
+      font-family:'Saira Condensed',sans-serif; letter-spacing:0.05em;
+      text-transform:uppercase; display:inline-block; padding:10px 0;
+      min-height:40px; }
+  .bt-foot a:hover, .bt-foot a:focus-visible { color:var(--stamp); }
   .bt-back { display:inline-block; margin:14px 0 0 0; color:#ff8c00;
       text-decoration:underline; font-size:0.85rem; }
+
+  /* This page carries its own light "paper" theme and does not load
+     assets/css/style.css, so the shared chrome needs local rules. */
+  .skip-link { position:absolute; left:-9999px; top:0; z-index:2000;
+      background:#ff8c00; color:#000; padding:12px 20px; font-weight:700;
+      font-family:'Saira Condensed',sans-serif; text-decoration:none; }
+  .skip-link:focus { left:0; }
+  :focus-visible { outline:3px solid #9C6A12; outline-offset:2px; }
+  .bt-nav .nav-toggle { display:none; background:none; border:1px solid #ff8c00;
+      color:#ff8c00; font-family:'Saira Condensed',sans-serif; font-weight:600;
+      letter-spacing:0.06em; text-transform:uppercase; font-size:0.85rem;
+      min-height:44px; padding:0 14px; border-radius:4px; cursor:pointer; }
+  .bt-nav .nav-toggle:focus-visible { outline:3px solid #ff8c00; outline-offset:2px; }
+  .bt-nav nav a { display:inline-block; padding:11px 2px; }
+  .bt-nav nav a[aria-current="page"] { color:#ff8c00; }
+  .bt-nav .nav-search { border:1px solid rgba(255,140,0,0.5); border-radius:6px;
+      padding:9px 12px; color:#ff8c00; }
+  @media (max-width:768px) {
+    .bt-nav .nav-toggle { display:inline-flex; align-items:center; gap:6px; }
+    .bt-nav .header-content { flex-wrap:wrap; row-gap:10px; }
+    .bt-nav nav { flex:1 0 100%; }
+    .bt-nav nav ul { display:none; flex-direction:column; gap:0; }
+    .bt-nav nav ul.open { display:flex; }
+    .bt-nav nav ul li a { display:block; padding:12px 0; min-height:44px; }
+  }
+  .to-top { position:fixed; right:18px; bottom:18px; z-index:900; width:48px;
+      height:48px; border-radius:50%; border:1px solid #B9B7AE;
+      background:rgba(240,238,232,0.95); color:#191C1F; font-size:1.3rem;
+      cursor:pointer; opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .to-top.is-visible { opacity:1; pointer-events:auto; }
+  .wake-chip { position:fixed; left:14px; bottom:14px; z-index:900;
+      font-family:'Saira Condensed',sans-serif; font-size:0.78rem; font-weight:600;
+      letter-spacing:0.06em; text-transform:uppercase; min-height:40px;
+      padding:0 16px; border-radius:20px; cursor:pointer; border:1px solid #B9B7AE;
+      background:rgba(240,238,232,0.95); color:#565A59; }
+  .wake-chip.is-on { border-color:#9C6A12; color:#9C6A12; }
+  .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration:0.01ms !important;
+        animation-duration:0.01ms !important; }
+  }
 </style>
 <header class="bt-nav">
     <div class="header-content">
-        <a href="index.html" class="logo">BattleTech HQ</a>
-        <nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools" aria-current="page">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
+<main id="main">
 <div class="wrap">
 
 <header class="mast">
@@ -476,6 +533,8 @@ details.gen[open]>summary{border-bottom:1.5px solid var(--ink)}
   </div>
   <a class="bmc" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a>
 </div>
+
+</main>
 
 <footer class="foot">
   <b>How to read it.</b> Each order is split into the two phases of the turn. The bold line in each block is the instruction, and the bullets under it are qualifiers on how to carry it out, not separate steps. The ladder shows what that exact variant does at each range band, and the order follows the ladder.<br><br>
@@ -1516,7 +1575,16 @@ async function loadData(){
 }
 function afterData(){
   dataReady=true;
-  buildChassis(); buildGenFilters(); readHandoff();
+  buildChassis(); buildGenFilters();
+  /* A force arriving in the URL from the Lance Builder or Campaign Tracker is
+     a deliberate new game, so it takes precedence over whatever was saved. */
+  if(!/[#&](?:force|lance)=/.test(location.hash||'')) restoreSession();
+  readHandoff();
+  /* From here on every render persists. The immediate save covers a force
+     that arrived in the URL, which would otherwise not be written until the
+     player touched something. */
+  sessionReady = true;
+  saveSession();
   document.getElementById('chassisFind').oninput=buildChassis;
   buildPChassis();
   document.getElementById('pChassisFind').oninput=buildPChassis;
@@ -2706,6 +2774,7 @@ document.getElementById('btnPasteGo').onclick=()=>{
 document.getElementById('btnClear').onclick=()=>{
   if(force.length&&!confirm('Remove every unit from the force?')) return;
   force=[];turn=1;objectives=[];players=[];document.getElementById('turnNo').textContent=1;
+  try{ localStorage.removeItem(SESSION_KEY); }catch(_){}
   document.getElementById('impStatus').textContent='';
   renderLance(); renderPlayers(); renderOrders();};
 document.getElementById('btnExport').onclick=()=>{
@@ -2850,6 +2919,166 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.getElementById('pane-lance').classList.toggle('hide',t.dataset.tab!=='lance');
   document.getElementById('pane-orders').classList.toggle('hide',t.dataset.tab!=='orders');});
 
+/* ---------------- Session persistence ----------------
+   This tool used to keep nothing at all. One accidental refresh, one
+   back-swipe, one phone call part-way through a game and the whole opposing
+   force, the turn count and every point of damage were gone, with no way
+   back. Everything else in the suite saved itself; this did not.
+
+   The snapshot deliberately stores chassis and variant names rather than the
+   catalogue objects, so it stays valid when mechs.json is updated: on restore
+   each unit is resolved through the same resolveUnit() the importers use, and
+   anything that no longer exists is skipped rather than throwing. */
+const SESSION_KEY = 'btOpforSession';
+const SESSION_V = 3;
+let restoring = false;
+/* The render wrappers below are installed as soon as this script runs, but
+   the page renders its empty state before the catalogue has loaded and
+   before restoreSession() gets a chance. Without this gate that first empty
+   render saved an empty snapshot over the real one, so a reload always came
+   back to a blank force. Nothing is written until the restore has had its
+   turn. */
+let sessionReady = false;
+
+function snapshot(){
+  return {
+    v: SESSION_V, ruleset: RS, turn, genW, genN,
+    objectives, objSeq,
+    force: force.map(u => ({
+      chassis:u.chassis, variant:u.v.n, pilot:u.pilot,
+      background:u.background, persona:u.persona, clanPilot:u.clanPilot,
+      gun:u.gun, pil:u.pil, bv:u.bv, adj:u.adj,
+      heat:u.heat, arm:u.arm, str:u.str, band:u.band,
+      dead:u.dead, prone:u.prone, motiveHits:u.motiveHits,
+      moveOrder:u.moveOrder, manualCond:u.manualCond, forceCrip:u.forceCrip,
+      collapsed:u.collapsed, lastHeadline:u.lastHeadline
+    })),
+    players: players.map(p => ({
+      chassis:p.chassis, variant:p.v.n, pilot:p.pilot,
+      arm:p.arm, str:p.str, manualCond:p.manualCond,
+      forceCrip:p.forceCrip, moved:p.moved, dead:p.dead
+    }))
+  };
+}
+
+function saveSession(){
+  if(restoring || !sessionReady) return;
+  try{
+    if(!force.length && !players.length && !objectives.length){
+      localStorage.removeItem(SESSION_KEY);
+      return;
+    }
+    localStorage.setItem(SESSION_KEY, JSON.stringify(snapshot()));
+  }catch(e){ /* private mode or full storage: nothing useful to say here */ }
+}
+
+/* Saving runs off a microtask so a single action that calls two or three
+   render functions only writes once. */
+let savePending = false;
+function queueSave(){
+  if(restoring || !sessionReady || savePending) return;
+  savePending = true;
+  Promise.resolve().then(()=>{ savePending = false; saveSession(); });
+}
+
+const num = x => Number.isFinite(x) ? x : null;
+function clampInt(val, lo, hi, dflt){
+  const n = Number(val);
+  if(!Number.isFinite(n)) return dflt;
+  return Math.max(lo, Math.min(hi, Math.round(n)));
+}
+
+function restoreSession(){
+  let snap = null;
+  try{ snap = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }
+  catch(e){ snap = null; }
+  if(!snap || snap.v !== SESSION_V || !Array.isArray(snap.force)) return false;
+
+  restoring = true;
+  try{
+    if(snap.ruleset === 'classic' || snap.ruleset === 'as') setRuleset(snap.ruleset);
+    force = []; players = [];
+
+    for(const e of snap.force){
+      const hit = e && e.chassis ? resolveUnit(e.chassis, e.variant) : null;
+      if(!hit) continue;                       // dropped from the catalogue
+      const [c, v] = hit;
+      const u = mkUnit(c, v, {
+        pilot:e.pilot, gun:num(e.gun), pil:num(e.pil),
+        bv:num(e.bv), adj:num(e.adj),
+        background:e.background, persona:e.persona, clanPilot:e.clanPilot
+      });
+      u.heat       = clampInt(e.heat, 0, HEATMAX(), 0);
+      u.arm        = clampInt(e.arm, 0, v.a, v.a);
+      u.str        = clampInt(e.str, 0, v.s, v.s);
+      u.band       = clampInt(e.band, 0, 3, 2);
+      u.motiveHits = clampInt(e.motiveHits, 0, 4, 0);
+      u.moveOrder  = Number.isFinite(e.moveOrder) ? e.moveOrder : null;
+      u.dead       = !!e.dead;
+      u.prone      = !!e.prone;
+      u.forceCrip  = !!e.forceCrip;
+      u.collapsed  = !!e.collapsed;
+      if(typeof e.manualCond === 'string') u.manualCond = e.manualCond;
+      if(typeof e.lastHeadline === 'string') u.lastHeadline = e.lastHeadline;
+      force.push(u);
+    }
+
+    for(const e of (Array.isArray(snap.players) ? snap.players : [])){
+      const hit = e && e.chassis ? resolveUnit(e.chassis, e.variant) : null;
+      if(!hit) continue;
+      const [c, v] = hit;
+      const p = mkPlayer(c, v, e.pilot);
+      p.arm       = clampInt(e.arm, 0, v.a, v.a);
+      p.str       = clampInt(e.str, 0, v.s, v.s);
+      p.forceCrip = !!e.forceCrip;
+      p.dead      = !!e.dead;
+      if(typeof e.manualCond === 'string') p.manualCond = e.manualCond;
+      if(typeof e.moved === 'string') p.moved = e.moved;
+      players.push(p);
+    }
+
+    if(Array.isArray(snap.objectives)) objectives = snap.objectives;
+    if(Number.isFinite(snap.objSeq)) objSeq = snap.objSeq;
+    turn = clampInt(snap.turn, 1, 999, 1);
+    if(typeof snap.genW === 'string') genW = snap.genW;
+    if(Number.isFinite(snap.genN)) genN = snap.genN;
+
+    const turnEl = document.getElementById('turnNo');
+    if(turnEl) turnEl.textContent = turn;
+  }catch(e){
+    // A corrupt snapshot must never brick the page. Drop it and start clean.
+    console.error('Could not restore the saved session:', e);
+    try{ localStorage.removeItem(SESSION_KEY); }catch(_){}
+    force = []; players = []; objectives = [];
+    restoring = false;
+    return false;
+  }
+  restoring = false;
+
+  if(!force.length && !players.length) return false;
+
+  /* Orders are derived from state, not part of it, so regenerate rather
+     than store them. */
+  if(typeof refreshAllOrders === 'function') refreshAllOrders();
+  renderLance(); renderPlayers(); renderOrders();
+
+  const st = document.getElementById('impStatus');
+  if(st){
+    st.className = 'status ok';
+    st.textContent = 'Picked your game back up at turn ' + turn + '.';
+  }
+  return true;
+}
+
+/* Every mutation in this tool finishes by re-rendering, so wrapping the three
+   render functions catches all of them without touching 60 call sites. */
+(function persistOnRender(){
+  const wrap = fn => function(){ const r = fn.apply(this, arguments); queueSave(); return r; };
+  renderLance = wrap(renderLance);
+  renderPlayers = wrap(renderPlayers);
+  renderOrders = wrap(renderOrders);
+})();
+
 setRuleset('classic');
 loadData();
 window.addEventListener('hashchange',readHandoff);
@@ -2880,13 +3109,24 @@ window.addEventListener('hashchange',readHandoff);
     <strong>Built this force? There is more coming.</strong>
     <span>I email when a tool ships or gets a real update. Roughly monthly, never more.</span>
   </div>
-  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank">
-    <input type="email" name="EMAIL" required placeholder="Email address" aria-label="Email address">
+  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" data-mc-ajax>
+    <label class="sr-only" for="nl-email-1">Email address</label><input type="email" name="EMAIL" required placeholder="Email address" id="nl-email-1" autocomplete="email">
     <div style="position:absolute;left:-5000px" aria-hidden="true">
       <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
     </div>
     <button type="submit">Keep me posted</button>
   </form>
 </div>
+<nav class="bt-foot" aria-label="Site">
+  <a href="/">BattleTech HQ</a>
+  <a href="/tools">Tools</a>
+  <a href="/lance-builder">Lance Builder</a>
+  <a href="/game-tracker">Game Tracker</a>
+  <a href="/mechs">Mech Guides</a>
+  <a href="/guides">Articles</a>
+  <a href="/search">Search</a>
+  <a href="/about">About</a>
+</nav>
+
 </body>
 </html>
