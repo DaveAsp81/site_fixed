@@ -1,881 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-T2794K8B9W');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plan your BattleTech 'Mech paint scheme. Pick faction presets or build your own, get matching Citadel and Vallejo paint names.">
-    <meta name="keywords" content="BattleTech beginner guide, how to start BattleTech, BattleTech for beginners, BattleTech getting started">
-    <title>BattleTech Paint Scheme Planner: Faction Colors & Paint Matching | BattleTech Hub</title>
+    <meta name="description" content="Plan a BattleTech 'Mech paint scheme. Faction presets or your own colours, Citadel and Vallejo names, shareable link.">
+    <title>Paint Scheme Planner | BattleTech HQ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Rajdhani:wght@500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
-<link href="https://cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="assets/css/hq.css">
     <link rel="canonical" href="https://battletechhq.com/paint-tool.html">
-
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://battletechhq.com/paint-tool.html">
-    <meta property="og:title" content="BattleTech Paint Scheme Planner: Faction Colors & Paint Matching | BattleTech Hub">
-    <meta property="og:description" content="Plan your BattleTech &#x27;Mech paint scheme. Pick faction presets or build your own, get matching Citadel and Vallejo paint names.">
+    <meta property="og:title" content="Paint Scheme Planner | BattleTech HQ">
+    <meta property="og:description" content="Plan a BattleTech 'Mech paint scheme. Faction presets or your own colours, Citadel and Vallejo names, shareable link.">
     <meta property="og:image" content="https://battletechhq.com/assets/images/og-default.jpg">
-    <meta property="og:site_name" content="BattleTech Hub">
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BattleTech Paint Scheme Planner: Faction Colors & Paint Matching | BattleTech Hub">
-    <meta name="twitter:description" content="Plan your BattleTech &#x27;Mech paint scheme. Pick faction presets or build your own, get matching Citadel and Vallejo paint names.">
-    <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
+    <link rel="stylesheet" href="assets/css/hq-paint.css">
 </head>
-<style>
-.pt-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 28px 20px;
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 24px;
-}
-@media (max-width: 780px) { .pt-wrap { grid-template-columns: 1fr; } }
-.pt-panel {
-    background: #0e0e0e;
-    border: 1px solid #222;
-    border-radius: 8px;
-    padding: 18px;
-}
-.pt-label {
-    font-size: 0.68rem; color: #555; letter-spacing: 0.12em;
-    text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
-    margin: 14px 0 7px;
-}
-.pt-label:first-child { margin-top: 0; }
-.zone-btn {
-    display: flex; align-items: center; gap: 9px; width: 100%;
-    background: #141414; border: 1px solid #222; color: #bbb;
-    padding: 8px 12px; border-radius: 4px; cursor: pointer;
-    margin-bottom: 5px; font-size: 0.82rem; font-family: inherit;
-    transition: border-color 0.12s; text-align: left;
-}
-.zone-btn:hover { border-color: #555; }
-.zone-btn.active { border-color: #ff8c00; border-width: 2px; color: #fff; }
-.zone-swatch { width: 20px; height: 20px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
-.wheel-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    padding: 12px; background: #141414; border: 1px solid #222; border-radius: 8px;
-}
-.brightness-row { display: flex; align-items: center; gap: 8px; width: 100%; }
-.brightness-row label { font-size: 0.7rem; color: #555; width: 18px; flex-shrink: 0; }
-#brightness-slider { flex: 1; accent-color: #ff8c00; }
-.hex-row { display: flex; align-items: center; gap: 8px; width: 100%; }
-#current-swatch { width: 36px; height: 36px; border-radius: 4px; border: 1px solid #333; flex-shrink: 0; }
-#hex-input {
-    flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd;
-    padding: 7px 9px; border-radius: 4px; font-family: monospace; font-size: 0.85rem;
-}
-.paint-match {
-    background: #141414; border: 1px solid #222; border-radius: 6px;
-    padding: 10px 12px; font-size: 0.78rem; line-height: 1.7;
-}
-.paint-brand { color: #ff8c00; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.08em; }
-.faction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-.faction-btn {
-    padding: 7px 8px; border-radius: 4px; cursor: pointer;
-    font-size: 0.72rem; font-family: 'Rajdhani', sans-serif; font-weight: 700;
-    letter-spacing: 0.04em; border: 1px solid transparent; text-align: center;
-    transition: opacity 0.12s;
-}
-.faction-btn:hover { opacity: 0.82; }
-.scheme-display {
-    display: flex; flex-direction: column; gap: 12px;
-}
-.scheme-swatch-large {
-    display: flex; align-items: center; gap: 14px; padding: 12px 16px;
-    background: #141414; border: 1px solid #222; border-radius: 6px;
-    cursor: pointer; transition: border-color 0.12s;
-}
-.scheme-swatch-large:hover { border-color: #444; }
-.scheme-swatch-large.active { border-color: #ff8c00; }
-.swatch-block {
-    width: 48px; height: 48px; border-radius: 5px; border: 1px solid #333; flex-shrink: 0;
-}
-.swatch-info { flex: 1; }
-.swatch-zone { font-size: 0.7rem; color: #555; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; }
-.swatch-hex { font-family: monospace; font-size: 0.82rem; color: #888; margin-top: 2px; }
-.swatch-paint { font-size: 0.75rem; color: #666; margin-top: 3px; line-height: 1.4; }
-.action-btn {
-    background: #1a1a1a; border: 1px solid #2a2a2a; color: #888;
-    padding: 7px 14px; border-radius: 4px; cursor: pointer;
-    font-size: 0.75rem; font-family: 'Rajdhani', sans-serif;
-    font-weight: 600; letter-spacing: 0.05em; transition: all 0.12s;
-}
-.action-btn:hover { border-color: #ff8c00; color: #ff8c00; }
-
-/* ---------- Paint plan ---------- */
-.plan-wrap {
-    background: #141414; border: 1px solid #222; border-radius: 8px;
-    padding: 14px; display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,0.8fr); gap: 16px;
-}
-@media (max-width: 700px) { .plan-wrap { grid-template-columns: 1fr; } }
-#paint-plan { width: 100%; height: auto; display: block; }
-.plate { cursor: pointer; }
-.plate .plate-fill { transition: stroke 0.12s; }
-.plate:hover .plate-fill { stroke: #888; stroke-width: 2; }
-.plate.selected .plate-fill { stroke: #ff8c00; stroke-width: 3; }
-.plate:focus { outline: none; }
-.plate:focus-visible .plate-fill { stroke: #ff8c00; stroke-width: 3; }
-.plate-label {
-    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 11px;
-    letter-spacing: 0.05em; fill: #6d6d6d; cursor: pointer; user-select: none;
-}
-.plate-label:hover { fill: #aaa; }
-.plate-label.on { fill: #ff8c00; }
-.plan-side { display: flex; flex-direction: column; gap: 4px; }
-.chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
-.zone-chip {
-    display: flex; align-items: center; gap: 6px;
-    background: #1a1a1a; border: 1px solid #2a2a2a; color: #999;
-    padding: 6px 9px; border-radius: 4px; cursor: pointer;
-    font-size: 0.72rem; font-family: 'Rajdhani', sans-serif; font-weight: 600;
-    letter-spacing: 0.04em; transition: border-color 0.12s, color 0.12s;
-}
-.zone-chip:hover { border-color: #555; color: #ddd; }
-.zone-chip.on { border-color: #ff8c00; color: #fff; }
-.chip-dot { width: 13px; height: 13px; border-radius: 3px; border: 1px solid #333; flex-shrink: 0; }
-.plan-hint { font-size: 0.72rem; color: #555; line-height: 1.5; }
-.plan-hint b { color: #ff8c00; font-weight: 600; }
-@media (prefers-reduced-motion: reduce) {
-    .plate .plate-fill, .zone-chip, .action-btn, .zone-btn, .scheme-swatch-large { transition: none; }
-}
-</style>
 <body>
-<header>
-        <div class="header-content">
-            <a href="index.html" class="logo">⚔️ BattleTech Hub</a>
-            <button class="nav-toggle" aria-label="Menu">☰ MENU</button>
-<nav>
-                <ul>
-                    <li><a href="index.html#getting-started">Getting Started</a></li>
-                    <li><a href="index.html#painting">Painting & Hobby</a></li>
-                    <li><a href="index.html#gameplay">Gameplay</a></li>
-                    <li><a href="index.html#lore">Lore</a></li>
-                    <li><a href="index.html#buying-guides">Buying Guides</a></li>
-                </ul>
-            </nav>
-        </div>
-    
-
-<div class="pt-wrap">
-
-    <!-- LEFT: Controls -->
-    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">BattleTech Paint Scheme Planner</h1>
-    <div>
-        <div class="pt-panel">
-            <div style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.12em; margin-bottom:4px;">⬡ PAINT SCHEME PLANNER</div>
-            <div style="font-size:0.75rem; color:#555; margin-bottom:14px; line-height:1.5;">Build your colour scheme, get matching paint names</div>
-
-            <div class="pt-label">Colour Zones</div>
+<header class="hq-built">
+    <div class="header-content">
+        <a href="index.html" class="logo" aria-label="BattleTech HQ home">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="2" fill="#0a0a0b"/><path d="M7 7h5v1.6H8.6V12H7V7zm13 0h5v5h-1.6V8.6H20V7zM7 20h1.6v3.4H12V25H7v-5zm16.4 0H25v5h-5v-1.6h3.4V20z" fill="#ff8c00"/><rect x="14.2" y="14.2" width="3.6" height="3.6" fill="#ff8c00"/></svg>
+            <span class="logo-stack"><small>BATTLETECH</small><strong>HQ</strong></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open menu">MENU</button>
+        <nav class="hq-nav"><ul>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="index.html#painting">Hobby</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul></nav>
+        <a class="hq-cta" href="lance-builder.html">Lance Builder</a>
+    </div>
+</header>
+<section class="hero">
+    <p class="hq-kicker">Hobby</p>
+    <h1>Paint scheme planner</h1>
+    <p>Faction colours or your own mix. Citadel and Vallejo names so you stop guessing at the pot.</p>
+</section>
+<div class="pt-page">
+    <aside class="pt-dock">
+        <div class="pt-card">
+            <p class="pt-kicker">Colours</p>
+            <div class="pt-label">Zones</div>
             <div id="zone-buttons"></div>
-
-            <div class="pt-label">Colour Picker</div>
+            <div class="pt-label">Picker</div>
             <div class="wheel-wrap">
-                <canvas id="colour-wheel-canvas" width="220" height="220"></canvas>
+                <canvas id="colour-wheel-canvas" width="220" height="220" aria-label="Colour wheel"></canvas>
                 <div class="brightness-row">
-                    <label>☀</label>
+                    <label for="brightness-slider">☀</label>
                     <input type="range" id="brightness-slider" min="0" max="100" value="50" oninput="brightnessChanged(this.value)">
-                    <label style="text-align:right;">☾</label>
+                    <label>☾</label>
                 </div>
                 <div class="hex-row">
                     <div id="current-swatch"></div>
-                    <input type="text" id="hex-input" value="#7a7a7a" oninput="hexInputChanged(this.value)" maxlength="7" placeholder="#rrggbb">
+                    <input type="color" id="native-color" value="#7a7a7a" oninput="nativeColorChanged(this.value)" title="System colour picker">
+                    <input type="text" id="hex-input" value="#7a7a7a" oninput="hexInputChanged(this.value)" maxlength="7" placeholder="#rrggbb" spellcheck="false">
                 </div>
             </div>
-
-            <div class="pt-label">Faction Presets</div>
-            <div class="faction-grid" id="faction-grid"></div>
-
-            <div class="pt-label">Actions</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button class="action-btn" onclick="copySchemeURL()">🔗 Share Scheme</button>
-                <button class="action-btn" onclick="resetScheme()">↺ Reset</button>
-            </div>
+            <div class="pt-label">Faction presets</div>
+            <div id="faction-grid"></div>
+            <div class="pt-label">Saved on this device</div>
+            <div class="saved-row" id="saved-list"></div>
         </div>
-    </div>
-
-    <!-- RIGHT: Scheme display -->
-    <div>
-        <div class="pt-panel">
-            <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:16px;">
-                <div id="scheme-name" style="color:#ff8c00; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:0.08em; font-size:1.1rem;">CUSTOM SCHEME</div>
-                <div style="font-size:0.72rem; color:#444;">Click a zone to edit it</div>
+    </aside>
+    <section class="pt-stage">
+        <div class="pt-card">
+            <div class="pt-head">
+                <input id="scheme-name" value="Custom scheme" aria-label="Scheme name">
+                <div class="pt-actions">
+                    <button class="action-btn solid" type="button" onclick="copySchemeURL()">Share</button>
+                    <button class="action-btn" type="button" onclick="saveScheme()">Save</button>
+                    <button class="action-btn" type="button" onclick="downloadPNG()">PNG</button>
+                    <button class="action-btn" type="button" onclick="copyShop()">Copy list</button>
+                    <button class="action-btn" type="button" onclick="undoLast()" id="undo-btn" disabled>Undo</button>
+                    <button class="action-btn" type="button" onclick="randomScheme()">Random</button>
+                    <button class="action-btn" type="button" onclick="resetScheme()">Reset</button>
+                </div>
             </div>
-            <div class="pt-label">Paint Plan</div>
+            <div class="pt-label">Paint plan</div>
             <div class="plan-wrap">
-                <svg id="paint-plan" viewBox="-24 0 448 478" role="img"
-                     aria-label="BattleMech armour diagram. Select a panel to change which colour it uses."></svg>
+                <svg id="paint-plan" viewBox="-24 0 448 478" role="img" aria-label="BattleMech armour diagram. Select a panel to change which colour it uses."></svg>
                 <div class="plan-side">
-                    <div class="pt-label" style="margin-top:0;">Panel: <span id="plan-sel-name" style="color:#ff8c00;">Centre Torso</span></div>
+                    <div class="pt-label" style="margin-top:0;">Panel: <span id="plan-sel-name" style="color:var(--pt-accent);">Centre Torso</span></div>
                     <div class="chip-row" id="plan-chips"></div>
-                    <div class="pt-label">Camo Pattern</div>
+                    <div class="pt-label">Camo</div>
                     <div class="chip-row" id="plan-patterns"></div>
-                    <div class="pt-label">Quick Layouts</div>
+                    <div class="pt-label">Quick layouts</div>
                     <div class="chip-row" id="plan-layouts"></div>
-                    <p class="plan-hint">Pick a panel on the diagram, then choose which colour it takes.
-                       Cockpit, weapons, vents and trim details stay tied to their own colours.</p>
+                    <p class="plan-hint">Click a plate, then a colour. Cockpit, weapons, vents and trim stay on their own pots.</p>
                 </div>
             </div>
-
-            <div class="pt-label">Colours &amp; Paint Matches</div>
+            <div class="pt-label">Shopping list</div>
+            <ul class="shop-list" id="shop-list"></ul>
+            <div class="pt-label">Colours &amp; paint matches</div>
             <div class="scheme-display" id="scheme-display"></div>
-
-            <div style="margin-top:20px; padding:14px 16px; background:#141414; border:1px solid #1a1a1a; border-radius:6px; font-size:0.78rem; color:#555; line-height:1.6;">
-                <strong style="color:#888; font-family:'Rajdhani',sans-serif; letter-spacing:0.06em; font-size:0.7rem;">HOW TO USE</strong><br>
-                Pick a zone on the left, choose a colour on the wheel, and the plan updates in real time.
-                Click any armour panel to change which colour it wears, so you can work out where the
-                base coat stops and the secondary starts before you open a pot.
-                The swatch list below always shows flat, unshaded colour, so that is the one to hold against a paint pot. Paint names are matched automatically. Hit <strong style="color:#888;">Share Scheme</strong>
-                to copy a link that carries your colours, panel layout and camo pattern.
-            </div>
+            <p class="pt-note">The swatches are flat colour — hold those against the pot, not the shaded diagram. Share copies a link with colours, layout and camo. Saves stay in this browser.</p>
         </div>
-    </div>
+    </section>
 </div>
-
-<!-- ==================== SUPPORT STRIP ==================== -->
 <div class="support-strip">
     <div class="support-copy">
         <h4>Enjoying the Paint Tool?</h4>
-        <p>It's free and always will be. If it's helped you plan a scheme, you can chuck a couple of bucks in the tip jar to help cover hosting. No pressure — the tools stay free either way.</p>
+        <p>It's free and always will be. If it's helped you plan a scheme, you can chuck a couple of bucks in the tip jar.</p>
     </div>
-    <a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+    <a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">Buy me a coffee</a>
 </div>
-<!-- ================== END SUPPORT STRIP ================= -->
-
 <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About BattleTech Hub</h4>
-                <p>Your trusted source for BattleTech guides, reviews, and strategies.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="affiliate-disclosure.html">Affiliate Disclosure</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net</a></li>
-                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
-                    <li><a href="https://bg.battletech.com" target="_blank">Official BattleTech</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a></p>
-            <p>&copy; 2026 BattleTech Hub. This is an unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-            <p>We are a participant in affiliate advertising programs designed to provide a means for sites to earn advertising fees.</p>
-                    <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
-        </div>
-    
-
-<script>
-const ZONES = [
-    { id:'primary',   label:'Primary Armour',   default:'#7a7a7a' },
-    { id:'secondary', label:'Secondary Armour',  default:'#4e4e4e' },
-    { id:'trim',      label:'Trim & Details',    default:'#b89018' },
-    { id:'weapons',   label:'Weapons',           default:'#252525' },
-    { id:'cockpit',   label:'Cockpit',           default:'#0088dd' },
-    { id:'vents',     label:'Heat Vents',        default:'#bb2200' },
-];
-
-const FACTIONS = [
-    // House Davion — Brigade of Guards: blue-grey armour, white secondary, red stripe trim (p.38 Atlas)
-    { name:'Davion',     bg:'#4a6080',fg:'#ffffff',c:{primary:'#4a6080',secondary:'#d0d8e0',trim:'#cc2200',weapons:'#1a1a1a',cockpit:'#00aaff',vents:'#cc3300'} },
-    // House Steiner — Lyran Guard / Royal Guards: ice blue with white and gold (p.22 Wolverine, p.44 Manticore)
-    { name:'Steiner',    bg:'#4488cc',fg:'#ffffff',c:{primary:'#4488cc',secondary:'#ddeeff',trim:'#ccaa00',weapons:'#0a1820',cockpit:'#88ddff',vents:'#cc3300'} },
-    // House Kurita — Sword of Light: bright red, black trim, gold dragon patch (p.6 Wasp)
-    { name:'Kurita',     bg:'#cc1111',fg:'#ffffff',c:{primary:'#cc1111',secondary:'#0a0a0a',trim:'#ccaa00',weapons:'#060606',cockpit:'#00aaff',vents:'#cc4400'} },
-    // House Liao — Northwind Highlanders / Chesterton Reserves: deep green, white trim
-    // (p.25 Catapult, p.31 Marauder). Note the Capellan Hussars on p.13 are the Red
-    // Lancers, the Liao Household Guard, and they are red rather than green.
-    { name:'Liao',       bg:'#1a5c1a',fg:'#ffffff',c:{primary:'#1a5c1a',secondary:'#f5f5f5',trim:'#bb2200',weapons:'#080808',cockpit:'#00cc44',vents:'#cc3300'} },
-    // House Marik — Marik Militia / Free Worlds Guards: medium purple, lighter purple secondary (p.7 Stinger, p.28 Thunderbolt)
-    { name:'Marik',      bg:'#6633aa',fg:'#ffffff',c:{primary:'#6633aa',secondary:'#9955cc',trim:'#cc2222',weapons:'#1a0828',cockpit:'#aa88ff',vents:'#cc3300'} },
-    /* The five Clan presets below and ComStar are NOT from Camo Specs. That book is
-       FASA 1988 and predates the Clans entirely; its 44 plates are all Inner Sphere
-       and mercenary regiments. These are canonical colours from later sources and
-       should be re-checked against a Clan-era sourcebook before being called sourced.
-       In particular p.30 is Wolf's Dragoons, a mercenary unit, not Clan Wolf. */
-    // Clan Wolf — grey with red chevron trim, black weapons
-    { name:'C. Wolf',    bg:'#505050',fg:'#ffffff',c:{primary:'#505050',secondary:'#282828',trim:'#cc2200',weapons:'#101010',cockpit:'#00aaff',vents:'#cc4400'} },
-    // Clan Jade Falcon — dark forest green, bright jade/lime trim
-    { name:'Jade Falcon',bg:'#1a5c1a',fg:'#aadd00',c:{primary:'#1a5c1a',secondary:'#0a2a0a',trim:'#aadd00',weapons:'#060606',cockpit:'#00ddaa',vents:'#cc4400'} },
-    // Clan Ghost Bear — dark navy blue with off-white/cream secondary
-    { name:'Ghost Bear', bg:'#1e3e5e',fg:'#ffffff',c:{primary:'#1e3e5e',secondary:'#e8e0d0',trim:'#7799bb',weapons:'#060606',cockpit:'#88ccff',vents:'#cc3300'} },
-    // Clan Smoke Jaguar — flat black, orange-red jaguar spot trim
-    { name:'Smoke Jag',  bg:'#0a0a0a',fg:'#ee5500',c:{primary:'#0a0a0a',secondary:'#1a1a1a',trim:'#dd4400',weapons:'#040404',cockpit:'#ff3300',vents:'#ff5500'} },
-    // Clan Nova Cat — deep navy blue, gold secondary stripe, white trim
-    { name:'Nova Cat',   bg:'#0a1a40',fg:'#ffcc00',c:{primary:'#0a1a40',secondary:'#ffcc00',trim:'#ffffff',weapons:'#040410',cockpit:'#00aaff',vents:'#ffcc00'} },
-    // ComStar — white/silver primary, grey secondary, red trim (canonical white & red)
-    { name:'ComStar',    bg:'#d0d0d0',fg:'#1a1a1a',c:{primary:'#d0d0d0',secondary:'#888888',trim:'#cc0000',weapons:'#141414',cockpit:'#00aaff',vents:'#cc3300'} },
-    // Wolf's Dragoons — flat black, red spider trim, bone/off-white secondary (p.30 Natasha's Warhammer)
-    { name:"Wolf's Drg", bg:'#111111',fg:'#cc2200',c:{primary:'#111111',secondary:'#e8e0cc',trim:'#cc2200',weapons:'#040404',cockpit:'#00aaff',vents:'#cc4400'} },
-];
-
-const PAINT_DB = [
-    [340,15,35,5,20,'Khorne Red','Model Color 814 Burnt Red'],
-    [340,15,50,20,45,'Mephiston Red','Game Color 011 Gory Red'],
-    [340,15,60,45,70,'Evil Sunz Scarlet','Game Color 010 Bloody Red'],
-    [310,350,30,25,50,'Screamer Pink','Model Color 812 Violet Red'],
-    [310,350,40,50,80,'Pink Horror','Model Color 812 Violet Red'],
-    [16,35,50,15,35,'Rhinox Hide','Model Color 981 Orange Brown'],
-    [16,35,55,35,58,'Jokaero Orange','Game Color 009 Hot Orange'],
-    [16,35,60,58,78,'Fire Dragon Bright','Game Color 008 Orange Fire'],
-    [36,62,25,15,35,'Zamesi Desert','Model Color 847 Dark Sand'],
-    [36,62,40,35,55,'Averland Sunset','Model Color 916 Sand Yellow'],
-    [36,62,55,55,72,'Yriel Yellow','Game Color 006 Sun Yellow'],
-    [36,62,65,72,90,'Flash Gitz Yellow','Model Color 953 Flat Yellow'],
-    [85,130,30,8,25,'Castellan Green','Model Color 896 German Extra Dark Green'],
-    [85,130,40,25,45,'Caliban Green','Game Color 024 Dark Green'],
-    [85,130,40,45,62,'Warpstone Glow','Game Color 025 Sick Green'],
-    [85,130,45,62,80,'Moot Green','Game Color 026 Escorpena Green'],
-    [160,185,35,25,50,'Sotek Green','Game Color 029 Jade Green'],
-    [200,225,35,10,28,'Kantor Blue','Model Color 925 Blue'],
-    [200,225,40,28,50,'Macragge Blue','Model Color 963 Medium Blue'],
-    [200,225,45,50,72,'Caledor Sky','Model Color 961 Sky Blue'],
-    [225,265,30,15,68,'Thunderhawk Blue','Model Color 870 Medium Blue'],
-    [255,285,30,10,30,'Naggaroth Night','Model Color 960 Violet'],
-    [255,285,35,30,55,'Xereus Purple','Game Color 046 Hexed Lichen'],
-    [285,340,25,18,45,'Genestealer Purple','Model Color 957 Flat Violet'],
-    [16,40,20,8,22,'Rhinox Hide','Model Color 984 Flat Brown'],
-    [20,45,20,22,38,'Mournfang Brown','Model Color 981 Orange Brown'],
-    [25,55,15,38,55,'Balor Brown','Model Color 875 Beige Brown'],
-    [30,60,12,55,72,'Karak Stone','Model Color 921 English Uniform'],
-    [0,360,5,30,55,'Leadbelcher','Model Color 865 Oily Steel'],
-    [30,55,10,50,68,'Retributor Armour','Model Color 996 Gold'],
-    [0,360,0,85,100,'White Scar','Model Color 951 White'],
-    [0,360,0,68,85,'Ulthuan Grey','Model Color 993 White Grey'],
-    [0,360,0,52,68,'Administratum Grey','Model Color 992 Neutral Grey'],
-    [0,360,0,35,52,'Dawnstone','Model Color 989 Sky Grey'],
-    [0,360,0,18,35,'Mechanicus Standard Grey','Model Color 867 Dark Bluegrey'],
-    [0,360,0,8,18,'Eshin Grey','Model Color 863 Gunmetal Grey'],
-    [0,360,0,0,8,'Abaddon Black','Model Color 950 Black'],
-];
-
-function hexToHsl(hex) {
-    let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
-    const max=Math.max(r,g,b),min=Math.min(r,g,b);let h,s,l=(max+min)/2;
-    if(max===min){h=s=0;}else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
-        switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
-    return[Math.round(h*360),Math.round(s*100),Math.round(l*100)];
-}
-
-function findPaintMatch(hex) {
-    if(!/^#[0-9a-fA-F]{6}$/.test(hex)) return null;
-    const[h,s,l]=hexToHsl(hex);
-    for(const[hmin,hmax,smin,lmin,lmax,citadel,vallejo] of PAINT_DB){
-        const hm=hmax>=hmin?(h>=hmin&&h<=hmax):(h>=hmin||h<=hmax);
-        if(!hm||l<lmin||l>lmax) continue;
-        if(hmin===0&&hmax===360){if(s<=20)return{citadel,vallejo};continue;}
-        if(s>=smin)return{citadel,vallejo};
-    }
-    return null;
-}
-
-// Colour wheel
-let wheelBrightness=50,currentHue=180,currentSat=0,isDragging=false;
-let wheelCanvas,wheelCtx,wheelRadius;
-
-function initWheel(){
-    wheelCanvas=document.getElementById('colour-wheel-canvas');
-    wheelCtx=wheelCanvas.getContext('2d');
-    wheelRadius=wheelCanvas.width/2;
-    drawWheel();
-    wheelCanvas.addEventListener('mousedown',e=>{isDragging=true;wheelPick(e);});
-    wheelCanvas.addEventListener('mousemove',e=>{if(isDragging)wheelPick(e);});
-    document.addEventListener('mouseup',()=>isDragging=false);
-    wheelCanvas.addEventListener('touchstart',e=>{isDragging=true;wheelPick(e.touches[0]);e.preventDefault();},{passive:false});
-    wheelCanvas.addEventListener('touchmove',e=>{if(isDragging)wheelPick(e.touches[0]);e.preventDefault();},{passive:false});
-    document.addEventListener('touchend',()=>isDragging=false);
-}
-
-function drawWheel(){
-    const ctx=wheelCtx,cx=wheelRadius,cy=wheelRadius,r=wheelRadius-2;
-    ctx.clearRect(0,0,wheelCanvas.width,wheelCanvas.height);
-    for(let a=0;a<360;a++){
-        const sa=(a-1)*Math.PI/180,ea=(a+1)*Math.PI/180;
-        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-        g.addColorStop(0,`hsl(${a},0%,${wheelBrightness}%)`);
-        g.addColorStop(1,`hsl(${a},100%,${wheelBrightness}%)`);
-        ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,sa,ea);ctx.closePath();
-        ctx.fillStyle=g;ctx.fill();
-    }
-    ctx.globalCompositeOperation='destination-in';
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
-    ctx.globalCompositeOperation='source-over';
-    const a=currentHue*Math.PI/180,dist=(currentSat/100)*(r-4);
-    const px=cx+Math.cos(a)*dist,py=cy+Math.sin(a)*dist;
-    ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
-    ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.strokeStyle='#000';ctx.lineWidth=1;ctx.stroke();
-}
-
-function wheelPick(e){
-    const rect=wheelCanvas.getBoundingClientRect();
-    const x=e.clientX-rect.left-wheelRadius,y=e.clientY-rect.top-wheelRadius;
-    const dist=Math.sqrt(x*x+y*y),r=wheelRadius-2;
-    if(dist>r)return;
-    currentHue=Math.round(Math.atan2(y,x)*180/Math.PI);if(currentHue<0)currentHue+=360;
-    currentSat=Math.round((dist/r)*100);
-    drawWheel();
-    setActiveColour(hslToHex(currentHue,currentSat,wheelBrightness));
-}
-
-function brightnessChanged(val){
-    wheelBrightness=parseInt(val);drawWheel();
-    setActiveColour(hslToHex(currentHue,currentSat,wheelBrightness));
-}
-
-function hslToHex(h,s,l){
-    s/=100;l/=100;const a=s*Math.min(l,1-l);
-    const f=n=>{const k=(n+h/30)%12,c=l-a*Math.max(Math.min(k-3,9-k,1),-1);
-        return Math.round(255*c).toString(16).padStart(2,'0');};
-    return'#'+f(0)+f(8)+f(4);
-}
-
-function hexInputChanged(val){
-    if(/^#[0-9a-fA-F]{6}$/.test(val)){
-        const[h,s,l]=hexToHsl(val);currentHue=h;currentSat=s;wheelBrightness=l;
-        document.getElementById('brightness-slider').value=l;
-        drawWheel();setActiveColour(val,false);
-    }
-}
-
-// State
-let currentZone='primary',scheme={};
-
-/* ---------------- Paint plan ----------------
-   An armour-location diagram rather than a picture of a 'Mech. Each plate is a
-   BattleMech armour location and can be assigned to any colour zone, so the
-   diagram answers the question a painter actually has: which panel gets which
-   pot. Geometry is original chamfered-plate work, not traced from any artwork. */
-
-const LOC = [
-    /* Contiguous angular plates following the record sheet armour diagram: the
-       'Mech's own left is on the viewer's left, limbs meet the torso rather than
-       floating, labels sit in the side gutters, and the rear torso group is below
-       the figure. Geometry is original, drawn to the same conventions, not traced. */
-    { code:'HD', label:'Head',        lx:200, ly:16,  z:'primary',
-      d:'M183.2,47.6 L183.2,30.5 Q183.2,18 200,18 Q216.8,18 216.8,30.5 L216.8,47.6 Z' },
-    { code:'LT', label:'Left Torso',  lx:27.2,  ly:97.6, z:'secondary',
-      d:'M171.2,49.2 L135.2,55.4 L118.4,72.6 L118.4,138.1 L137.6,156.8 L171.2,156.8 Z' },
-    { code:'CT', label:'Centre Torso',lx:200, ly:367, z:'primary',
-      d:'M173.6,49.2 L226.4,49.2 L226.4,156.8 L233.6,164.6 L233.6,181.8 L214.4,191.2 L185.6,191.2 L166.4,181.8 L166.4,164.6 L173.6,156.8 Z' },
-    { code:'RT', label:'Right Torso', lx:372.8, ly:97.6, z:'secondary',
-      d:'M228.8,49.2 L264.8,55.4 L281.6,72.6 L281.6,138.1 L262.4,156.8 L228.8,156.8 Z' },
-    { code:'LA', label:'Left Arm',    lx:27.2,  ly:160, z:'secondary',
-      d:'M82.4,71 L118.4,60.1 L118.4,111.6 L112.4,119.4 L118.4,127.2 L118.4,169.3 L87.2,169.3 L80,127.2 L86,119.4 L80,111.6 Z' },
-    { code:'RA', label:'Right Arm',   lx:372.8, ly:160, z:'secondary',
-      d:'M317.6,71 L281.6,60.1 L281.6,111.6 L287.6,119.4 L281.6,127.2 L281.6,169.3 L312.8,169.3 L320,127.2 L314,119.4 L320,111.6 Z' },
-    { code:'LL', label:'Left Leg',    lx:27.2,  ly:266, z:'primary',
-      d:'M149.6,184.9 L192.8,184.9 L192.8,253.6 L198.8,262.9 L192.8,272.3 L192.8,325.3 L198.8,344 L198.8,355 L138.8,355 L138.8,344 L148.4,325.3 L148.4,272.3 L142.4,262.9 L148.4,253.6 Z' },
-    { code:'RL', label:'Right Leg',   lx:372.8, ly:266, z:'primary',
-      d:'M250.4,184.9 L207.2,184.9 L207.2,253.6 L201.2,262.9 L207.2,272.3 L207.2,325.3 L201.2,344 L201.2,355 L261.2,355 L261.2,344 L251.6,325.3 L251.6,272.3 L257.6,262.9 L251.6,253.6 Z' },
-    { code:'LTR', label:'L.T. Rear',  lx:70.4,  ly:424.4, z:'secondary',
-      d:'M123.2,397.9 L180.8,393.2 L180.8,443.2 L132.8,446.3 Z' },
-    { code:'CTR', label:'C.T. Rear',  lx:200, ly:461.9, z:'primary',
-      d:'M185.6,393.2 L214.4,393.2 L214.4,443.2 L185.6,443.2 Z' },
-    { code:'RTR', label:'R.T. Rear',  lx:329.6, ly:424.4, z:'secondary',
-      d:'M219.2,393.2 L276.8,397.9 L267.2,446.3 L219.2,443.2 Z' },
-];
-
-/* Fixed details. These never change zone, which is the point of having them:
-   the cockpit is always cockpit colour however you carve up the armour. */
-const DETAIL = [
-    { x:188, y:24.2, w:24, h:7, c:2, z:'cockpit' },  // visor
-    { x:238.4, y:69.5, w:36, h:12.5, c:3, z:'weapons' },  // right torso launcher
-    { x:125.6, y:113.2, w:31.2, h:4.7, c:1, z:'vents'   },  // left torso louvres
-    { x:125.6, y:121, w:31.2, h:4.7, c:1, z:'vents'   },
-    { x:125.6, y:128.8, w:31.2, h:4.7, c:1, z:'vents'   },
-    { x:80, y:153.7, w:38.4, h:15.6, c:4, z:'weapons' },  // arm muzzles
-    { x:281.6, y:153.7, w:38.4, h:15.6, c:4, z:'weapons' },
-    { x:173.6, y:78.8, w:52.8, h:10.1, c:2, z:'trim'    },  // chest band
-    { x:148.4, y:298.8, w:44.4, h:9.4, c:2, z:'trim'    },  // leg bands
-    { x:207.2, y:298.8, w:44.4, h:9.4, c:2, z:'trim'    },
-];
-
-const ENGRAVE = [
-    [118.4,89.8,171.2,89.8],[173.6,121,226.4,121],[148.4,316,192.8,316],[207.2,316,251.6,316],
-];
-
-const PATTERNS = [
-    { id:'flat',     label:'Flat'     },
-    { id:'woodland', label:'Woodland' },
-    { id:'desert',   label:'Desert'   },
-    { id:'urban',    label:'Urban'    },
-    { id:'tiger',    label:'Tiger'    },
-];
-
-const LAYOUTS = [
-    { label:'All one colour',
-      map:['primary','primary','primary','primary','primary','primary','primary','primary','primary','primary','primary'] },
-    { label:'Torsos and limbs',
-      map:['primary','primary','primary','primary','secondary','secondary','secondary','secondary','primary','primary','primary'] },
-    { label:'Dark limbs',
-      map:['primary','primary','primary','primary','weapons','weapons','secondary','secondary','primary','primary','primary'] },
-    { label:'Split down the middle',
-      map:['primary','secondary','primary','primary','secondary','primary','secondary','primary','secondary','primary','primary'] },
-];
-
-const ZCODE = { primary:'p', secondary:'s', trim:'t', weapons:'w', cockpit:'c', vents:'v' };
-const ZFROM = Object.fromEntries(Object.entries(ZCODE).map(([k,v])=>[v,k]));
-
-let planMap = LOC.map(l=>l.z);
-let planPattern = 'flat';
-let planShade = true;
-let planSel = 2; // Centre Torso
-let planPips = true;
-
-function chamfer(x,y,w,h,c){
-    return `M${x+c},${y} L${x+w-c},${y} L${x+w},${y+c} L${x+w},${y+h-c} `
-         + `L${x+w-c},${y+h} L${x+c},${y+h} L${x},${y+h-c} L${x},${y+c} Z`;
-}
-function shade(hex,amt){
-    const n=parseInt(hex.slice(1),16);
-    const ch=i=>{
-        const v=(n>>(16-8*i))&255;
-        return Math.max(0,Math.min(255,Math.round(amt>=0 ? v+(255-v)*amt : v*(1+amt))));
-    };
-    return '#'+[0,1,2].map(i=>ch(i).toString(16).padStart(2,'0')).join('');
-}
-function readableOn(hex){
-    const n=parseInt(hex.slice(1),16);
-    const lin=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
-    const L=0.2126*lin((n>>16)&255)+0.7152*lin((n>>8)&255)+0.0722*lin(n&255);
-    return L>0.42 ? 'rgba(0,0,0,0.78)' : 'rgba(255,255,255,0.86)';
-}
-
-/* Camo tiles. Each is a small repeating patch built from the zone colour plus a
-   shade derived from it, so a pattern never clashes with the colour it sits on. */
-function patternBody(kind,base){
-    const d=shade(base,-0.22), l=shade(base,0.15), dd=shade(base,-0.40);
-    if(kind==='woodland') return `<rect width="52" height="52" fill="${base}"/>`
-        + `<path d="M-6,10 C6,2 14,14 24,9 C34,4 40,12 52,6 L52,22 C40,28 32,20 22,25 C12,30 4,22 -6,28Z" fill="${d}"/>`
-        + `<path d="M-6,34 C4,28 12,38 22,34 C32,30 42,40 52,34 L52,46 C42,52 32,44 22,48 C12,52 2,46 -6,50Z" fill="${dd}"/>`
-        + `<path d="M14,0 C22,4 20,12 12,14 C4,16 0,8 6,2Z" fill="${l}"/>`;
-    if(kind==='desert') return `<rect width="52" height="52" fill="${base}"/>`
-        + `<path d="M-6,6 C8,-2 20,8 32,4 C44,0 50,10 52,14 L52,26 C42,22 34,28 22,26 C10,24 2,30 -6,24Z" fill="${l}"/>`
-        + `<path d="M-6,36 C6,30 16,40 28,36 C40,32 48,42 52,38 L52,52 L-6,52Z" fill="${d}"/>`;
-    if(kind==='urban') return `<rect width="44" height="44" fill="${base}"/>`
-        + `<path d="M0,0 L22,0 L14,18 L0,13Z" fill="${d}"/>`
-        + `<path d="M26,2 L44,8 L44,24 L20,20Z" fill="${l}"/>`
-        + `<path d="M2,20 L16,26 L10,44 L0,38Z" fill="${dd}"/>`
-        + `<path d="M22,28 L40,30 L44,44 L18,44Z" fill="${d}"/>`;
-    if(kind==='tiger') return `<rect width="34" height="34" fill="${base}"/>`
-        + `<path d="M-4,3 C6,9 14,3 20,-1 C26,-4 32,0 38,-2 L38,4 C31,5 26,3 21,7 C14,12 6,15 -4,9Z" fill="${dd}"/>`
-        + `<path d="M-4,20 C7,27 15,20 22,16 C28,13 33,17 38,15 L38,21 C31,22 27,20 22,24 C15,29 6,32 -4,26Z" fill="${dd}"/>`;
-    return `<rect width="10" height="10" fill="${base}"/>`;
-}
-const PSIZE={woodland:52,desert:52,urban:44,tiger:34,flat:10};
-
-function planFill(colour,defs,seen){
-    if(planPattern==='flat') return colour;
-    const id='pat-'+planPattern+'-'+colour.slice(1);
-    if(!seen.has(id)){
-        seen.add(id);
-        const s=PSIZE[planPattern];
-        defs.push(`<pattern id="${id}" width="${s}" height="${s}" patternUnits="userSpaceOnUse">`
-            + patternBody(planPattern,colour) + `</pattern>`);
-    }
-    return `url(#${id})`;
-}
-
-function pipStroke(hex){
-    const n=parseInt(hex.slice(1),16);
-    const lin=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
-    const L=0.2126*lin((n>>16)&255)+0.7152*lin((n>>8)&255)+0.0722*lin(n&255);
-    return L>0.42 ? 'rgba(0,0,0,0.42)' : 'rgba(255,255,255,0.46)';
-}
-/* Armour pips, the thing that makes a record sheet read as a record sheet. Drawn
-   as a staggered tile clipped by each plate's own path, so they fill any shape
-   without hand-placing a single circle. */
-function pipFill(colour,defs,seen){
-    const id='pip-'+colour.slice(1);
-    if(!seen.has(id)){
-        seen.add(id);
-        const c=pipStroke(colour);
-        defs.push(`<pattern id="${id}" width="22" height="22" patternUnits="userSpaceOnUse">`
-            + `<circle cx="6" cy="6" r="3.1" fill="none" stroke="${c}" stroke-width="1.1"/>`
-            + `<circle cx="17" cy="17" r="3.1" fill="none" stroke="${c}" stroke-width="1.1"/>`
-            + `</pattern>`);
-    }
-    return `url(#${id})`;
-}
-
-function buildPaintPlan(){
-    const svg=document.getElementById('paint-plan');
-    if(!svg) return;
-    /* One alpha-only gradient reused by every plate, so shading costs a single def
-       and stays correct whatever colour the user picks. */
-    const defs=[`<linearGradient id="bevel" x1="0" y1="0" x2="0.35" y2="1">
-        <stop offset="0" stop-color="#fff" stop-opacity="0.24"/>
-        <stop offset="0.42" stop-color="#fff" stop-opacity="0.05"/>
-        <stop offset="0.60" stop-color="#000" stop-opacity="0.06"/>
-        <stop offset="1" stop-color="#000" stop-opacity="0.32"/></linearGradient>`],
-        seen=new Set(),body=[],labels=[];
-
-    LOC.forEach((l,i)=>{
-        const zone=planMap[i], colour=scheme[zone]||'#7a7a7a';
-        const zl=(ZONES.find(z=>z.id===zone)||{}).label||zone;
-        body.push(
-            `<g class="plate${i===planSel?' selected':''}" data-i="${i}" role="button" tabindex="0"`
-          + ` aria-label="${l.label}, currently ${zl}">`
-          + `<path class="plate-fill" d="${l.d}" fill="${planFill(colour,defs,seen)}"`
-          + ` stroke="rgba(170,170,170,0.34)" stroke-width="1.6" stroke-linejoin="round"/>`
-          + (planShade ? `<path d="${l.d}" fill="url(#bevel)" pointer-events="none"/>` : '')
-          + (planPips  ? `<path d="${l.d}" fill="${pipFill(colour,defs,seen)}" pointer-events="none"/>` : '')
-          + `</g>`);
-        labels.push(`<text class="plate-label${i===planSel?' on':''}" x="${l.lx}" y="${l.ly}"`
-          + ` text-anchor="middle" data-i="${i}">${l.label}</text>`);
-    });
-
-    ENGRAVE.forEach(([x1,y1,x2,y2])=>body.push(
-        `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.32)" stroke-width="1.5"/>`));
-
-    DETAIL.forEach(d=>{
-        const colour=scheme[d.z]||'#7a7a7a';
-        body.push(`<path d="${chamfer(d.x,d.y,d.w,d.h,d.c)}" fill="${colour}"`
-            + ` stroke="rgba(0,0,0,0.5)" stroke-width="1" pointer-events="none"/>`);
-    });
-
-    svg.innerHTML=`<defs>${defs.join('')}</defs>${body.join('')}${labels.join('')}`;
-    svg.querySelectorAll('.plate, .plate-label').forEach(g=>{
-        const i=+g.dataset.i;
-        g.addEventListener('click',()=>selectPlate(i));
-        g.addEventListener('keydown',e=>{
-            if(e.key==='Enter'||e.key===' '){e.preventDefault();selectPlate(i);}
-        });
-    });
-}
-
-function selectPlate(i){
-    planSel=i;
-    document.getElementById('plan-sel-name').textContent=LOC[i].label;
-    buildPaintPlan();
-    buildPlanChips();
-    selectZone(planMap[i]);   // so the wheel is already on that colour
-}
-
-function assignZone(zid){
-    planMap[planSel]=zid;
-    buildPaintPlan();buildPlanChips();
-    selectZone(zid);
-    updateSchemeName('Custom Scheme');
-}
-
-function buildPlanChips(){
-    const el=document.getElementById('plan-chips');if(!el)return;
-    el.innerHTML='';
-    ZONES.forEach(z=>{
-        const b=document.createElement('button');
-        b.className='zone-chip'+(planMap[planSel]===z.id?' on':'');
-        b.innerHTML=`<span class="chip-dot" style="background:${scheme[z.id]||z.default};"></span>${z.label.replace(' Armour','')}`;
-        b.onclick=()=>assignZone(z.id);
-        el.appendChild(b);
-    });
-}
-function buildPatternChips(){
-    const el=document.getElementById('plan-patterns');if(!el)return;
-    el.innerHTML='';
-    PATTERNS.forEach(p=>{
-        const b=document.createElement('button');
-        b.className='zone-chip'+(planPattern===p.id?' on':'');
-        b.textContent=p.label;
-        b.onclick=()=>{planPattern=p.id;buildPaintPlan();buildPatternChips();};
-        el.appendChild(b);
-    });
-    const t=document.createElement('button');
-    t.className='zone-chip'+(planShade?' on':'');
-    t.textContent=planShade?'Shading on':'Shading off';
-    t.title='Turn shading off to judge the true colour against a paint pot';
-    t.onclick=()=>{planShade=!planShade;buildPaintPlan();buildPatternChips();};
-    el.appendChild(t);
-    const q=document.createElement('button');
-    q.className='zone-chip'+(planPips?' on':'');
-    q.textContent=planPips?'Pips on':'Pips off';
-    q.title='Armour pips, as on a record sheet';
-    q.onclick=()=>{planPips=!planPips;buildPaintPlan();buildPatternChips();};
-    el.appendChild(q);
-}
-function buildLayoutChips(){
-    const el=document.getElementById('plan-layouts');if(!el)return;
-    el.innerHTML='';
-    LAYOUTS.forEach(L=>{
-        const b=document.createElement('button');
-        b.className='zone-chip';
-        b.textContent=L.label;
-        b.onclick=()=>{planMap=L.map.slice();buildPaintPlan();buildPlanChips();};
-        el.appendChild(b);
-    });
-}
-
-function defaultScheme(){const s={};ZONES.forEach(z=>s[z.id]=z.default);return s;}
-
-window.addEventListener('DOMContentLoaded',()=>{
-    loadFromURL();
-    buildZoneButtons();
-    buildFactionGrid();
-    buildSchemeDisplay();
-    buildPaintPlan();
-    buildPlanChips();
-    buildPatternChips();
-    buildLayoutChips();
-    initWheel();
-    syncPickerToZone();
-});
-
-function buildZoneButtons(){
-    const el=document.getElementById('zone-buttons');el.innerHTML='';
-    ZONES.forEach(z=>{
-        const btn=document.createElement('button');
-        btn.className='zone-btn'+(z.id===currentZone?' active':'');
-        btn.id='zone-btn-'+z.id;
-        btn.innerHTML=`<span class="zone-swatch" id="swatch-${z.id}" style="background:${scheme[z.id]||z.default};"></span>${z.label}`;
-        btn.onclick=()=>selectZone(z.id);
-        el.appendChild(btn);
-    });
-}
-
-function buildFactionGrid(){
-    const el=document.getElementById('faction-grid');
-    FACTIONS.forEach(f=>{
-        const btn=document.createElement('button');
-        btn.className='faction-btn';
-        btn.style.cssText=`background:${f.bg};color:${f.fg};border-color:${f.bg};`;
-        btn.textContent=f.name;
-        btn.onclick=()=>applyFaction(f);
-        el.appendChild(btn);
-    });
-}
-
-function buildSchemeDisplay(){
-    const el=document.getElementById('scheme-display');el.innerHTML='';
-    ZONES.forEach(z=>{
-        const col=scheme[z.id]||z.default;
-        const match=findPaintMatch(col);
-        const div=document.createElement('div');
-        div.className='scheme-swatch-large'+(z.id===currentZone?' active':'');
-        div.id='display-'+z.id;
-        div.onclick=()=>selectZone(z.id);
-        div.innerHTML=`
-            <div class="swatch-block" id="block-${z.id}" style="background:${col};"></div>
-            <div class="swatch-info">
-                <div class="swatch-zone">${z.label}</div>
-                <div class="swatch-hex" id="hex-${z.id}">${col}</div>
-                <div class="swatch-paint" id="paint-${z.id}">${match
-                    ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
-                    : '<span style="color:#444;">—</span>'}</div>
-            </div>`;
-        el.appendChild(div);
-    });
-}
-
-function selectZone(id){
-    currentZone=id;
-    document.querySelectorAll('.zone-btn').forEach(b=>b.classList.toggle('active',b.id==='zone-btn-'+id));
-    document.querySelectorAll('.scheme-swatch-large').forEach(b=>b.classList.toggle('active',b.id==='display-'+id));
-    syncPickerToZone();
-}
-
-function syncPickerToZone(){
-    const col=scheme[currentZone]||ZONES.find(z=>z.id===currentZone)?.default||'#888';
-    const[h,s,l]=hexToHsl(col);
-    currentHue=h;currentSat=s;wheelBrightness=l;
-    document.getElementById('brightness-slider').value=l;
-    document.getElementById('current-swatch').style.background=col;
-    document.getElementById('hex-input').value=col;
-    drawWheel();
-}
-
-function setActiveColour(hex,updateHex=true){
-    scheme[currentZone]=hex;
-    if(updateHex)document.getElementById('hex-input').value=hex;
-    document.getElementById('current-swatch').style.background=hex;
-    // Update zone button swatch
-    const sw=document.getElementById('swatch-'+currentZone);
-    if(sw)sw.style.background=hex;
-    // Update scheme display
-    const block=document.getElementById('block-'+currentZone);
-    if(block)block.style.background=hex;
-    const hexEl=document.getElementById('hex-'+currentZone);
-    if(hexEl)hexEl.textContent=hex;
-    // Update paint match
-    const match=findPaintMatch(hex);
-    const paintEl=document.getElementById('paint-'+currentZone);
-    if(paintEl)paintEl.innerHTML=match
-        ? `<span class="paint-brand">CIT</span> ${match.citadel} &nbsp; <span class="paint-brand">VAL</span> ${match.vallejo}`
-        : '<span style="color:#444;">—</span>';
-    updateSchemeName('Custom Scheme');
-    buildPaintPlan();buildPlanChips();
-}
-
-function applyFaction(f){
-    Object.assign(scheme,f.c);
-    buildZoneButtons();buildSchemeDisplay();
-    buildPaintPlan();buildPlanChips();
-    syncPickerToZone();
-    updateSchemeName(f.name+' Scheme');
-}
-
-function updateSchemeName(name){
-    document.getElementById('scheme-name').textContent=name.toUpperCase();
-}
-
-function resetScheme(){
-    scheme=defaultScheme();
-    planMap=LOC.map(l=>l.z); planPattern='flat'; planShade=true; planPips=true; planSel=2;
-    document.getElementById('plan-sel-name').textContent=LOC[planSel].label;
-    buildZoneButtons();buildSchemeDisplay();
-    buildPaintPlan();buildPlanChips();buildPatternChips();
-    syncPickerToZone();
-    updateSchemeName('Custom Scheme');
-}
-
-function copySchemeURL(){
-    const p=new URLSearchParams();
-    ZONES.forEach(z=>{if(scheme[z.id])p.set(z.id,scheme[z.id].replace('#',''));});
-    p.set('map',planMap.map(z=>ZCODE[z]||'p').join(''));
-    if(planPattern!=='flat')p.set('pat',planPattern);
-    if(!planShade)p.set('sh','0');
-    if(!planPips)p.set('pip','0');
-    const url=location.origin+location.pathname+'?'+p.toString();
-    navigator.clipboard.writeText(url).then(()=>{
-        const btn=event.target;const orig=btn.textContent;
-        btn.textContent='✓ Copied!';btn.style.color='#0f0';
-        setTimeout(()=>{btn.textContent=orig;btn.style.color='';},2000);
-    }).catch(()=>prompt('Share link:',url));
-}
-
-function loadFromURL(){
-    scheme=defaultScheme();
-    const p=new URLSearchParams(location.search);
-    ZONES.forEach(z=>{if(p.has(z.id))scheme[z.id]='#'+p.get(z.id);});
-    const m=p.get('map');
-    if(m&&m.length===LOC.length&&[...m].every(ch=>ZFROM[ch]))
-        planMap=[...m].map(ch=>ZFROM[ch]);
-    const pat=p.get('pat');
-    if(pat&&PATTERNS.some(x=>x.id===pat))planPattern=pat;
-    if(p.get('sh')==='0')planShade=false;
-    if(p.get('pip')==='0')planPips=false;
-}
-</script>
+    <div class="footer-content">
+        <div class="footer-section"><h4>BattleTech HQ</h4><p>Unofficial fansite. Home of BattleTech Down Under.</p></div>
+        <div class="footer-section"><h4>Tools</h4><ul><li><a href="tools.html">All tools</a></li><li><a href="lance-builder.html">Lance Builder</a></li><li><a href="paint-tool.html">Paint Tool</a></li></ul></div>
+        <div class="footer-section"><h4>Site</h4><ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 BattleTech HQ. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+    </div>
+</footer>
+<script src="assets/js/paint-tool.js"></script>
+<script src="assets/js/hq.js" defer></script>
 </body>
 </html>
