@@ -1,0 +1,296 @@
+{
+  "_note": "Every scheme carries a `sourced` flag and a `source` string. `sourced: true` means the colours trace to a specific plate in Camo Specs (FASA, 1988), whose citations came with the previous version of this page. `sourced: false` means the colours are an interpretation from general canon and have NOT been checked against a sourcebook — the page says so on the card. Correct anything wrong here and the page picks it up; no code to touch.",
+  "_caveat": "Camo Specs is 1988 and predates the Clans entirely: its 44 plates are all Inner Sphere and mercenary regiments. No Clan scheme in this file is sourced from it.",
+  "_roles": "primary = the bulk of the armour. secondary = the contrast panels, usually limbs or torsos. accent = trim, stripes, unit markings. cockpit = the canopy glass, used by the gemming step.",
+  "schemes": [
+    {
+      "id": "sword-of-light",
+      "unit": "Sword of Light",
+      "faction": "Draconis Combine",
+      "factionId": "kurita",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plate 6 — Wasp",
+      "notes": "The Combine's household regiments, and the most recognisable red in the Inner Sphere. Black trim does the separating, and the gold dragon goes on the centre torso or the left shoulder. A red this saturated needs a warm undercoat or it goes pink over grey plastic.",
+      "colours": [
+        { "role": "primary", "label": "Armour red", "hex": "#cc1111" },
+        { "role": "secondary", "label": "Trim black", "hex": "#0a0a0a" },
+        { "role": "accent", "label": "Dragon gold", "hex": "#ccaa00", "finish": "metallic" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "davion-brigade-of-guards",
+      "unit": "Brigade of Guards",
+      "faction": "Federated Suns",
+      "factionId": "davion",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plate 38 — Atlas",
+      "notes": "Blue-grey over near-white, with a red stripe doing the work. The white reads better as a very light warm grey than as pure white; keep actual white for the stripe edges and stencils.",
+      "colours": [
+        { "role": "primary", "label": "Armour blue-grey", "hex": "#4a6080" },
+        { "role": "secondary", "label": "Panel white", "hex": "#d0d8e0" },
+        { "role": "accent", "label": "Stripe red", "hex": "#cc2200" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "lyran-royal-guards",
+      "unit": "Royal Guards",
+      "faction": "Lyran Commonwealth",
+      "factionId": "steiner",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plates 22 — Wolverine and 44 — Manticore",
+      "notes": "Ice blue with white and gold. The palest Lyran schemes are the hardest to keep clean-looking: shade the recesses only, and leave the flat panels alone.",
+      "colours": [
+        { "role": "primary", "label": "Ice blue", "hex": "#4488cc" },
+        { "role": "secondary", "label": "Panel white", "hex": "#ddeeff" },
+        { "role": "accent", "label": "Trim gold", "hex": "#ccaa00", "finish": "metallic" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#88ddff" }
+      ]
+    },
+    {
+      "id": "northwind-highlanders",
+      "unit": "Northwind Highlanders",
+      "faction": "Capellan Confederation",
+      "factionId": "liao",
+      "era": "Succession Wars",
+      "kind": "field",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plates 25 — Catapult and 31 — Marauder",
+      "notes": "Deep green with white trim. A green this dark swallows a black wash, so shade with a brown-green and put the contrast in the highlight instead.",
+      "colours": [
+        { "role": "primary", "label": "Highland green", "hex": "#1a5c1a" },
+        { "role": "secondary", "label": "Trim white", "hex": "#f5f5f5" },
+        { "role": "accent", "label": "Marking red", "hex": "#bb2200" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00cc44" }
+      ]
+    },
+    {
+      "id": "red-lancers",
+      "unit": "Red Lancers",
+      "faction": "Capellan Confederation",
+      "factionId": "liao",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plate 13 — Capellan Hussars",
+      "notes": "The Liao household regiment, and red rather than the green most Capellan units wear. Worth knowing if you were about to paint a whole Capellan force green.",
+      "colours": [
+        { "role": "primary", "label": "Lancer red", "hex": "#a81c1c" },
+        { "role": "secondary", "label": "Panel black", "hex": "#101010" },
+        { "role": "accent", "label": "Trim gold", "hex": "#c4a04a", "finish": "metallic" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "marik-militia",
+      "unit": "Marik Militia",
+      "faction": "Free Worlds League",
+      "factionId": "marik",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plates 7 — Stinger and 28 — Thunderbolt",
+      "notes": "Two purples rather than a purple and a neutral, which is what makes the League look like the League. Purple over grey plastic goes muddy — undercoat white or use a light grey.",
+      "colours": [
+        { "role": "primary", "label": "League purple", "hex": "#6633aa" },
+        { "role": "secondary", "label": "Light purple", "hex": "#9955cc" },
+        { "role": "accent", "label": "Marking red", "hex": "#cc2222" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#aa88ff" }
+      ]
+    },
+    {
+      "id": "wolfs-dragoons",
+      "unit": "Wolf's Dragoons",
+      "faction": "Mercenary",
+      "factionId": "mercenary",
+      "era": "Succession Wars",
+      "kind": "field",
+      "sourced": true,
+      "source": "Camo Specs (FASA, 1988), plate 30 — Natasha Kerensky's Warhammer",
+      "notes": "Black with a bone secondary and the red spider. Flat black kills all detail: base with a very dark grey instead and save true black for the panel lines.",
+      "colours": [
+        { "role": "primary", "label": "Dragoon black", "hex": "#111111" },
+        { "role": "secondary", "label": "Bone", "hex": "#e8e0cc" },
+        { "role": "accent", "label": "Spider red", "hex": "#cc2200" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "comstar",
+      "unit": "ComStar Com Guards",
+      "faction": "ComStar",
+      "factionId": "comstar",
+      "era": "Succession Wars",
+      "kind": "parade",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "White and grey with red trim. The classic problem scheme: white over dark plastic needs three thin coats, or a white primer and a grey shade to bring the panels back.",
+      "colours": [
+        { "role": "primary", "label": "Order white", "hex": "#d0d0d0" },
+        { "role": "secondary", "label": "Panel grey", "hex": "#888888" },
+        { "role": "accent", "label": "Trim red", "hex": "#cc0000" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "clan-wolf",
+      "unit": "Clan Wolf",
+      "faction": "Clan Wolf",
+      "factionId": "clanwolf",
+      "era": "Clan Invasion",
+      "kind": "field",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Grey with a red chevron and black weapon housings. The most forgiving Clan scheme to paint: the grey does the work and the chevron is the only fiddly part.",
+      "colours": [
+        { "role": "primary", "label": "Wolf grey", "hex": "#505050" },
+        { "role": "secondary", "label": "Dark grey", "hex": "#282828" },
+        { "role": "accent", "label": "Chevron red", "hex": "#cc2200" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "jade-falcon",
+      "unit": "Clan Jade Falcon",
+      "faction": "Clan Jade Falcon",
+      "factionId": "jadefalcon",
+      "era": "Clan Invasion",
+      "kind": "parade",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Dark forest green with a bright jade trim, which is the whole point: the two greens have to be far enough apart to read across a table.",
+      "colours": [
+        { "role": "primary", "label": "Falcon green", "hex": "#1a5c1a" },
+        { "role": "secondary", "label": "Deep green", "hex": "#0a2a0a" },
+        { "role": "accent", "label": "Jade trim", "hex": "#37b86e" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00ddaa" }
+      ]
+    },
+    {
+      "id": "ghost-bear",
+      "unit": "Clan Ghost Bear",
+      "faction": "Clan Ghost Bear",
+      "factionId": "ghostbear",
+      "era": "Clan Invasion",
+      "kind": "field",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Dark navy over a cream secondary. The cream wants to be off-white and slightly warm, not bone and not white, or it fights the navy.",
+      "colours": [
+        { "role": "primary", "label": "Bear navy", "hex": "#1e3e5e" },
+        { "role": "secondary", "label": "Cream", "hex": "#e8e0d0" },
+        { "role": "accent", "label": "Pale blue trim", "hex": "#7799bb" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#88ccff" }
+      ]
+    },
+    {
+      "id": "smoke-jaguar",
+      "unit": "Clan Smoke Jaguar",
+      "faction": "Clan Smoke Jaguar",
+      "factionId": "smokejaguar",
+      "era": "Clan Invasion",
+      "kind": "field",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Near-black with orange-red spotting. Do the spots last, thinned, and irregularly — evenly spaced spots read as polka dots at tabletop distance.",
+      "colours": [
+        { "role": "primary", "label": "Jaguar black", "hex": "#0a0a0a" },
+        { "role": "secondary", "label": "Off black", "hex": "#1a1a1a" },
+        { "role": "accent", "label": "Spot orange", "hex": "#dd4400" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#ff3300" }
+      ]
+    },
+    {
+      "id": "nova-cat",
+      "unit": "Clan Nova Cat",
+      "faction": "Clan Nova Cat",
+      "factionId": "novacat",
+      "era": "Clan Invasion",
+      "kind": "parade",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Deep navy with a gold secondary and white trim. Three strong colours, so keep the gold to panels rather than edges or it overwhelms the navy.",
+      "colours": [
+        { "role": "primary", "label": "Cat navy", "hex": "#0a1a40" },
+        { "role": "secondary", "label": "Panel gold", "hex": "#c9a34a", "finish": "metallic" },
+        { "role": "accent", "label": "Trim white", "hex": "#ffffff" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "kell-hounds",
+      "unit": "Kell Hounds",
+      "faction": "Mercenary",
+      "factionId": "mercenary",
+      "era": "Succession Wars",
+      "kind": "field",
+      "sourced": false,
+      "source": "Interpretation from general canon — not checked against a sourcebook",
+      "notes": "Black over red. Reads as a merc unit rather than a House one because there is no trim colour doing the tidying — the two blocks just meet.",
+      "colours": [
+        { "role": "primary", "label": "Hound black", "hex": "#151515" },
+        { "role": "secondary", "label": "Hound red", "hex": "#8e1418" },
+        { "role": "accent", "label": "Marking white", "hex": "#e8e8e4" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "generic-urban",
+      "unit": "Urban camouflage",
+      "faction": "Any",
+      "factionId": "generic",
+      "era": "Any",
+      "kind": "field",
+      "sourced": false,
+      "source": "Generic field pattern, not a specific unit",
+      "notes": "Three greys, hard-edged, no unit colour. The default for a merc company or a force you have not decided the allegiance of yet, and the fastest scheme on this page to paint.",
+      "colours": [
+        { "role": "primary", "label": "Mid grey", "hex": "#6f7672" },
+        { "role": "secondary", "label": "Dark grey", "hex": "#3a3f41" },
+        { "role": "accent", "label": "Light grey", "hex": "#b9bdb6" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "generic-desert",
+      "unit": "Desert camouflage",
+      "faction": "Any",
+      "factionId": "generic",
+      "era": "Any",
+      "kind": "field",
+      "sourced": false,
+      "source": "Generic field pattern, not a specific unit",
+      "notes": "Sand over a darker tan with a brown break-up. Takes a heavy earth wash better than any other scheme here, which is what makes it look weathered with almost no effort.",
+      "colours": [
+        { "role": "primary", "label": "Sand", "hex": "#c3a468" },
+        { "role": "secondary", "label": "Dark tan", "hex": "#8a5f33" },
+        { "role": "accent", "label": "Brown break-up", "hex": "#4b3226" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00aaff" }
+      ]
+    },
+    {
+      "id": "generic-woodland",
+      "unit": "Woodland camouflage",
+      "faction": "Any",
+      "factionId": "generic",
+      "era": "Any",
+      "kind": "field",
+      "sourced": false,
+      "source": "Generic field pattern, not a specific unit",
+      "notes": "Olive base with a dark green and a brown. Keep the three patches roughly equal in tone or the pattern turns into stripes at arm's length.",
+      "colours": [
+        { "role": "primary", "label": "Olive", "hex": "#5a6236" },
+        { "role": "secondary", "label": "Dark green", "hex": "#22392a" },
+        { "role": "accent", "label": "Earth brown", "hex": "#4b3226" },
+        { "role": "cockpit", "label": "Canopy", "hex": "#00cc44" }
+      ]
+    }
+  ]
+}

@@ -94,7 +94,9 @@ def c_mainclose(s, f):
 
 @check("low-contrast grey (#444/#555/#666) text")
 def c_grey(s, f):
-    return bool(re.search(r'color:\s*#(444|555|666)\b', s, re.I))
+    # `color:` only, not border-color / background-color / outline-color.
+    # A dim border is fine; dim body text is not.
+    return bool(re.search(r'(?<![-\w])color:\s*#(444|555|666)\b', s, re.I))
 
 
 @check("background-image on a content thumbnail")
