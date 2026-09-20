@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every BattleMaster variant ranked by a MechTech. Why it holds its PPC like a rifle, what the weak head armour costs a command mech, and how to fight one.">
+    <meta name="keywords" content="BattleMaster BattleTech, best BattleMaster variant, BLR-1G, BLR-3M, BLR-10S, Beemer, BattleTech assault mech">
+    <title>BattleMaster: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/battlemaster">
+    <meta property="og:title" content="BattleMaster: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 32 BattleMaster variants ranked, the detachable PPC, and the ComStar filing error that armed the Draconis Combine.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/battlemaster">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; BattleMaster</p>
+
+        <div class="mech-hero">
+            <h1>BattleMaster</h1>
+            <p class="sub">85 tons &middot; Inner Sphere &middot; 32 variants &middot; 2633 to 3145</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/battlemaster-schematic.webp" type="image/webp">
+                    <img src="assets/images/battlemaster-schematic.png"
+                         alt="Front elevation schematic of a BLR-1G BattleMaster, showing the six-tube SRM rack on the left shoulder, the medium lasers arranged around the cockpit and the machine guns on the left wrist"
+                         width="366" height="641" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Front elevation of a 1G. The six-tube Holly rack sits on the left shoulder, and the medium lasers cluster around the cockpit. Two more face the other way, which you cannot see from here and neither can anyone behind it.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Hollis Industries put the BattleMaster out in 2633, and the brief was to build the largest and most powerful machine the Star League had. It is eighty-five tons. There were already heavier things walking around. The kindest reading, and the one the old readouts hint at, is that largest meant tallest.</p>
+                <p>So the reputation ran ahead of the specification from the first day, and then the machine spent five centuries earning it anyway.</p>
+                <p><strong>The thing nobody expects.</strong> The Donal PPC is not built into the arm. It is held. A detachable rifle-style mount, and in an emergency the pilot can drop it and have both hands free. It is on the official quirk list as a jettison-capable weapon and there is nothing else quite like it in the game. I have taken one off and put it back on, and it is exactly as strange as it sounds.</p>
+                <p><strong>The rest of it.</strong> Six Martell mediums, four of them arranged around the cockpit facing forward and two mounted lower down covering your back. A Holly six-rack on the left shoulder with thirty reloads. Twin Sperry Brownings on the left wrist for infantry. Fourteen and a half tons of plate. And walk four on eighty-five tons, which keeps it with the heavies rather than plodding along behind them.</p>
+                <p><strong>What that adds up to.</strong> 22 of the 32 variants are tagged Brawler. Not sniper, not juggernaut. This is an assault mech that wants to be in the fight, and unlike most of them it is quick enough to get there.</p>
+                <p><strong>If you are choosing one:</strong> the <strong>BLR-1G</strong> is the real thing. The <strong>BLR-1D</strong> is the one that solved the heat. The <strong>BLR-3M</strong> is the sensible modern fit and the <strong>BLR-10S</strong> is the toughest ever built.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Eighty-five tons at walk four is the whole argument. Most assault mechs trade speed for tonnage and then spend the game arriving. A BattleMaster keeps pace with a heavy lance, which means it can be where the fight is rather than where the fight was ten minutes ago.</p>
+            <p>The weapon fit is built around that. One PPC for the approach, and then six medium lasers for when it gets there. Four of those sit around the cockpit facing forward and two are mounted lower down facing backwards, which tells you what the designers expected: somebody would get behind an assault mech that liked to advance, and they wanted an answer ready.</p>
+            <p>The six-rack on the left shoulder carries thirty reloads, which is a lot, and the twin Sperry Brownings on the left wrist are there for infantry. All of that ammunition lives in the left torso, and that is the thing to know about the machine when you are standing next to one with a toolkit. Fill it up and you are carrying a fair amount of explosive in one side of the chest.</p>
+            <p>Then the part I still find remarkable. The Donal PPC sits in a detachable rifle-style mount. The BattleMaster holds its main gun rather than wearing it, and it can let go. If it needs both hands, for a physical fight or to get something off itself, the gun goes on the floor. No other machine on this site can do that.</p>
+
+            <div class="heat-callout">
+                <h3>Three quirks, and two of them are warnings</h3>
+                <table class="heat-table">
+                    <tr><th>Quirk</th><th>What it means on the table</th></tr>
+                    <tr><td>Command BattleMech</td><td>Built to run a formation from inside. It was used that way by Hanse Davion and by two generations of Kuritas.</td></tr>
+                    <tr><td>Jettison-capable weapon</td><td>The PPC can be dropped. Rarely the right call, and it is there when it is.</td></tr>
+                    <tr><td class="bad">Weak head armour</td><td class="bad">The head takes a point less than it should. On a command mech, where a head hit costs you the commander, that is a nasty piece of design.</td></tr>
+                </table>
+                <p style="margin-top:16px;">The last one is worth dwelling on. This is the machine the Great Houses gave to their commanders, and it has a thinner skull than it ought to. Most design flaws are a compromise you can see the reasoning behind. That one, like the Highlander's difficult ejection, just looks like something nobody could fix once the tooling was cut.</p>
+            </div>
+
+                        <h2>Five centuries, and one very bad shipping manifest</h2>
+            <p>It was never common. The size and the cost meant only a few worlds could build one at all, and even so examples turned up in every Great House arsenal because technicians went to absurd lengths to keep them running. Pilots called it the Beemer, which tells you how they felt about it.</p>
+            <p>Then the First Succession War took Hollis's factories on Corey. The production lines were destroyed and every finished BattleMaster on the site was carted off by whichever House force got there. Earthwerks on Keystone, Trellshire on Twycross and Red Devil on Pandora picked up production afterwards and between them managed a handful a year. That was enough to make Steiner and Marik the largest users for the next few centuries. Liao had plenty too, right up until the Fourth Succession War, when a great many of them changed hands and ended up with a Federated Suns that had never built one.</p>
+            <p>And then the best story in the chassis, which is a filing error.</p>
+            <p>A ComStar Precentor was supposed to ship a batch of unmodified, un-downgraded advanced BattleMasters to Com Guard units. He sent them to the Draconis Combine instead. Sarna records him only as the Precentor Who Lost His Name, which is a fittingly bleak way to be remembered. Those machines went on to serve as command vehicles for the Combine during the War of 3039, in full working order, against the interests of the organisation that built the shipping manifest.</p>
+            <p>The Pandora line deserves a mention too, because it is farce. The factory was a mess and the planet's nobility spent years dragging their feet over relocating it. By 3061 Red Devil was close to shutting when the lobbying finally worked and Katherine Steiner-Davion released funds to refurbish the place. The new BLR-4S started coming off the line in 3062, the FedCom Civil War delayed full production to 3064, and in 3064 the second Jade Falcon Incursion captured the planet. The brand new BattleMasters went straight into Jade Falcon second-line units.</p>
+            <p>One more, because it is a good one. Somebody did try to build a bigger BattleMaster. The Alliance was a joint NAIS and Defiance project from 3026, visually near identical and a full hundred tons, and it performed so inexplicably badly that they shelved it after about twenty units. Forty years later somebody worked out why: Defiance had been buying cheap fusion engines from a fraudulent supplier, and every one of them carried a hidden design flaw.</p>
+            <p>They are still being built. The Federated Suns and Clan Sea Fox are both turning them out in the ilClan era, five hundred years after Hollis started.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other BattleMasters available in the same era</strong>, not against the rest of the game. This is the second longest variant list on the site behind the Marauder, so the era filtering matters more here than on most.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 1 of the 32 BattleMaster variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 32 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-1G: the one everyone means</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1519 &middot; PV 40 &middot; Brawler &middot; 2633<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 18 Single &middot; 340 Fusion Engine<br>
+  2x Machine Gun, 1x PPC, 1x SRM 6, 6x Medium Laser</p>
+  <p>The original from 2633 and the one everyone means. A Donal PPC held like a rifle, six Martell mediums, an SRM 6 on the left shoulder with thirty reloads, and twin machine guns on the wrist. Walk four on eighty-five tons, which is quicker than it has any right to be.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-1Gb: the Royal</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1825 &middot; PV 44 &middot; Brawler &middot; 2760<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 17 IS Double &middot; 340 Fusion Engine<br>
+  2x ER PPC, 4x Medium Laser, 1x Large Pulse Laser</p>
+  <p>The SLDF Royal, 2760. Endo steel, double heat sinks, and instead of one PPC it carries an ER PPC in each arm plus a large pulse laser in the chest. It gives up the rear-facing lasers to do it. Better than the standard everywhere that matters.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-1D: the one that fixed the heat</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1522 &middot; PV 40 &middot; Brawler &middot; 2867<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 24 Single &middot; 340 Fusion Engine<br>
+  2x Machine Gun, 1x PPC, 4x Medium Laser</p>
+  <p>Davion, 2867, and it exists because they could not build the thing themselves and needed the ones they had to survive. The six-rack and the rear lasers come off, six more heat sinks and another ton of armour go on. 24 single heat sinks, six more than the original carried, and enough that the heat stops being the thing that limits you.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-3M: the sensible upgrade</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1679 &middot; PV 42 &middot; Brawler &middot; 3049<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 18 IS Double &middot; 340 Fusion Engine<br>
+  1x Machine Gun, 1x ER PPC, 1x SRM 6, 6x Medium Laser</p>
+  <p>Marik, 3049, and the sensible modernisation. Doubles throughout, a Fusigon Longtooth ER PPC, and one machine gun given up for CASE so the ammunition stops being a death sentence. The best of the Clan Invasion fits.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-4S: a decade of politics</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 2018 &middot; PV 44 &middot; Brawler &middot; 3062<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 13 IS Double &middot; 340 Light Engine<br>
+  2x Small Pulse Laser, 1x Gauss Rifle, 1x SRM 6, 4x ER Medium Laser, 2x Medium Laser</p>
+  <p>The 3062 rebuild, and the one that took a decade of politics to happen. A Zeus Slingshot Gauss rifle in the right arm, four ER mediums, two standard mediums, an Artemis-guided six-rack and small pulse lasers for infantry. Light engine underneath, so it keeps most of its toughness.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-10S: the toughest ever built</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1927 &middot; PV 50 &middot; Juggernaut &middot; 3070<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 20 IS Double &middot; 255 Compact Engine<br>
+  2x Anti-BattleArmor Pods (B-Pods), 1x ER PPC, 6x ER Medium Laser, 1x Streak SRM 4, 1x ER Small Laser</p>
+  <p>A compact engine and a heavy-duty gyro, so it is slower but genuinely hard to put down: structure 9, the best in the chassis. ER PPC, six ER mediums, B-pods for battle armour and a Guardian ECM suite. If you want a BattleMaster that survives, this is the one.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-6G: built on its successor’s lines</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1960 &middot; PV 44 &middot; Brawler &middot; 3088<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 16 IS Double &middot; 340 Light Engine<br>
+  2x Small X-Pulse Laser, 1x Heavy PPC, 1x Streak SRM 6, 4x Light PPC, 2x ER Small Laser</p>
+  <p>Built by General Motors on the production lines that used to make the Warlord, the machine meant to replace the BattleMaster. A heavy PPC, two light PPCs, a Streak six in a CASE II bay and rear-facing ER smalls. The successor&#x27;s factory, still making the thing it was supposed to succeed.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BLR-6X: fast, and made of glass</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">85 tons &middot; BV 1966 &middot; PV 45 &middot; Skirmisher &middot; 3085<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 16 IS Double &middot; 425 Large XXL Engine<br>
+  1x ER PPC, 1x Heavy PPC, 2x ER Medium Laser, 1x Streak SRM 6</p>
+  <p>An experimental XXL engine for walk five, which is genuinely fast for eighty-five tons. The frame underneath rates 2 on the card, the lowest in the chassis by a distance. It is a glass cannon wearing an assault mech&#x27;s silhouette.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Use the speed. Walk four means you can pick your moment instead of committing on turn one, and it means you can follow a heavy lance rather than anchoring a static line. Open with the PPC on the way in and then let the six mediums do the work. Watch the left torso: the missile and machine gun ammunition all lives in there, and a lucky hit will take the side off you.</p>
+            <p><strong>Fighting one.</strong> Do not let it close, because inside medium range six lasers and a six-rack is a serious turn of damage. Going behind it is less useful than usual, since two of those lasers face backwards specifically for you. The head is the soft spot, unusually so, and against the XL and light-engine fits from the Clan Invasion onward a side torso still ends it.</p>
+            <p><strong>What I see go wrong.</strong> People treat it like an Atlas and plant it somewhere. It is not that machine. It is quick, it is a brawler, and standing still throws away the one advantage it has over everything else in its weight class.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the BattleMaster is one of the most predictable chassis on the site, second only to the Warhammer. 22 of 32 variants are tagged Brawler, so whichever one you field, the engine will mostly drive it the same way: short range weighting and a strong positive aggression modifier. It closes.</p>
+            <ul>
+                <li>The exceptions are worth knowing. <strong>BLR-M3</strong>, <strong>BLR-4L</strong> and <strong>BLR-6M</strong> are Snipers and will hold distance instead.</li>
+                <li><strong>BLR-CM</strong>, <strong>BLR-10S</strong>, <strong>BLR-10S2</strong>, <strong>BLR-6C</strong> and the Clan <strong>C 3</strong> are Juggernauts: the same aggression, less patience, and slower on their feet.</li>
+                <li><strong>BLR-K4</strong> and <strong>BLR-6X</strong> are Skirmishers, and both are fast enough to make that mean something.</li>
+            </ul>
+            <p>Practical upshot: an enemy BattleMaster is coming for you regardless of which one it is. That makes it a good choice when you want a scenario to move rather than settle into a firing line.</p>
+
+                        <h2>All 32 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">BLR-1G</td><td>2633</td><td>1519</td><td>40</td><td>Brawler</td><td class="wpn">2x Machine Gun, 1x PPC, 1x SRM 6, 6x Medium Laser</td><td class="num">3/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-1G-DC</td><td>2633</td><td>1494</td><td>41</td><td>Brawler</td><td class="wpn">2x Machine Gun, 1x PPC, 1x SRM 6, 4x Medium Laser</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-1Gb</td><td>2760</td><td>1825</td><td>44</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x Medium Laser, 1x Large Pulse Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-1Gbc</td><td>2763</td><td>1825</td><td>42</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x Medium Laser, 1x Large Pulse Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BLR-1Gc</td><td>2763</td><td>1577</td><td>43</td><td>Brawler</td><td class="wpn">1x PPC, 1x SRM 6, 6x Medium Laser</td><td class="num">4/4/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">BLR-1D</td><td>2867</td><td>1522</td><td>40</td><td>Brawler</td><td class="wpn">2x Machine Gun, 1x PPC, 4x Medium Laser</td><td class="num">4/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">BLR-2C</td><td>2925</td><td>1563</td><td>45</td><td>Brawler</td><td class="wpn">1x Anti-Missile System, 1x ER PPC, 1x SRM 6, 4x Medium Laser</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">BLR-1S</td><td>3025</td><td>1507</td><td>42</td><td>Brawler</td><td class="wpn">1x LRM 15, 2x SRM 2, 4x Medium Laser, 1x LRM 5</td><td class="num">3/4/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">BLR-3M</td><td>3049</td><td>1679</td><td>42</td><td>Brawler</td><td class="wpn">1x Machine Gun, 1x ER PPC, 1x SRM 6, 6x Medium Laser</td><td class="num">4/4/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-3S</td><td>3050</td><td>1441</td><td>40</td><td>Brawler</td><td class="wpn">1x LRM 20, 1x SRM 6, 6x Medium Pulse Laser</td><td class="num">4/5/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-3M-DC</td><td>3053</td><td>1627</td><td>43</td><td>Brawler</td><td class="wpn">1x Machine Gun, 1x ER PPC, 1x SRM 6, 4x Medium Laser</td><td class="num">4/4/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BLR-1G (Red Corsair)</td><td>3055</td><td>2745</td><td>54</td><td>Brawler</td><td class="wpn">2x ER PPC, 6x Medium Pulse Laser, 1x Large Pulse Laser</td><td class="num">6/6/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-3M (Rogers)</td><td>3057</td><td>1818</td><td>46</td><td>Brawler</td><td class="wpn">6x Medium Laser, 1x ER PPC, 7x Streak SRM 2</td><td class="num">4/4/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">BLR-4S</td><td>3062</td><td>2018</td><td>44</td><td>Brawler</td><td class="wpn">2x Small Pulse Laser, 1x Gauss Rifle, 1x SRM 6, 4x ER Medium Laser, 2x Medium Laser</td><td class="num">5/5/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-CM</td><td>3064</td><td>1883</td><td>52</td><td>Juggernaut</td><td class="wpn">1x ER PPC, 1x MRM 30, 2x ER Medium Laser, 2x C3 Computer (Master)</td><td class="num">4/4/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-K3</td><td>3064</td><td>1851</td><td>51</td><td>Brawler</td><td class="wpn">4x ER Medium Laser, 1x ER PPC, 2x ER Large Laser, 1x Streak SRM 6, 1x C3 Computer (Master)</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BLR-5M</td><td>3067</td><td>1766</td><td>43</td><td>Brawler</td><td class="wpn">1x Light Gauss Rifle, 1x ER Large Laser, 6x ER Medium Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">BLR-10S</td><td>3070</td><td>1927</td><td>50</td><td>Juggernaut</td><td class="wpn">2x Anti-BattleArmor Pods (B-Pods), 1x ER PPC, 6x ER Medium Laser, 1x Streak SRM 4, 1x ER Small Laser</td><td class="num">5/5/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-4S (Calvin)</td><td>3070</td><td>2029</td><td>44</td><td>Brawler</td><td class="wpn">2x Light PPC, 1x Rotary AC/5, 4x ER Medium Laser, 2x Medium Laser, 1x Streak SRM 6</td><td class="num">5/5/1</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by BLR-10S</span></td></tr>
+<tr><td class="vname">BLR-M3</td><td>3070</td><td>1674</td><td>52</td><td>Sniper</td><td class="wpn">2x Medium Pulse Laser, 1x Light Gauss Rifle, 2x Light PPC, 1x MML 5, 1x C3 Computer (Master)</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C</td><td>3070</td><td>3025</td><td>55</td><td>Brawler</td><td class="wpn">1x HAG/30, 1x ATM 6, 4x Medium Pulse Laser, 2x ER Medium Laser</td><td class="num">8/7/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-4S (Calvin II)</td><td>3071</td><td>2274</td><td>41</td><td>Brawler</td><td class="wpn">2x Light PPC, 1x Rotary AC/5, 4x ER Medium Laser, 2x Machine Gun, 1x Streak SRM 6</td><td class="num">5/5/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-10S2</td><td>3072</td><td>1927</td><td>52</td><td>Juggernaut</td><td class="wpn">2x Anti-BattleArmor Pods (B-Pods), 1x ER PPC, 6x ER Medium Laser, 1x Streak SRM 4, 1x ER Small Laser</td><td class="num">4/4/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BLR-K4</td><td>3073</td><td>2232</td><td>44</td><td>Skirmisher</td><td class="wpn">1x Large Pulse Laser, 1x Snub-Nose PPC, 1x Gauss Rifle, 2x ER Medium Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">BLR-4L</td><td>3081</td><td>1890</td><td>42</td><td>Sniper</td><td class="wpn">1x Light Gauss Rifle, 1x MML 7, 2x Light PPC, 2x ER Medium Laser</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BLR-6C</td><td>3081</td><td>1557</td><td>39</td><td>Juggernaut</td><td class="wpn">2x Small X-Pulse Laser, 1x Streak SRM 6, 4x Light AC/5, 2x ER Small Laser</td><td class="num">4/4/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-6X</td><td>3085</td><td>1966</td><td>45</td><td>Skirmisher</td><td class="wpn">1x ER PPC, 1x Heavy PPC, 2x ER Medium Laser, 1x Streak SRM 6</td><td class="num">4/4/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">BLR-6G</td><td>3088</td><td>1960</td><td>44</td><td>Brawler</td><td class="wpn">2x Small X-Pulse Laser, 1x Heavy PPC, 1x Streak SRM 6, 4x Light PPC, 2x ER Small Laser</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">BLR-6R</td><td>3104</td><td>2181</td><td>46</td><td>Brawler</td><td class="wpn">1x Rotary AC/5, 1x Streak SRM 6, 4x Light PPC, 2x Improved Heavy Medium Laser</td><td class="num">5/5/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BLR-6M</td><td>3120</td><td>1958</td><td>47</td><td>Sniper</td><td class="wpn">1x Heavy PPC, 1x Thunderbolt 15, 2x ER Medium Laser, 2x ER Small Laser</td><td class="num">3/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">C 2</td><td>3145</td><td>2538</td><td>50</td><td>Brawler</td><td class="wpn">2x ER PPC, 4x ER Medium Laser, 1x Large Pulse Laser</td><td class="num">5/5/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">C 3</td><td>3145</td><td>2532</td><td>50</td><td>Juggernaut</td><td class="wpn">2x Machine Gun, 1x ER PPC, 1x Streak SRM 6, 6x ER Medium Laser</td><td class="num">7/6/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the BLR-1G by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Inner Sphere General, Mercenary, Pirates, Rim Worlds Republic - Home Guard, Rim Worlds Republic - Terran Corps, Star League General, Taurian Concordat</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Magistracy of Canopus, Mercenary, Pirates, Star League in Exile, Taurian Concordat</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Lyran Commonwealth, Mercenary, Pirates</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Mercenary, Pirates, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Pirates</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Warlord</h3>
+  <p class="vstats">80 tons &middot; Inner Sphere &middot; 4 variants &middot; BV 1844 to 2284</p>
+  <p>The machine built to replace the BattleMaster. An all-energy redesign on the same bones, and the BLR-6G is now being built on the lines that made it.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Atlas</h3>
+  <p class="vstats">100 tons &middot; Mixed &middot; 28 variants &middot; BV 1787 to 2789</p>
+  <p>No relation. A hundred tons that plants itself. Where the Atlas anchors a line, a BattleMaster goes and finds the fight.</p>
+</div>
+<div class="fam">
+  <h3>Highlander</h3>
+  <p class="vstats">90 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 1801 to 2682</p>
+  <p>Ninety tons and it jumps. The other assault people hand to commanders, and the one that lands on you.</p>
+</div>
+<div class="fam">
+  <h3>Zeus</h3>
+  <p class="vstats">80 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 1323 to 2280</p>
+  <p>Lighter, faster, and built around the same idea of an assault mech that keeps up with the heavies.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a BattleMaster in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best BattleMaster variant?</h3>
+                <p>For the Succession Wars the BLR-1D at BV 1522 is the pick, because it fixed the heat that limits the original. The BLR-3M is the sensible Clan Invasion upgrade. Later on, the BLR-10S is the toughest one ever built and the BLR-6G and BLR-6R hit hardest.</p>
+
+                <h3>Can the BattleMaster really drop its PPC?</h3>
+                <p>Yes. The Donal PPC sits in a detachable rifle-style mount so the pilot can disengage it and free both hands in an emergency. It is on the official quirk list as a jettison-capable weapon, and no other design on this site has it.</p>
+
+                <h3>Is the BattleMaster actually the largest mech?</h3>
+                <p>No, and it never was. It is eighty-five tons and there were heavier designs walking around before it. The old readouts describe it as the largest and most powerful machine of its day, and the usual reading is that largest referred to height rather than mass.</p>
+
+                <h3>Why is the BattleMaster rare?</h3>
+                <p>Its size and cost meant only a few worlds could build one. Hollis lost its factories on Corey during the First Succession War, and the plants that picked up production afterwards managed only a handful a year between them. It still ended up in every Great House arsenal, because people went to great lengths to keep the ones they had running.</p>
+
+                <h3>What is the weak point of a BattleMaster?</h3>
+                <p>Two of them. The left torso carries all the missile and machine gun ammunition, so a good hit there can take the side off. And it carries the weak head armour quirk, which on a machine built specifically as a command vehicle is a genuinely poor piece of design.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best BattleMaster variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "For the Succession Wars the BLR-1D at BV 1522 is the pick, because it fixed the heat that limits the original. The BLR-3M is the sensible Clan Invasion upgrade. Later on, the BLR-10S is the toughest one ever built and the BLR-6G and BLR-6R hit hardest."}
+    },
+    {
+      "@type": "Question",
+      "name": "Can the BattleMaster really drop its PPC?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Donal PPC sits in a detachable rifle-style mount so the pilot can disengage it and free both hands in an emergency. It is on the official quirk list as a jettison-capable weapon, and no other design on this site has it."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the BattleMaster actually the largest mech?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No, and it never was. It is eighty-five tons and there were heavier designs walking around before it. The old readouts describe it as the largest and most powerful machine of its day, and the usual reading is that largest referred to height rather than mass."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the BattleMaster rare?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Its size and cost meant only a few worlds could build one. Hollis lost its factories on Corey during the First Succession War, and the plants that picked up production afterwards managed only a handful a year between them. It still ended up in every Great House arsenal, because people went to great lengths to keep the ones they had running."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the weak point of a BattleMaster?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Two of them. The left torso carries all the missile and machine gun ammunition, so a good hit there can take the side off. And it carries the weak head armour quirk, which on a machine built specifically as a command vehicle is a genuinely poor piece of design."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'battlemaster';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
