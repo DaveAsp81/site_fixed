@@ -1566,3 +1566,70 @@ h3[id] {
         align-items: center;
     }
 }
+
+/* ── Links that had no colour of their own ───────────────────────────
+   Four things the new header/footer rollout exposed. Each of these
+   elements had a size or spacing rule but no colour, so it fell back to
+   the browser's default link blue on a dark background, or lost to a
+   more specific rule. */
+
+/* Breadcrumbs: only the mech guides defined a colour, inline. Every other
+   page using .breadcrumb showed default-blue links. */
+.breadcrumb {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: #8b8b8b;
+    margin: 0 0 18px;
+}
+.breadcrumb a {
+    color: var(--accent-orange);
+    text-decoration: none;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+    text-decoration: underline;
+}
+
+/* The footer's legal row: .footer-bottom set a colour on the container,
+   but its links inherited nothing. */
+.footer-bottom a {
+    color: #a9a9a9;
+    text-decoration: none;
+}
+.footer-bottom a:hover,
+.footer-bottom a:focus-visible {
+    color: var(--accent-orange);
+    text-decoration: underline;
+}
+
+/* .footer-section a is class+type, so it out-specified .bmc-button and
+   painted the button's label #999 on gold: 1.75:1. */
+footer .bmc-button,
+footer .bmc-button:hover {
+    color: #1a1a1a;
+}
+
+/* .tool-hero-cta was only ever defined inline on the home page, so the
+   same class on /tools and /paint-tool rendered as a bare link. */
+.tool-hero-cta {
+    background: var(--accent-orange);
+    color: #000;
+    padding: 15px 32px;
+    min-height: 48px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.35);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.tool-hero-cta:hover {
+    background: #ffaa33;
+    box-shadow: 0 6px 25px rgba(255, 140, 0, 0.55);
+}
