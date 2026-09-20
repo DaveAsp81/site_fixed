@@ -9,6 +9,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
   :root { --or:#ff8c00; --ink:#e8e4da; --dim:#8b8578; --line:#242424; --pan:#141414; --bg:#0d0d0d; }
@@ -31,7 +34,7 @@
   .btn:hover { border-color:var(--or); color:var(--or); }
   .btn.pri { background:#8a1b12; border-color:#8a1b12; color:#fff; }
   .btn.pri:hover { background:#a52216; color:#fff; }
-  .btn:disabled { opacity:.4; cursor:not-allowed; border-color:#2a2a2a; color:#666; }
+  .btn:disabled { opacity:.4; cursor:not-allowed; border-color:#2a2a2a; color:#8b8b8b; }
   .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
   select,input[type=text],input[type=number] { background:#0d0d0d; color:var(--ink); border:1px solid #333;
     border-radius:4px; padding:9px; font-family:inherit; font-size:.85rem; }
@@ -77,24 +80,31 @@
       gtag('js', new Date());
       gtag('config', 'G-T2794K8B9W');
     </script>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
-<body>
+<body data-wake-lock>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <header class="bt-nav">
-  <div class="header-content">
-    <a href="index.html" class="logo">BattleTech HQ</a>
-    <nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
-  </div>
+    <div class="header-content">
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools" aria-current="page">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
+<main id="main">
 
 <div class="wrap">
   <h1>Campaign <em>Tracker</em></h1>
@@ -907,7 +917,7 @@ function render() {
         Objective type <b>${esc(m.objective)}</b>.
       </p>
       <div class="lbl" style="margin-top:12px">Opposition · ${esc(factionName(m.enemyFaction))} · ${m.enemy.reduce((a,e)=>a+e.pv,0)} PV</div>
-      <div class="meta">${m.enemy.map(e=>`${esc(e.name)} <span style="color:#666">(${e.tons}t, ${e.pv} PV)</span>`).join('<br>')}</div>`;
+      <div class="meta">${m.enemy.map(e=>`${esc(e.name)} <span style="color:#8b8b8b">(${e.tons}t, ${e.pv} PV)</span>`).join('<br>')}</div>`;
     /* Salvaged and bought machines arrive without a crew, so an unpiloted
        'Mech is a normal state now rather than an edge case. It cannot deploy:
        show it greyed with the reason rather than hiding it, so the player can
@@ -936,7 +946,7 @@ function render() {
   if (wrecks.length) {
     sPanel.classList.remove('hide');
     $('salvage-body').innerHTML = wrecks.map(w=>`<div style="margin-bottom:6px">
-      ${esc(w.e.name)} <span style="color:#666">(${w.e.tons}t, ${w.e.pv} PV)</span>
+      ${esc(w.e.name)} <span style="color:#8b8b8b">(${w.e.tons}t, ${w.e.pv} PV)</span>
       <button class="btn" style="font-size:.7rem;padding:4px 8px;margin-left:6px"
         data-claim="${w.mn}:${w.i}">Recover the hull</button>
       <button class="btn" style="font-size:.7rem;padding:4px 8px"
@@ -976,7 +986,7 @@ function render() {
            <button class="btn" style="font-size:.7rem;padding:4px 8px;margin-left:6px"
              data-hire="${esc(u.uid)}">Hire a green pilot</button>
          </div>`).join('')
-       + `<div style="margin-top:4px;color:#666">Green pilots come in at gunnery 4, piloting 5, and improve nothing until they survive a few missions. Veterans only come from the field.</div></div>`;
+       + `<div style="margin-top:4px;color:#8b8b8b">Green pilots come in at gunnery 4, piloting 5, and improve nothing until they survive a few missions. Veterans only come from the field.</div></div>`;
   }
   if (fallen.length)
     rb += `<div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--line)">
@@ -1427,13 +1437,67 @@ if (C) checkReturn();
     <strong>Running a campaign? Hear when it improves.</strong>
     <span>I email when a tool ships or gets a real update. Roughly monthly, never more.</span>
   </div>
-  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank">
-    <input type="email" name="EMAIL" required placeholder="Email address" aria-label="Email address">
+  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" data-mc-ajax>
+    <label class="sr-only" for="nl-email-1">Email address</label><input type="email" name="EMAIL" required placeholder="Email address" id="nl-email-1" autocomplete="email">
     <div style="position:absolute;left:-5000px" aria-hidden="true">
       <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
     </div>
     <button type="submit">Keep me posted</button>
   </form>
 </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
+
 </body>
 </html>

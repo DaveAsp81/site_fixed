@@ -10,6 +10,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
@@ -45,7 +47,7 @@
   .pip-row { display:flex; align-items:center; gap:8px; margin:6px 0; flex-wrap:wrap; }
   .pip-row .lbl { width:52px; font-family:'Share Tech Mono'; font-size:0.66rem; color:#888; letter-spacing:0.06em; }
   .weap-list { font-size:0.74rem; color:#999; margin-top:8px; line-height:1.5; }
-  .weap-list span { color:#666; font-size:0.62rem; letter-spacing:0.14em; }
+  .weap-list span { color:#8b8b8b; font-size:0.62rem; letter-spacing:0.14em; }
   .pips { display:flex; gap:4px; flex-wrap:wrap; }
   .pip { width:18px; height:18px; border-radius:50%; border:2px solid #555; background:transparent; cursor:pointer; padding:0; }
   .pip.armor.on { background:#3ad17a; border-color:#3ad17a; }
@@ -72,7 +74,7 @@
   .abil-defs div { font-size:0.7rem; color:#999; line-height:1.5; padding:2px 0; }
   .abil-defs b { color:#ffc107; font-family:'Share Tech Mono'; }
   .card-foot { display:flex; justify-content:flex-end; margin-top:8px; }
-  .mini { background:none; border:1px solid #333; color:#666; font-size:0.68rem; padding:3px 9px; border-radius:4px; cursor:pointer; }
+  .mini { background:none; border:1px solid #333; color:#8b8b8b; font-size:0.68rem; padding:3px 9px; border-radius:4px; cursor:pointer; }
   .mini:hover { color:#ff4c4c; border-color:#ff4c4c; }
 
   .empty { text-align:center; padding:70px 20px; color:#888; }
@@ -101,7 +103,7 @@
   .weap .wheat.unknown { border-color:#ffc107; }
   .weap .wammo { width:52px; background:#0e0e0e; border:1px solid #2a4a2a; color:#3ad17a; font-family:'Share Tech Mono';
                  text-align:center; border-radius:4px; padding:3px 2px; font-size:0.78rem; }
-  .weap .wammo::placeholder { color:#444; font-size:0.62rem; }
+  .weap .wammo::placeholder { color:#8b8b8b; font-size:0.62rem; }
   .weap .wammo.empty { border-color:#ff4c4c; color:#ff4c4c; background:rgba(255,76,76,0.08); }
 
   /* GATOR */
@@ -114,7 +116,7 @@
   .grow { display:flex; align-items:center; gap:8px; margin:7px 0; flex-wrap:wrap; }
   .glbl { width:14px; color:#ff8c00; font-family:'Share Tech Mono'; font-weight:700; font-size:0.85rem; }
   .gauto { font-family:'Share Tech Mono'; color:#3ad17a; min-width:26px; }
-  .ghint { color:#666; font-size:0.68rem; }
+  .ghint { color:#8b8b8b; font-size:0.68rem; }
   .gbtns { display:flex; gap:4px; flex-wrap:wrap; }
   .gbtns button { background:#141414; border:1px solid #333; color:#888; padding:4px 8px; border-radius:4px;
                   cursor:pointer; font-family:'Share Tech Mono'; font-size:0.68rem; }
@@ -137,7 +139,7 @@
   .notes-in { width:100%; background:#0e0e0e; border:1px solid #2a2a2a; color:#aaa; border-radius:4px;
               padding:6px 8px; font-size:0.78rem; margin-top:8px; font-family:'Rajdhani'; }
   .equip-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:8px 0 2px; }
-  .equip-lbl { font-size:0.6rem; color:#555; letter-spacing:0.14em; }
+  .equip-lbl { font-size:0.6rem; color:#8b8b8b; letter-spacing:0.14em; }
   .chip { background:#0e0e0e; border:1px solid #333; color:#777; padding:4px 10px; border-radius:12px;
           cursor:pointer; font-family:'Share Tech Mono'; font-size:0.66rem; letter-spacing:0.06em; }
   .chip:hover { border-color:#ffc107; color:#ffc107; }
@@ -164,8 +166,11 @@
       gtag('js', new Date());
       gtag('config', 'G-T2794K8B9W');
     </script>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
-<body>
+<body data-wake-lock>
+<a class="skip-link" href="#main">Skip to main content</a>
 <style>
   .bt-nav { background:#0d0d0d; border-bottom:1px solid #222; padding:10px 16px; }
   .bt-nav .header-content { max-width:1200px; margin:0 auto; display:flex;
@@ -183,19 +188,23 @@
 </style>
 <header class="bt-nav">
     <div class="header-content">
-        <a href="index.html" class="logo">BattleTech HQ</a>
-        <nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/#getting-started">Getting Started</a></li>
-                    <li><a href="/#lore">Lore</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools" aria-current="page">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
+<main id="main">
 <div class="gt-wrap">
   <div class="gt-head">
     <div>
@@ -210,6 +219,8 @@
       <a class="gt-btn" href="lance-builder.html">← Lance Builder</a>
       <a class="gt-btn" href="opfor-command.html" title="Run the enemy force alongside this tracker">🎯 OpFor Command</a>
       <button class="gt-btn" id="cool-btn" onclick="newRound()">Cool Inactive (End Phase)</button>
+      <button class="gt-btn" id="undo-btn" onclick="undoLast()" disabled
+              title="Nothing to undo yet">↩ Undo</button>
       <button class="gt-btn danger" onclick="resetGame()">Reset Game</button>
     </div>
   </div>
@@ -492,8 +503,68 @@ function loadState() {
     }
     gs = gs.map(st => Object.assign(BLANK(), st));   // migrate older saves missing newer fields
     localStorage.setItem('battletechGameStateFp', fp);
+    /* Baseline for undo: without this the first change after opening the page
+       would have nothing to step back to. A fresh import starts a new game,
+       so the history from the previous one is dropped. */
+    undoStack = [];
+    lastSnapshot = snapshotNow();
+    updateUndoButton();
 }
-function saveState() { safeSave('battletechGameState', gs); }
+/* ---------------- Undo ----------------
+   Every mutation here ends in saveState(), and one of them is Reset Game,
+   which sits next to the end-phase button and wipes the board. There was no
+   way back from a mistap: the tracker saved eagerly and kept no history.
+
+   saveState() sees the state *after* the change, so the snapshot taken at the
+   previous save is the one worth keeping. */
+const UNDO_LIMIT = 40;
+let undoStack = [];
+let lastSnapshot = null;
+
+function snapshotNow() { return JSON.stringify(gs); }
+
+function updateUndoButton() {
+    const b = document.getElementById('undo-btn');
+    if (!b) return;
+    b.disabled = undoStack.length === 0;
+    b.title = undoStack.length
+        ? 'Undo the last change (' + undoStack.length + ' step'
+          + (undoStack.length === 1 ? '' : 's') + ' available)'
+        : 'Nothing to undo yet';
+}
+
+function saveState() {
+    const now = snapshotNow();
+    if (lastSnapshot !== null && lastSnapshot !== now) {
+        undoStack.push(lastSnapshot);
+        if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+    }
+    lastSnapshot = now;
+    updateUndoButton();
+    safeSave('battletechGameState', gs);
+}
+
+function undoLast() {
+    if (!undoStack.length) return;
+    const prev = undoStack.pop();
+    try { gs = JSON.parse(prev); }
+    catch (e) { console.error('Could not undo:', e); return; }
+    // Restore without recording the undo itself as a new step.
+    lastSnapshot = prev;
+    updateUndoButton();
+    safeSave('battletechGameState', gs);
+    render();
+}
+
+document.addEventListener('keydown', e => {
+    const k = (e.key || '').toLowerCase();
+    if (k !== 'z' || !(e.ctrlKey || e.metaKey) || e.shiftKey) return;
+    // never steal undo from a field someone is typing in
+    const t = e.target;
+    if (t && /^(input|textarea|select)$/i.test(t.tagName)) return;
+    e.preventDefault();
+    undoLast();
+});
 
 /* Motive type sits in the vehicle's Alpha Strike move string as a suffix:
    8"t tracked, 12"h hover, 16"w wheeled, 24"v VTOL, g WiGE, n naval,
@@ -621,7 +692,7 @@ function renderAS() {
     const app = document.getElementById('app');
     let gi = 0, html = '';
     force.forEach(L => {
-        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#555;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
+        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#8b8b8b;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
         L.units.forEach(u => {
             const i = gi++;
             const st = gs[i];
@@ -636,14 +707,14 @@ function renderAS() {
             html += `<div class="card ${st.dead?'dead':''} ${st.h>=4?'shut':''}">
                 <h3>${esc(u.name)}</h3>
                 <div class="meta">MV <b>${mv.ground!=null? Math.max(0, mv.ground - (u.isVehicle ? (st.motive||0)*2 : 0))+'"' : '?'}${mv.jump? '/'+mv.jump+'"j':''}</b>${u.isVehicle ? ` \u00b7 <b>${esc(u.motive||'Vehicle')}</b>` : ` \u00b7 OV <b>${bf.overheat ?? '\u2014'}</b>`} \u00b7 ${u.tons}t · PV <b>${u.pv ?? '—'}</b></div>
-                <div style="font-size:0.62rem; color:#666; letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;">Damage dealt at range</div>
+                <div style="font-size:0.62rem; color:#8b8b8b; letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;">Damage dealt at range</div>
                 <div class="dmg-table">
                     <div class="dmg-cell"><div class="v">${dmg.short ?? '—'}</div><div class="l">SHORT 0–6"</div></div>
                     <div class="dmg-cell"><div class="v">${dmg.medium ?? '—'}</div><div class="l">MED ≤24"</div></div>
                     <div class="dmg-cell"><div class="v">${dmg.long ?? '—'}</div><div class="l">LONG ≤42"</div></div>
                     <div class="dmg-cell"><div class="v">${dmg.extreme ?? '—'}</div><div class="l">EXTR ≤60"</div></div>
                 </div>
-                <div class="pip-row"><span class="lbl">ARMOR</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#555;font-size:0.75rem;">no card data</span>'}</span></div>
+                <div class="pip-row"><span class="lbl">ARMOR</span><span class="pips">${bf.armor ? Array.from({length:bf.armor},(_,x)=>pip('armor',bf.armor,st.a,x)).join('') : '<span style="color:#8b8b8b;font-size:0.75rem;">no card data</span>'}</span></div>
                 <div class="pip-row"><span class="lbl">STRUCT</span><span class="pips">${bf.structure ? Array.from({length:bf.structure},(_,x)=>pip('struct',bf.structure,st.s,x)).join('') : ''}</span></div>
                 ${hasHeat(u) ? `
                 <div class="heat-row"><span class="lbl">HEAT</span><span class="heat-steps">
@@ -655,7 +726,7 @@ function renderAS() {
                     ${[0,1,2,3].map(h=>`<button class="hstep ${(st.motive||0)===h?'cur':''}" onclick="setMotive(${i},${h})">${h===3?'IM':h}</button>`).join('')}
                 </span></div>
                 <div class="effects ${(st.motive||0)>=3?'down':((st.motive||0)?'hot':'ok')}">${esc(motiveEffect(st).label)} \u00b7 ${esc(motiveEffect(st).eff)}</div>`}
-                ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${esc(bf.abilities)} <span style="color:#555;">${st.abilOpen?'▾':'ⓘ'}</span></div>
+                ${bf.abilities ? `<div class="abil abil-tap" onclick="toggleAbil(${i})" title="Tap to expand ability definitions">${esc(bf.abilities)} <span style="color:#8b8b8b;">${st.abilOpen?'▾':'ⓘ'}</span></div>
                 ${st.abilOpen ? `<div class="abil-defs">${expandAbilities(bf.abilities).map(a=>`<div><b>${esc(a.tok)}</b> · ${esc(a.def.replace(/^[^—]+—\s*/,''))}</div>`).join('')}</div>` : ''}` : ''}
                 <div class="card-foot"><button class="mini" onclick="toggleDead(${i})">${st.dead?'revive':'mark destroyed'}</button></div>
             </div>`;
@@ -886,7 +957,7 @@ function renderClassic() {
     const app = document.getElementById('app');
     let gi = 0, html = '';
     force.forEach(L => {
-        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#555;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
+        html += `<div class="gt-lance-title">${esc(L.name)} <span style="color:#8b8b8b;">· ${esc(L.type)}</span></div><div class="gt-grid">`;
         L.units.forEach(u => {
             const i = gi++;
             const st = gs[i];
@@ -897,14 +968,14 @@ function renderClassic() {
             const pilotTN = ['—','3+','5+','7+','10+','11+','DEAD'][st.pilot] || '—';
             html += `<div class="card ${st.dead?'dead':''} ${st.ch>=30?'shut':''}">
                 <h3>${esc(u.name)}</h3>
-                <div class="meta"><b>${esc(u.movement || '?')}</b> · Sinks <b>${esc(u.heatsinks || '?')} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv != null ? Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting)) : '—'}</b> <span style="color:#666;">(${u.gunnery ?? 4}/${u.piloting ?? 5})</span></div>
+                <div class="meta"><b>${esc(u.movement || '?')}</b> · Sinks <b>${esc(u.heatsinks || '?')} (−${p.sink})</b> · ${u.tons}t · BV <b>${u.bv != null ? Math.round(u.bv * getPilotMultiplier(u.gunnery, u.piloting)) : '—'}</b> <span style="color:#8b8b8b;">(${u.gunnery ?? 4}/${u.piloting ?? 5})</span></div>
                 <div class="heatbox">
                     <button class="step" onclick="adjHeat(${i},-1)">−</button>
                     <div class="heatnum ${hcls}">${st.ch}</div>
                     <button class="step" onclick="adjHeat(${i},1)">+</button>
                     <div class="effects ${st.ch>=30?'down':fx.length?'hot':'ok'}" style="margin-top:0; flex:1;">${st.ch>=30?'SHUT DOWN':(fx.length?fx.join(' · '):'Running cool')}</div>
                 </div>
-                <div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-top:6px;">Weapons fired this turn</div>
+                <div style="font-size:0.68rem; color:#8b8b8b; letter-spacing:0.12em; text-transform:uppercase; margin-top:6px;">Weapons fired this turn</div>
                 ${weps.map((w,wi)=>{
                     const heat = st.wheat && st.wheat[wi] != null ? st.wheat[wi] : w.heat;
                     const tracksAmmo = usesAmmo(w.name);
@@ -919,7 +990,7 @@ function renderClassic() {
                     </div>`;}).join('')}
                 <div class="movesel">
                     ${['none','walk','run','jump'].map(mv=>`<button class="${st.move===mv?'on':''}" onclick="setMoveHeat(${i},'${mv}')">${mv.toUpperCase()}${MOVE_HEAT[mv]?' +'+MOVE_HEAT[mv]:''}</button>`).join('')}
-                    <span class="extra-group"><span style="color:#666; font-size:0.72rem;">extra:</span><button class="step" onclick="extraStep(${i},-1)">−</button><span class="fired">${st.extra||0}</span><button class="step" onclick="extraStep(${i},1)">+</button></span>
+                    <span class="extra-group"><span style="color:#8b8b8b; font-size:0.72rem;">extra:</span><button class="step" onclick="extraStep(${i},-1)">−</button><span class="fired">${st.extra||0}</span><button class="step" onclick="extraStep(${i},1)">+</button></span>
                 </div>
                 <div class="equip-row">
                     <span class="equip-lbl">EQUIPMENT</span>
@@ -1058,13 +1129,67 @@ function idxToUnit(i){ let n=0; for (const L of force) for (const u of L.units) 
     <strong>Good game? I keep building these.</strong>
     <span>I email when a tool ships or gets a real update. Roughly monthly, never more.</span>
   </div>
-  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank">
-    <input type="email" name="EMAIL" required placeholder="Email address" aria-label="Email address">
+  <form class="nl-form" action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" data-mc-ajax>
+    <label class="sr-only" for="nl-email-1">Email address</label><input type="email" name="EMAIL" required placeholder="Email address" id="nl-email-1" autocomplete="email">
     <div style="position:absolute;left:-5000px" aria-hidden="true">
       <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
     </div>
     <button type="submit">Keep me posted</button>
   </form>
 </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
+
 </body>
 </html>

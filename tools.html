@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every BattleTech HQ tool in one place — Lance Builder, Game Tracker, OpFor Command, Campaign Tracker and the Paint Scheme Planner. Free, browser-based, and built for the table.">
+    <meta name="keywords" content="BattleTech tools, lance builder, BattleTech game tracker, solo BattleTech, Alpha Strike tracker">
+    <title>BattleTech Tools: Lance Builder, Trackers &amp; Solo Play | BattleTech HQ</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="canonical" href="https://battletechhq.com/tools">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://battletechhq.com/tools">
+    <meta property="og:title" content="BattleTech Tools: Lance Builder, Trackers &amp; Solo Play">
+    <meta property="og:description" content="Five free browser tools for BattleTech — build a force, track a game, run an opponent, run a campaign, plan a paint scheme.">
+    <meta property="og:image" content="https://battletechhq.com/assets/images/og-default.jpg">
+    <meta property="og:site_name" content="BattleTech HQ">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        .tools-intro {
+            color: #bbb;
+            line-height: 1.75;
+            max-width: var(--measure);
+            margin: 0 0 14px;
+            font-size: 1.05rem;
+        }
+        .tools-note {
+            color: #8b8b8b;
+            line-height: 1.7;
+            max-width: var(--measure);
+            margin: 0 0 40px;
+            font-size: 0.92rem;
+        }
+        .tool-list {
+            display: grid;
+            gap: 22px;
+            margin: 0 0 20px;
+        }
+        .tool-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 18px 28px;
+            align-items: start;
+            background: rgba(20, 20, 20, 0.96);
+            border: 1px solid #2a2a2a;
+            border-left: 4px solid #ff8c00;
+            border-radius: 0 12px 12px 0;
+            padding: 26px 28px;
+        }
+        .tool-row h2 {
+            font-family: 'Rajdhani', sans-serif;
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 0 0 6px;
+            font-weight: 700;
+        }
+        .tool-row .tool-for {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #8b8b8b;
+            margin: 0 0 10px;
+        }
+        .tool-row p {
+            color: #c8c8c8;
+            line-height: 1.7;
+            margin: 0 0 12px;
+            max-width: var(--measure);
+        }
+        .tool-row ul {
+            margin: 0;
+            padding-left: 1.2em;
+            color: #a9a9a9;
+            line-height: 1.7;
+            font-size: 0.93rem;
+        }
+        .tool-open {
+            background: #ff8c00;
+            color: #000;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 6px;
+            white-space: nowrap;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            align-self: center;
+        }
+        .tool-open:hover { background: #ffaa33; }
+        .tool-row.is-secondary { border-left-color: #3d7ea6; }
+        .tool-row.is-secondary h2 { color: #6ba3c9; }
+        .tool-row.is-secondary .tool-open {
+            background: transparent;
+            border: 1px solid #6ba3c9;
+            color: #6ba3c9;
+        }
+        .tool-row.is-secondary .tool-open:hover { background: #6ba3c9; color: #000; }
+        @media (max-width: 700px) {
+            .tool-row {
+                grid-template-columns: 1fr;
+            }
+            .tool-open {
+                justify-content: center;
+                align-self: stretch;
+            }
+        }
+        .offline-note {
+            background: rgba(255, 140, 0, 0.06);
+            border-left: 4px solid #ff8c00;
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            margin: 40px 0 0;
+            color: #bbb;
+            line-height: 1.7;
+            max-width: var(--measure);
+        }
+        .offline-note h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ff8c00;
+            margin: 0 0 8px;
+        }
+    </style>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools" aria-current="page">Tools</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main id="main">
+<div class="container">
+
+    <p class="breadcrumb"><a href="/">Home</a> &rsaquo; Tools</p>
+
+    <h1>Tools</h1>
+    <p class="tools-intro">Five tools, all free, all in the browser. Nothing to install and no
+    account to make. They were built because I wanted them at my own table and they did not exist.</p>
+    <p class="tools-note">Everything saves to the device you are on, so a refresh mid-game will
+    not lose your place. Nothing is uploaded anywhere.</p>
+
+    <div class="tool-list">
+
+        <section class="tool-row">
+            <div>
+                <p class="tool-for">Before the game</p>
+                <h2>Lance Builder</h2>
+                <p>The force planner built for the table rather than the wiki. Filter by faction
+                and era, watch Battle Value and tonnage as you go, and print or export the roster
+                when you are done.</p>
+                <ul>
+                    <li>620 chassis and over 3,700 variants from the Master Unit List</li>
+                    <li>Battle Value and tonnage totals as you build</li>
+                    <li>Classic and Alpha Strike</li>
+                    <li>Print sheet, CSV, clipboard, and MegaMek export</li>
+                </ul>
+            </div>
+            <a class="tool-open" href="/lance-builder">Open Lance Builder</a>
+        </section>
+
+        <section class="tool-row">
+            <div>
+                <p class="tool-for">During the game &middot; your force</p>
+                <h2>Game Tracker</h2>
+                <p>Heat, armour and ammo for the 'Mechs you are piloting. It keeps a full lance
+                straight across a long game so you are not rubbing out pencil marks between turns.</p>
+                <ul>
+                    <li>Classic and Alpha Strike</li>
+                    <li>Imports a force straight from the Lance Builder, a .mul file, or pasted text</li>
+                    <li>Keeps the screen awake while you play</li>
+                    <li>Survives a refresh</li>
+                </ul>
+            </div>
+            <a class="tool-open" href="/game-tracker">Open Game Tracker</a>
+        </section>
+
+        <section class="tool-row">
+            <div>
+                <p class="tool-for">During the game &middot; their force</p>
+                <h2>OpFor Command</h2>
+                <p>A weapon-aware opponent, so you can play a real game with nobody on the other
+                side of the table. It reads the actual variant you are facing, works out the range
+                band that 'Mech wants to fight at, and gives you movement and fire orders each turn.</p>
+                <ul>
+                    <li>Reads the real loadout, not a generic profile</li>
+                    <li>Movement and fire orders every turn</li>
+                    <li>Classic and Alpha Strike</li>
+                </ul>
+            </div>
+            <a class="tool-open" href="/opfor-command">Open OpFor Command</a>
+        </section>
+
+        <section class="tool-row">
+            <div>
+                <p class="tool-for">Across many games</p>
+                <h2>Campaign Tracker</h2>
+                <p>Roll a campaign of five to ten missions and run it solo. You get a company of
+                twelve with named pilots and you pick a lance for each mission. Damage carries
+                between missions, salvage pays for repairs and replacements, wrecks can be
+                recovered off the field, and pilots can die. Alpha Strike.</p>
+                <ul>
+                    <li>Persistent company roster with named pilots</li>
+                    <li>Damage, salvage and repair economy between missions</li>
+                    <li>Feeds straight into the Game Tracker and OpFor Command</li>
+                </ul>
+            </div>
+            <a class="tool-open" href="/campaign">Open Campaign Tracker</a>
+        </section>
+
+        <section class="tool-row is-secondary">
+            <div>
+                <p class="tool-for">Away from the table</p>
+                <h2>Paint Scheme Planner</h2>
+                <p>Try a faction scheme on a 'Mech before you commit paint to plastic. Canonical
+                colours for the Houses and Clans, with the nearest matches across the common
+                paint ranges.</p>
+                <ul>
+                    <li>Canonical faction colours</li>
+                    <li>Matches across Citadel, Vallejo and Army Painter</li>
+                    <li>Shareable link for a scheme you like</li>
+                </ul>
+            </div>
+            <a class="tool-open" href="/paint-tool">Open Paint Tool</a>
+        </section>
+
+    </div>
+
+    <div class="offline-note">
+        <h2>Works at the club</h2>
+        <p>Add BattleTech HQ to your home screen and any tool you have opened before will
+        open again without a connection. On Android that is <strong>Install app</strong> in the
+        browser menu; on iPhone it is <strong>Share</strong>, then
+        <strong>Add to Home Screen</strong>. Open the tools you want once while you still have
+        signal and they will be there when the venue wifi gives up halfway through a game.</p>
+    </div>
+
+</div><!-- /container -->
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
+
+</body>
+</html>

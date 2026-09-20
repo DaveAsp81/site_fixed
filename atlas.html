@@ -19,6 +19,9 @@
     <meta property="og:description" content="All 28 Atlas variants ranked, the engine argument, and what a hundred tons at walk three really means.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://battletechhq.com/atlas">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
@@ -102,8 +105,8 @@
             border-bottom: 1px solid #2a2a2a;
         }
         .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
-        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
-        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: var(--measure); }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: var(--measure); }
         .mech-body li { margin-bottom: 8px; }
 
         .heat-callout {
@@ -258,7 +261,7 @@
             padding-top: 18px;
             margin-top: 44px;
             line-height: 1.7;
-            max-width: 800px;
+            max-width: var(--measure);
         }
         .mech-plate {
             margin: 28px 0;
@@ -283,25 +286,31 @@
             border-top: 1px solid #262626;
         }
     </style>
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/site.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
     <header>
-        <div class="header-content">
-            <a href="/" class="logo">BattleTech HQ</a>
-            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
-            <nav>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/paint-tool">Paint Tool</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/guides">Articles</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="header-content">
+        <a href="/" class="logo">BattleTech HQ</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            <span aria-hidden="true">&#9776;</span> Menu
+        </button>
+        <nav id="site-nav" aria-label="Main">
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/mechs" aria-current="page">Mech Guides</a></li>
+                <li><a href="/guides">Articles</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main id="main">
 
     <div class="container">
 
@@ -312,12 +321,7 @@
             <p class="sub">100 tons &middot; Inner Sphere &middot; 28 variants &middot; 2755 to 3140</p>
             <div class="mech-hero-grid">
             <figure class="mech-schematic">
-                <picture>
-                    <source srcset="assets/images/atlas-schematic.webp" type="image/webp">
-                    <img src="assets/images/atlas-schematic.png"
-                         alt="Technical illustration of an AS7-D Atlas BattleMech, showing the skull-shaped Death’s Head cockpit, the AC/20 barrel in the right torso and the LRM 20 launcher on the left shoulder"
-                         width="480" height="765" loading="eager" decoding="async">
-                </picture>
+                <img src="assets/images/atlas-schematic-480.webp" srcset="assets/images/atlas-schematic-480.webp 480w" sizes="(min-width: 900px) 560px, calc(100vw - 80px)" width="480" height="765" alt="Technical illustration of an AS7-D Atlas BattleMech, showing the skull-shaped Death’s Head cockpit, the AC/20 barrel in the right torso and the LRM 20 launcher on the left shoulder" loading="eager" decoding="async">
                 <figcaption>The Death’s Head assembly, antennas and all. They spent a year on the head alone, and the folding satellite dish stows inside it.</figcaption>
             </figure>
             <div class="verdict-box">
@@ -331,6 +335,9 @@
             </div>
             </div>
         </div>
+
+        <nav class="guide-toc" data-toc data-toc-scope=".mech-body" hidden
+             aria-labelledby="toc-title"></nav>
 
         <div class="mech-body">
 
@@ -631,45 +638,59 @@
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About BattleTech HQ</h4>
-                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="/lance-builder">Lance Builder</a></li>
-                    <li><a href="/mechs">Mech Guides</a></li>
-                    <li><a href="/guides">All Guides &amp; Articles</a></li>
-                    <li><a href="/search">Search</a></li>
-                    <li><a href="/game-tracker">Game Tracker</a></li>
-                    <li><a href="/opfor-command">OpFor Command</a></li>
-                    <li><a href="/campaign">Campaign Tracker</a></li>
-                    <li><a href="/paint-tool">Paint Tool</a></li>
-                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
-                    <li><a href="/privacy">Privacy Policy</a></li>
-                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
-                    <li><a href="/image-credits">Image Credits</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
-                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
-                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
-                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
-                </ul>
-            </div>
+    </main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>BattleTech HQ</h4>
+            <p>Guides, tools and opinions for the modern MechWarrior, from the
+            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
+            YouTube channel. Something wrong or missing?
+            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
+            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
         </div>
-        <div class="footer-bottom">
-            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
-            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        <div class="footer-section">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="/lance-builder">Lance Builder</a></li>
+                <li><a href="/game-tracker">Game Tracker</a></li>
+                <li><a href="/opfor-command">OpFor Command</a></li>
+                <li><a href="/campaign">Campaign Tracker</a></li>
+                <li><a href="/paint-tool">Paint Tool</a></li>
+                <li><a href="/tools">All five, compared &rarr;</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-section">
+            <h4>Reading</h4>
+            <ul>
+                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
+                <li><a href="/mechs">Mech Guides</a></li>
+                <li><a href="/guides">All guides &amp; articles</a></li>
+                <li><a href="/rating-scale">How guides are rated</a></li>
+                <li><a href="/search">Search the site</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Elsewhere</h4>
+            <ul>
+                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
+                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
+                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
+                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
+                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
+           <a href="/privacy">Privacy</a> &middot;
+           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
+           <a href="/image-credits">Image credits</a></p>
+        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+</footer>
 
 <script type="application/ld+json">
 {
@@ -782,16 +803,5 @@
 })();
 </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var toggle = document.querySelector('.nav-toggle');
-    var navUl = document.querySelector('nav ul');
-    if (toggle && navUl) {
-        toggle.addEventListener('click', function() {
-            navUl.classList.toggle('open');
-        });
-    }
-});
-</script>
 </body>
 </html>

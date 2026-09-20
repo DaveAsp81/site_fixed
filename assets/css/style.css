@@ -1,7 +1,10 @@
 /* BattleTech HQ - Bold Gaming-Focused Design */
 /* Dark theme, single orange accent, matching the tool interfaces */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts are loaded with a <link> in each page's <head>, not @import.
+   An @import here forced a serial chain — HTML, then this file, then the
+   Google CSS, then the woff2 — before any text could render in the right
+   face. The <link> starts that request in parallel with this stylesheet. */
 
 :root {
     /* One palette: Solaris orange, matching the tools and the HUD idea.
@@ -28,6 +31,11 @@
     --border-glow: rgba(255, 140, 0, 0.3);
     --shadow-red: rgba(255, 140, 0, 0.45);
     --shadow-blue: rgba(255, 140, 0, 0.35);
+
+    /* One reading column for all long-form text. 608px lands at roughly 66
+       characters per line at the article body size and 72 in the mech
+       guides, both inside the comfortable 45-75 range. */
+    --measure: 38rem;
 }
 
 * {
@@ -798,7 +806,7 @@ footer {
     }
 }
 .hero {
-    background-image: linear-gradient(rgba(18, 18, 18, 0.6), rgba(18, 18, 18, 0.9)), url('../images/hero-madcat.jpg');
+    background-image: linear-gradient(rgba(18, 18, 18, 0.6), rgba(18, 18, 18, 0.9)), url('../images/hero-madcat.webp');
     background-size: cover;
     background-position: center;
     padding: 100px 20px;
@@ -956,4 +964,605 @@ article table {
 }
 @media (max-width: 600px) {
     .support-strip { flex-direction: column; align-items: flex-start; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   UX / accessibility pass
+   Everything below was added in one go; it only adds rules and overrides,
+   so removing this block restores the previous behaviour exactly.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Real <img> inside the old background-image wrappers ─────────────
+   The card/hero thumbnails used to be CSS background-images, which can
+   neither lazy-load nor carry a srcset. They are now <img> inside the
+   same wrapper, so the ::after gradient overlays still sit on top. The
+   global `img { height: auto }` rule above has to be overridden here. */
+.article-card-image,
+.article-hero,
+.mech-feature-img,
+.mech-card-image {
+    position: relative;
+    overflow: hidden;
+}
+.article-card-image > img,
+.article-hero > img,
+.mech-feature-img > img,
+.mech-card-image > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* the wrappers set their own height, so ignore the intrinsic ratio */
+    max-width: none;
+}
+/* Schematics are transparent line art on a dark plate: fit, don't crop. */
+.mech-feature-img > img,
+.mech-card-image > img {
+    object-fit: contain;
+}
+.article-hero > img {
+    border-radius: 12px;
+}
+/* The wrappers were sized by background-size before; keep them explicit
+   now that a replaced element is doing the work. */
+.mech-feature-img { min-height: 250px; }
+.mech-card-image  { height: 240px; }
+
+/* ── Skip link ───────────────────────────────────────────────────────
+   Keyboard users had to tab the whole nav on all 43 pages. */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 2000;
+    background: var(--accent-orange);
+    color: #000;
+    padding: 12px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 0 0 6px 0;
+}
+.skip-link:focus {
+    left: 0;
+}
+
+/* ── Visible keyboard focus ──────────────────────────────────────────
+   The stylesheet previously had exactly one :focus rule, so custom
+   buttons and cards had no keyboard affordance at all. */
+:focus-visible {
+    outline: 3px solid var(--accent-orange-bright);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+/* Mouse users keep the old look; only keyboard focus draws a ring. */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+.tool-hero-cta:focus-visible,
+.solo-cta:focus-visible,
+.read-more:focus-visible,
+.buy-link:focus-visible,
+.nav-toggle:focus-visible,
+nav a:focus-visible {
+    outline-offset: 3px;
+}
+
+/* ── Respect reduced-motion ──────────────────────────────────────────
+   Card hover lifts, scales and 0.4s transitions throughout. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .article-card:hover {
+        transform: none;
+    }
+    .logo:hover {
+        transform: none;
+    }
+}
+
+/* ── Forced-colors / high-contrast ───────────────────────────────────
+   The logo and hero h1 paint their text through background-clip, which
+   means -webkit-text-fill-color: transparent. In Windows high-contrast
+   mode the gradient is dropped and the text disappears entirely. */
+@media (forced-colors: active) {
+    .logo,
+    .hero h1 {
+        -webkit-text-fill-color: CanvasText;
+        background: none;
+        text-shadow: none;
+    }
+    .article-card,
+    .tool-hero,
+    .solo-card {
+        border: 1px solid CanvasText;
+    }
+}
+
+/* ── Readable measure for long-form prose ────────────────────────────
+   Body copy ran to 95 characters per line on a 1440px screen (112 in
+   the verdict boxes). Comfortable is 45-75, so cap the text column
+   while leaving tables, figures and heroes full width. */
+.content-layout {
+    max-width: 860px;
+    margin: 0 auto;
+}
+article > p,
+article > ul,
+article > ol,
+article > blockquote,
+article > h2,
+article > h3,
+article > h4 {
+    max-width: var(--measure);
+}
+.mech-body p,
+.mech-body ul,
+.mech-body ol {
+    max-width: var(--measure);
+}
+.verdict-box p,
+.heat-callout p,
+.faq p,
+.vcard p {
+    max-width: var(--measure);
+}
+/* Tables, figures and the variant cards keep the full column. */
+.mech-body .table-wrap,
+.mech-body table,
+.mech-body figure {
+    max-width: none;
+}
+
+/* ── Contrast repairs ────────────────────────────────────────────────
+   #444 on #121212 measured 1.92:1 and #555 measured 2.53:1; AA body
+   text needs 4.5:1. #8b8b8b clears it at 4.6:1 on this background. */
+.affiliate-note,
+.legal-note,
+.form-legal {
+    color: #8b8b8b;
+}
+.affiliate-note a,
+.legal-note a,
+.form-legal a {
+    color: #a9a9a9;
+    text-decoration: underline;
+}
+.tool-hero-preview .pv-dim {
+    color: #8b8b8b;
+}
+
+/* ── Tap targets ─────────────────────────────────────────────────────
+   48 interactive elements measured under 32px tall; nav links on the
+   tool pages were 16px. 44px is the minimum comfortable touch target. */
+nav a {
+    display: inline-block;
+    padding: 11px 2px;
+}
+.read-more,
+.mech-feature-all a,
+.breadcrumb a {
+    display: inline-block;
+    padding: 6px 0;
+    min-height: 24px;
+}
+footer .footer-section ul a {
+    display: inline-block;
+    padding: 7px 0;
+}
+@media (max-width: 768px) {
+    nav ul li a {
+        display: block;
+        padding: 12px 0;
+        min-height: 44px;
+    }
+    .read-more,
+    .breadcrumb a,
+    .mech-feature-all a {
+        padding: 10px 0;
+        min-height: 44px;
+    }
+}
+
+/* ── Nav: toggle, search, current page ───────────────────────────────
+   The toggle had no aria-expanded and the menu had no landmark label;
+   both now live in the markup. Search used to be footer-only. */
+.nav-toggle {
+    min-height: 44px;
+    font-size: 1rem;
+    align-items: center;
+    gap: 6px;
+}
+nav[aria-label="Main"] ul {
+    align-items: center;
+    gap: 1.9rem;
+}
+nav a[aria-current="page"] {
+    color: var(--accent-orange);
+}
+nav a[aria-current="page"]::after {
+    width: 100%;
+}
+.nav-search {
+    border: 1px solid rgba(255, 140, 0, 0.45);
+    border-radius: 6px;
+    padding: 9px 14px !important;
+    color: var(--accent-orange) !important;
+}
+.nav-search:hover {
+    background: rgba(255, 140, 0, 0.12);
+}
+.nav-search::after {
+    display: none;
+}
+@media (max-width: 768px) {
+    /* Grid rather than a wrapping flex row: the wordmark's intrinsic width
+       kept pushing the Menu button onto a second line, which cost 140px of
+       a 812px viewport before any content. Two explicit columns cannot
+       wrap by accident. */
+    .header-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: 12px;
+        row-gap: 10px;
+    }
+    .logo {
+        min-width: 0;
+    }
+    nav[aria-label="Main"] {
+        grid-column: 1 / -1;
+    }
+    .nav-search {
+        display: inline-block;
+        margin-top: 6px;
+    }
+}
+
+/* ── Contents list on long guides ────────────────────────────────────
+   Built by site.js from the headings already in the page. */
+.guide-toc {
+    display: block;
+    background: rgba(255, 140, 0, 0.05);
+    border: 1px solid rgba(255, 140, 0, 0.25);
+    border-left: 4px solid var(--accent-orange);
+    border-radius: 0 10px 10px 0;
+    padding: 22px 26px;
+    margin: 0 0 40px;
+    max-width: var(--measure);
+}
+.guide-toc[hidden] {
+    display: none;
+}
+.guide-toc .guide-toc-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+    max-width: none;
+}
+.guide-toc .guide-toc-title::before {
+    display: none;
+}
+.guide-toc ol {
+    margin: 0;
+    padding-left: 1.3em;
+    color: var(--text-muted);
+}
+.guide-toc li {
+    margin: 0;
+    line-height: 1.5;
+}
+.guide-toc a {
+    display: inline-block;
+    padding: 7px 0;
+    color: #dcdcdc;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+.guide-toc a:hover,
+.guide-toc a:focus-visible {
+    color: var(--accent-orange-bright);
+    border-bottom-color: currentColor;
+}
+/* Jumping to a heading must not park it under the sticky header. */
+:target,
+h2[id],
+h3[id] {
+    scroll-margin-top: 110px;
+}
+
+/* ── Section jump strip (home page) ──────────────────────────────────
+   The home page is 18 phone screens tall; this is the only way to skip
+   a whole category. */
+.page-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 34px 0 10px;
+    padding: 16px 18px;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #262626;
+    border-radius: 10px;
+}
+.page-jump-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8b8b8b;
+    margin-right: 4px;
+}
+.page-jump a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #dcdcdc;
+    text-decoration: none;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 9px 16px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+}
+.page-jump a:hover,
+.page-jump a:focus-visible {
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+/* ── Back to top ─────────────────────────────────────────────────────
+   Injected by site.js on pages over four screens tall. */
+.to-top {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 900;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 140, 0, 0.5);
+    background: rgba(18, 18, 18, 0.92);
+    color: var(--accent-orange);
+    font-size: 1.3rem;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.to-top:hover {
+    background: var(--accent-orange);
+    color: #000;
+}
+
+/* ── Wake-lock chip on the tool pages ────────────────────────────────
+   Injected by site.js. Tapping it opts out; the choice is remembered. */
+.wake-chip {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 900;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid #3a3a3a;
+    background: rgba(18, 18, 18, 0.92);
+    color: #8b8b8b;
+}
+.wake-chip.is-on {
+    border-color: rgba(255, 140, 0, 0.6);
+    color: var(--accent-orange);
+}
+
+/* ── Wide tables ─────────────────────────────────────────────────────
+   .table-wrap above already scrolls; what was missing was any sign that
+   it does, and any way for a keyboard to reach it. Only the additions
+   are here, so the earlier rule stays the single source for the rest. */
+.table-wrap {
+    position: relative;
+}
+.table-wrap.is-scrollable {
+    /* a soft edge on the right, which disappears at the end of the scroll */
+    background:
+        linear-gradient(to left, rgba(255, 140, 0, 0.16), transparent 42px) right / 42px 100% no-repeat;
+}
+.table-wrap.is-scrollable.at-end {
+    background: none;
+}
+.table-wrap.is-scrollable::after {
+    content: "scrolls \2192";
+    position: sticky;
+    right: 0;
+    bottom: 0;
+    float: right;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8b8b8b;
+    padding: 2px 0 6px;
+}
+.table-wrap.is-scrollable.at-end::after {
+    content: "";
+}
+
+/* ── Newsletter status line ──────────────────────────────────────────
+   Subscribing used to open a Mailchimp page in a new tab. */
+.form-status {
+    margin: 14px auto 0;
+    max-width: 480px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    min-height: 1.4em;
+}
+.form-status.is-pending { color: #8b8b8b; }
+.form-status.is-ok      { color: #6ddc8b; }
+.form-status.is-error   { color: #ff9a8a; }
+
+/* ── Article byline ──────────────────────────────────────────────────
+   The dates were already in each page's JSON-LD but never shown, so a
+   reader had no way to tell whether a guide was current. */
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: baseline;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8b8b8b;
+    margin: -14px 0 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #262626;
+    max-width: var(--measure);
+}
+.article-meta .meta-updated {
+    color: var(--accent-orange);
+}
+
+/* ── Related guides ──────────────────────────────────────────────────
+   Nothing linked onward from the bottom of an article. */
+.related-guides {
+    margin: 50px 0 0;
+    padding-top: 26px;
+    border-top: 1px solid #262626;
+    max-width: var(--measure);
+}
+.related-guides h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+.related-guides h2::before {
+    display: none;
+}
+.related-guides ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+.related-guides a {
+    display: block;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #262626;
+    border-left: 3px solid rgba(255, 140, 0, 0.5);
+    border-radius: 0 8px 8px 0;
+    color: #dcdcdc;
+    text-decoration: none;
+    line-height: 1.4;
+}
+.related-guides a:hover,
+.related-guides a:focus-visible {
+    border-left-color: var(--accent-orange);
+    color: #fff;
+    background: rgba(255, 140, 0, 0.07);
+}
+
+/* ── Visually hidden, still announced ────────────────────────────────
+   For labels on inputs that only had a placeholder. */
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Footer columns ──────────────────────────────────────────────────
+   The footer now carries four columns rather than three, and a
+   280px minimum wrapped the last one onto its own row at common
+   laptop widths. 210px fits four across from about 1000px up. */
+.footer-content {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 32px 40px;
+}
+.footer-bottom p:first-child a {
+    display: inline-block;
+    padding: 8px 0;
+}
+
+/* ── Remaining small tap targets ─────────────────────────────────────
+   The "all N articles" links and the Amazon buttons measured 21px and
+   34px tall on a phone. Inline links inside a sentence are exempt from
+   the 44px guidance, but these are standalone controls. */
+.section-more a,
+.buy-link,
+.product-card .buy-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+}
+.section-more a {
+    padding: 4px 0;
+}
+.product-card .buy-link {
+    padding: 10px 18px;
+}
+
+/* ── Mobile header and footer sizing ─────────────────────────────────
+   The wordmark is 252px wide at 1.8rem, so on a 375px screen it and the
+   Menu button could not share a row and the header grew to 140px — a
+   sixth of the viewport before any content. Footer links were 34px. */
+@media (max-width: 560px) {
+    header {
+        padding: 0.8rem 0;
+    }
+    .header-content {
+        padding: 0 16px;
+    }
+    .logo {
+        font-size: 1.35rem;
+        letter-spacing: 0.5px;
+    }
+    .nav-toggle {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 768px) {
+    footer .footer-section ul a,
+    .footer-bottom p:first-child a {
+        padding: 12px 0;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
 }

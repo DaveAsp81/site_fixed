@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Nothing useful for a crawler here.
+Disallow: /offline.html
+Disallow: /build-scripts/
+
+Sitemap: https://battletechhq.com/sitemap.xml
