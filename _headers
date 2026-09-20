@@ -30,6 +30,12 @@
 /assets/js/*
   Cache-Control: public, max-age=3600
 
+# The exception: this filename carries its version, so a change ships as a new
+# URL and a hard cache is safe. See the header comment in the file itself
+# before editing it.
+/assets/js/opfor-command.v1.js
+  Cache-Control: public, max-age=31536000, immutable
+
 # Hand-edited reference data, same reasoning as CSS and JS above: long
 # enough to be free within a session, short enough that a correction to a
 # paint scheme goes out the same morning.
