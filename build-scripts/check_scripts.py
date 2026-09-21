@@ -68,7 +68,8 @@ def main():
             except Exception as exc:
                 failed += 1
                 print("FAIL %s JSON-LD #%d: %s" % (path, i, exc))
-    for path in ["site.webmanifest", "force-packs.json"]:
+    for path in ["site.webmanifest", "force-packs.json",
+                 "assets/data/paints.json", "assets/data/paint-schemes.json"]:
         if os.path.exists(path):
             checked += 1
             try:

@@ -30,6 +30,13 @@
 /assets/js/*
   Cache-Control: public, max-age=3600
 
+# Hand-edited reference data, same reasoning as CSS and JS above: long
+# enough to be free within a session, short enough that a correction to a
+# paint scheme goes out the same morning.
+/assets/data/*
+  Cache-Control: public, max-age=3600
+  Content-Type: application/json; charset=utf-8
+
 /favicon.ico
   Cache-Control: public, max-age=2592000
 
