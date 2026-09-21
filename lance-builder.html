@@ -16,9 +16,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         body { background-color: #0b0b0b; color: #eeeeee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; min-height: 100vh; }
@@ -151,11 +148,8 @@
     <meta name="twitter:title" content="BattleTech Lance Builder: Force Planner & Game Tracker | BattleTech HQ">
     <meta name="twitter:description" content="BattleTech Lance Builder — 620 chassis, 3700+ variants, faction filters, BV tracking and print-ready roster sheets.">
     <meta name="twitter:image" content="https://battletechhq.com/assets/images/og-default.jpg">
-    <link rel="manifest" href="/site.webmanifest">
-    <script defer src="/assets/js/site.js"></script>
 </head>
-<body data-wake-lock>
-<a class="skip-link" href="#main">Skip to main content</a>
+<body>
 
 <div id="faction-bg-layer"></div>
 
@@ -169,28 +163,25 @@
 
 <header>
     <div class="header-content">
-        <a href="/" class="logo">BattleTech HQ</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-            <span aria-hidden="true">&#9776;</span> Menu
-        </button>
-        <nav id="site-nav" aria-label="Main">
-            <ul>
-                <li><a href="/lance-builder" aria-current="page">Lance Builder</a></li>
-                <li><a href="/tools">Tools</a></li>
-                <li><a href="/mechs">Mech Guides</a></li>
-                <li><a href="/guides">Articles</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
-            </ul>
-        </nav>
+        <a href="index.html" class="logo">BattleTech HQ</a>
+        <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/#getting-started">Getting Started</a></li>
+                    <li><a href="/#lore">Lore</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
     </div>
 </header>
 
 <header style="background:#111; padding:25px; text-align:center; border-bottom:4px solid #ff8c00;">
-    <h1>Lance Builder</h1>
+    <h1>BATTLETECH HUB COMMAND</h1>
 </header>
 
-<main id="main" style="max-width:1200px; margin:30px auto; padding:0 20px;">
+<main style="max-width:1200px; margin:30px auto; padding:0 20px;">
     <a href="index.html" style="color:#ff8c00; text-decoration:underline; margin-bottom:15px; display:inline-block;">← Back to Home</a>
 
     
@@ -198,7 +189,7 @@
     <div style="background: rgba(255,140,0,0.06); border: 1px solid rgba(255,140,0,0.2); border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.78rem; color: #888; line-height: 1.5;">
         <strong style="color: #ff8c00;">Data Notice:</strong> 
         Unit stats and faction availability sourced from the 
-        <a href="https://www.masterunitlist.info" target="_blank" style="color: #ff8c00;" rel="noopener">Master Unit List</a> 
+        <a href="https://www.masterunitlist.info" target="_blank" style="color: #ff8c00;">Master Unit List</a> 
         and MegaMek MTF files. Data is accurate to the best of our knowledge but may contain gaps or errors — 
         the MUL is the authoritative reference. 
         Found something wrong? <a href="mailto:DaveAsp81@gmail.com?subject=Lance Builder Data Error" style="color: #ff8c00;">Report it here</a>.
@@ -282,7 +273,7 @@
     <div class="main-grid">
         <div class="control-panel">
     <div class="preview-container">
-        <img id="mech-preview-img" alt="" style="max-width:100%; max-height:100%; display:none;" src="">
+        <img id="mech-preview-img" style="max-width:100%; max-height:100%; display:none;" src="">
     </div>
     <div id="preview-label" style="background:#222; padding:10px; text-align:center; color:#ff8c00; font-weight:bold;">TARGET DATA LINKED</div>
 
@@ -324,10 +315,6 @@
                 <h2 style="margin:0; color:#ff8c00;">ACTIVE ROSTER</h2>
                 <div id="stats-summary" style="font-weight:bold; color:#ff8c00;">0t | 0 BV</div>
             </div>
-            <p id="draft-note" role="status" hidden
-               style="margin:0 0 10px; padding:9px 12px; font-size:0.85rem;
-                      color:#ffb300; background:rgba(255,140,0,0.08);
-                      border-left:3px solid #ff8c00; border-radius:0 4px 4px 0;"></p>
             <ul id="lance-roster" style="list-style:none; padding:0; min-height:400px;"></ul>
 			<!-- LANCE FEEDBACK PANEL -->
 <div id="lance-feedback" style="margin-top:15px; padding:12px; background:rgba(30,30,30,0.95); border:1px solid #444; border-radius:4px; font-size:0.9em; min-height:60px;"></div>
@@ -399,9 +386,9 @@
 <div style="margin-top:20px; background:linear-gradient(135deg, rgba(255,140,0,0.05), rgba(20,20,20,0.95)); padding:15px; border-radius:4px; border:1px solid rgba(255,140,0,0.3);">
     <strong style="color:#ff8c00; font-size:0.85em; display:block; margin-bottom:6px;">📬 Stay in the loop</strong>
     <p style="color:#888; font-size:0.75rem; margin:0 0 10px 0; line-height:1.4;">Lance builder updates, new lore articles, and the occasional battle report. No spam.</p>
-    <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" style="display:flex; flex-direction:column; gap:8px;" data-mc-ajax>
-        <label class="sr-only" for="nl-email-1">Email address</label><input type="email" name="EMAIL" placeholder="Your email address" required
-               style="background:#111; border:1px solid #333; color:#ddd; padding:8px 12px; border-radius:4px; font-size:0.8rem; font-family:inherit;" id="nl-email-1" autocomplete="email">
+    <form action="https://battletechhq.us19.list-manage.com/subscribe/post?u=76039b4cbf83da28f7d3f0bfd&amp;id=b634226e1c&amp;f_id=008c82e4f0" method="post" target="_blank" style="display:flex; flex-direction:column; gap:8px;">
+        <input type="email" name="EMAIL" placeholder="Your email address" required
+               style="background:#111; border:1px solid #333; color:#ddd; padding:8px 12px; border-radius:4px; font-size:0.8rem; font-family:inherit;">
         <div style="position:absolute; left:-5000px;" aria-hidden="true">
             <input type="text" name="b_76039b4cbf83da28f7d3f0bfd_b634226e1c" tabindex="-1" value="">
         </div>
@@ -453,33 +440,6 @@ function safeSave(key, value) {
         return false;
     }
 }
-/* An unnamed, in-progress lance used to vanish on refresh: only an explicit
-   "Save lance" with a name persisted anything. This keeps a rolling draft so
-   a reload, a phone call or a dead battery does not cost you the build. */
-const LANCE_DRAFT_KEY = 'battletechLanceDraft';
-
-function saveDraftQuietly(value) {
-    // Deliberately silent, unlike safeSave: an autosave must never throw an
-    // alert into the middle of someone building a force.
-    try { localStorage.setItem(LANCE_DRAFT_KEY, JSON.stringify(value)); }
-    catch(e) { /* storage full or blocked; the named save still warns */ }
-}
-
-function restoreDraft() {
-    const draft = safeParse(LANCE_DRAFT_KEY, null);
-    if (!draft || !Array.isArray(draft.lance) || !draft.lance.length) return;
-    currentLance = draft.lance;
-    if (draft.mode === 'classic' || draft.mode === 'alpha') currentMode = draft.mode;
-    updateDisplay();
-    const note = document.getElementById('draft-note');
-    if (note) {
-        note.textContent = 'Picked up where you left off — '
-            + currentLance.length + (currentLance.length === 1 ? ' unit' : ' units')
-            + ' restored.';
-        note.hidden = false;
-    }
-}
-
 function safeParse(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
     catch(e) { console.error('Corrupted localStorage key, resetting:', key, e); return fallback; }
@@ -1350,20 +1310,6 @@ function randomizeThemedLance() {
     updateDisplay();
 }
 // ==================== DISPLAY ====================
-/* Every mutation in this tool routes through updateDisplay(), so wrapping it
-   is the one place that catches all of them. */
-function persistDraftAfterRender(fn) {
-    return function () {
-        const result = fn.apply(this, arguments);
-        if (currentLance.length) {
-            saveDraftQuietly({ mode: currentMode, lance: currentLance });
-        } else {
-            try { localStorage.removeItem(LANCE_DRAFT_KEY); } catch(e) {}
-        }
-        return result;
-    };
-}
-
 function updateDisplay() {
     const roster = document.getElementById('lance-roster');
     roster.innerHTML = '';
@@ -1384,7 +1330,7 @@ function updateDisplay() {
 
         roster.innerHTML += `
             <li class="roster-item">
-                <img src="${esc(unit.img)}" alt="" loading="lazy" decoding="async" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.style.display='none'">
+                <img src="${esc(unit.img)}" style="width:50px;height:50px;object-fit:cover;margin-right:15px;border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
                 <div style="flex-grow:1;">
                     <strong>${esc(unit.name)}</strong><br>
                     <small>${unit.tons}t | ${adjustedValue} ${valueLabel} <span style="font-size:0.75em;color:#888;">(${baseValue} base × ${multiplier.toFixed(2)})</span></small>
@@ -1415,7 +1361,7 @@ function updateDisplay() {
                         ${unit.background === 'Custom' ? `<input type="text" value="${esc(unit.customBackground || '')}" placeholder="Custom background" style="width:220px" onchange="currentLance[${i}].customBackground = this.value; updateDisplay();">` : ''}
                     </div>
                 </div>
-                <button type="button" onclick="removeUnit(${i})" aria-label="Remove ${esc(unit.name)} from the lance" title="Remove ${esc(unit.name)}" style="background:none;color:#ff4c4c;border:none;cursor:pointer;font-size:1.4em;min-width:44px;min-height:44px;">×</button>
+                <button onclick="removeUnit(${i})" style="background:none;color:#ff4c4c;border:none;cursor:pointer;font-size:1.2em;">×</button>
             </li>`;
     });
 
@@ -1464,7 +1410,7 @@ function openModal() {
     const factionBadges = (v.factions && v.factions.length > 0)
         ? v.factions.map(f => `<span style="display:inline-block;background:#1a1a1a;border:1px solid #444;
             border-radius:3px;padding:2px 7px;margin:2px;font-size:0.75em;color:#aaa;">${f}</span>`).join('')
-        : '<span style="color:#8b8b8b;font-size:0.8em;">No faction data</span>';
+        : '<span style="color:#555;font-size:0.8em;">No faction data</span>';
 
     const statRow = (label, value) => value
         ? `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;">
@@ -1510,7 +1456,7 @@ function openModal() {
                     ? v.weapons.map(w =>
                         `<div style="padding:4px 0;border-bottom:1px solid #222;color:#eee;font-size:0.85em;">${w}</div>`
                       ).join('')
-                    : '<div style="color:#8b8b8b;font-size:0.85em;">No weapon data</div>'
+                    : '<div style="color:#555;font-size:0.85em;">No weapon data</div>'
                 }
 
                 <div style="color:#ff8c00;font-size:0.7em;letter-spacing:0.1em;
@@ -1526,7 +1472,7 @@ function openModal() {
 
         <div style="margin-top:20px; padding-top:12px; border-top:1px solid #1a1a1a; text-align:center;">
             <a href="mailto:DaveAsp81@gmail.com?subject=Lance Builder Data Error&body=Chassis: ${c.chassis}%0AVariant: ${v.name}%0AIssue: [describe the problem here]"
-               style="font-size:0.78rem; color:#8b8b8b; text-decoration:none;"
+               style="font-size:0.78rem; color:#444; text-decoration:none;"
                onmouseover="this.style.color='#ff8c00'" onmouseout="this.style.color='#444'">
                ⚑ Report incorrect data for this 'Mech
             </a>
@@ -1548,11 +1494,8 @@ function clearLance() {
     updateDisplay();
 }
 
-updateDisplay = persistDraftAfterRender(updateDisplay);
-
 window.onload = () => {
     updateFormationUI();
-    restoreDraft();
     const chassisGrid = document.getElementById('chassis-grid');
     if (chassisGrid) {
         chassisGrid.innerHTML = '<p style="color:#aaa;padding:2rem;text-align:center;">Loading mech database...</p>';
@@ -1657,7 +1600,7 @@ function refreshSavedList() {
             </div>`;
     });
 
-    container.innerHTML = html || '<small style="color:#8b8b8b;">No saved lances yet. Save one above!</small>';
+    container.innerHTML = html || '<small style="color:#666;">No saved lances yet. Save one above!</small>';
 }
 
 // ==================== EXPORT OPTIONS (Phase 5) ====================
@@ -1863,7 +1806,15 @@ function filterChassis() {
         // Era filter only applies when no specific faction is selected
         filtered = filtered.filter(m => m.era === eraFilter);
     }
-    if (searchTerm) filtered = filtered.filter(m => m.chassis.toLowerCase().includes(searchTerm));
+    // Match the alternate name too: the MUL records dual-named Clan designs
+    // as "Mad Cat (Timber Wolf)", and searching the half we do not store as
+    // the chassis name should still find the machine.
+    if (searchTerm) filtered = filtered.filter(function (m) {
+        if (m.chassis.toLowerCase().includes(searchTerm)) return true;
+        return (m.aliases || []).some(function (a) {
+            return String(a).toLowerCase().includes(searchTerm);
+        });
+    });
 
     // Apply sort
     if (currentSort === 'tons') filtered.sort((a,b) => a.tons - b.tons);
@@ -1884,9 +1835,15 @@ function filterChassis() {
     filtered.forEach(m => {
         let opt = document.createElement('option');
         opt.value = m.chassis;
+        // Show the alternate name where there is one, so a search for
+        // "Timber Wolf" does not return a row that only says "Mad Cat".
+        // The option value stays the chassis name: nothing downstream changes.
+        const label = (m.aliases && m.aliases.length)
+            ? `${m.chassis} / ${m.aliases[0]}`
+            : m.chassis;
         opt.textContent = m.isVehicle
-            ? `${m.chassis} (${m.tons}t) \u2013 ${m.variants[0].motive || 'vehicle'}`
-            : `${m.chassis} (${m.tons}t)`;
+            ? `${label} (${m.tons}t) \u2013 ${m.variants[0].motive || 'vehicle'}`
+            : `${label} (${m.tons}t)`;
         select.appendChild(opt);
     });
 
@@ -2094,14 +2051,14 @@ function renderShoppingList() {
         return `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
             <div><div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${c.pack.name}</div>
             <div style="font-size:0.76rem; color:#888; margin-top:2px;">Gives you: <span style="color:#ccc;">${esc(c.covers.join(', '))}</span></div></div>
-            <a href="${link}" target="_blank" rel="nofollow sponsored noopener" style="background:${direct?'#ff8c00':'transparent'}; color:${direct?'#000':'#ff8c00'}; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">${direct?'Buy →':'Find on Amazon →'}</a>
+            <a href="${link}" target="_blank" rel="nofollow sponsored" style="background:${direct?'#ff8c00':'transparent'}; color:${direct?'#000':'#ff8c00'}; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">${direct?'Buy →':'Find on Amazon →'}</a>
         </div>`;
     }).join('');
 
     const singleRows = leftover.map(m =>
         `<div style="display:flex; justify-content:space-between; align-items:center; gap:12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:11px 14px; margin-bottom:8px;">
             <div style="color:#eee; font-family:'Rajdhani'; font-weight:700;">${esc(m)}<div style="font-size:0.72rem; color:#777; margin-top:2px;">Single mini (Salvage Box)</div></div>
-            <a href="${salvageBoxLink(m)}" target="_blank" rel="nofollow sponsored noopener" style="background:transparent; color:#ff8c00; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">Find on Amazon →</a>
+            <a href="${salvageBoxLink(m)}" target="_blank" rel="nofollow sponsored" style="background:transparent; color:#ff8c00; border:1px solid #ff8c00; text-decoration:none; font-weight:700; font-family:'Rajdhani'; padding:8px 14px; border-radius:5px; white-space:nowrap; font-size:0.82rem;">Find on Amazon →</a>
         </div>`).join('');
 
     return `
@@ -2112,7 +2069,7 @@ function renderShoppingList() {
             <span style="color:#3ad17a;">${chosen.length}</span> pack${chosen.length!==1?'s':''} cover <span style="color:#3ad17a;">${covered}</span> of ${totalMechs} 'Mechs${leftover.length?` · ${leftover.length} sold as single minis`:''}.</div>
         ${packRows}
         ${leftover.length ? `<div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing:0.14em; margin:16px 0 8px;">Single 'Mechs — sold individually</div>${singleRows}` : ''}
-        <div style="font-size:0.72rem; color:#8b8b8b; margin-top:14px;">As an Amazon Associate I earn from qualifying purchases. Single 'Mechs link to Salvage Box / individual minis where available.</div>
+        <div style="font-size:0.72rem; color:#555; margin-top:14px;">As an Amazon Associate I earn from qualifying purchases. Single 'Mechs link to Salvage Box / individual minis where available.</div>
     </div>`;
 }
 
@@ -2224,14 +2181,14 @@ function renderCustomLibrary() {
     if (!el) return;
     const lib = getCustomLibrary();
     if (!lib.length) { el.innerHTML = ''; return; }
-    el.innerHTML = `<div style="font-size:0.68rem; color:#8b8b8b; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">My saved 'Mechs</div>` +
+    el.innerHTML = `<div style="font-size:0.68rem; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">My saved 'Mechs</div>` +
         lib.map((m, i) => `
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; background:#0e0e0e; border:1px solid #262626; border-radius:5px; padding:8px 12px; margin-bottom:6px;">
             <div style="font-size:0.85rem;"><b style="color:#eee;">${esc(m.name)}</b>
                 <span style="color:#777; font-family:'Share Tech Mono',monospace; font-size:0.72rem;"> ${m.tons}t · BV ${m.bv}${m.bf ? ' · AS ✓' : ''}${m.weapons && m.weapons.length ? ' · ' + m.weapons.length + ' wpn' : ''}</span></div>
             <div style="display:flex; gap:6px;">
                 <button onclick="addSavedCustom(${i})" style="background:#161616; border:1px solid #ff8c00; color:#ff8c00; padding:5px 12px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-weight:700;">＋ lance</button>
-                <button onclick="deleteSavedCustom(${i})" style="background:none; border:1px solid #333; color:#8b8b8b; padding:5px 9px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button>
+                <button onclick="deleteSavedCustom(${i})" style="background:none; border:1px solid #333; color:#666; padding:5px 9px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button>
             </div>
         </div>`).join('');
 }
@@ -2335,59 +2292,6 @@ function checkSharedForce() {
     <a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">☕ Buy me a coffee</a>
 </div>
 <!-- ================== END SUPPORT STRIP ================= -->
-
-
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>BattleTech HQ</h4>
-            <p>Guides, tools and opinions for the modern MechWarrior, from the
-            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
-            YouTube channel. Something wrong or missing?
-            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
-            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
-        </div>
-        <div class="footer-section">
-            <h4>Tools</h4>
-            <ul>
-                <li><a href="/lance-builder">Lance Builder</a></li>
-                <li><a href="/game-tracker">Game Tracker</a></li>
-                <li><a href="/opfor-command">OpFor Command</a></li>
-                <li><a href="/campaign">Campaign Tracker</a></li>
-                <li><a href="/paint-tool">Paint Tool</a></li>
-                <li><a href="/tools">All five, compared &rarr;</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>Reading</h4>
-            <ul>
-                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
-                <li><a href="/mechs">Mech Guides</a></li>
-                <li><a href="/guides">All guides &amp; articles</a></li>
-                <li><a href="/rating-scale">How guides are rated</a></li>
-                <li><a href="/search">Search the site</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>Elsewhere</h4>
-            <ul>
-                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
-                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
-                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
-                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
-                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
-           <a href="/privacy">Privacy</a> &middot;
-           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
-           <a href="/image-credits">Image credits</a></p>
-        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
-    </div>
-</footer>
 
 </body>
 </html>
