@@ -15,15 +15,46 @@
     <meta name="keywords" content="BattleTech mech guide, best variant, BattleMech chassis guide, Battle Value, Alpha Strike stats">
     <title>Mech Guides: Every Variant Ranked | BattleTech HQ</title>
     <link rel="canonical" href="https://battletechhq.com/mechs">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#ff8c00">
     <style>
+        .site-search {
+            display: flex;
+            gap: 10px;
+            max-width: 620px;
+            margin: 0 0 30px;
+        }
+        .site-search input {
+            flex: 1;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            color: #e8e8e8;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            padding: 11px 14px;
+            outline: none;
+        }
+        .site-search input:focus { border-color: #ff8c00; }
+        .site-search input::placeholder { color: #666; }
+        .site-search button {
+            background: rgba(255,140,0,0.12);
+            border: 1px solid rgba(255,140,0,0.45);
+            color: #ff8c00;
+            border-radius: 8px;
+            padding: 0 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+        .site-search button:hover { background: rgba(255,140,0,0.2); }
         .mech-card-image {
             background-color: #0d0d0d;
             background-size: contain;
@@ -68,31 +99,25 @@
         }
         .coming-soon p { color: #888; font-size: 0.88rem; margin: 14px 0 0; line-height: 1.6; }
     </style>
-    <link rel="manifest" href="/site.webmanifest">
-    <script defer src="/assets/js/site.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
 
     <header>
-    <div class="header-content">
-        <a href="/" class="logo">BattleTech HQ</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-            <span aria-hidden="true">&#9776;</span> Menu
-        </button>
-        <nav id="site-nav" aria-label="Main">
-            <ul>
-                <li><a href="/lance-builder">Lance Builder</a></li>
-                <li><a href="/tools">Tools</a></li>
-                <li><a href="/mechs" aria-current="page">Mech Guides</a></li>
-                <li><a href="/guides">Articles</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<main id="main">
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <section class="hero">
         <h1>Mech Guides</h1>
@@ -106,9 +131,14 @@
         <p class="mech-intro">That is what these are. Every guide covers the full variant list with Battle Value and Alpha Strike figures, per-era faction availability off the Master Unit List, how to pilot the chassis, how to kill one, and how our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a> handles it in a solo game.</p>
         <p class="mech-intro">Every variant gets a verdict. If you want to know exactly what those verdicts mean and how the Trap rating is calculated, <a href="/rating-scale" style="color:#ff8c00;">the rating scale is written down here</a>.</p>
 
+        <form class="site-search" action="search.html" method="get" role="search">
+            <input type="search" name="q" placeholder="Search the whole site" aria-label="Search the site" autocomplete="off">
+            <button type="submit">Search</button>
+        </form>
+
         <div class="articles-grid" style="margin-top:36px;">
             <div class="article-card">
-                <div class="article-card-image mech-card-image"><img src="assets/images/marauder-schematic-356.webp" srcset="assets/images/marauder-schematic-356.webp 356w" sizes="(min-width: 700px) 230px, calc(100vw - 60px)" width="356" height="554" alt="" loading="lazy" decoding="async"></div>
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/marauder-schematic.png');"></div>
                 <div class="article-card-content">
                     <h3>Marauder</h3>
                     <p class="mech-card-meta">75 tons &middot; Inner Sphere &middot; 36 variants</p>
@@ -117,7 +147,7 @@
                 </div>
             </div>
             <div class="article-card">
-                <div class="article-card-image mech-card-image"><img src="assets/images/warhammer-card-480.webp" srcset="assets/images/warhammer-card-480.webp 480w" sizes="(min-width: 700px) 230px, calc(100vw - 60px)" width="640" height="540" alt="" loading="lazy" decoding="async"></div>
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/warhammer-card.webp');"></div>
                 <div class="article-card-content">
                     <h3>Warhammer</h3>
                     <p class="mech-card-meta">70 tons &middot; Inner Sphere &middot; 31 variants</p>
@@ -126,7 +156,7 @@
                 </div>
             </div>
             <div class="article-card">
-                <div class="article-card-image mech-card-image"><img src="assets/images/atlas-schematic-480.webp" srcset="assets/images/atlas-schematic-480.webp 480w" sizes="(min-width: 700px) 230px, calc(100vw - 60px)" width="480" height="765" alt="" loading="lazy" decoding="async"></div>
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/atlas-schematic.webp');"></div>
                 <div class="article-card-content">
                     <h3>Atlas</h3>
                     <p class="mech-card-meta">100 tons &middot; Inner Sphere &middot; 28 variants</p>
@@ -135,7 +165,7 @@
                 </div>
             </div>
             <div class="article-card">
-                <div class="article-card-image mech-card-image"><img src="assets/images/locust-schematic-480.webp" srcset="assets/images/locust-schematic-480.webp 480w" sizes="(min-width: 700px) 230px, calc(100vw - 60px)" width="560" height="674" alt="" loading="lazy" decoding="async"></div>
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/locust-schematic.webp');"></div>
                 <div class="article-card-content">
                     <h3>Locust</h3>
                     <p class="mech-card-meta">20 tons &middot; Inner Sphere &middot; 24 variants</p>
@@ -144,7 +174,7 @@
                 </div>
             </div>
             <div class="article-card">
-                <div class="article-card-image mech-card-image"><img src="assets/images/highlander-schematic-480.webp" srcset="assets/images/highlander-schematic-480.webp 480w" sizes="(min-width: 700px) 230px, calc(100vw - 60px)" width="520" height="520" alt="" loading="lazy" decoding="async"></div>
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/highlander-schematic.webp');"></div>
                 <div class="article-card-content">
                     <h3>Highlander</h3>
                     <p class="mech-card-meta">90 tons &middot; Inner Sphere &middot; 13 variants</p>
@@ -152,12 +182,38 @@
                     <a href="/highlander" class="read-more">Read More &rarr;</a>
                 </div>
             </div>
+            <div class="article-card">
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/battlemaster-schematic.webp');"></div>
+                <div class="article-card-content">
+                    <h3>BattleMaster</h3>
+                    <p class="mech-card-meta">85 tons &middot; Inner Sphere &middot; 32 variants</p>
+                    <p>It holds its PPC like a rifle and can throw it away. Every variant ranked, plus the ComStar filing error that armed the Draconis Combine by accident.</p>
+                    <a href="/battlemaster" class="read-more">Read More &rarr;</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/bushwacker-schematic.webp');"></div>
+                <div class="article-card-content">
+                    <h3>Bushwacker</h3>
+                    <p class="mech-card-meta">55 tons &middot; Inner Sphere &middot; 6 variants</p>
+                    <p>A failed design, saved by schematics stolen from Clan Jade Falcon. Every variant ranked, and why the low profile nearly killed it.</p>
+                    <a href="/bushwacker" class="read-more">Read More &rarr;</a>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-card-image mech-card-image" style="background-image: url('assets/images/axman-schematic.webp');"></div>
+                <div class="article-card-content">
+                    <h3>Axman</h3>
+                    <p class="mech-card-meta">65 tons &middot; Inner Sphere &middot; 8 variants</p>
+                    <p>Built as a symbol of Federated Commonwealth unity, and the variant list records that union coming apart. Plus five tonnes of hatchet.</p>
+                    <a href="/axman" class="read-more">Read More &rarr;</a>
+                </div>
+            </div>
         </div>
 
         <div class="coming-soon">
             <h3>Next up</h3>
             <ul>
-                <li>BattleMaster</li>
                 <li>Timber Wolf</li>
                 <li>Awesome</li>
                 <li>Catapult</li>
@@ -169,59 +225,46 @@
 
     </div>
 
-    </main>
-
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>BattleTech HQ</h4>
-            <p>Guides, tools and opinions for the modern MechWarrior, from the
-            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
-            YouTube channel. Something wrong or missing?
-            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
-            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/rating-scale">Rating Scale</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-section">
-            <h4>Tools</h4>
-            <ul>
-                <li><a href="/lance-builder">Lance Builder</a></li>
-                <li><a href="/game-tracker">Game Tracker</a></li>
-                <li><a href="/opfor-command">OpFor Command</a></li>
-                <li><a href="/campaign">Campaign Tracker</a></li>
-                <li><a href="/paint-tool">Paint Tool</a></li>
-                <li><a href="/tools">All five, compared &rarr;</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
         </div>
-        <div class="footer-section">
-            <h4>Reading</h4>
-            <ul>
-                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
-                <li><a href="/mechs">Mech Guides</a></li>
-                <li><a href="/guides">All guides &amp; articles</a></li>
-                <li><a href="/rating-scale">How guides are rated</a></li>
-                <li><a href="/search">Search the site</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>Elsewhere</h4>
-            <ul>
-                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
-                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
-                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
-                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
-                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
-           <a href="/privacy">Privacy</a> &middot;
-           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
-           <a href="/image-credits">Image credits</a></p>
-        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
-    </div>
-</footer>
+    </footer>
 
 <script>
 /* Which guide cards actually get clicked, so the index earns its place. */
@@ -245,5 +288,16 @@
 })();
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
 </body>
 </html>

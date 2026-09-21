@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Axman variant ranked by a MechTech. Why the hatchet is a deterrent rather than a weapon, why the light engine variants are the best built, and how the variant list records a nation splitting.">
+    <meta name="keywords" content="Axman BattleTech, best Axman variant, AXM-1N, AXM-3S, hatchet, Hatchetman, BattleTech heavy mech">
+    <title>Axman: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/axman">
+    <meta property="og:title" content="Axman: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 8 Axman variants ranked, and how a symbol of Federated Commonwealth unity came apart.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/axman">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Axman</p>
+
+        <div class="mech-hero">
+            <h1>Axman</h1>
+            <p class="sub">65 tons &middot; Inner Sphere &middot; 8 variants &middot; 3048 to 3148</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/axman-schematic.webp" type="image/webp">
+                    <img src="assets/images/axman-schematic.png"
+                         alt="Illustration of an AXM-1N Axman BattleMech holding its five-tonne hatchet, showing the autocannon barrel and the shoulder-mounted laser cluster"
+                         width="480" height="672" loading="eager" decoding="async">
+                </picture>
+                <figcaption>The hatchet, held rather than fixed, and about as crude as it looks. The value is not the swing. It is that the other pilot has to keep thinking about it.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Team Banzai built the Axman as the big brother to the Hatchetman, and the brief was blunt: a machine for killing other machines. Defiance and Johnston picked it up, and full production started in 3048.</p>
+                <p>It was also meant to mean something. The Axman was built as a symbol of Federated Commonwealth unity, deliberately assembled from components made in the Federated Suns, in the Lyran Commonwealth, and in what had been Capellan space. A machine you could point at and say, look, this is what the two of us can build together.</p>
+                <p>You can probably see where this is going.</p>
+                <p><strong>What you have got.</strong> Sixty-five tons, walk four, and four jump jets, which on a heavy is the whole point. A Luxor Devastator-20 autocannon that takes a ton of plate off whatever it hits. A Sutel large pulse laser and three Intek mediums. And a hatchet, five tonnes of it, held in the right hand.</p>
+                <p><strong>About the axe.</strong> It is not really the weapon. It is the reason people move. A MechWarrior who knows an Axman can jump to them and swing will not stand where an Axman can jump to them, and that is worth more over a game than the damage it does when it lands. Play it as a threat that shapes the board, not as a thing you are trying to connect with.</p>
+                <p><strong>If you are choosing one:</strong> the <strong>AXM-3S</strong> and <strong>AXM-3Sr</strong> are the best built, because somebody finally fitted a light engine instead of the XL. The <strong>AXM-1N</strong> is the real thing. The <strong>AXM-2N</strong> is a good machine that is not really an Axman.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Sixty-five tons with four jump jets is the design, and everything else is arranged around it. Most heavies that close on you have to walk, which gives you time to arrange your line. An Axman can be ninety metres to your flank on the turn it decides to be, and that changes what the autocannon and the hatchet are worth.</p>
+            <p>The Devastator-20 is the honest damage. A ton of armour off a target in one hit, at short range, from something that just jumped into your rear arc. The Sutel large pulse and the three Inteks fill in around it.</p>
+            <p>Then the hatchet, and I have sharpened a few. Five tonnes of hardened head on a shaft, held rather than fixed, and it works exactly as crudely as it sounds. What it is genuinely good for is not the swing. It is that the other pilot has to keep thinking about the swing.</p>
+            <p>The thing to know before you sign one out is what is underneath. Most Axmen run an XL engine, and on 3 structure that means a side torso takes the machine with it. The Lyran 3S and 3Sr fixed that with a light engine and it is the single biggest improvement anyone made to the design.</p>
+
+            <div class="heat-callout">
+                <h3>Read the variant list as a political history</h3>
+                <p>This is the only chassis on the site where the model numbers tell you what was happening to a nation.</p>
+                <table class="heat-table">
+                    <tr><th>Year</th><th>Variant</th><th>What it says</th></tr>
+                    <tr><td>3048</td><td>AXM-1N</td><td>Built from Federated Suns, Lyran and ex-Capellan components. A symbol of unity.</td></tr>
+                    <tr><td>3060</td><td>AXM-3S</td><td class="bad">After Katrina split the realm, the Lyran Alliance commissions its own, made exclusively by Defiance.</td></tr>
+                    <tr><td>3071</td><td>AXM-4D</td><td class="bad">The Federated Suns builds a version specifically to reduce reliance on foreign equipment.</td></tr>
+                </table>
+                <p style="margin-top:16px;">Twenty-three years from a machine built to prove two realms could work together, to two realms each building their own so they would not have to. Nobody wrote that as a story. It is just what the production records say.</p>
+            </div>
+
+                        <h2>A hundred years, and a union coming apart</h2>
+            <p>The prototype was the -1X, and its job was to convince the AFFC to release the funding and the recovered technology the real thing needed. Without an advanced engine it had to make do: the autocannon came down to a ten, the large pulse became a standard laser, and it lost a medium. Closer to a scaled-up Hatchetman than the machine that followed. It worked as a pitch, which was all it had to do.</p>
+            <p>What came out of that was the 1N, and it arrived at exactly the wrong moment to be a symbol of anything. Full production began in 3048. The Clans arrived the following year.</p>
+            <p>Then Katrina Steiner-Davion created the Lyran Alliance in 3057 and the Federated Commonwealth started coming apart. By 3060 the Alliance had its own Axman, built for it alone by Defiance Industries. By 3071 the Federated Suns had replaced the 1N line on New Syrtis with a version designed explicitly to reduce its dependence on equipment made somewhere else.</p>
+            <p>And then the last one, which I find oddly hopeful. The 3148 AXM-5N was rushed into production for a desperate AFFS after the Davions took New Syrtis back from the Capellans. It carries a hyper-assault Gauss rifle supplied by the Tiburon Khanate and a Clan Sea Fox ER PPC. A machine built from whatever three unrelated suppliers could provide, in a hurry, because it was needed. Which is closer to how the original actually got made than any of the politics in between.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Axmen available in the same era</strong>. This is a short list by the standards of this site, which makes the era filtering less important and the engine choice more so.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 8 Axman variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants</h2>
+
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-1N: the symbol</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1374 &middot; PV 33 &middot; Skirmisher &middot; 3048<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 10 IS Double &middot; 260 XL Engine<br>
+  1x Large Pulse Laser, 3x Medium Laser, 1x AC/20</p>
+  <p>The original, 3048. A Luxor Devastator-20 autocannon, a Sutel large pulse laser, three Intek mediums, four jump jets, and a five-tonne hatchet in the right hand. Everything about it says get close, and the jump jets mean it can. The XL engine is the bill.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-2N: barely an Axman</h3>
+    <span class="tier tier-solid">Solid</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1458 &middot; PV 33 &middot; Skirmisher &middot; 3049<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 10 IS Double &middot; 260 XL Engine<br>
+  1x Large Pulse Laser, 3x Medium Laser, 2x LRM 15</p>
+  <p>Called a mistake by some and a stroke of genius by others, which is fair. The autocannon comes off and two LRM 15s go on, so the machine that was built to close now shoots from range and carries an axe it will rarely swing. It is a good missile platform. It is barely an Axman.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-3S: the Lyran one, and the best built</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1649 &middot; PV 32 &middot; Skirmisher &middot; 3060<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 10 IS Double &middot; 260 Light Engine<br>
+  3x ER Medium Laser, 1x LB 20-X AC</p>
+  <p>Lyran Alliance, 3060, built exclusively for them by Defiance. An LB 20-X where the autocannon was, ER mediums, and crucially a light engine instead of the XL, so losing a side torso no longer ends the fight. The best-built Axman there is.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-4D: the political one</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1222 &middot; PV 32 &middot; Brawler &middot; 3071<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 260 XL Engine<br>
+  2x Medium Laser, 4x Light AC/5</p>
+  <p>Davion, 3071, and the point of it is political. Four light autocannons, two mediums, a targeting computer, and it drops the jump jets, the lasers and the big gun to get there. It is on single heat sinks. This is the Axman built to stop needing Lyran parts.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-6X: an axe it will never swing</h3>
+    <span class="tier tier-solid">Solid</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 2132 &middot; PV 41 &middot; Missile Boat &middot; 3074<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 10 IS Double &middot; 325 XL (Clan) Engine<br>
+  4x ER Medium Laser, 2x Thunderbolt 15</p>
+  <p>Twin Thunderbolt 15 launchers and four ER mediums on a Clan-grade XL, walking five. Enormous long-range damage for sixty-five tons, no jump jets, and an axe it is not going to use.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AXM-5N: built from whatever was available</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 2575 &middot; PV 39 &middot; Skirmisher &middot; 3148<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 10 IS Double &middot; 260 XL Engine(IS)<br>
+  1x ER PPC, 3x ER Medium Laser, 1x HAG/20</p>
+  <p>3148, thrown together for a desperate AFFS after the recapture of New Syrtis. A hyper-assault Gauss 20 from the Tiburon Khanate, a Sea Fox ER PPC, three ER mediums, and the jump jets are back. Parts from three different suppliers and it works.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Jump first, shoot second. The four jets are the reason the machine is worth its Battle Value and sitting still wastes them. Get into a flank or a rear arc, put the Devastator-20 into something, and let the axe do its work by existing. Watch the side torsos on any of the XL fits, because that is how these die.</p>
+            <p><strong>Fighting one.</strong> Keep it at range and keep moving. Most fits have nothing worth speaking of past medium range. Four of the 8 do reach further, and two of those, the Thunderbolt-armed missile variants, gave up the jump jets to manage it. If it does land next to you, the autocannon is the problem, not the hatchet. Against an XL fit, concentrate on a side torso.</p>
+            <p><strong>What I see go wrong.</strong> People chase the axe. They spend turns manoeuvring for a physical attack that misses, while the autocannon that would have done the job sits unfired. The hatchet is a deterrent. Treat it as one and the machine is good.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Axman splits in a way that matters more than usual, because the two groups do not play alike at all.</p>
+            <ul>
+                <li>5 of the 8 variants are Skirmishers, including the <strong>AXM-1N</strong>. Balanced weighting, positive aggression, and they will use the jump jets to go after anything already damaged or cut off.</li>
+                <li>The <strong>AXM-6X</strong> and <strong>AXM-6T</strong> are Missile Boats, which get the most negative aggression in the engine. They will sit at the back and throw Thunderbolts, which is the opposite of what an Axman is for.</li>
+                <li>The <strong>AXM-4D</strong> is the only Brawler, and with no jump jets it has to walk into the fight the rest of them jump into.</li>
+            </ul>
+
+                        <h2>All 8 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. The hatchet is a physical weapon and does not appear in the loadout.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">AXM-1N</td><td>3048</td><td>1374</td><td>33</td><td>Skirmisher</td><td class="wpn">1x Large Pulse Laser, 3x Medium Laser, 1x AC/20</td><td class="num">4/4/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">AXM-2N</td><td>3049</td><td>1458</td><td>33</td><td>Skirmisher</td><td class="wpn">1x Large Pulse Laser, 3x Medium Laser, 2x LRM 15</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AXM-3S</td><td>3060</td><td>1649</td><td>32</td><td>Skirmisher</td><td class="wpn">3x ER Medium Laser, 1x LB 20-X AC</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">AXM-3Sr</td><td>3069</td><td>1734</td><td>39</td><td>Skirmisher</td><td class="wpn">3x ER Medium Laser, 1x Rotary AC/5, 1x Medium Pulse Laser</td><td class="num">4/4/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AXM-4D</td><td>3071</td><td>1222</td><td>32</td><td>Brawler</td><td class="wpn">2x Medium Laser, 4x Light AC/5</td><td class="num">4/4/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">AXM-6X</td><td>3074</td><td>2132</td><td>41</td><td>Missile Boat</td><td class="wpn">4x ER Medium Laser, 2x Thunderbolt 15</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">AXM-6T</td><td>3083</td><td>1830</td><td>43</td><td>Missile Boat</td><td class="wpn">4x ER Medium Laser, 2x Thunderbolt 15</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">AXM-5N</td><td>3148</td><td>2575</td><td>39</td><td>Skirmisher</td><td class="wpn">1x ER PPC, 3x ER Medium Laser, 1x HAG/20</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the AXM-1N by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>Federated Suns, Lyran Commonwealth</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Federated Commonwealth, Federated Suns, Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Lyran Commonwealth, Mercenary, St. Ives Compact, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Federated Commonwealth, Federated Suns, Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Mercenary, St. Ives Compact, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Federated Suns, Filtvelt Coalition, Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Mercenary, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Federated Suns, Filtvelt Coalition, Lyran Commonwealth, Mercenary</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Filtvelt Coalition, Lyran Commonwealth, Mercenary</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Lyran Commonwealth</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Hatchetman</h3>
+  <p class="vstats">45 tons &middot; Inner Sphere &middot; 15 variants &middot; BV 854 to 1788</p>
+  <p>The 45 ton original that started it. The Axman is explicitly its big brother, and it is the reason anybody puts axes on BattleMechs at all.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Bushwacker</h3>
+  <p class="vstats">55 tons &middot; Inner Sphere &middot; 6 variants &middot; BV 1193 to 1751</p>
+  <p>The other design that came out of the same era and the same realm, and the other one that almost did not make it. Lighter, no jump jets, and a very different story.</p>
+</div>
+<div class="fam">
+  <h3>Catapult</h3>
+  <p class="vstats">65 tons &middot; Inner Sphere &middot; 19 variants &middot; BV 1242 to 1880</p>
+  <p>What the AXM-2N is really competing with once you take the autocannon off, and the comparison is not flattering.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Axman in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Axman variant?</h3>
+                <p>The AXM-3S and AXM-3Sr, because they are the only ones built on a light engine rather than an XL, which means losing a side torso does not end the fight. The AXM-1N at BV 1374 is the classic and still perfectly good.</p>
+
+                <h3>How good is the hatchet really?</h3>
+                <p>As a weapon, situational. As a deterrent, excellent. It weighs five tonnes and it will take an arm or a head off something if it connects, but the value is that the other pilot has to keep respecting the possibility. The mistake is manoeuvring for the swing instead of using the autocannon.</p>
+
+                <h3>What is the difference between an Axman and a Hatchetman?</h3>
+                <p>The Hatchetman is 45 tons and came first; the Axman is 65 tons and was built by Team Banzai as its big brother, designed specifically as a mech killer. Same idea, considerably more machine behind it.</p>
+
+                <h3>Why does the Axman have so few variants?</h3>
+                <p>It is a late design. Full production only began in 3048, so it has had about a century rather than the five or six that the Star League era designs have had. 8 variants across 100 years is a normal rate, there has just been less time.</p>
+
+                <h3>Do all Axmen have jump jets?</h3>
+                <p>Most. 5 of the 8 carry four jets. The exceptions are the AXM-4D, which dropped them for autocannons, and the two Thunderbolt-armed missile variants, which gave them up for reach.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Axman variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The AXM-3S and AXM-3Sr, because they are the only ones built on a light engine rather than an XL, which means losing a side torso does not end the fight. The AXM-1N at BV 1374 is the classic and still perfectly good."}
+    },
+    {
+      "@type": "Question",
+      "name": "How good is the hatchet really?",
+      "acceptedAnswer": {"@type": "Answer", "text": "As a weapon, situational. As a deterrent, excellent. It weighs five tonnes and it will take an arm or a head off something if it connects, but the value is that the other pilot has to keep respecting the possibility. The mistake is manoeuvring for the swing instead of using the autocannon."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an Axman and a Hatchetman?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Hatchetman is 45 tons and came first; the Axman is 65 tons and was built by Team Banzai as its big brother, designed specifically as a mech killer. Same idea, considerably more machine behind it."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Axman have so few variants?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It is a late design. Full production only began in 3048, so it has had about a century rather than the five or six that the Star League era designs have had. 8 variants across 100 years is a normal rate, there has just been less time."}
+    },
+    {
+      "@type": "Question",
+      "name": "Do all Axmen have jump jets?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Most. 5 of the 8 carry four jets. The exceptions are the AXM-4D, which dropped them for autocannons, and the two Thunderbolt-armed missile variants, which gave them up for reach."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'axman';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

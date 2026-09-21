@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Bushwacker variant ranked by a MechTech. Why the design nearly failed, how stolen Clan schematics saved it, and how to get the best out of fifty-five tons.">
+    <meta name="keywords" content="Bushwacker BattleTech, Mad Dog, Vulture, best Bushwacker variant, BSW-X1, BSW-S2, BSW-L1, Gauntlet OmniMech, BattleTech medium mech">
+    <title>Bushwacker: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/bushwacker">
+    <meta property="og:title" content="Bushwacker: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 6 Bushwacker variants ranked, and how a dead design was rescued by copying the enemy.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/bushwacker">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Bushwacker</p>
+
+        <div class="mech-hero">
+            <h1>Bushwacker</h1>
+            <p class="sub">55 tons &middot; Inner Sphere &middot; 6 variants &middot; 3053 to 3125</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/bushwacker-schematic.webp" type="image/webp">
+                    <img src="assets/images/bushwacker-schematic.png"
+                         alt="Illustration of a BSW-X1 Bushwacker BattleMech, showing the low-slung narrow upper torso, the autocannon barrel and the missile racks"
+                         width="430" height="396" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Look at the upper torso. That low, narrow shape is the entire design idea, and it is also what nearly killed the project.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>The Bushwacker should not exist. It was a failure, and everyone involved knew it was a failure.</p>
+                <p>The idea was sound enough. Build a medium with a low-slung, narrow upper torso so there is less of it to shoot at from the front. Evaluators liked it. The problem was what that shape did to the inside: everything ended up crammed together, and the fusion engine finished up close enough to the sensors and the communications gear to interfere with both. Systems failed. Engineers could not fix it, and not for want of trying. The thing was headed for the scrap heap.</p>
+                <p>Then the Armed Forces of the Federated Commonwealth raided a Clan Jade Falcon base on Twycross and came back with a stack of schematics, including the Mad Dog, which the Inner Sphere calls the Vulture. Different machine, more vertical, and the exact same compressed volume problem, which Clan engineers had solved by making some genuinely odd decisions about internal layout.</p>
+                <p>TharHes copied their homework. They reconfigured the internal structure using the Clan solution, and the Bushwacker went into full production on Tharkad in 3053, right after the Truce of Tukayyid.</p>
+                <p>So the machine was rescued by technical data stolen from the enemy it had been designed to fight. There is no neater summary of the Clan Invasion's effect on Inner Sphere engineering than that.</p>
+                <p><strong>What you have got.</strong> Fifty-five tons, walk five, run eight, no jump. An AC/10, an ER large laser, two LRM 5s and a pair of machine guns on the original. A weapon for every range and nothing spectacular at any of them, which is exactly what a medium should be. <strong>If you are choosing one:</strong> the <strong>BSW-X1</strong> and <strong>BSW-S2</strong> are the workhorses, the <strong>BSW-L1</strong> is the one that survives, and the <strong>BSW-X4</strong> is the best of the late ones.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>The whole design is one idea: be harder to hit. The upper torso sits low and narrow so there is less of you presented to anything shooting from the front, and at walk five and run eight you are not standing still either.</p>
+            <p>That is a real advantage and it cost more than anybody expected. Squeeze the volume and everything inside has to live closer together, and on the early machines that meant the fusion engine sat near enough to the sensor and comms gear to interfere with them. Not a tuning problem. A layout problem, and you cannot tune your way out of where things physically are.</p>
+            <p>The weapon fit is deliberately unremarkable. An AC/10 for the middle distance, an ER large laser for reach, two LRM 5s to do something useful on the approach, and two machine guns for infantry. Nothing there is going to win a fight on its own. Together they mean there is no range at which a Bushwacker has nothing to do, and on fifty-five tons that is worth more than a big gun.</p>
+            <p>The thing to check before you sign one out is the engine. Most of them run a 275 XL. The <strong>BSW-L1</strong> is the exception and uses a light engine instead, which takes up less room in the side torsos and means losing one is survivable rather than terminal. On a machine whose entire defence is being difficult to hit, having a second line of defence matters.</p>
+
+            <div class="heat-callout">
+                <h3>The Mad Dog connection</h3>
+                <p>Worth spelling this out because it is the only example of it on this site.</p>
+                <p>The Bushwacker's fatal flaw was a consequence of its shape. The Clan Mad Dog, known in the Inner Sphere as the Vulture, a completely different machine built by a completely different culture, had arrived at the same problem from the opposite direction: a compressed internal volume causing interference. Clan engineers had already solved it with an unusual internal layout.</p>
+                <p style="margin-top:16px;">The FedCom raid on Twycross brought those schematics home, TharHes adapted the solution, and a dead Inner Sphere design walked. Every other chassis on this site was improved by recovering its own lost technology. This one was saved by copying the enemy.</p>
+            </div>
+
+                        <h2>Saved by the enemy, then sold off</h2>
+            <p>Production started on Tharkad in 3053, right after the Truce of Tukayyid, though units serving on the Clan front had already been issued preproduction machines during the invasion itself. That is why it turned up first along the Clan and Lyran Alliance border, and it is also why the early ones have a reputation among people who were there.</p>
+            <p>By the end of the FedCom Civil War you could find a Bushwacker in almost every first-line unit in both halves of the Federated Commonwealth. And then, for reasons nobody has satisfactorily explained, it became a particular favourite of MechWarriors in the Draconis and Capellan Marches. Sarna records that as an unknown. I like that it is an unknown. Machines acquire reputations in units for reasons that never make it into a production record.</p>
+            <p>The ending is the part I find bleak. TharHes Industries was badly damaged during the Jihad and the Word of Blake occupation of Tharkad, and to raise the capital to rebuild its lines the company sold the Bushwacker plans outright. Coventry Metal Works bought them and used the specifications to build the Gauntlet OmniMech. Modern Bushwackers now share a frame and a range of components with it, which lets both firms keep costs down.</p>
+            <p>So the design that was saved by copying the Clans ended up being sold off to pay for a factory, and the machine that came out of it is a cousin the original never asked for.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Bushwackers</strong>. With only six variants across a single century the era filtering matters less here than on the older chassis, and the engine choice matters more.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 6 Bushwacker variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants</h2>
+
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>BSW-X1: the one that finally worked</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1223 &middot; PV 33 &middot; Skirmisher &middot; 3053<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 11 IS Double &middot; 275 XL Engine<br>
+  2x LRM 5, 1x AC/10, 2x Machine Gun, 1x ER Large Laser</p>
+  <p>The one that finally worked, 3053. An AC/10, an ER large laser, two LRM 5s and a pair of machine guns, on a frame that walks five and runs eight. Nothing clever, a weapon for every range, and at BV 1223 it is one of the better general purpose mediums anybody built.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BSW-S2: the other workhorse</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1293 &middot; PV 33 &middot; Sniper &middot; 3056<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 11 IS Double &middot; 275 XL Engine<br>
+  2x SRM 4, 1x LB 10-X AC, 1x Anti-Missile System, 1x ER Large Laser</p>
+  <p>Swaps the AC/10 for an LB 10-X, the missiles for SRM 4s, and adds an anti-missile system. On a machine this fragile, the AMS earns its tonnage. The cluster ammunition makes it genuinely nasty against anything already opened up.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BSW-L1: the one that survives</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1513 &middot; PV 33 &middot; Skirmisher &middot; 3063<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 10 IS Double &middot; 275 Light Engine<br>
+  1x LB 20-X AC, 1x ER Large Laser</p>
+  <p>An LB 20-X and an ER large laser, nothing else, and a light engine instead of the XL. Fewer guns, more armour, and losing a side torso no longer ends the fight. Structure is the same on the card but the crit space is not, and in practice this is the one that survives.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>BSW-X4: the complete one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1751 &middot; PV 37 &middot; Sniper &middot; 3125<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 11 IS Double &middot; 275 XL Engine<br>
+  2x MML 5, 1x Plasma Rifle, 2x Medium Laser, 1x ER Large Laser</p>
+  <p>3125, and the most complete version. Two MML 5s so you choose your missile type on the day, a plasma rifle, an ER large and two mediums. It does something useful at every range on the board, which is what the design was always trying to be.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Move. The low profile helps, the speed helps more, and a Bushwacker that stands still is a fifty-five ton machine with mediocre armour and no special protection. Use the spread of weapons: there is no range where you have nothing to contribute, so contribute. Against the XL fits, keep your side torsos out of a concentrated arc.</p>
+            <p><strong>Fighting one.</strong> It has an answer at every range, so beating it on range brackets is hard. What it does not have is armour. Concentrate fire, take a side torso off any of the XL variants and it is done. The <strong>BSW-L1</strong> is the one that will not fold to that, and it is also the one with the fewest guns.</p>
+            <p><strong>What I see go wrong.</strong> People treat it as a brawler because it carries an autocannon. It is not built for a stand-up fight and it does not have the plate for one. It is a machine that should be somewhere inconvenient, shooting, and then somewhere else.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Bushwacker is straightforward: 4 of the 6 variants are Skirmishers and 2 are Snipers.</p>
+            <ul>
+                <li>Skirmisher fits, including the <strong>BSW-X1</strong>, get balanced weighting and a modest positive aggression modifier. They go after whatever is already hurt or separated, which suits the machine exactly.</li>
+                <li>The <strong>BSW-S2</strong> and <strong>BSW-X4</strong> are tagged Sniper and will hold at range instead.</li>
+            </ul>
+            <p>Useful as an opposing medium precisely because it does not commit hard. It is a nuisance that keeps shooting, which is a harder problem to solve than something that charges you.</p>
+
+                        <h2>All 6 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">BSW-X1</td><td>3053</td><td>1223</td><td>33</td><td>Skirmisher</td><td class="wpn">2x LRM 5, 1x AC/10, 2x Machine Gun, 1x ER Large Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">BSW-X2</td><td>3054</td><td>1193</td><td>33</td><td>Skirmisher</td><td class="wpn">3x LRM 5, 1x AC/10, 2x Machine Gun, 2x Medium Pulse Laser</td><td class="num">4/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">BSW-S2</td><td>3056</td><td>1293</td><td>33</td><td>Sniper</td><td class="wpn">2x SRM 4, 1x LB 10-X AC, 1x Anti-Missile System, 1x ER Large Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">BSW-L1</td><td>3063</td><td>1513</td><td>33</td><td>Skirmisher</td><td class="wpn">1x LB 20-X AC, 1x ER Large Laser</td><td class="num">3/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">BSW-S2r</td><td>3075</td><td>1339</td><td>32</td><td>Skirmisher</td><td class="wpn">1x SRM 4, 1x LB 10-X AC, 1x Anti-Missile System, 1x Plasma Rifle</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">BSW-X4</td><td>3125</td><td>1751</td><td>37</td><td>Sniper</td><td class="wpn">2x MML 5, 1x Plasma Rifle, 2x Medium Laser, 1x ER Large Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the BSW-X1 by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Federated Commonwealth, Federated Suns, Kell Hounds, Lyran Alliance, Lyran Commonwealth, Mercenary, St. Ives Compact, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Federated Commonwealth, Federated Suns, Kell Hounds, Lyran Alliance, Mercenary, St. Ives Compact, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Federated Suns, Kell Hounds, Lyran Alliance, Mercenary, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Mercenary</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Mercenary</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Mercenary</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Vulture</h3>
+  <p class="vstats">60 tons &middot; Clan &middot; 15 variants &middot; BV 1892 to 2676</p>
+  <p>Known to the Clans as the Mad Dog. Its captured schematics solved the Bushwacker’s interference problem. No shared parts, just a borrowed idea about where to put things.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Axman</h3>
+  <p class="vstats">65 tons &middot; Inner Sphere &middot; 8 variants &middot; BV 1222 to 2575</p>
+  <p>The other design out of the same realm and roughly the same moment, and the other one whose story is about politics rather than engineering.</p>
+</div>
+<div class="fam">
+  <h3>Hunchback</h3>
+  <p class="vstats">50 tons &middot; Mixed &middot; 24 variants &middot; BV 968 to 1893</p>
+  <p>The other medium built around an autocannon, and the opposite philosophy: no subtlety, one enormous gun, and a profile you can see from orbit.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Bushwacker in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Bushwacker variant?</h3>
+                <p>The BSW-X1 at BV 1223 and the BSW-S2 are the reliable general purpose picks. The BSW-L1 is the one built on a light engine rather than an XL, so it survives a side torso hit, and the BSW-X4 is the most complete of the late versions.</p>
+
+                <h3>Why did the Bushwacker nearly fail?</h3>
+                <p>Its low, narrow upper torso left too little internal volume, so the fusion engine ended up close enough to the sensor and communication systems to cause electronic interference and system failures. Engineers could not design the problem out and the project was very nearly abandoned.</p>
+
+                <h3>How was the Bushwacker fixed?</h3>
+                <p>With Clan technology. A Federated Commonwealth raid on a Clan Jade Falcon base on Twycross recovered schematics for several Clan designs including the Mad Dog, the Vulture in Inner Sphere parlance, which had the same compressed volume problem and an unusual internal layout that solved it. TharHes adapted that approach and the design went into production in 3053.</p>
+
+                <h3>Is the Bushwacker any good?</h3>
+                <p>Yes, as a general purpose medium. It carries something useful at every range, walks five and runs eight, and does not cost much. What it does not have is armour, so it works as a mobile nuisance rather than a brawler.</p>
+
+                <h3>What is the Gauntlet?</h3>
+                <p>An OmniMech built by Coventry Metal Works from the Bushwacker specifications. TharHes was badly damaged during the Jihad and sold the plans to raise capital to rebuild, and modern Bushwackers now share a frame and various components with the Gauntlet so both firms can keep costs down.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Bushwacker variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The BSW-X1 at BV 1223 and the BSW-S2 are the reliable general purpose picks. The BSW-L1 is the one built on a light engine rather than an XL, so it survives a side torso hit, and the BSW-X4 is the most complete of the late versions."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why did the Bushwacker nearly fail?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Its low, narrow upper torso left too little internal volume, so the fusion engine ended up close enough to the sensor and communication systems to cause electronic interference and system failures. Engineers could not design the problem out and the project was very nearly abandoned."}
+    },
+    {
+      "@type": "Question",
+      "name": "How was the Bushwacker fixed?",
+      "acceptedAnswer": {"@type": "Answer", "text": "With Clan technology. A Federated Commonwealth raid on a Clan Jade Falcon base on Twycross recovered schematics for several Clan designs including the Mad Dog, the Vulture in Inner Sphere parlance, which had the same compressed volume problem and an unusual internal layout that solved it. TharHes adapted that approach and the design went into production in 3053."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Bushwacker any good?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes, as a general purpose medium. It carries something useful at every range, walks five and runs eight, and does not cost much. What it does not have is armour, so it works as a mobile nuisance rather than a brawler."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Gauntlet?",
+      "acceptedAnswer": {"@type": "Answer", "text": "An OmniMech built by Coventry Metal Works from the Bushwacker specifications. TharHes was badly damaged during the Jihad and sold the plans to raise capital to rebuild, and modern Bushwackers now share a frame and various components with the Gauntlet so both firms can keep costs down."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'bushwacker';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
