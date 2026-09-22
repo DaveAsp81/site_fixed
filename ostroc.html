@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Ostroc variant ranked by a MechTech. Why the Helm Memory Core passed it over, why the famous artwork shows the wrong arms, and how to use an urban specialist.">
+    <meta name="keywords" content="Ostroc BattleTech, best Ostroc variant, OSR-2C, OSR-4L, Ostsol, Ostwar, Ostmann Industries, BattleTech urban mech">
+    <title>Ostroc: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/ostroc">
+    <meta property="og:title" content="Ostroc: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 15 Ostroc variants ranked, and why being rare made it rarer.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/ostroc">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Ostroc</p>
+
+        <div class="mech-hero">
+            <h1>Ostroc</h1>
+            <p class="sub">60 tons &middot; Inner Sphere &middot; 15 variants &middot; 2511 to 3139</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/ostroc-schematic.webp" type="image/webp">
+                    <img src="assets/images/ostroc-schematic.png"
+                         alt="Illustration of an Ostroc BattleMech firing its large laser, showing two fully modelled hands and the SRM 4 launcher mounted upright on the right shoulder"
+                         width="480" height="521" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Hands. And the SRM 4 sitting upright on the right shoulder, not paddles on the arms. This is the standard machine, not the field-refit look everyone remembers.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Here is a question worth asking before anything else. Why have you almost never seen one of these on a table?</p>
+                <p>Not because it is bad. I would put an Ostroc up against most heavies its age. It has been a good machine since 2511, which makes it older than the Warhammer and one of the oldest designs anybody still fields. The real answer is duller and sadder than "it was bad", and I will get to it.</p>
+                <p>Start with what it actually is. Sixty tons, walk five, run eight, which is quick for a heavy. It was built during the Age of War to fight in streets, and it has a low, narrow profile the old readouts compare to an UrbanMech's. Stand one at the end of an alley and you will genuinely struggle to pick it out, and that is not flavour text, it is on the official quirk list.</p>
+                <p><strong>What you have got.</strong> Two Fuersturm-C large lasers and two Fuersturm-b mediums, all four tucked into the side torsos, plus a Totschlagen four-rack in the right. Nine tons of armour and fifteen heat sinks. Almost the whole loadout is energy weapons, which means it can operate a long way from a supply line without much bothering the quartermaster, and that is why it made as good a raider as it did a street fighter.</p>
+                <p><strong>And the thing I would want to know before climbing into one.</strong> The arms are short and they are carrying almost no armour. You will lose one, sooner rather than later, and the readouts say so plainly rather than pretending otherwise. Worse, those short arms make hand-to-hand fighting a genuinely bad idea, because the shock of a physical hit can knock the Fuersturm laser systems clean out of alignment. This is a machine that does not want to be punched, built to fight in the one environment where punching happens constantly.</p>
+                <p><strong>If you are choosing one:</strong> the <strong>OSR-2D</strong> is the classic done properly, the <strong>OSR-4L</strong> is the best of the lot by a decent margin, the <strong>OSR-4K</strong> is the sensible modern pick, and the <strong>OSR-6R</strong> is the strongest thing anybody has ever built on this frame.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>The shape is the whole design. A low, narrow torso sitting on a walker frame, weapons in pods rather than arms, and you will recognise that layout because the Stalker and the Marauder both use it and both get far more credit for it. The Ostroc got there first, in 2511, and the only quirk the chassis carries is narrow and low profile.</p>
+            <p>That matters most exactly where it was built to fight. A sixty ton machine that is genuinely hard to pick out at the end of a street, moving at eighty-six kilometres an hour, is an unpleasant thing to go looking for.</p>
+            <p>Every weapon lives in the side torsos. Two large lasers, two mediums, and the four-rack on the right. Nothing at all in the arms, which is the first thing you notice with the panels off, and it explains the second thing straight away: the arms carry almost no armour because there was never anything in them worth protecting. You will lose one eventually. Plan for it rather than being surprised by it.</p>
+            <p>The energy-heavy loadout is the part I think gets underrated. One ton of missile reloads and the rest runs off the fusion plant, so an Ostroc can operate away from supply for a long stretch. That is why the old readouts keep calling it a raider as well as an urban fighter, and it is why you find it doing guerrilla work as often as street fighting.</p>
+
+            <div class="heat-callout">
+                <h3>The picture you know is of the wrong mech</h3>
+                <p>If you picture an Ostroc, you are probably picturing flat paddle-like hands with missile ports built into them. I know I did, for years.</p>
+                <p>That is not the standard machine. The real Ostroc has hands, proper ones, and its SRM 4 sits upright in the right torso.</p>
+                <p style="margin-top:16px;">What the paddles actually are is a field refit. Spares were impossible to get hold of during the Succession Wars, so people started bolting arm assemblies from the <strong>Ostwar</strong>, an earlier Ostmann design with interchangeable parts, onto damaged Ostrocs. Those Ostwar arms carry SRM 4 launchers instead of hands. The look became so common that most of the Inner Sphere assumed it was the factory configuration, and the artist who drew the machine for the technical readout drew what everybody had actually seen in the field.</p>
+                <p>So the most recognisable thing about this mech is a picture of somebody else's arms.</p>
+            </div>
+
+                        <h2>Six centuries of being overlooked</h2>
+            <p>Now the answer to the question I opened with.</p>
+            <p>Ostmann Industries built a genuinely good machine and could not build very many of them. Their production capacity was so small that they had to license their other Ost designs out to Kong Interstellar just to keep the Ostroc line running at any useful rate. Most of what they did manage went to garrison duty inside the Terran Hegemony. It still fought in every major conflict of the Star League, right through the Amaris Civil War and into the First Succession War, but there simply were never very many of them anywhere.</p>
+            <p>Then in 2777 the Ostmann facility on Terra was destroyed, and that was the end of new Ostrocs being built at all. Everybody who had one kept fielding it, the Combine more than most.</p>
+            <p><strong>And here is the part that really decided its reputation.</strong> When the Helm Memory Core turned up and the Inner Sphere started modernising its old designs, the Ostroc was mostly passed over. Not because it was unsuitable, but because there were too few of them, scattered too widely, for anyone to bother building a proper refit programme around. There was never even an official field refit kit. The OSR-2D you see today exists because individual techs upgraded whatever machines they had whenever they could get their hands on the parts. That tells you a lot about how the design was regarded, and none of it is a knock on the machine itself.</p>
+            <p>So it was rare, and being rare made it rarer still. That is the actual reason you do not see one on a table, and I think it is a far more interesting reason than most designs ever get.</p>
+            <p>It did come back, twice. The Capellan Strategios decided after the Clan Invasion that the old machine deserved modernising, and rather than reverse-engineer the original, they told every Capellan manufacturer to bid for a full replacement. Ceres Metals was the only company whose proposal matched exactly what had been asked for, and they took the contract, completing the first production run in January 3067. Versions then started turning up in the Taurian Concordat and the Circinus Federation, which the Capellans put down to espionage and were probably right about.</p>
+            <p>And in 3139, Kong Interstellar, the licensee that only ever built these because Ostmann could not keep up on their own, went back to the design with Clan Sea Fox help and produced the best Ostroc there has ever been. Six hundred years after the original, from the company that started out as the subcontractor.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Ostrocs available in the same era</strong>. This chassis rewards the comparison more than most, because the variants disagree sharply about what the machine is for.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 1 of the 15 Ostroc variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 15 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-2C: the original</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1228 &middot; PV 34 &middot; Skirmisher &middot; 2511<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 15 Single &middot; 300 Fusion Engine<br>
+  2x Large Laser, 2x Medium Laser, 1x SRM 4</p>
+  <p>The original, 2511, and still the one you will meet. Two Fuersturm-C large lasers and two Fuersturm-b mediums in the side torsos, a Totschlagen four-rack in the right. Nine tons of armour and eighty-six kilometres an hour on sixty tons. Nothing fancy and nothing wasted.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-2Cb: the Royal</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1478 &middot; PV 36 &middot; Skirmisher &middot; 2729<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 14 IS Double &middot; 300 Fusion Engine<br>
+  2x ER Large Laser, 2x Medium Laser, 2x Streak SRM 2</p>
+  <p>The SLDF Royal from 2729. ER large lasers, Streak twos instead of the four-rack, fourteen doubles and ferro-fibrous plate. Better than the standard in every direction and, like most Royals, almost impossible to actually field.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-2D: the one techs built themselves</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1396 &middot; PV 39 &middot; Skirmisher &middot; 3050<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 15 IS Double &middot; 300 Fusion Engine<br>
+  2x ER Large Laser, 2x Medium Laser, 1x SRM 4</p>
+  <p>The 3050 upgrade everybody actually wanted: ER large lasers and doubles, everything else left alone. There was never an official refit kit for the Ostroc, so this was done by whoever could get the parts. That tells you something about how the design was regarded.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-3C: three large lasers</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1288 &middot; PV 30 &middot; Skirmisher &middot; 2876<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 15 Single &middot; 300 Fusion Engine<br>
+  3x Large Laser</p>
+  <p>A third large laser in the right torso, paid for with both mediums and the four-rack. More reach on paper, and you have given up everything that made the machine work inside two hundred metres. Beaten outright by the OSR-2M, which costs 49 less BV and gives up nothing it carries.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-9C: the Ostwar frankenmech</h3>
+    <span class="tier tier-solid">Solid</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1230 &middot; PV 29 &middot; Juggernaut &middot; 2905<br>
+  Walk 4 / Run 6 / Jump 3 &middot; 19 Single &middot; 240 Fusion Engine<br>
+  2x SRM 2, 2x Large Laser, 2x Medium Laser</p>
+  <p>The Ostroc Mk II, and a frankenmech: Ostwar parts, an SRM 2 in each arm, four more heat sinks, three jump jets and half a ton more armour. The engine came down to a 240 to pay for it. Slower, tougher, and the only Juggernaut in the chassis.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-4L: the best of them</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1778 &middot; PV 46 &middot; Sniper &middot; 3066<br>
+  Walk 5 / Run 8 / Jump 5 &middot; 13 IS Double &middot; 300 Fusion Engine<br>
+  2x ER Large Laser, 2x ER Medium Laser</p>
+  <p>The Capellan redesign of 3067, and the best Ostroc there is. Endo steel, five jump jets, ten and a half tons of stealth armour and a Guardian ECM to run it. Built for Shadow Lances, and it is genuinely difficult to hit.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-4K: the sensible modern one</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1490 &middot; PV 30 &middot; Skirmisher &middot; 3077<br>
+  Walk 4 / Run 6 / Jump 6 &middot; 11 IS Double &middot; 240 Fusion Engine<br>
+  2x Snub-Nose PPC, 2x ER Medium Laser</p>
+  <p>Kurita, 3077, and the sensible one. Twin snub-nose PPCs, ER mediums, six jump jets and a heavy-duty gyro so it stays upright when something connects. It went into factory production after the Jihad, which very few Ostrocs ever managed.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>OSR-6R: the subcontractor’s revenge</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2095 &middot; PV 41 &middot; Skirmisher &middot; 3139<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 18 IS Double &middot; 360 XL Engine(IS)<br>
+  2x ER Large Laser, 2x ER Medium Laser, 1x Streak SRM 4</p>
+  <p>3139, and the ending nobody saw coming. Kong Interstellar, who only ever built Ostrocs under licence, survived the Succession Wars and went back to it with Clan Sea Fox help. Reflective armour, endo-composite, a 360 XL and Clan-spec lasers. The best damage in the chassis by a distance.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Fight where the profile actually helps you. Out in open ground you are just a sixty ton machine with nine tons of armour and no reach advantage worth mentioning, which is a fight you did not need to pick. In a built-up area you are hard to spot, quick on your feet, and carrying four lasers. Keep something between you and the enemy and keep moving. Make your peace early with losing an arm, because you will, and there is no point spending effort trying to protect them.</p>
+            <p><strong>Fighting one.</strong> Drag it out into open ground, or close the distance and start punching. Both work well. It has nothing worth calling a long-range game, so at distance you are only ever dealing with two large lasers. Get in close and its arms are short, thinly armoured and physically fragile, and a solid physical attack can knock its main guns clean out of alignment. 7 of the 15 variants carry jump jets, so do not assume the terrain will pin it down for you.</p>
+            <p><strong>What I see go wrong.</strong> People field it as a general purpose heavy because sixty tons sounds like one. It is not that. It is a specialist that happens to weigh sixty tons, and on an open map it will get outranged and outgunned by things that cost about the same.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Ostroc is the most single-minded chassis on the site. 13 of the 15 variants are tagged Skirmisher.</p>
+            <ul>
+                <li>That means balanced range weighting and a modest positive aggression modifier: it goes after whatever is already damaged or separated, and it uses terrain to do it.</li>
+                <li>The two exceptions are the <strong>OSR-9C</strong>, the Ostwar-parts Mk II, which is a Juggernaut and will come straight at you, and the <strong>OSR-4L</strong>, tagged Sniper, which will hold distance behind its stealth armour.</li>
+            </ul>
+            <p>A useful opponent when you want a scenario about position rather than a firing line, and a good one to put on a city map.</p>
+
+                        <h2>All 15 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">OSR-2C</td><td>2511</td><td>1228</td><td>34</td><td>Skirmisher</td><td class="wpn">2x Large Laser, 2x Medium Laser, 1x SRM 4</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">OSR-2Cb</td><td>2729</td><td>1478</td><td>36</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x Medium Laser, 2x Streak SRM 2</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">OSR-2M</td><td>2793</td><td>1239</td><td>29</td><td>Skirmisher</td><td class="wpn">2x Large Laser</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">OSR-3C</td><td>2876</td><td>1288</td><td>30</td><td>Skirmisher</td><td class="wpn">3x Large Laser</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by OSR-2M</span></td></tr>
+<tr><td class="vname">OSR-2L</td><td>2884</td><td>1233</td><td>31</td><td>Skirmisher</td><td class="wpn">2x Large Laser, 2x Medium Laser, 1x LRM 5</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">OSR-9C</td><td>2905</td><td>1230</td><td>29</td><td>Juggernaut</td><td class="wpn">2x SRM 2, 2x Large Laser, 2x Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">OSR-2C (Michi)</td><td>3028</td><td>1321</td><td>29</td><td>Skirmisher</td><td class="wpn">2x Large Laser, 2x Medium Laser, 1x SRM 6</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">OSR-2D</td><td>3050</td><td>1396</td><td>39</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x Medium Laser, 1x SRM 4</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">OSR-4C</td><td>3066</td><td>1325</td><td>33</td><td>Skirmisher</td><td class="wpn">2x Large Laser, 2x Medium Laser, 2x Rocket Launcher 15, 2x Rocket Launcher 10</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">OSR-4L</td><td>3066</td><td>1778</td><td>46</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">OSR-5W</td><td>3070</td><td>1655</td><td>37</td><td>Skirmisher</td><td class="wpn">2x Snub-Nose PPC, 2x ER Medium Laser</td><td class="num">3/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">OSR-4K</td><td>3077</td><td>1490</td><td>30</td><td>Skirmisher</td><td class="wpn">2x Snub-Nose PPC, 2x ER Medium Laser</td><td class="num">3/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">OSR-5C</td><td>3082</td><td>1788</td><td>37</td><td>Skirmisher</td><td class="wpn">1x Light PPC, 1x Medium Pulse Laser, 1x Heavy PPC, 1x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">OSR-3M</td><td>3088</td><td>1594</td><td>36</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x Streak SRM 4</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">OSR-6R</td><td>3139</td><td>2095</td><td>41</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 1x Streak SRM 4</td><td class="num">5/5/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the OSR-2C by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Capellan Confederation, Draconis Combine, Lyran Commonwealth, Mercenary, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>The rest of the Ost family</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Ostwar</h3>
+  <p class="vstats">65 tons &middot; Inner Sphere &middot; 3 variants &middot; BV 1205 to 1638</p>
+  <p>The design the Ostroc was built to replace, and the source of those paddle arms. Components were interchangeable enough that Ostrocs wore Ostwar parts for centuries.</p>
+</div>
+<div class="fam">
+  <h3>Ostsol</h3>
+  <p class="vstats">60 tons &middot; Mixed &middot; 15 variants &middot; BV 1245 to 2277</p>
+  <p>Arrived near the end of Ostroc production and carried no ammunition at all, which made it the better deep raider of the two.</p>
+</div>
+<div class="fam">
+  <h3>Ostscout</h3>
+  <p class="vstats">35 tons &middot; Inner Sphere &middot; 9 variants &middot; BV 484 to 1209</p>
+  <p>The scout of the family, licensed to Kong Interstellar in 2700 so Ostmann could keep the Ostroc line going.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Marauder</h3>
+  <p class="vstats">75 tons &middot; Inner Sphere &middot; 36 variants &middot; BV 1335 to 2708</p>
+  <p>No relation, but it uses the walker and pod profile the Ostroc had first, and it is far better known for it.</p>
+</div>
+<div class="fam">
+  <h3>UrbanMech</h3>
+  <p class="vstats">30 tons &middot; Inner Sphere &middot; 11 variants &middot; BV 470 to 894</p>
+  <p>The other machine built for streets, and the comparison the old readouts reach for when describing how hard an Ostroc is to spot.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Ostroc in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>Why is the Ostroc so rare?</h3>
+                <p>Ostmann Industries had small production capacity and licensed out their other designs just to keep the Ostroc line running. Their Terra facility was destroyed in 2777, ending new production. Then, crucially, when the Helm Memory Core let the Inner Sphere modernise its old designs, the Ostroc was passed over precisely because so few survived and they were spread so thinly that no refit programme made sense.</p>
+
+                <h3>What is the best Ostroc variant?</h3>
+                <p>The OSR-4L, the Capellan redesign of 3067, with stealth armour, ECM and five jump jets. For the Succession Wars the OSR-2D is the classic upgraded properly. The OSR-4K is the sensible late pick, and the OSR-6R at BV 2095 is the strongest machine ever built on the frame.</p>
+
+                <h3>Why does the Ostroc have paddle hands in the artwork?</h3>
+                <p>It does not, normally. The standard Ostroc has hands and mounts its SRM 4 in the right torso. The paddle-like launchers in the original Technical Readout: 3025 art are arm assemblies from the Ostwar, an earlier Ostmann design with interchangeable parts, bolted on as a field refit when spares ran short. It became so common that people assumed it was the original.</p>
+
+                <h3>Is the Ostroc good?</h3>
+                <p>In the right place, yes. It is fast for a heavy, hard to spot in an urban environment, and almost entirely energy-armed so it can operate away from supply. In open ground it is outranged and its arms are fragile. It is a specialist, not a general purpose heavy.</p>
+
+                <h3>What is the difference between the Ostroc, Ostsol and Ostwar?</h3>
+                <p>All three are Ostmann designs sharing many components. The Ostwar came first and the Ostroc was built to replace it. The Ostsol arrived near the end of Ostroc production and carried no ammunition at all, which made it the better deep raider of the two.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is the Ostroc so rare?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Ostmann Industries had small production capacity and licensed out their other designs just to keep the Ostroc line running. Their Terra facility was destroyed in 2777, ending new production. Then, crucially, when the Helm Memory Core let the Inner Sphere modernise its old designs, the Ostroc was passed over precisely because so few survived and they were spread so thinly that no refit programme made sense."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best Ostroc variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The OSR-4L, the Capellan redesign of 3067, with stealth armour, ECM and five jump jets. For the Succession Wars the OSR-2D is the classic upgraded properly. The OSR-4K is the sensible late pick, and the OSR-6R at BV 2095 is the strongest machine ever built on the frame."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Ostroc have paddle hands in the artwork?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It does not, normally. The standard Ostroc has hands and mounts its SRM 4 in the right torso. The paddle-like launchers in the original Technical Readout: 3025 art are arm assemblies from the Ostwar, an earlier Ostmann design with interchangeable parts, bolted on as a field refit when spares ran short. It became so common that people assumed it was the original."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Ostroc good?",
+      "acceptedAnswer": {"@type": "Answer", "text": "In the right place, yes. It is fast for a heavy, hard to spot in an urban environment, and almost entirely energy-armed so it can operate away from supply. In open ground it is outranged and its arms are fragile. It is a specialist, not a general purpose heavy."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between the Ostroc, Ostsol and Ostwar?",
+      "acceptedAnswer": {"@type": "Answer", "text": "All three are Ostmann designs sharing many components. The Ostwar came first and the Ostroc was built to replace it. The Ostsol arrived near the end of Ostroc production and carried no ammunition at all, which made it the better deep raider of the two."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'ostroc';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

@@ -20,6 +20,15 @@ unhedged, no contractions, the Inner Sphere referred to as "they". Clan
 terms only where they carry meaning (caste, Trial, touman); heavier jargon
 reads as pastiche. chassis_timber_wolf.py is the reference implementation.
 
+The two registers sit close enough together that writing one right after
+the other is exactly when the voice bleeds. It happened on chassis_ostroc.py:
+written after chassis_timber_wolf.py, it came out clipped and unhedged, a
+Clan technician's rhythm on an Inner Sphere page, with none of the
+MechTech's usual first-person asides. The build guard below catches the
+obvious version of this in both directions; it does not replace reading
+the lead paragraph back before shipping, especially when a Clan and an
+Inner Sphere page are written in the same sitting.
+
 The engine decides which note to show from the data, not from the module:
 technology == 'Clan' gets the voice note automatically. "Mixed" chassis are
 Inner Sphere designs with Clan-tech variants and keep the MechTech voice.
@@ -684,16 +693,47 @@ def check(ch, c, page):
     if 'tool_handoff' not in page:
         p.append('click tracking script missing')
 
-    # A Clan page written in the Inner Sphere voice is a real mistake and an
-    # easy one: the giveaway is the MechTech's bay. Flag it rather than ship
-    # two different narrators without a note.
+    # Voice drift, in either direction. Writing a Clan page and an Inner
+    # Sphere one back to back is exactly when this happens: the two
+    # registers are close enough that a rewrite of one bleeds into the
+    # other. Caught this happening on the Ostroc page once already.
+    try:
+        art_body = page[page.index('<div class="mech-hero">'):page.index('class="srcnote"')]
+    except ValueError:
+        art_body = page
+    body_txt = re.sub(r'<[^>]+>', ' ', art_body)
+
+    # Vocabulary that only belongs to the Clan technician: caste, touman,
+    # Trial-speak, "Aff" for yes. Specific enough that it will not collide
+    # with ordinary Inner Sphere prose, which mentions "the Clans" and
+    # "Clan technology" constantly without ever using these.
+    CLAN_TELLS = ('touman', 'the technician caste', 'Clan technician',
+                  ' Aff,', ' Aff.')
+    # The MechTech's hedges and asides: first person, opinionated, warm.
+    # Every Inner Sphere/Mixed page written so far hits at least one of
+    # these somewhere in the article body.
+    MECHTECH_TELLS = ('I think', 'I would', 'I have', 'I like', 'I enjoy',
+                       'I find', 'I actually', 'I recall', 'I swear',
+                       'I still', 'I reckon', 'gets me', 'in the bay')
+
     if ch.rec.get('technology') == 'Clan':
         if 'voice-note' not in page:
             p.append('Clan chassis with no voice note')
-        body_txt = re.sub(r'<[^>]+>', ' ', page)
         for tell in ('in the bay', 'in my bay', 'signed one out'):
             if tell in body_txt:
                 p.append(f'Clan page uses Inner Sphere MechTech phrasing: "{tell}"')
+    else:
+        # Inner Sphere and Mixed chassis keep the MechTech. Flag Clan
+        # vocabulary bleeding in, and flag the MechTech's voice going
+        # missing entirely, which is what happened when the Ostroc got
+        # written right after a Clan page and came out half-technician.
+        for tell in CLAN_TELLS:
+            if tell in body_txt:
+                p.append(f'Inner Sphere page uses Clan-voice phrasing: "{tell.strip()}"')
+        if not any(t in body_txt for t in MECHTECH_TELLS):
+            p.append('Inner Sphere page has none of the MechTech\'s usual '
+                     'first-person asides — check it has not drifted '
+                     'into the Clan register')
 
     # Unrendered placeholders. A doubled brace in a chassis module's prose
     # renders a literal {name} instead of the value, and the page still looks
