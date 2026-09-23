@@ -19,9 +19,6 @@
     <meta property="og:description" content="All 13 Highlander variants ranked, and the story of how a misuse became a factory feature.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://battletechhq.com/highlander">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
@@ -105,8 +102,8 @@
             border-bottom: 1px solid #2a2a2a;
         }
         .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
-        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: var(--measure); }
-        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: var(--measure); }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
         .mech-body li { margin-bottom: 8px; }
 
         .heat-callout {
@@ -261,7 +258,7 @@
             padding-top: 18px;
             margin-top: 44px;
             line-height: 1.7;
-            max-width: var(--measure);
+            max-width: 800px;
         }
         .mech-plate {
             margin: 28px 0;
@@ -285,32 +282,38 @@
             padding: 12px 18px 14px;
             border-top: 1px solid #262626;
         }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
     </style>
-    <link rel="manifest" href="/site.webmanifest">
-    <script defer src="/assets/js/site.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
 
     <header>
-    <div class="header-content">
-        <a href="/" class="logo">BattleTech HQ</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-            <span aria-hidden="true">&#9776;</span> Menu
-        </button>
-        <nav id="site-nav" aria-label="Main">
-            <ul>
-                <li><a href="/lance-builder">Lance Builder</a></li>
-                <li><a href="/tools">Tools</a></li>
-                <li><a href="/mechs" aria-current="page">Mech Guides</a></li>
-                <li><a href="/guides">Articles</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a class="nav-search" href="/search"><span aria-hidden="true">&#9906;</span> Search</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<main id="main">
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <div class="container">
 
@@ -321,13 +324,18 @@
             <p class="sub">90 tons &middot; Inner Sphere &middot; 13 variants &middot; 2592 to 3115</p>
             <div class="mech-hero-grid">
             <figure class="mech-schematic">
-                <img src="assets/images/highlander-schematic-480.webp" srcset="assets/images/highlander-schematic-480.webp 480w" sizes="(min-width: 900px) 560px, calc(100vw - 80px)" width="520" height="520" alt="Illustration of a Highlander BattleMech standing on the crushed wreckage of another machine, showing the Gauss rifle arm, the LRM 20 shoulder rack and the reinforced legs" loading="eager" decoding="async">
+                <picture>
+                    <source srcset="assets/images/highlander-schematic.webp" type="image/webp">
+                    <img src="assets/images/highlander-schematic.png"
+                         alt="Illustration of a Highlander BattleMech standing on the crushed wreckage of another machine, showing the Gauss rifle arm, the LRM 20 shoulder rack and the reinforced legs"
+                         width="520" height="520" loading="eager" decoding="async">
+                </picture>
                 <figcaption>The aftermath of a Highlander Burial. Look at what it is standing on, and then look at the legs it landed with. Those were reinforced on purpose.</figcaption>
             </figure>
             <div class="verdict-box">
-                <p>Hollis and StarCorps put the Highlander out in 2592 as a city and installation defender. Ninety tons, walk three, and three HildCo jump jets giving it ninety metres of lift, which at the time made it about the heaviest thing in existence that could leave the ground. The jets were there so it could get over a building instead of walking round it, and so it could keep up with faster machines on broken ground.</p>
-                <p>Then the trial runs happened, and the pilots worked out what else you can do with ninety tons and ninety metres.</p>
-                <p>You jump, and you come down on top of somebody. A Highlander landing on a light mech does not damage it so much as drive it into the ground. And here is the part that gets me every time I am elbow-deep in a leg assembly: it worked so well that the design team went back and re-engineered the legs to take repeated death from above attacks. They took a desperation move, decided it was a feature, and built the machine around it. It is on the official quirk list to this day as reinforced legs.</p>
+                <p>Hollis and StarCorps put the Highlander out in 2592 to hold cities and fixed installations. Ninety tons, walk three, and three HildCo jump jets giving it ninety metres of lift, which at the time made it about the heaviest thing in existence that could leave the ground. The jets existed so it could clear a building rather than go around it, and so it could keep pace with faster machines on broken ground.</p>
+                <p>Then the trial runs happened, and pilots started finding out what ninety tons with ninety metres of lift could really do.</p>
+                <p>You jump, and you come down on top of somebody. A Highlander landing on a light mech doesn't so much damage it as drive it straight into the dirt. And here is the part that gets me every time I am elbow-deep in a leg assembly: the legs ended up rebuilt afterward, purpose-made to survive doing it again and again. They took a desperation move, decided it was a feature, and built the machine around it. It is on the official quirk list to this day as reinforced legs.</p>
                 <p><strong>What you have got.</strong> An M-7 Gauss rifle that takes a ton of armour off at a time, a Holly-20 for the approach, two Harmon mediums and a Holly six-rack for close work. Two tons of ammunition each for the Gauss and both launchers, CASE to keep it from killing you, and fifteen and a half tons of ferro-fibrous. Twelve heat sinks, which sounds thin and is not: the weapons run cool enough that you can keep up an almost continuous barrage.</p>
                 <p><strong>And the thing the variant list tells you.</strong> 12 of the 13 variants built over 523 years kept those three jump jets. One did not. Near enough everyone who ever built a Highlander understood what it was for.</p>
                 <p><strong>If you are choosing one:</strong> the <strong>HGN-732</strong> is the real thing and the <strong>HGN-732b</strong> is flatly better if your era allows it. The <strong>HGN-733</strong> is the cheap way in and there is nothing wrong with it. The <strong>HGN-740</strong> is the best of the late ones.</p>
@@ -335,8 +343,7 @@
             </div>
         </div>
 
-        <nav class="guide-toc" data-toc data-toc-scope=".mech-body" hidden
-             aria-labelledby="toc-title"></nav>
+        
 
         <div class="mech-body">
 
@@ -361,7 +368,7 @@
 
                         <h2>Five centuries, and it nearly did not make it</h2>
             <p>Within a few decades of 2592 nearly every BattleMech regiment in the Regular and Royal armies had them. Then the Star League fell and the Highlander very nearly went with it.</p>
-            <p>StarCorps' plant on Son Hoa was wrecked towards the end of the Second Succession War and the original HGN-732 became virtually extinct. What kept the name alive was an arrangement between StarCorps and Hollis to rebuild wrecked chassis from scratch using whatever technology was still available, which is how the HGN-733 came about: a Highlander with an autocannon where the Gauss rifle should be, because there were no more Gauss rifles.</p>
+            <p>StarCorps' Son Hoa plant was wrecked late in the Second Succession War, and the original HGN-732 all but vanished as a result. What kept the name alive was an arrangement between StarCorps and Hollis to rebuild wrecked chassis from scratch using whatever technology was still available, which is how the HGN-733 came about: a Highlander with an autocannon where the Gauss rifle should be, because there were no more Gauss rifles.</p>
             <p>Production did not properly restart until the mid-3030s, on Son Hoa and Corey, and even then they were managing barely a dozen a year. A dozen. For the entire Inner Sphere. The Capellans and the Lyrans got most of those and tended to put them in lances alongside Exterminators, Victors, Grasshoppers and Catapults.</p>
             <p>Meanwhile ComStar had been sitting quietly on a large stock of Star League Highlanders that nobody knew about. They handed some to the Draconis Combine during the War of 3039, and the sudden appearance of all those supposedly rare 733s, plus a few genuine 732s whose technology got past ComStar's own screening, did serious damage to Lyran morale. Finding out the enemy has a museum piece is one thing. Finding out they have a dozen of them is another.</p>
             <p>The Northwind Highlanders were the exception to all of it. Through the Succession Wars they and ComStar were the only forces keeping large numbers of the machine running, and they have a reputation for the Burial that the rest of us are still hearing about.</p>
@@ -604,7 +611,7 @@
                 <p>Not from its guns. A Gauss rifle and missile launchers generate very little heat, so twelve single sinks are enough for a near-continuous barrage. The jump jets are the complication: use them hard and the margin the weapons left you disappears.</p>
 
                 <h3>Why is the Highlander so rare in the Succession Wars?</h3>
-                <p>The StarCorps plant on Son Hoa was destroyed near the end of the Second Succession War and the original went virtually extinct. Rebuilt chassis kept the name alive, and production did not restart properly until the mid-3030s, at barely a dozen machines a year. ComStar and the Northwind Highlanders were the only forces keeping large numbers running.</p>
+                <p>Son Hoa, StarCorps' plant, was destroyed near the close of the Second Succession War, and the original variant nearly disappeared with it. Rebuilt chassis kept the name alive, and production did not restart properly until the mid-3030s, at barely a dozen machines a year. ComStar and the Northwind Highlanders were the only forces keeping large numbers running.</p>
             </div>
 
             <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
@@ -612,59 +619,45 @@
         </div>
     </div>
 
-    </main>
-
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>BattleTech HQ</h4>
-            <p>Guides, tools and opinions for the modern MechWarrior, from the
-            <a href="https://www.youtube.com/@DaveAsp81" target="_blank" rel="noopener" style="color:#ff8c00;">BattleTech Down Under</a>
-            YouTube channel. Something wrong or missing?
-            <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">Tell me</a>.</p>
-            <p style="margin-top:14px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-section">
-            <h4>Tools</h4>
-            <ul>
-                <li><a href="/lance-builder">Lance Builder</a></li>
-                <li><a href="/game-tracker">Game Tracker</a></li>
-                <li><a href="/opfor-command">OpFor Command</a></li>
-                <li><a href="/campaign">Campaign Tracker</a></li>
-                <li><a href="/paint-tool">Paint Tool</a></li>
-                <li><a href="/tools">All five, compared &rarr;</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
         </div>
-        <div class="footer-section">
-            <h4>Reading</h4>
-            <ul>
-                <li><a href="/articles/battletech-beginner-guide">Start here</a></li>
-                <li><a href="/mechs">Mech Guides</a></li>
-                <li><a href="/guides">All guides &amp; articles</a></li>
-                <li><a href="/rating-scale">How guides are rated</a></li>
-                <li><a href="/search">Search the site</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>Elsewhere</h4>
-            <ul>
-                <li><a href="https://www.sarna.net" target="_blank" rel="noopener">Sarna.net &mdash; BattleTech Wiki</a></li>
-                <li><a href="https://www.masterunitlist.info" target="_blank" rel="noopener">Master Unit List</a></li>
-                <li><a href="https://megamek.org" target="_blank" rel="noopener">MegaMek &mdash; free digital BT</a></li>
-                <li><a href="https://store.catalystgamelabs.com" target="_blank" rel="noopener">Catalyst Game Labs</a></li>
-                <li><a href="https://battletech.com" target="_blank" rel="noopener">Official BattleTech</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot;
-           <a href="/privacy">Privacy</a> &middot;
-           <a href="/affiliate-disclosure">Affiliate disclosure</a> &middot;
-           <a href="/image-credits">Image credits</a></p>
-        <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
-        <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
-    </div>
-</footer>
+    </footer>
 
 <script type="application/ld+json">
 {
@@ -694,7 +687,7 @@
     {
       "@type": "Question",
       "name": "Why is the Highlander so rare in the Succession Wars?",
-      "acceptedAnswer": {"@type": "Answer", "text": "The StarCorps plant on Son Hoa was destroyed near the end of the Second Succession War and the original went virtually extinct. Rebuilt chassis kept the name alive, and production did not restart properly until the mid-3030s, at barely a dozen machines a year. ComStar and the Northwind Highlanders were the only forces keeping large numbers running."}
+      "acceptedAnswer": {"@type": "Answer", "text": "Son Hoa, StarCorps' plant, was destroyed near the close of the Second Succession War, and the original variant nearly disappeared with it. Rebuilt chassis kept the name alive, and production did not restart properly until the mid-3030s, at barely a dozen machines a year. ComStar and the Northwind Highlanders were the only forces keeping large numbers running."}
     }
   ]
 }
@@ -777,5 +770,16 @@
 })();
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
 </body>
 </html>
