@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Centurion variant ranked by a MechTech. Why its autocannon keeps getting replaced, the story of Yen-Lo-Wang across three generations, and how to play one.">
+    <meta name="keywords" content="Centurion BattleTech, best Centurion variant, CN9-A, CN9-D, Yen-Lo-Wang, Justin Xiang Allard, Kai Allard-Liao, BattleTech medium mech">
+    <title>Centurion: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/centurion">
+    <meta property="og:title" content="Centurion: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 25 Centurion variants ranked, and the story of Yen-Lo-Wang, the medium mech that outlived three of its own pilots.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/centurion">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Centurion</p>
+
+        <div class="mech-hero">
+            <h1>Centurion</h1>
+            <p class="sub">50 tons &middot; Inner Sphere &middot; 25 variants &middot; 2801 to 3121</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/centurion-schematic.webp" type="image/webp">
+                    <img src="assets/images/centurion-schematic.png"
+                         alt="Illustration of a Centurion BattleMech, showing the autocannon in the right arm and the LRM launcher grid on the left shoulder"
+                         width="470" height="579" loading="eager" decoding="async">
+                </picture>
+                <figcaption>The gun in that right arm is the whole story. Everything else on this page is what happens when it breaks.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>The most famous Centurion in fiction started out as nothing special. Just a beat-up secondhand CN9-A, bought on Solaris VII by an exiled noble with no money of his own and everything to prove.</p>
+                <p>That's Yen-Lo-Wang, and I'll get to it properly further down. First, the chassis it came from. Corean Enterprises built the Centurion in 2801 to complement their Trebuchet, a fire support 'Mech that needed something to stand in front of it. The Centurion ended up eclipsing the machine it was built to support.</p>
+                <p><strong>What you've got.</strong> A Luxor D-Series AC/10 in the right arm, an LRM 10 in the left torso for reach, two medium lasers, one of them rear-facing, for anything that closes the distance. Ten tons of armour and 10 heat sinks. It's not fast, walk four with no jump jets on the original, but it hits at every range band and it keeps hitting after most mediums its age have run dry.</p>
+                <p><strong>Here's the thing almost nobody explains properly.</strong> That autocannon's loading system is notorious for jamming, and it's custom-fitted to this one chassis rather than built from off-the-shelf parts. When it breaks in the field and the specific part isn't in the bay, the fix isn't repair. It's pulling the whole gun out and bolting on something else. That's not a one-off story, it's the actual reason this chassis has carried an AC/20, a pair of PPCs, a Gauss rifle, a rotary autocannon, a plasma rifle and a light Gauss rifle across its history. Every one of those is somebody's answer to a Luxor that finally gave up.</p>
+                <p><strong>If you're choosing one:</strong> the <strong>CN9-A</strong> is still the honest original, the <strong>CN9-D</strong> is the modern standard once an LB 10-X and an XL engine are available, and the <strong>CN9-YLW</strong> is worth fielding for the name alone.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Everything on the CN9-A points at one job: stay in the fight at whatever range the enemy picks. The AC/10 and LRM 10 overlap enough that there's rarely a gap, and the two medium lasers, one of them facing backward, mean getting behind a Centurion isn't the free kill it is on most mediums.</p>
+            <p>The catch is the autocannon itself. A Luxor D-Series AC/10, fed from a two-ton magazine in the right torso, and per Sarna's own account, its loading system is "notorious for its defects." Because the whole assembly is custom-fitted rather than a standard part, a tech without the exact spare on hand often can't repair it at all. The standard fix, documented across the variant list, is to strip the mount and put something else in its place. That's not a flaw the factory ever fixed. It's the reason there's a CN9-AH with an AC/20 crammed into the same space, a CN9-Ar running twin PPCs because Jihad-era factories couldn't get autocannon parts at all, and a dozen more in between.</p>
+            <p>Heat is a minor concern next to that. A full alpha on the CN9-A runs 14 against 10 sinks, 4 over each turn it fires everything at once, which is manageable if you're not doing it constantly.</p>
+
+            <div class="heat-callout">
+                <h3>Yen-Lo-Wang: three owners, one name</h3>
+                <p>In 3027, Justin Xiang Allard was exiled from House Liao and broke, fighting on Solaris VII to survive on money borrowed from Kym Sorenson. He bought an old, ordinary CN9-A. Pulled the LRM 10 for a bigger autocannon, an AC/20, and won his first match on the surprise of it. He fixed titanium nails to the hand actuators later, a detail the rules could only represent as a hatchet, and used them once when the autocannon jammed mid-fight against Billy Wolfson.</p>
+                <p style="margin-top:16px;">The machine passed to his son, Kai Allard-Liao, who rebuilt it during the Clan Invasion: the AC/20 became a Gauss rifle, three medium pulse lasers went in, triple-strength myomer too. It went missing in action against Clan Jade Falcon on Alyina. Kai got it back anyway. After his death, it passed again, to Danai Liao-Centrella, rebuilt a third time with a Gauss rifle, an LRM 20, and endo steel construction.</p>
+                <p style="margin-top:16px;">Three pilots, three generations of the same family, one name carried through all of it. Named for a Chinese god of death, which is exactly the kind of thing you name a 'Mech that keeps outliving the people who own it.</p>
+            </div>
+
+                        <h2>Two centuries of a temperamental gun</h2>
+            <p>The Centurion earned its keep early. Born into the First Succession War, it became close to the Federated Suns' unofficial house medium, and its slow, steady advances backed by that intimidating autocannon gave AFFS pilots a reputation for grinding fights rather than winning them fast.</p>
+            <p>By the early 3000s, Corean was in real trouble. The autocannon's chronic reliability problems had followed the design for two centuries, and losing the Centurion contract would have hurt badly. Corean's answer was to build an entirely new production facility on New Avalon in 3012 and move its whole headquarters there, spending heavily to fix what could be fixed. It worked well enough that the New Avalon Institute of Science took notice, and in 3022 NAIS partnered with Corean to make the Centurion a testbed for new technology outright. The line survived, and when the Federated Suns and Lyran Commonwealth merged, the AFFC inherited it as a going concern.</p>
+            <p>Demand kept growing. Corean licensed Jalastar Aerospace on Panpour to build the original CN9-A in 3047, and unveiled the modernised CN9-D two years later. The Clan Invasion pushed variants further still, and each new generation cycled the previous one out to mercenary units, which is how the design ended up scattered across the Periphery and even into Marian Hegemony service.</p>
+            <p>It didn't survive the Federated Commonwealth Civil War as a first-line design. Newer chassis pushed it out through the 3060s, and by the time of the HPG Blackout the original CN9-A was gone from front-line service entirely, though the line kept producing new variants well past that point.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Centurions available in the same era</strong>. One variant, the CN9-D3D, fails the Trap test to the CN10-W, which does the same sniping job for less.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 1 of the 25 Centurion variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 25 are in the table further down. These are the ones that change how the machine plays, or that carry a name worth knowing.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>CN9-A: the original</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">50 tons &middot; BV 945 &middot; PV 28 &middot; Brawler &middot; 2801<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 200 Fusion Engine<br>
+  1x AC/10, 1x LRM 10, 2x Medium Laser</p>
+  <p>The original, 2801. Luxor AC/10 in the right arm, an LRM 10 for reach, two medium lasers for anything that gets close. 10 heat sinks and ten tons of armour. Slow for a medium, walk four with no jump jets, but it hits at every range and it&#x27;ll still be standing when the fight&#x27;s done. The one everybody means.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CN9-D: the modern standard</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">50 tons &middot; BV 1130 &middot; PV 28 &middot; Skirmisher &middot; 3049<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 10 Single &middot; 300 XL Engine<br>
+  1x LB 10-X AC, 1x LRM 10, 2x Medium Laser</p>
+  <p>The 3049 modernisation: an LB 10-X in place of the old Luxor, an XL engine for walk six, run nine. Properly quick for the first time in this chassis&#x27; life, and the LB 10-X can switch between slug and cluster rounds, which the original autocannon never could.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CN9-YLW: Yen-Lo-Wang, first generation</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">50 tons &middot; BV 957 &middot; PV 27 &middot; Juggernaut &middot; 3027<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 200 Fusion Engine<br>
+  1x AC/20, 2x Medium Laser</p>
+  <p>Justin Xiang Allard&#x27;s own machine, and the one that made this chassis famous. Same AC/20 conversion as the AH, plus two medium lasers and, per the fluff, titanium nails on the hand actuators that the rules represent as a hatchet. Worth fielding for the name alone.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CN9-YLW2: Yen-Lo-Wang, Kai&#x27;s rebuild</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">50 tons &middot; BV 1415 &middot; PV 28 &middot; Brawler &middot; 3051<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 200 XL Engine<br>
+  3x Medium Pulse Laser, 1x Gauss Rifle</p>
+  <p>Kai Allard-Liao&#x27;s Clan-era rebuild: the AC/20 becomes a Gauss rifle, three medium pulse lasers replace the mediums, triple-strength myomer goes in. Went missing in action against Clan Jade Falcon on Alyina. Kai recovered it anyway.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CN9-D5: rotary autocannon DPS</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">50 tons &middot; BV 1738 &middot; PV 47 &middot; Skirmisher &middot; 3062<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 10 IS Double &middot; 300 XL Engine<br>
+  1x Rotary AC/5, 2x ER Medium Laser</p>
+  <p>A rotary AC/5 and double heat sinks turn this into a genuine DPS machine: four short, four medium damage per Alpha Strike turn, more than any other Centurion on this list. Loud, and it means it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CN10-D: the newest, on a Light Engine</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1260 &middot; PV 28 &middot; Sniper &middot; 3121<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 IS Double &middot; 220 Light Engine<br>
+  1x LB 10-X AC, 1x LRM 10, 1x Light PPC, 1x ER Medium Laser</p>
+  <p>The newest variant here, 3121: an LB 10-X, an LRM 10, a light PPC and an ER medium laser, on a Light Engine that survives a side torso hit an XL never would. The old formula, finally on a chassis built to take a punch.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Use the range overlap. Open with the autocannon and LRM together, and don't be afraid to let something close in, the rear-facing medium laser means it doesn't cost you as much as it should. Watch your heat if you're running one of the later doubled-up variants, but on the original ten single sinks, firing everything every turn will catch up with you.</p>
+            <p><strong>Fighting one.</strong> It's slow. Walk four on the original, nothing exotic even on most later builds, so out-manoeuvring it is realistic if your own 'Mech has the legs. Its rear medium laser means a flanking attack isn't free, but it is survivable, since a Centurion caught from behind still can't bring its heavy gun to bear in time.</p>
+            <p><strong>What I see go wrong.</strong> People treat every Centurion like the original AC/10 build and get surprised when it's actually carrying a Gauss rifle or twin PPCs. Check the variant before you commit to a plan, because this chassis has changed its primary weapon more times than almost anything else on this site.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Centurion splits across all four roles: 10 Brawlers, 8 Skirmishers, 5 Snipers and 2 Juggernauts out of 25 variants.</p>
+            <ul>
+                <li>The AC/20 builds, including both early <strong>CN9-YLW</strong> fits, play as Juggernauts and Brawlers and will close the distance.</li>
+                <li>The XL-engined <strong>CN9-D</strong> family plays as Skirmisher, repositioning rather than holding ground.</li>
+                <li>The PPC and Gauss builds like <strong>CN10-W</strong> and <strong>CN11-OE</strong> play as Snipers and will hold range.</li>
+            </ul>
+            <p>A good mid-tier lance filler precisely because it refuses to specialise in just one thing.</p>
+
+                        <h2>All 25 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">CN9-A</td><td>2801</td><td>945</td><td>28</td><td>Brawler</td><td class="wpn">1x AC/10, 1x LRM 10, 2x Medium Laser</td><td class="num">2/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-AH</td><td>2874</td><td>945</td><td>29</td><td>Juggernaut</td><td class="wpn">1x AC/20, 1x LRM 10</td><td class="num">3/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">CN9-AL</td><td>2915</td><td>1057</td><td>28</td><td>Brawler</td><td class="wpn">1x Large Laser, 1x Small Laser, 1x LRM 10, 2x Medium Laser</td><td class="num">2/2/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">CN9-YLW &#x27;Yen Lo Wang&#x27;</td><td>3027</td><td>957</td><td>27</td><td>Juggernaut</td><td class="wpn">1x AC/20, 2x Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">CN9-D</td><td>3049</td><td>1130</td><td>28</td><td>Skirmisher</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 2x Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-YLW2 &#x27;Yen Lo Wang&#x27;</td><td>3051</td><td>1415</td><td>28</td><td>Brawler</td><td class="wpn">3x Medium Pulse Laser, 1x Gauss Rifle</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-D3</td><td>3052</td><td>1324</td><td>29</td><td>Skirmisher</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 2x Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CN10-B</td><td>3057</td><td>1243</td><td>30</td><td>Brawler</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 1x Medium Laser, 1x Medium Pulse Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CN10-J</td><td>3057</td><td>1257</td><td>28</td><td>Brawler</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 1x Medium Laser, 1x Medium Pulse Laser</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN10-W</td><td>3057</td><td>1112</td><td>29</td><td>Sniper</td><td class="wpn">1x LB 10-X AC, 1x PPC, 1x LRM 10</td><td class="num">2/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-D3D</td><td>3060</td><td>1373</td><td>37</td><td>Skirmisher</td><td class="wpn">1x Light Gauss Rifle, 1x LRM 10, 1x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by CN10-W</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">CN9-D5</td><td>3062</td><td>1738</td><td>47</td><td>Skirmisher</td><td class="wpn">1x Rotary AC/5, 2x ER Medium Laser</td><td class="num">4/4/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-Da</td><td>3065</td><td>1035</td><td>28</td><td>Skirmisher</td><td class="wpn">1x AC/5, 1x LRM 10, 2x Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CN9-D4D</td><td>3066</td><td>1369</td><td>31</td><td>Skirmisher</td><td class="wpn">1x Light Gauss Rifle, 1x LRM 15, 1x ER Medium Laser</td><td class="num">2/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">CN9-D9</td><td>3071</td><td>1638</td><td>31</td><td>Skirmisher</td><td class="wpn">1x Plasma Rifle, 1x LRM 10, 2x ER Medium Laser</td><td class="num">2/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN9-Ar</td><td>3072</td><td>1226</td><td>31</td><td>Sniper</td><td class="wpn">1x Heavy PPC, 1x Light PPC, 1x LRM 10, 1x Medium Laser, 1x Medium Pulse Laser</td><td class="num">2/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">CN9-H</td><td>3077</td><td>848</td><td>20</td><td>Brawler</td><td class="wpn">1x LB 10-X AC, 5x Rocket Launcher 10, 1x Medium Laser</td><td class="num">2/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">CN9-YLW3 &#x27;Yen Lo Wang&#x27;</td><td>3101</td><td>1815</td><td>33</td><td>Brawler</td><td class="wpn">1x Gauss Rifle, 1x LRM 20, 1x ER Medium Laser</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN11-O</td><td>3111</td><td>1236</td><td>28</td><td>Brawler</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 2x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CN11-OA</td><td>3111</td><td>1398</td><td>35</td><td>Brawler</td><td class="wpn">1x Rotary AC/5, 1x MML 9, 1x ER Medium Laser</td><td class="num">4/4/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN11-OB</td><td>3111</td><td>1430</td><td>34</td><td>Sniper</td><td class="wpn">1x Heavy PPC, 1x MML 7</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN11-OC</td><td>3111</td><td>1628</td><td>35</td><td>Skirmisher</td><td class="wpn">1x Plasma Rifle, 1x LRM 10, 2x ER Medium Laser</td><td class="num">2/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">CN11-OD</td><td>3111</td><td>1177</td><td>30</td><td>Brawler</td><td class="wpn">1x ER Small Laser, 1x MML 9, 2x ER Medium Laser</td><td class="num">3/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CN11-OE</td><td>3111</td><td>1515</td><td>37</td><td>Sniper</td><td class="wpn">1x Gauss Rifle, 2x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CN10-D</td><td>3121</td><td>1260</td><td>28</td><td>Sniper</td><td class="wpn">1x LB 10-X AC, 1x LRM 10, 1x Light PPC, 1x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the CN9-A by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Federated Commonwealth, Federated Suns, Free Rasalhague Republic, Free Worlds League, Kell Hounds, Lyran Alliance, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Federated Suns, Free Rasalhague Republic, Free Worlds League, Kell Hounds, Lyran Alliance, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Federated Suns, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Mercenary, Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Trebuchet</h3>
+  <p class="vstats">50 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 984 to 2165</p>
+  <p>The fire-support &#x27;Mech the Centurion was built to complement, and ended up eclipsing.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Centurion in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Centurion variant?</h3>
+                <p>The CN9-A at BV 945 is still the honest baseline. The CN9-D is the better all-rounder once an LB 10-X and an XL engine are available, and the CN9-YLW, Yen-Lo-Wang, is worth fielding for the history alone.</p>
+
+                <h3>Why does the Centurion have so many different primary weapons across its variants?</h3>
+                <p>Its signature Luxor D-Series AC/10 has a loading system Sarna itself calls notorious for defects, and because the mount is custom-fitted rather than a standard part, a damaged one often can't be repaired at all without the exact spare. The documented fix across the chassis' history is to remove the whole gun and replace it with something else entirely, and that's how you end up with variants built around an AC/20, a pair of PPCs, a Gauss rifle, or a rotary autocannon instead.</p>
+
+                <h3>What is Yen-Lo-Wang?</h3>
+                <p>The most famous individual Centurion in BattleTech fiction. Originally an ordinary secondhand CN9-A bought by the exiled Justin Xiang Allard on Solaris VII in 3027, rebuilt with an AC/20 and later passed to his son Kai Allard-Liao and then to Danai Liao-Centrella, each rebuild carrying the same name across three generations of one family.</p>
+
+                <h3>Is the Centurion a good beginner mech?</h3>
+                <p>It's a solid, forgiving design: overlapping weapon ranges mean there's rarely a dead zone, and a rear-facing medium laser softens the usual light-mech flanking trick. Its main weakness is speed, walk four with no jump jets on the original, so it rewards patient positioning over aggressive manoeuvring.</p>
+
+                <h3>Why is the Centurion associated with the Federated Suns?</h3>
+                <p>Corean Enterprises built it in 2801 and it became the AFFS's unofficial house medium almost immediately, seeing action from the First Succession War onward. It stayed a Davion mainstay through the creation of the AFFC, until newer designs pushed it out of front-line service around the Federated Commonwealth Civil War.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Centurion variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The CN9-A at BV 945 is still the honest baseline. The CN9-D is the better all-rounder once an LB 10-X and an XL engine are available, and the CN9-YLW, Yen-Lo-Wang, is worth fielding for the history alone."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Centurion have so many different primary weapons across its variants?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Its signature Luxor D-Series AC/10 has a loading system Sarna itself calls notorious for defects, and because the mount is custom-fitted rather than a standard part, a damaged one often can't be repaired at all without the exact spare. The documented fix across the chassis' history is to remove the whole gun and replace it with something else entirely, and that's how you end up with variants built around an AC/20, a pair of PPCs, a Gauss rifle, or a rotary autocannon instead."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is Yen-Lo-Wang?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The most famous individual Centurion in BattleTech fiction. Originally an ordinary secondhand CN9-A bought by the exiled Justin Xiang Allard on Solaris VII in 3027, rebuilt with an AC/20 and later passed to his son Kai Allard-Liao and then to Danai Liao-Centrella, each rebuild carrying the same name across three generations of one family."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Centurion a good beginner mech?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It's a solid, forgiving design: overlapping weapon ranges mean there's rarely a dead zone, and a rear-facing medium laser softens the usual light-mech flanking trick. Its main weakness is speed, walk four with no jump jets on the original, so it rewards patient positioning over aggressive manoeuvring."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Centurion associated with the Federated Suns?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Corean Enterprises built it in 2801 and it became the AFFS's unofficial house medium almost immediately, seeing action from the First Succession War onward. It stayed a Davion mainstay through the creation of the AFFC, until newer designs pushed it out of front-line service around the Federated Commonwealth Civil War."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'centurion';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
