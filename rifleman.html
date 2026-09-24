@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Rifleman variant ranked by a MechTech. Why the RFL-3N runs so hot, why that made sense for an anti-aircraft mech, and how to play one on the table.">
+    <meta name="keywords" content="Rifleman BattleTech, best Rifleman variant, RFL-3N, RFL-3C, RFL-8D, anti-aircraft mech, Kallon, BattleTech heavy mech">
+    <title>Rifleman: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/rifleman">
+    <meta property="og:title" content="Rifleman: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 23 Rifleman variants ranked, and why its heat problem is really a job problem.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/rifleman">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Rifleman</p>
+
+        <div class="mech-hero">
+            <h1>Rifleman</h1>
+            <p class="sub">60 tons &middot; Inner Sphere &middot; 23 variants &middot; 2504 to 3133</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/rifleman-schematic.webp" type="image/webp">
+                    <img src="assets/images/rifleman-schematic.png"
+                         alt="Illustration of an RFL-3N Rifleman BattleMech from Technical Readout: 3025, showing the wing-shaped comms array across the top and the twin-barrelled arms"
+                         width="470" height="638" loading="eager" decoding="async">
+                </picture>
+                <figcaption>That wing across the top is the Garret T11-A comms array. A superb radio, and it tended to draw fire.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Everyone knows the Rifleman runs hot. I think what almost nobody mentions is that it was never supposed to fight the way people use it.</p>
+                <p>It's an anti-aircraft mech. Kallon built the first one in 2504, which makes it one of the oldest designs anybody still fields: of the chassis on this site, only the Thunderbolt and the Locust are older. The version everyone pictures, the RFL-3N, arrived in 2770.</p>
+                <p><strong>What you've got.</strong> Two large lasers and two AC/5s in arms that swivel, two medium lasers either side of the cockpit, and a Garret D2j targeting system that's genuinely one of the best ever fitted to a mech. It can flip its arms over to shoot behind itself. And it has 10 heat sinks and seven and a half tons of armour.</p>
+                <p><strong>Now do the maths.</strong> Fire everything while walking and you make 25 heat against 10 sinks. That's 15 points of heat every single turn. It looks like a design mistake until you remember what it was for. Anti-aircraft work comes in bursts. You fire on the pass, the fighter turns round for another go, and you cool down while it's doing that.</p>
+                <p><strong>So what went wrong?</strong> Three hundred years of war. Commanders ran short of mechs and started using Riflemans on the front line, where there's no pause between passes and the enemy's a sixty-ton heavy standing in front of you. There, with thin armour and no hands, it's genuinely bad. The reputation is real. It's just attached to the wrong job.</p>
+                <p><strong>If you're choosing one:</strong> the <strong>RFL-3N</strong> is the classic, the <strong>RFL-3C</strong> is the better front-line machine, the <strong>RFL-8D</strong> is the one that fixed its reputation, and the Clan <strong>C 3</strong> is the 3N with every part upgraded.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Everything about the 3N makes sense once you picture aircraft coming over. Long-range guns only, because fighters don't come close. Arms that swivel and even flip over backwards, so you can track something that's passed overhead. A targeting system good enough to hold a lock on a fast-moving target. And a heat budget built around firing in bursts with breaks in between.</p>
+            <p>The Garret electronics deserve a mention. The D2j targeting-tracking system held its reputation for centuries, and when the Free Worlds League rebuilt the Rifleman as the 5M in 3049 they left it alone. The T11-A comms array was just as good, although its wing-shaped housing tended to draw fire.</p>
+            <p>What it can't do is brawl. Seven and a half tons of armour, a particularly thin rear, no hands or lower arm actuators, and a torso that only twists forty degrees. Against a lighter mech its size carries it through. Against something its own weight, standing and trading, it loses, and the commander who put it there was told as much by the design.</p>
+            <p>One last engineering detail: both autocannons feed off a single twenty-round magazine. Enough for short, sharp bursts. Not enough for a long fight.</p>
+
+            <div class="heat-callout">
+                <h3>The heat maths on the 3N</h3>
+                <table class="heat-table">
+                    <tr><th>What you fire</th><th>Heat made</th><th>After 10 sinks</th></tr>
+                    <tr><td>Both AC/5s, walking</td><td>3</td><td>Cooling</td></tr>
+                    <tr><td>Both large lasers, walking</td><td>17</td><td class="bad">+7 a turn</td></tr>
+                    <tr><td>Everything, walking</td><td>25</td><td class="bad">+15 a turn</td></tr>
+                </table>
+                <p style="margin-top:16px;">Against aircraft you fire one pass and cool on the next. Against a mech standing in front of you there is no next pass, and that one row at the bottom is the Rifleman's entire reputation.</p>
+            </div>
+
+                        <h2>Six centuries in the wrong job</h2>
+            <p>The early Riflemans were a struggle. The 1N overheated badly enough that Kallon went back to the drawing board, and the 2N fifty years later was better and still ran too hot. The 3N in 2770 swapped some of the heat-hungry energy weapons for autocannons, and that's the one that stuck.</p>
+            <p>Kallon still wasn't happy with it, and within a few years they'd built a replacement: the JagerMech, meant to fix the Rifleman's heat, armour and endurance. It never replaced it. The two ended up serving side by side for centuries, which tells you the Rifleman was doing something right.</p>
+            <p>When the Star League fell, Riflemans ended up in every Successor State army, with House Davion holding the most and using them hard against the Combine. That's where the front-line habit started, as losses forced them into roles they weren't built for. Hanse Davion himself designed two variants, the 4D and the 3C, trying to make it a better line mech.</p>
+            <p>By the FedCom Civil War it had a poor reputation, and then something odd happened. The 7th FedCom RCT blockaded Kallon's factory on Talon, cutting off JagerMech production, so Kallon pushed its experimental RFL-8D into full production as a stopgap. The 8D was good. Both sides of the civil war ended up fielding it, and the Rifleman's name recovered on the back of a blockade.</p>
+            <p>A bit of trivia to finish on: the Rifleman's look was borrowed from the Destroid Defender in the anime Macross, which makes it one of the original Unseen designs.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Riflemans available in the same era</strong>. One variant fails the Trap test, a rushed ComStar build from Tukayyid.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 1 of the 23 Rifleman variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 23 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>RFL-3N: the anti-aircraft original</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1039 &middot; PV 26 &middot; Sniper &middot; 2770<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 240 Fusion Engine<br>
+  2x Large Laser, 2x AC/5, 2x Medium Laser</p>
+  <p>The 2770 Rifleman everybody pictures. Two large lasers and two AC/5s in swivelling arms, two mediums by the cockpit, a superb Garret targeting system, and only 10 heat sinks. Brilliant at shooting down aircraft and not built for much else.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>RFL-3C: Hanse Davion’s line mech</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1066 &middot; PV 28 &middot; Brawler &middot; 3026<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 10 Single &middot; 240 Fusion Engine<br>
+  2x AC/10, 2x Medium Laser</p>
+  <p>Davion&#x27;s second go: two AC/10s instead of the lasers and AC/5s, and an extra ton of armour. Cooler, harder-hitting up close, and far better suited to the front-line work Riflemans kept getting.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>RFL-5M: the sensible rebuild</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1227 &middot; PV 31 &middot; Brawler &middot; 3049<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 12 IS Double &middot; 240 XL Engine<br>
+  2x Large Laser, 2x Ultra AC/5, 2x Medium Laser</p>
+  <p>The 3049 Free Worlds rebuild: Ultra AC/5s, twelve doubles, CASE on the ammo and an extra ton of plate, all paid for with an XL engine. They kept the Garret electronics, because why would you replace those.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>RFL-8D: the blockade baby</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1777 &middot; PV 35 &middot; Skirmisher &middot; 3064<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 11 IS Double &middot; 240 XL Engine<br>
+  2x Rotary AC/5, 2x ER Medium Laser</p>
+  <p>The one that saved the name. Two rotary AC/5s, four ER mediums, twelve tons of armour and jump jets. Kallon rushed it into production when their JagerMech line was blockaded, and both sides of the FedCom Civil War ended up using it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>MUSE WIND: two hyper-assault Gauss rifles</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2012 &middot; PV 38 &middot; Sniper &middot; 3076<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 10 IS Double &middot; 240 XL Engine(IS)<br>
+  2x HAG/20, 2x Medium Pulse Laser</p>
+  <p>Nigel Griffin&#x27;s mixed-tech experiment: a hyper-assault Gauss 20 in each arm, Clan pulse lasers and Clan armour. Ridiculous on paper and very good on the table.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Rifleman C 3: the 3N, upgraded</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1871 &middot; PV 38 &middot; Sniper &middot; 3132<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 14 Clan Double &middot; 240 Fusion (Clan) Engine<br>
+  2x ER Large Laser, 2x Ultra AC/5, 2x ER Medium Laser</p>
+  <p>Clan Sea Fox&#x27;s version: ER large lasers and Ultra AC/5s with integrated CASE, ER mediums, fourteen doubles. The 3N&#x27;s layout with every piece upgraded.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Fire in bursts. Pick a weapon group, fire, and let the heat settle before the next big turn. If there are aircraft or VTOLs in the scenario, you're the best thing on the table for them. If there aren't, stay at range and let heavier mechs take the hits, because you can't.</p>
+            <p><strong>Fighting one.</strong> Close in and stay close. Past its long-range sweet spot a 3N has nothing but thin armour and a heat problem. Its rear is especially thin, but don't assume you're safe behind it, because those arms can flip over and fire backwards.</p>
+            <p><strong>What I see go wrong.</strong> People fire everything every turn because it's all long range and everything's in reach. Two turns later they're at thirty heat, sluggish and missing, and the enemy walks straight up to them. The Rifleman rewards patience more than anything else here.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Rifleman is split: 11 Snipers, 7 Brawlers and 5 Skirmishers.</p>
+            <ul>
+                <li>The 3N and most long-range variants are Snipers and will hold their distance.</li>
+                <li>The autocannon-heavy variants like the <strong>RFL-3C</strong> and <strong>RFL-5M</strong> are Brawlers and will push in.</li>
+                <li>The fast, jump-capable late builds such as the <strong>RFL-8D</strong> and <strong>C 2</strong> play as Skirmishers.</li>
+            </ul>
+            <p>Give the engine an aircraft to shoot at and a sniper Rifleman does exactly what it was built for.</p>
+
+                        <h2>All 23 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">RFL-1N</td><td>2504</td><td>931</td><td>22</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">RFL-2N</td><td>2556</td><td>1093</td><td>26</td><td>Sniper</td><td class="wpn">2x PPC, 4x Medium Laser</td><td class="num">2/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">RFL-3N</td><td>2770</td><td>1039</td><td>26</td><td>Sniper</td><td class="wpn">2x Large Laser, 2x AC/5, 2x Medium Laser</td><td class="num">2/2/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">C</td><td>2826</td><td>1335</td><td>26</td><td>Sniper</td><td class="wpn">2x Large Pulse Laser, 2x LB 5-X AC</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">RFL-4D</td><td>3021</td><td>1173</td><td>27</td><td>Sniper</td><td class="wpn">2x PPC, 2x Large Laser</td><td class="num">2/2/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">RFL-3C</td><td>3026</td><td>1066</td><td>28</td><td>Brawler</td><td class="wpn">2x AC/10, 2x Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">RFL-5M</td><td>3049</td><td>1227</td><td>31</td><td>Brawler</td><td class="wpn">2x Large Laser, 2x Ultra AC/5, 2x Medium Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">RFL-5D</td><td>3050</td><td>1395</td><td>32</td><td>Brawler</td><td class="wpn">2x ER PPC, 2x Large Laser, 2x Medium Laser</td><td class="num">4/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">RFL-5CS</td><td>3052</td><td>1303</td><td>35</td><td>Sniper</td><td class="wpn">2x Large Laser, 2x Ultra AC/5</td><td class="num">3/4/2</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by RFL-5M</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">RFL-6X</td><td>3063</td><td>1464</td><td>35</td><td>Sniper</td><td class="wpn">2x LB 10-X AC, 2x ER Medium Laser, 2x ER Small Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-8D</td><td>3064</td><td>1777</td><td>35</td><td>Skirmisher</td><td class="wpn">2x Rotary AC/5, 2x ER Medium Laser</td><td class="num">5/5/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">RFL-7M</td><td>3066</td><td>1521</td><td>34</td><td>Brawler</td><td class="wpn">2x Light Gauss Rifle, 6x ER Medium Laser, 1x Small Laser</td><td class="num">4/4/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">RFL-8X</td><td>3068</td><td>1798</td><td>38</td><td>Skirmisher</td><td class="wpn">2x ER PPC, 4x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-6D</td><td>3069</td><td>1274</td><td>35</td><td>Skirmisher</td><td class="wpn">4x Light AC/5, 2x ER Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-3Cr</td><td>3071</td><td>1129</td><td>28</td><td>Brawler</td><td class="wpn">2x AC/10, 2x Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-9T</td><td>3071</td><td>1503</td><td>35</td><td>Brawler</td><td class="wpn">2x Light PPC, 2x Light AC/5, 2x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-X3 MUSE WIND</td><td>3076</td><td>2012</td><td>38</td><td>Sniper</td><td class="wpn">2x HAG/20, 2x Medium Pulse Laser</td><td class="num">5/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">RFL-7X</td><td>3081</td><td>1645</td><td>30</td><td>Skirmisher</td><td class="wpn">2x Snub-Nose PPC, 2x Light PPC</td><td class="num">3/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">C 2</td><td>3083</td><td>2150</td><td>45</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 2x Improved Heavy Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">RFL-7G</td><td>3086</td><td>1302</td><td>28</td><td>Sniper</td><td class="wpn">2x Silver Bullet Gauss Rifle, 2x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">C 3</td><td>3132</td><td>1871</td><td>38</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 2x Ultra AC/5, 2x ER Medium Laser</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">RFL-7N</td><td>3133</td><td>1398</td><td>32</td><td>Sniper</td><td class="wpn">2x ER Large Laser, 2x LB 5-X AC, 2x ER Medium Laser</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">RFL-7N2</td><td>3133</td><td>1452</td><td>32</td><td>Sniper</td><td class="wpn">2x LB 10-X AC, 2x Light PPC, 2x ER Medium Laser</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the RFL-3N by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Draconis Combine, Free Worlds League, Rim Worlds Republic - Home Guard, Rim Worlds Republic - Terran Corps, Star League Regular, Taurian Concordat, Terran Hegemony</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Federated Suns, Free Worlds League (Duchy of Tamarind-Abbey), Free Worlds League (Marik-Stewart Commonwealth), Free Worlds League (Non-Aligned Worlds), Lyran Commonwealth, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Periphery General, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>JagerMech</h3>
+  <p class="vstats">65 tons &middot; Inner Sphere &middot; 12 variants &middot; BV 901 to 1774</p>
+  <p>Built by Kallon to replace the Rifleman. It never did, and the two served together for centuries.</p>
+</div>
+<div class="fam">
+  <h3>Rifleman II</h3>
+  <p class="vstats">80 tons &middot; Inner Sphere &middot; 1 variants &middot; BV 1543 to 1543</p>
+  <p>The SLDF Royals’ upgrade, twenty tons heavier.</p>
+</div>
+<div class="fam">
+  <h3>Rifleman IIC</h3>
+  <p class="vstats">65 tons &middot; Clan &middot; 9 variants &middot; BV 1345 to 2794</p>
+  <p>The Clan rebuild: five tons heavier, four large pulse lasers, jump jets and an active probe.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Quickdraw</h3>
+  <p class="vstats">60 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 1192 to 2224</p>
+  <p>Technicron’s front-line heavy, pitched as the machine the Rifleman kept being used as.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Rifleman in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>Why does the Rifleman overheat so badly?</h3>
+                <p>The RFL-3N makes 25 heat on a walking alpha against 10 heat sinks. It was designed as an anti-aircraft platform, expected to fire on a fighter's pass and cool down while the aircraft turned around. Used as a front-line mech with no breaks between turns, it overheats quickly.</p>
+
+                <h3>What is the best Rifleman variant?</h3>
+                <p>The RFL-3N at BV 1039 is the classic anti-aircraft mech. The RFL-3C is better in a line fight, the RFL-8D is the most complete Inner Sphere version, and the Clan-built Rifleman C 3 upgrades every part of the 3N layout.</p>
+
+                <h3>Is the Rifleman a bad mech?</h3>
+                <p>Not at its intended job. It has excellent targeting electronics, swivelling arms that can even fire behind it, and strong long-range weapons. Its poor reputation comes from being used as a front-line mech, where its thin armour and heat problems show.</p>
+
+                <h3>What replaced the Rifleman?</h3>
+                <p>Kallon built the JagerMech to fix the Rifleman's heat, armour and endurance, but it never replaced it. The two served together for centuries. Technicron's Quickdraw was also pitched as a front-line alternative.</p>
+
+                <h3>Why is the Rifleman associated with House Davion?</h3>
+                <p>The Federated Suns held the largest concentration of Riflemans through the Succession Wars and used them heavily against the Draconis Combine. Hanse Davion personally designed two variants, the RFL-4D and RFL-3C.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the Rifleman overheat so badly?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The RFL-3N makes 25 heat on a walking alpha against 10 heat sinks. It was designed as an anti-aircraft platform, expected to fire on a fighter's pass and cool down while the aircraft turned around. Used as a front-line mech with no breaks between turns, it overheats quickly."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best Rifleman variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The RFL-3N at BV 1039 is the classic anti-aircraft mech. The RFL-3C is better in a line fight, the RFL-8D is the most complete Inner Sphere version, and the Clan-built Rifleman C 3 upgrades every part of the 3N layout."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Rifleman a bad mech?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Not at its intended job. It has excellent targeting electronics, swivelling arms that can even fire behind it, and strong long-range weapons. Its poor reputation comes from being used as a front-line mech, where its thin armour and heat problems show."}
+    },
+    {
+      "@type": "Question",
+      "name": "What replaced the Rifleman?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Kallon built the JagerMech to fix the Rifleman's heat, armour and endurance, but it never replaced it. The two served together for centuries. Technicron's Quickdraw was also pitched as a front-line alternative."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Rifleman associated with House Davion?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Federated Suns held the largest concentration of Riflemans through the Succession Wars and used them heavily against the Draconis Combine. Hanse Davion personally designed two variants, the RFL-4D and RFL-3C."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'rifleman';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

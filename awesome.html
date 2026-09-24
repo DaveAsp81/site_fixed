@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Awesome variant ranked by a MechTech. Why three PPCs and no ammunition made it so feared, the heat maths on the 8Q, and how to beat one.">
+    <meta name="keywords" content="Awesome BattleTech, best Awesome variant, AWS-8Q, AWS-9Q, AWS-9M, PPC assault mech, Technicron, BattleTech assault mech">
+    <title>Awesome: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/awesome">
+    <meta property="og:title" content="Awesome: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 16 Awesome variants ranked, and why the only defence against one is another one.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/awesome">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Awesome</p>
+
+        <div class="mech-hero">
+            <h1>Awesome</h1>
+            <p class="sub">80 tons &middot; Inner Sphere &middot; 16 variants &middot; 2665 to 3143</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/awesome-schematic.webp" type="image/webp">
+                    <img src="assets/images/awesome-schematic.png"
+                         alt="Illustration of an AWS-9M Awesome BattleMech wading through a swamp, showing the PPC in its right arm and Streak missiles launching from its left"
+                         width="620" height="517" loading="eager" decoding="async">
+                </picture>
+                <figcaption>An upgraded 9M, knee deep in water. Not a bad place for an Awesome to stand, all things considered.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>There's a line soldiers have about this one: the only defence against an Awesome is another Awesome. Stand next to a couple and you understand it.</p>
+                <p>Technicron built it in 2665 to replace the Striker, and it didn't just replace it, it became one of the most feared machines anybody's ever put in the field. Eighty tons, three PPCs, and not one weapon on it that needs a bullet.</p>
+                <p><strong>What you've got.</strong> Three Kreuss PPCs, a small laser in the head, and a battlefist on the left arm for anyone who gets too close. Fifteen tons of armour, including some of the thickest rear plate on any mech, and 28 heat sinks. That's more heat sinks than any machine I've written up for this site, and it still isn't quite enough.</p>
+                <p><strong>Here's the catch.</strong> Three PPCs make thirty heat. Walking adds one. That's 31 against 28 sinks, so a full alpha leaves you 3 points up every turn. Not dramatic on its own, but it adds up, and most pilots end up firing two and holding the third back. It walks three and runs five, which is slow, and anything that gets round its flank has a fighting chance.</p>
+                <p><strong>What it's actually for.</strong> Standing still and bleeding the enemy dry. No ammo to run out of, so it'll keep firing long after everything around it has gone quiet. Point it down a lane, give it a screen, and let it work.</p>
+                <p><strong>If you're choosing one:</strong> the <strong>AWS-8Q</strong> is still the real thing, the <strong>AWS-9Q</strong> adds a fourth gun without losing the toughness, the <strong>AWS-11H</strong> finally has the cooling the design always wanted, and the Clan-built <strong>C</strong> is the strongest of the lot.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>The whole design comes down to one decision: no ammunition. Every gun on the 8Q runs off the reactor, which means there's nothing in the torso waiting to blow when a lucky shot finds a crit, and nothing to run out of three turns into a long fight. That's why it gets used in sieges. It'll sit there and keep pouring particle fire at the same target for as long as the heat lets it.</p>
+            <p>The heat is the thing you manage. Twenty-eight sinks sounds like plenty and very nearly is. Fire all three while walking and you're three over each turn, which you can carry for a while and then can't. The habit most pilots fall into is two PPCs every turn and the third when the shot's worth it. That's not a flaw so much as the price of carrying that much gun on eighty tons.</p>
+            <p>The armour's the other half. Fifteen tons of it, better protected than a BattleMaster, and the rear plate is thick enough that getting behind one isn't the free kill it is on most assaults. The small laser in the head is there for completeness. The battlefist on the left arm is the real close-in weapon, and eighty tons behind a closed fist is a fair argument.</p>
+
+            <div class="heat-callout">
+                <h3>The heat maths on the 8Q</h3>
+                <table class="heat-table">
+                    <tr><th>What you fire</th><th>Heat made</th><th>After 28 sinks</th></tr>
+                    <tr><td>Two PPCs, walking</td><td>21</td><td>Cooling, with room to spare</td></tr>
+                    <tr><td>Three PPCs, standing</td><td>30</td><td class="bad">+2 a turn</td></tr>
+                    <tr><td>Three PPCs, walking</td><td>31</td><td class="bad">+3 a turn</td></tr>
+                </table>
+                <p style="margin-top:16px;">Compared with most of the machines on this site that's gentle. The difference is the Awesome never has to stop to reload, so a pilot who manages the third gun properly can keep this up for the whole game.</p>
+            </div>
+
+                        <h2>Four centuries of nobody wanting to change it</h2>
+            <p>Technicron originally built it on Savannah for the Star League, and it spread through every House army before the League fell. When the Succession Wars started, the Free Worlds League held onto the Savannah factory, which made them the only realm that could build new ones, and that's why you still think of it as a Marik machine. Lycomb-Davion had been building them too, on Demeter, until the Capellans destroyed that line early in the First Succession War.</p>
+            <p>Later Technicron partnered with Irian BattleMechs Unlimited to open a second line on Irian, and here's the part I like: neither company was willing to change the design. For centuries the answer to "can we improve the Awesome" was a polite no. It took the Helm Memory Core and the Clans turning up to finally shake loose the AWS-9M in 3049.</p>
+            <p>After that it moved quickly. The 9Q was ready in time for Operation Guerrero, and the Jihad-era 10KM came out of a joint venture between Irian Technologies and Alshain Weaponry, locked into a contract so tight even Irian couldn't find a way to sell it to anyone else. In the Dark Age the Scorpion Empire, of all people, built a Clan-tech version and put four ER PPCs on it.</p>
+            <p>Two attempts were made to retire it. George Hasek designed the Templar specifically to replace the Awesome in the AFFC's assault corps, and the Regent later borrowed half the Awesome's bones. It's still in service anyway.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Awesomes available in the same era</strong>. Two of the late variants fail the Trap test to the same machine, which is worth a look further down.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 2 of the 16 Awesome variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 16 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>AWS-8Q: the original</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 1605 &middot; PV 39 &middot; Sniper &middot; 2665<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 28 Single &middot; 240 Fusion Engine<br>
+  3x PPC, 1x Small Laser</p>
+  <p>The original, 2665. Three Kreuss PPCs, a small laser in the head, a battlefist on the left arm and 28 heat sinks. No ammo to cook off, fifteen tons of plate, and it&#x27;ll keep shooting until something makes it stop. Still the one to beat.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AWS-9M: the lostech rebuild</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 1812 &middot; PV 41 &middot; Brawler &middot; 3049<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 20 IS Double &middot; 320 XL Engine<br>
+  2x Streak SRM 2, 3x ER PPC, 1x Medium Pulse Laser, 1x Small Pulse Laser</p>
+  <p>The 3049 lostech rebuild. Three ER PPCs, doubles, an XL engine for walk four, plus Streaks and pulse lasers for close work. Quicker and meaner, and the XL means a side torso can now end it, which the old one never had to worry about.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AWS-9Q: a fourth PPC</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 1875 &middot; PV 45 &middot; Sniper &middot; 3057<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 19 IS Double &middot; 240 Fusion Engine<br>
+  4x PPC, 1x Small Laser</p>
+  <p>A fourth PPC and a Guardian ECM on a standard engine. People moaned that the PPCs weren&#x27;t ER models, and then it went out during Operation Guerrero and flattened things. Keeps the old toughness and adds a gun.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AWS-10KM: the contract nobody could break</h3>
+    <span class="tier tier-solid">Solid</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 1961 &middot; PV 46 &middot; Juggernaut &middot; 3068<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 18 IS Double &middot; 240 Compact Engine<br>
+  1x Snub-Nose PPC, 2x Heavy PPC</p>
+  <p>Irian and Alshain&#x27;s joint job: two heavy PPCs, a snub-nose PPC, a compact engine and gyro. Tough as old boots and reserved for elite League and Combine units under a contract even Irian couldn&#x27;t wriggle out of.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>AWS-11H: the 8Q done properly</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 2036 &middot; PV 46 &middot; Sniper &middot; 3142<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 23 Clan Double &middot; 240 Fusion Engine(IS)<br>
+  3x Heavy PPC, 1x ER Small Laser</p>
+  <p>Three heavy PPCs on twenty-three Clan doubles, and it can actually fire them all turn after turn. There&#x27;s even a small laser in the head for old times&#x27; sake. This is the 8Q done properly.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Awesome C: four Clan ER PPCs</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">80 tons &middot; BV 2737 &middot; PV 51 &middot; Sniper &middot; 3143<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 27 Clan Double &middot; 240 Fusion (Clan) Engine<br>
+  4x ER PPC</p>
+  <p>Scorpion Empire, 3143. Four Clan ER PPCs, twenty-seven doubles, fifteen and a half tons of plate. The hardest-hitting Awesome ever built by a distance, and priced like it.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Find a spot with a long view and cover on your flanks, and settle in. You're too slow to reposition often, so pick the ground carefully the first time. Fire two PPCs every turn and save the third for when it'll kill something or you're cool enough to afford it. If someone closes in, remember the fist.</p>
+            <p><strong>Fighting one.</strong> Don't trade shots with it at range, you'll lose. Get round the side, because it walks three and turns slowly, and hit the arm or side torso it's leaning on. Against the XL variants from 3049 onward, a side torso ends it. Against the 8Q, bring enough friends to outlast twenty-eight heat sinks.</p>
+            <p><strong>What I see go wrong.</strong> Pilots alpha strike every turn because three PPCs feels like the point. Four turns later they're shut down in the open with their rear to an enemy light mech. Two guns, every turn, is the whole trick.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Awesome is overwhelmingly a Sniper: 11 of the 16 variants carry that tag.</p>
+            <ul>
+                <li>The engine will hold it at range and let it grind, which is exactly how the design wants to fight.</li>
+                <li>The <strong>AWS-8R</strong> and <strong>AWS-8T</strong> are Missile Boats and will sit even further back.</li>
+                <li>The two <strong>AWS-10KM</strong> fits are Juggernauts and the <strong>AWS-9M</strong> is a Brawler, so those will come looking for you.</li>
+            </ul>
+            <p>A good choice if you want a solo scenario built around breaking a defensive position.</p>
+
+                        <h2>All 16 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">AWS-8Q</td><td>2665</td><td>1605</td><td>39</td><td>Sniper</td><td class="wpn">3x PPC, 1x Small Laser</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AWS-8R</td><td>2683</td><td>1470</td><td>38</td><td>Missile Boat</td><td class="wpn">1x Large Laser, 2x LRM 15, 1x Small Laser</td><td class="num">2/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">AWS-8T</td><td>2815</td><td>1593</td><td>39</td><td>Missile Boat</td><td class="wpn">2x Large Laser, 2x LRM 15, 1x Small Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">AWS-8V</td><td>2980</td><td>1510</td><td>39</td><td>Sniper</td><td class="wpn">1x PPC, 1x Large Laser, 1x LRM 15, 1x Small Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">AWS-9M</td><td>3049</td><td>1812</td><td>41</td><td>Brawler</td><td class="wpn">2x Streak SRM 2, 3x ER PPC, 1x Medium Pulse Laser, 1x Small Pulse Laser</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AWS-9Ma</td><td>3051</td><td>1836</td><td>42</td><td>Sniper</td><td class="wpn">1x Small Laser, 3x ER PPC</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AWS-9Q</td><td>3057</td><td>1875</td><td>45</td><td>Sniper</td><td class="wpn">4x PPC, 1x Small Laser</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">AWS-10KM</td><td>3068</td><td>1961</td><td>46</td><td>Juggernaut</td><td class="wpn">1x Snub-Nose PPC, 2x Heavy PPC</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">AWS-10KM (Cameron)</td><td>3070</td><td>2466</td><td>53</td><td>Juggernaut</td><td class="wpn">1x Snub-Nose PPC, 2x ER PPC, 1x ER Small Laser</td><td class="num">5/5/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AWS-9Q (Klatt)</td><td>3071</td><td>1805</td><td>46</td><td>Sniper</td><td class="wpn">4x PPC, 1x Small Pulse Laser</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">AWS-11M</td><td>3079</td><td>1801</td><td>42</td><td>Sniper</td><td class="wpn">8x Light PPC</td><td class="num">3/4/4</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by AWS-9Q (Klatt)</span></td></tr>
+<tr><td class="vname">AWS-8Q (Buck)</td><td>Unknown</td><td>1787</td><td>42</td><td>Sniper</td><td class="wpn">3x PPC</td><td class="num">3/3/3</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by AWS-9Q (Klatt)</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">AWS-11R</td><td>3133</td><td>1878</td><td>41</td><td>Sniper</td><td class="wpn">1x Light Gauss Rifle, 1x LRM 15, 1x Extended LRM 15, 1x ER Medium Laser</td><td class="num">2/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">AWS-11V</td><td>3135</td><td>1855</td><td>40</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x Light Gauss Rifle, 1x Extended LRM 15, 1x ER Medium Laser</td><td class="num">2/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">AWS-11H</td><td>3142</td><td>2036</td><td>46</td><td>Sniper</td><td class="wpn">3x Heavy PPC, 1x ER Small Laser</td><td class="num">4/5/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">C</td><td>3143</td><td>2737</td><td>51</td><td>Sniper</td><td class="wpn">4x ER PPC</td><td class="num">6/6/6</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the AWS-8Q by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Clan Star Adder, Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Free Worlds League (Duchy of Andurien), Free Worlds League (Duchy of Tamarind-Abbey), Free Worlds League (Marik-Stewart Commonwealth), Free Worlds League (Non-Aligned Worlds), Free Worlds League (Oriente Protectorate), Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Mercenary, Periphery General, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Striker</h3>
+  <p class="vstats">80 tons &middot; Inner Sphere &middot; 4 variants &middot; BV 1466 to 1779</p>
+  <p>The machine the Awesome was built to replace, and replaced completely.</p>
+</div>
+<div class="fam">
+  <h3>Templar</h3>
+  <p class="vstats">85 tons &middot; Inner Sphere &middot; 15 variants &middot; BV 1632 to 2423</p>
+  <p>George Hasek&#x27;s design, built to take the Awesome&#x27;s place in the AFFC&#x27;s assault corps.</p>
+</div>
+<div class="fam">
+  <h3>Regent</h3>
+  <p class="vstats">90 tons &middot; Clan &middot; 5 variants &middot; BV 2116 to 3412</p>
+  <p>A Dark Age hybrid of the Awesome and the Hauptmann.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>BattleMaster</h3>
+  <p class="vstats">85 tons &middot; Mixed &middot; 32 variants &middot; BV 1441 to 3025</p>
+  <p>Five tons heavier, carries a single PPC it can drop, and has less armour than the Awesome.</p>
+</div>
+<div class="fam">
+  <h3>Warhammer</h3>
+  <p class="vstats">70 tons &middot; Mixed &middot; 31 variants &middot; BV 1299 to 2772</p>
+  <p>The other long-serving PPC platform, lighter and quicker, and a lot hotter.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Awesome in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Awesome variant?</h3>
+                <p>The AWS-8Q at BV 1605 is still the benchmark. The AWS-9Q adds a fourth PPC and ECM without losing the standard engine's toughness, the AWS-11H has the cooling to fire three heavy PPCs every turn, and the Clan-built Awesome C is the hardest hitter.</p>
+
+                <h3>Why is the Awesome so feared?</h3>
+                <p>Three PPCs, fifteen tons of armour and no ammunition. It can't cook off, it never runs dry, and it can keep firing from the same position for as long as its heat allows. Soldiers reckon you need one of your own to deal with one.</p>
+
+                <h3>Does the Awesome overheat?</h3>
+                <p>A little. Three PPCs and walking make 31 heat against 28 heat sinks, so a full alpha leaves it 3 points up each turn. Most pilots fire two PPCs a turn and hold the third back, which keeps it cool indefinitely.</p>
+
+                <h3>How do you beat an Awesome?</h3>
+                <p>Get round its flanks. It walks three and turns slowly, and it has no rear-facing weapons. Against the XL-engined variants from 3049 onward, a side torso hit can end it. Against the original 8Q you need to outlast it, because it doesn't run out of ammunition.</p>
+
+                <h3>Why is the Awesome a Free Worlds League mech?</h3>
+                <p>Because the League kept Technicron's Savannah factory through the Succession Wars, making them the only realm able to build new Awesomes. Every other House was stuck with what it already had.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Awesome variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The AWS-8Q at BV 1605 is still the benchmark. The AWS-9Q adds a fourth PPC and ECM without losing the standard engine's toughness, the AWS-11H has the cooling to fire three heavy PPCs every turn, and the Clan-built Awesome C is the hardest hitter."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Awesome so feared?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Three PPCs, fifteen tons of armour and no ammunition. It can't cook off, it never runs dry, and it can keep firing from the same position for as long as its heat allows. Soldiers reckon you need one of your own to deal with one."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Awesome overheat?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A little. Three PPCs and walking make 31 heat against 28 heat sinks, so a full alpha leaves it 3 points up each turn. Most pilots fire two PPCs a turn and hold the third back, which keeps it cool indefinitely."}
+    },
+    {
+      "@type": "Question",
+      "name": "How do you beat an Awesome?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Get round its flanks. It walks three and turns slowly, and it has no rear-facing weapons. Against the XL-engined variants from 3049 onward, a side torso hit can end it. Against the original 8Q you need to outlast it, because it doesn't run out of ammunition."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Awesome a Free Worlds League mech?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Because the League kept Technicron's Savannah factory through the Succession Wars, making them the only realm able to build new Awesomes. Every other House was stuck with what it already had."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'awesome';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

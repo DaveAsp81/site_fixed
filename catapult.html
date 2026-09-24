@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Catapult variant ranked by a MechTech. Why the Star League turned it down, why the Succession Wars fought over it, and how to use a missile boat with no arms.">
+    <meta name="keywords" content="Catapult BattleTech, best Catapult variant, CPLT-C1, CPLT-K2, CPLT-C3, Hollis, LRM fire support, BattleTech heavy mech">
+    <title>Catapult: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/catapult">
+    <meta property="og:title" content="Catapult: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 19 Catapult variants ranked, and the mech the Star League rejected that everyone later fought over.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/catapult">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Catapult</p>
+
+        <div class="mech-hero">
+            <h1>Catapult</h1>
+            <p class="sub">65 tons &middot; Inner Sphere &middot; 19 variants &middot; 2561 to 3136</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/catapult-schematic.webp" type="image/webp">
+                    <img src="assets/images/catapult-schematic.png"
+                         alt="Illustration of a CPLT-C1 Catapult BattleMech in profile, showing the missile racks raised on its shoulders, the cockpit nose and the bird-like legs"
+                         width="282" height="461" loading="eager" decoding="async">
+                </picture>
+                <figcaption>The original TRO:3025 Catapult. Missile racks up, no arms, and a cockpit nose that looks like it&#x27;s sniffing the air.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>The Star League tried the Catapult for three years and decided not to keep it. It did the job, the review said, it just wasn't quite what they wanted.</p>
+                <p>Hollis built it from 2561 to 2563 on a limited contract for the Terran Hegemony, their first ever BattleMech. When the contract came up for renewal the Hegemony passed, and Hollis switched the factory over to the BattleMaster. The Catapults already built drifted into second-line and mountain units and slowly wore out.</p>
+                <p>Then the Star League fell, the last factory went with it, and the Successor States started invading each other specifically to capture the survivors. A mech nobody wanted became one people went to war over. I don't think any other design on this site has a turnaround quite like it.</p>
+                <p><strong>What you've got.</strong> Two LRM 15s in those ears, four medium lasers under the cockpit, four jump jets, ten tons of armour and 15 heat sinks. No arms at all, which the quirk list states outright. It's built to stand well back and drop missiles on things from six hundred metres.</p>
+                <p><strong>The two things that bite you.</strong> Ammunition, first: eight reloads per launcher and then you're down to lasers. And the head: weak head armour is on the official quirk list, same as the BattleMaster and the Timber Wolf. Keep it back and screened and neither matters much. Put it in a brawl and both will.</p>
+                <p><strong>If you're choosing one:</strong> the <strong>CPLT-C1</strong> is the classic, the <strong>CPLT-C1b</strong> fixes its ammunition and armour, the <strong>CPLT-K2</strong> turns it into a PPC boat, and the <strong>CPLT-C5</strong> is the artillery version that doesn't run dry.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>The shape tells you what it's for. The missile racks sit up in the ears, the lasers tuck under the cockpit, and there are no arms at all. It's a missile platform on a pair of legs and a set of jump jets, and everything about it assumes someone else is holding the front line.</p>
+            <p>That's fine as long as it's true. Two LRM 15s from long range, a jump to the next bit of cover, repeat. Four medium lasers mean a light mech that runs in to finish it gets a nasty surprise. The problem is endurance. Eight reloads per launcher goes quickly, and once the missiles are gone you're a sixty-five ton machine with four mediums and not much armour.</p>
+            <p>Two bits of engineering history worth knowing if you ever get one in the bay. The original Anderson 21 jump jets had a habit of breaking down and venting exhaust into the mech, which cooked it from inside. There was a general recall in 2566 to fit Anderson 25s, and some Catapults never got the refit. And the ejection system fires sideways. Perfectly safe, apparently, but a genuine surprise the first time.</p>
+
+            <div class="heat-callout">
+                <h3>The heat maths on the C1</h3>
+                <table class="heat-table">
+                    <tr><th>What you fire</th><th>Heat made</th><th>After 15 sinks</th></tr>
+                    <tr><td>Both LRM 15s, walking</td><td>11</td><td>Cooling</td></tr>
+                    <tr><td>Both LRMs and two mediums</td><td>17</td><td class="bad">+2 a turn</td></tr>
+                    <tr><td>Everything, walking</td><td>23</td><td class="bad">+8 a turn</td></tr>
+                </table>
+                <p style="margin-top:16px;">At range the C1 runs cool for as long as the missiles last. The heat only turns up when something's close enough for the lasers, which is exactly when you least want to be slowed down.</p>
+            </div>
+
+                        <h2>Turned down, then fought over</h2>
+            <p>After the Hegemony let the contract lapse, the remaining Catapults stayed in service with specialist and second-line units, mountaineering regiments among them, and Hollis made just enough spare parts to keep a shrinking number of them walking.</p>
+            <p>When the Star League fell, a lot of the survivors went with Kerensky on the Exodus. The Capellan Confederation gathered up most of the ones left behind, and the Draconis Combine took a sizeable batch when it captured Dieron. Hollis's factory on Corey briefly started making new ones and spare parts again, and then it was destroyed at the start of the First Succession War.</p>
+            <p>That's when it got strange. With no factory anywhere, the Catapult became rare enough to be worth fighting over, and there were whole invasions launched simply to seize the remaining machines, the Federated Suns' campaigns against the Confederation above all.</p>
+            <p>It took until 3033 for things to turn round, when the Combine contracted Yori 'Mech Works to restart production of the K2 on Al Na'ir. The C3 artillery variant followed, and paired with Ravens for spotting it became one of the more feared combinations of its era, despite nearly five centuries separating the two designs. By the Clan Invasion the Confederation and the Combine held most of the Catapults in existence, and new variants kept coming for decades.</p>
+            <p>And one last thing: it's half the reason the Timber Wolf is called the Mad Cat. When an Inner Sphere targeting computer first met one, it couldn't decide between a Marauder and a Catapult.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Catapults available in the same era</strong>. No variant fails the Trap test, which fits a chassis that split into genuinely different roles rather than piling up near-copies.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 19 Catapult variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 19 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-C1: the original</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1399 &middot; PV 32 &middot; Missile Boat &middot; 2561<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 15 Single &middot; 260 Fusion Engine<br>
+  2x LRM 15, 4x Medium Laser</p>
+  <p>The original, 2561. Two LRM 15s in the ears, four medium lasers under the cockpit, four jump jets and 15 heat sinks. It&#x27;ll hit you from six hundred metres and still bite when you get close. The one everybody means.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-C1b: the Royal fix</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1570 &middot; PV 37 &middot; Missile Boat &middot; 2688<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 12 IS Double &middot; 260 Fusion Engine<br>
+  2x LRM 15, 4x Medium Laser</p>
+  <p>The 2688 Royal kit: same weapons, twice the ammunition, ferro-fibrous plate, CASE in both torsos and twelve doubles. It fixes the two things that actually hurt the C1.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-K2: the PPC Catapult</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1319 &middot; PV 32 &middot; Sniper &middot; 2603<br>
+  Walk 4 / Run 6 / Jump 0 &middot; 20 Single &middot; 260 Fusion Engine<br>
+  2x PPC, 2x Medium Laser, 2x Machine Gun</p>
+  <p>The Combine&#x27;s rethink: two PPCs instead of the missile racks, two machine guns for infantry, and no jump jets. It stops being a support mech and becomes a direct-fire heavy, and it&#x27;s good at it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-C3: artillery</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1368 &middot; PV 38 &middot; Missile Boat &middot; 3049<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 15 Single &middot; 260 Fusion Engine<br>
+  1x Arrow IV, 4x Medium Laser</p>
+  <p>An Arrow IV artillery launcher instead of the LRMs. Superb paired with a Raven for spotting, and the Capellans rushed it so badly the faulty old Anderson 21 jump jets came back. One ton of ammo, five shots.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-C5: artillery that lasts</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1748 &middot; PV 42 &middot; Missile Boat &middot; 3061<br>
+  Walk 4 / Run 6 / Jump 4 &middot; 12 IS Double &middot; 260 Fusion Engine<br>
+  1x Arrow IV, 4x ER Medium Laser</p>
+  <p>The C3 done right: endo steel, doubles, ER mediums, twelve and a half tons of armour and four times the Arrow IV ammunition behind CASE. Proper artillery support that won&#x27;t run dry in five shots.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>CPLT-K4: twin heavy PPCs</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">65 tons &middot; BV 1880 &middot; PV 41 &middot; Sniper &middot; 3068<br>
+  Walk 3 / Run 5 / Jump 3 &middot; 17 IS Double &middot; 195 Fusion Engine<br>
+  2x Heavy PPC, 2x ER Medium Laser</p>
+  <p>Twin heavy PPCs, ER mediums, seventeen doubles and a C3 slave. The smaller engine slows it to walk three, and it hits harder at range than anything else in the chassis.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Stay back, stay in cover, and jump between firing positions rather than walking between them. Count your reloads from turn one, because eight per launcher runs out faster than you'd expect. Keep the lasers for anything that reaches you, and don't start a fight where they're your main weapon.</p>
+            <p><strong>Fighting one.</strong> Close the distance. Inside its minimum range the LRMs are wasted, and it has no arms to fight with. Aim for the head if you get the chance, since the weak head armour quirk is working for you. And if it's the C1 or A1, you can simply outlast its ammunition.</p>
+            <p><strong>What I see go wrong.</strong> Catapults getting put in the front rank because they're sixty-five tons and look sturdy. They aren't. It's a support mech with a heavy's weight, and it needs someone standing in front of it.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Catapult splits three ways: 10 Missile Boats, 5 Snipers and 4 Skirmishers.</p>
+            <ul>
+                <li>The C1 family are Missile Boats and will hang right back, which is what they should do.</li>
+                <li>The K-series PPC variants play as Snipers and will trade shots at range.</li>
+                <li><strong>Butterbee</strong>, the <strong>K5</strong>, the <strong>H2</strong> and the <strong>C6</strong> are Skirmishers and will close in, which suits their short-range loadouts.</li>
+            </ul>
+            <p>16 of the 19 variants carry jump jets, so expect an enemy Catapult to move between firing positions rather than stand still.</p>
+
+                        <h2>All 19 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">CPLT-C1</td><td>2561</td><td>1399</td><td>32</td><td>Missile Boat</td><td class="wpn">2x LRM 15, 4x Medium Laser</td><td class="num">2/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-A1</td><td>2563</td><td>1285</td><td>31</td><td>Missile Boat</td><td class="wpn">2x LRM 15</td><td class="num">1/2/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">CPLT-C4</td><td>2565</td><td>1358</td><td>31</td><td>Missile Boat</td><td class="wpn">2x LRM 20, 2x Small Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">CPLT-K2</td><td>2603</td><td>1319</td><td>32</td><td>Sniper</td><td class="wpn">2x PPC, 2x Medium Laser, 2x Machine Gun</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-C1b</td><td>2688</td><td>1570</td><td>37</td><td>Missile Boat</td><td class="wpn">2x LRM 15, 4x Medium Laser</td><td class="num">3/4/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">CPLT-C1 (Jenny) &#x27;Butterbee&#x27;</td><td>3027</td><td>1242</td><td>31</td><td>Skirmisher</td><td class="wpn">4x SRM 6, 4x Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">CPLT-K3</td><td>3047</td><td>1437</td><td>33</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Laser, 2x Machine Gun</td><td class="num">4/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">CPLT-C3</td><td>3049</td><td>1368</td><td>38</td><td>Missile Boat</td><td class="wpn">1x Arrow IV, 4x Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">CPLT-K2 (Kasigi)</td><td>3050</td><td>1597</td><td>33</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-C4C</td><td>3055</td><td>1449</td><td>36</td><td>Missile Boat</td><td class="wpn">2x LRM 20, 1x Large Laser, 1x Small Pulse Laser</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CPLT-K2K</td><td>3058</td><td>1716</td><td>37</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x ER Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-K5</td><td>3058</td><td>1457</td><td>40</td><td>Skirmisher</td><td class="wpn">2x MRM 30, 2x Medium Pulse Laser</td><td class="num">5/5/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CPLT-C5</td><td>3061</td><td>1748</td><td>42</td><td>Missile Boat</td><td class="wpn">1x Arrow IV, 4x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">CPLT-C2</td><td>3062</td><td>1346</td><td>33</td><td>Missile Boat</td><td class="wpn">2x LRM 15, 2x LB 2-X AC</td><td class="num">2/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">CPLT-H2</td><td>3064</td><td>1473</td><td>32</td><td>Skirmisher</td><td class="wpn">1x PPC, 8x Rocket Launcher 20, 2x Medium Laser</td><td class="num">3/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">CPLT-C5A</td><td>3068</td><td>1772</td><td>41</td><td>Missile Boat</td><td class="wpn">2x LRM 15, 4x ER Medium Laser</td><td class="num">3/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-K4</td><td>3068</td><td>1880</td><td>41</td><td>Sniper</td><td class="wpn">2x Heavy PPC, 2x ER Medium Laser</td><td class="num">3/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">CPLT-C6</td><td>3069</td><td>1874</td><td>35</td><td>Skirmisher</td><td class="wpn">2x Plasma Rifle, 2x ER Medium Laser</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">CPLT-K6</td><td>3136</td><td>1619</td><td>34</td><td>Missile Boat</td><td class="wpn">2x Extended LRM 15, 4x ER Small Laser</td><td class="num">2/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the CPLT-C1 by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Capellan Confederation, Draconis Combine, Free Worlds League, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Clan Sea Fox, Clan Wolf, Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Capellan Confederation, Escorpión Imperio, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Capellan Confederation, Escorpión Imperio, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Capellan Confederation, Escorpión Imperio, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Scorpion Empire</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Catapult II</h3>
+  <p class="vstats">70 tons &middot; Inner Sphere &middot; 2 variants &middot; BV 1656 to 2574</p>
+  <p>A Capellan follow-up from the early thirty-second century.</p>
+</div>
+<div class="fam">
+  <h3>Mad Cat</h3>
+  <p class="vstats">75 tons &middot; Clan &middot; 20 variants &middot; BV 2224 to 2923</p>
+  <p>The Timber Wolf, named partly after the Catapult by a confused Inner Sphere targeting computer.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Archer</h3>
+  <p class="vstats">70 tons &middot; Mixed &middot; 26 variants &middot; BV 1269 to 2408</p>
+  <p>The other classic long-range missile heavy, with bigger racks and a pair of arms the Catapult never got.</p>
+</div>
+<div class="fam">
+  <h3>Trebuchet</h3>
+  <p class="vstats">50 tons &middot; Inner Sphere &middot; 13 variants &middot; BV 984 to 2165</p>
+  <p>A lighter, faster missile platform doing much the same work.</p>
+</div>
+<div class="fam">
+  <h3>Raven</h3>
+  <p class="vstats">35 tons &middot; Inner Sphere &middot; 12 variants &middot; BV 601 to 1035</p>
+  <p>Not a rival but a partner: the spotter that made the C3 artillery Catapult so dangerous.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Catapult in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Catapult variant?</h3>
+                <p>The CPLT-C1 at BV 1399 is the classic. The C1b fixes its ammunition and armour problems, the K2 and K2K turn it into a PPC direct-fire mech, and the C5 is the artillery version with enough ammunition to last. No variant fails the Trap test.</p>
+
+                <h3>Why was the Catapult so rare during the Succession Wars?</h3>
+                <p>The Star League only built it from 2561 to 2563 before letting the contract lapse, and the Corey plant that later tried to restart production was lost when the First Succession War opened. Catapults became valuable enough that whole invasions were launched just to capture the remaining ones.</p>
+
+                <h3>What are the Catapult’s weaknesses?</h3>
+                <p>Limited ammunition, with eight reloads per launcher on the C1, no arms for close combat, and weak head armour on its quirk list. It's a support mech and does best kept behind a screen.</p>
+
+                <h3>Is the Catapult part of the Mad Cat name?</h3>
+                <p>Yes. When Inner Sphere forces first met the Timber Wolf, a targeting computer couldn't decide whether it was a Marauder or a Catapult, and the after-action analysis gave it the reporting name Mad Cat.</p>
+
+                <h3>What does the CPLT-C3 do?</h3>
+                <p>It swaps both LRM 15s for an Arrow IV artillery system, letting it hit targets from well beyond direct line of fire. It worked especially well paired with a Raven for spotting, though it only carries one ton of ammunition. The later C5 fixes that.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Catapult variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The CPLT-C1 at BV 1399 is the classic. The C1b fixes its ammunition and armour problems, the K2 and K2K turn it into a PPC direct-fire mech, and the C5 is the artillery version with enough ammunition to last. No variant fails the Trap test."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why was the Catapult so rare during the Succession Wars?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Star League only built it from 2561 to 2563 before letting the contract lapse, and the Corey plant that later tried to restart production was lost when the First Succession War opened. Catapults became valuable enough that whole invasions were launched just to capture the remaining ones."}
+    },
+    {
+      "@type": "Question",
+      "name": "What are the Catapult\u2019s weaknesses?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Limited ammunition, with eight reloads per launcher on the C1, no arms for close combat, and weak head armour on its quirk list. It's a support mech and does best kept behind a screen."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Catapult part of the Mad Cat name?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes. When Inner Sphere forces first met the Timber Wolf, a targeting computer couldn't decide whether it was a Marauder or a Catapult, and the after-action analysis gave it the reporting name Mad Cat."}
+    },
+    {
+      "@type": "Question",
+      "name": "What does the CPLT-C3 do?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It swaps both LRM 15s for an Arrow IV artillery system, letting it hit targets from well beyond direct line of fire. It worked especially well paired with a Raven for spotting, though it only carries one ton of ammunition. The later C5 fixes that."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'catapult';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
