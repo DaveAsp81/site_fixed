@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Shadow Hawk variant ranked by a MechTech. Why its ammunition is scattered across all three torsos, the training that had pilots covering wounds with the mech&#x27;s own hands, and how to play one.">
+    <meta name="keywords" content="Shadow Hawk BattleTech, best Shadow Hawk variant, SHD-2H, SHD-5M, Battledroids 1984, Unseen BattleMech, BattleTech medium mech">
+    <title>Shadow Hawk: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/shadow-hawk">
+    <meta property="og:title" content="Shadow Hawk: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 26 Shadow Hawk variants ranked, and why Sarna calling it a bad ’Mech started a months-long argument in the comments.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/shadow-hawk">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Shadow Hawk</p>
+
+        <div class="mech-hero">
+            <h1>Shadow Hawk</h1>
+            <p class="sub">55 tons &middot; Inner Sphere &middot; 26 variants &middot; 2467 to 3141</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/shadow-hawk-schematic.webp" type="image/webp">
+                    <img src="assets/images/shadow-hawk-schematic.png"
+                         alt="Illustration of a Shadow Hawk BattleMech, showing the shoulder-mounted autocannon and the missile launchers in the torso"
+                         width="0" height="0" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Three torso locations, three separate ammo bins. That&#x27;s the whole story on this page.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Sarna ran a whole article calling this thing a bad 'Mech. The comment section spent months arguing back.</p>
+                <p>That's the whole Shadow Hawk experience in miniature: put ten pilots in a room and you'll get eleven opinions, and at least two of them will get personal about it. Lang Industries built it in 2467, and it's one of the original ten machines from the very first BattleTech box, back in 1984, when the game was called Battledroids and George Lucas hadn't yet decided he owned the word "droid."</p>
+                <p><strong>What you've got</strong> is an AC/5, a medium laser, an LRM 5, an SRM 2, three jump jets and 12 single heat sinks. Four weapons for four range bands, and not one of them ends an argument on its own. Less duelist, more someone who brought a little of everything to the potluck and is hoping it adds up to enough.</p>
+                <p><strong>Here's the part that actually matters, and it's not the guns.</strong> The Shadow Hawk carries ammunition in all three torso sections, which means there isn't really a direction you can get hit from that doesn't come with a small chance of something going very wrong. SLDF training covered exactly one response to a breached torso panel: get a hand over the hole, or eject. Not "assess the situation." Not "reroute power." Get a hand over the hole.</p>
+                <p>The pose is unmistakable once you've seen it. Fifty-five tons folded in on itself, one manipulator clamped over a black tear in the armour like a man trying to keep his insides in. The joke in the barracks was that you weren't covering a wound. You were covering a magazine, and hoping the bin hadn't already voted.</p>
+                <p>I've never had to give that order myself, and I intend to keep it that way. By the time a Shadow Hawk is clutching its own guts, the fight has usually already finished deciding itself without you.</p>
+                <p><strong>And yet.</strong> Pilots swore by the Sparrow 300J life-support rig, comfortable enough that plenty of them called it the best cockpit in the business, which means you get to be genuinely relaxed right up until you aren't. "Jack of all trades, master of none" isn't really an insult here, it's the actual business plan. That's why this thing turns up in more lances, on more worlds and from more manufacturers than almost anything else its age. It's never the best tool in the shed. It's just the one that's already out of the crate.</p>
+                <p><strong>If you're choosing one,</strong> the <strong>SHD-2H</strong> is still the honest baseline, the <strong>SHD-2Hb</strong> Royal fixes the two real weaknesses in one pass, and the <strong>SHD-5M</strong> is the one that finally makes people stop laughing.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Four weapons, four range bands, and not one of them wins the fight by itself. The AC/5 and LRM 5 carry the long conversation, the medium laser and SRM 2 take over once somebody gets impolite and closes the distance. It's a sound plan on paper. Then you look at where the ammunition for that plan actually lives, and the plan gets a lot less sound.</p>
+            <p>An AC/5, an LRM 5 and an SRM 2 each need their own bin, and the original layout scattered them one per torso, left, right, centre. That's not a design compromise, that's three separate bombs wearing the same paint job. SLDF training was blunt about what to do when one of those panels opened up: get a hand over the hole, physically, or eject before you find out the hard way what happens next. I still think that's a strange thing to drill into a soldier, and a stranger thing to actually need in the field, and I've heard enough stories from techs who serviced these to believe every word of it.</p>
+            <p>Here's the part that almost makes up for it. Two heat sinks more than the maths strictly demands means a 2H can fire everything it owns while jumping and land a point of cooling margin to spare, which most mediums its age can only dream about. Pair that with the Sparrow 300J life-support system, reportedly good enough that pilots called it the single most comfortable cockpit built, and you get a machine that's genuinely pleasant to sit inside right up until something finds the wrong panel. Comfortable and combustible in the same breath. That's the Shadow Hawk in one sentence.</p>
+
+            <div class="heat-callout">
+                <h3>Sarna called it a bad 'Mech. I'd have argued too.</h3>
+                <p>In 2025 Sarna ran the Shadow Hawk through its "Bad 'Mechs" column, the site's own satirical teardown series, mostly on the ammunition problem above and the lack of any single standout weapon. Within a day the comment section had turned into a genuine scrap: long-time players lining up to defend it as a proven workhorse, pointing at its record, its parts availability, the plain fact that it's still rolling off lines nearly seven centuries later.</p>
+                <p style="margin-top:16px;">Nobody won, and I don't think anybody was ever going to. It's not the best 'Mech at any one thing, and it never has been. It's just rarely the wrong choice, and out here that's worth more than being the right one occasionally.</p>
+            </div>
+
+                        <h2>One of the ten machines that started the hobby</h2>
+            <p>Rodger Taylor designed the Shadow Hawk for Lang Industries on Caph in 2467, part of the Star League Defense Force's habit of staying one step ahead of an Inner Sphere that had just finished stealing its BattleMech technology. The original SHD-1R had a real fault, not a rumour: armour plating that could sever the leg myomer under serious damage, the kind of thing that gets a chassis quietly pulled off the line and rethought.</p>
+            <p>That rethink landed in 2550 as the SHD-2H, the version everyone actually pictures. Better armour killed the leg fault and shed weight doing it, two extra heat sinks meant it could fight and jump at the same time without flinching, and the whole package caught on well enough to earn a place as one of ten machines included as playing pieces in the original 1984 Battledroids boxed set, the game's first release, before the rename and before this chassis and its box-mates became the Unseen. Its face comes from Fang of the Sun Dougram, the same anime that gave the hobby several of its founding silhouettes, which makes the Shadow Hawk older than the game it's technically part of.</p>
+            <p>When the Star League fell and Lang's factories went with it, the Great Houses did what the Great Houses always do: upgraded what they had with whatever was on the shelf. Davion's SHD-2D gave up nearly half the armour for more close-range teeth, a trade most people still consider a straightforward mistake. Kurita went the other way entirely, stripping the SHD-2K down to a single PPC. Lyran MechWarriors called it a "Griffin knockoff" like it was supposed to sting. It became one of the more successful Succession Wars redesigns of the whole chassis anyway, insult and all.</p>
+            <p>The Helm Memory Core changed the conversation in 3048. Earthwerks' SHD-5M kept the old four-weapon philosophy and simply replaced every part of it with something better: an Ultra AC/5, an LRM 20, an XL engine, doubles. For the first time the Shadow Hawk had teeth worth the name. Production kept rolling from there, eventually spread across at least eight manufacturers, which is about as good a measure of ubiquity as this hobby offers. Its parts were common enough that when the Capellan Confederation needed a new heavy 'Mech built from whatever its remaining factories could actually produce, the Cataphract went together partly out of Shadow Hawk components. Even its leftovers built things.</p>
+            <p>The most recent version, the SHD-6D, finally kills the thing that's dogged this chassis since 2550: one ammunition bin, protected by CASE II, instead of three scattered across the torso waiting for a bad day. Five hundred and ninety-one years is a long time to spend learning not to store your own bombs in every room of the house, but the Shadow Hawk got there in the end.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Shadow Hawks available in the same era</strong>. No variant fails the Trap test here, which fits a chassis whose whole reputation is about never being the wrong pick rather than ever being the standout one.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 26 Shadow Hawk variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 26 are in the table further down. These are the ones that change how the machine plays.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-2H: the classic</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1064 &middot; PV 30 &middot; Skirmisher &middot; 2550<br>
+  Walk 5 / Run 8 / Jump 3 &middot; 12 Single &middot; 275 Fusion Engine<br>
+  1x Medium Laser, 1x AC/5, 1x LRM 5, 1x SRM 2</p>
+  <p>The 2550 fix, and the one everybody means. AC/5, medium laser, LRM 5, SRM 2, 12 single sinks, three jump jets. Fires everything mid-jump and still has a point of heat to spare. Doesn&#x27;t hit hard anywhere. Doesn&#x27;t leave a gap anywhere either. That&#x27;s the whole pitch, take it or leave it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-2Hb: the Royal fix</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1354 &middot; PV 34 &middot; Skirmisher &middot; 2752<br>
+  Walk 5 / Run 8 / Jump 3 &middot; 11 IS Double &middot; 275 Fusion Engine<br>
+  2x Medium Laser, 1x LB 10-X AC, 2x Streak SRM 2</p>
+  <p>The SLDF Royal from 2752, and the version that makes the standard 2H look like a rough draft. Drops the AC/5 for an LB 10-X, doubles the medium lasers, swaps the single SRM for twin Streaks, doubles the heat sinks, adds CASE so a lucky hit stops being a death sentence. Better than the standard in every direction that counts, which is just what a Royal is supposed to do.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-2K: the &quot;Griffin knockoff&quot;</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1147 &middot; PV 30 &middot; Sniper &middot; 2803<br>
+  Walk 5 / Run 8 / Jump 3 &middot; 17 Single &middot; 275 Fusion Engine<br>
+  1x PPC, 1x LRM 5</p>
+  <p>Kurita&#x27;s answer, 2803, and the one Lyran pilots loved to mock. Strips the laser, autocannon and SRM down to a single PPC and five extra heat sinks, and got called a &quot;Griffin knockoff&quot; for its trouble. The insult didn&#x27;t stick. It became one of the more successful Succession Wars redesigns of the whole chassis, knockoff or not.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-5M: the Helm Memory Core rebuild</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1430 &middot; PV 35 &middot; Missile Boat &middot; 3048<br>
+  Walk 5 / Run 8 / Jump 5 &middot; 10 IS Double &middot; 275 XL Engine<br>
+  1x Medium Laser, 1x Ultra AC/5, 1x LRM 20, 1x Streak SRM 2</p>
+  <p>The one the Helm Memory Core paid for, 3048, and the moment this chassis stopped apologising. Ultra AC/5, an LRM 20 where the old LRM 5 used to sit, a Streak, an XL engine, doubles. Six shots of ammo on that LRM 20, so it rewards a trigger finger with actual patience behind it. This is a Shadow Hawk that means it.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-2Ht: the Elemental hunter</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1453 &middot; PV 37 &middot; Skirmisher &middot; 3052<br>
+  Walk 5 / Run 8 / Jump 5 &middot; 10 IS Double &middot; 275 Fusion Engine<br>
+  2x Medium Laser, 1x Large Laser, 5x Streak SRM 2</p>
+  <p>ComStar&#x27;s Tukayyid special, purpose-built to hunt Elementals. Large laser, two mediums, five Streak SRM 2s, jump five. Clan forces kept mistaking it for a plain 2H and closing to short range, which is precisely the mistake this thing was built to punish.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>SHD-6D: the ammo problem, finally solved</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">55 tons &middot; BV 1371 &middot; PV 36 &middot; Skirmisher &middot; 3141<br>
+  Walk 5 / Run 8 / Jump 5 &middot; 11 IS Double &middot; 275 Fusion Engine<br>
+  1x Medium Re-engineered Laser, 1x Large Re-engineered Laser, 1x MML 5, 1x Streak SRM 2 (I-OS)</p>
+  <p>The newest here, 3141, and the one that finally learned the lesson. Re-engineered lasers that punch through modern reflective armour, an MML 5, a single one-shot Streak SRM 2 for anti-infantry work, and every bit of ammunition it carries lives in one CASE II-protected bin instead of three scattered across the torso. Five hundred and ninety-one years to fix the one thing this chassis has always been bad at, and it finally got there.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Use everything you've got, because there's rarely a range where you're standing there empty-handed. Keep the torso pointed at whatever's shooting at you where you can, since any of the three locations going down risks the ammunition sitting behind it. On the 2H specifically, jump and fire freely and don't second-guess it, the heat margin exists precisely for that.</p>
+            <p><strong>Fighting one.</strong> Any solid torso hit is a real shot at a sympathetic detonation, so don't write off a called shot at the side or centre just because the armour reads thick on paper. It's quick for its weight and jump-capable on most builds, so don't expect it to stand still and trade blows like it owes you money.</p>
+            <p><strong>What I see go wrong.</strong> People walk in expecting a brawler or a sniper and get neither, then judge it against machines built to specialise in one thing. It was never trying to win the range band it's fighting in. It's trying to never be the one standing there with nothing to say.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Shadow Hawk splits wide: 9 Skirmishers, 6 Missile Boats and 6 Snipers make up most of the 26 variants.</p>
+            <ul>
+                <li>The classic four-weapon builds like the <strong>SHD-2H</strong> play as Skirmisher, repositioning rather than committing hard to one range.</li>
+                <li>The <strong>SHD-5M</strong> and the later LRM-heavy builds play as Missile Boat and will happily hold distance.</li>
+                <li>The PPC-focused late variants like <strong>SHD-4H</strong> and <strong>SHD-12C</strong> play as Sniper.</li>
+            </ul>
+            <p>A genuinely flexible mid-tier filler, and useful precisely because it never commits the AI to one obvious plan.</p>
+
+                        <h2>All 26 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">SHD-1R</td><td>2467</td><td>851</td><td>22</td><td>Sniper</td><td class="wpn">1x Medium Laser, 1x AC/5</td><td class="num">1/1/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">SHD-2H</td><td>2550</td><td>1064</td><td>30</td><td>Skirmisher</td><td class="wpn">1x Medium Laser, 1x AC/5, 1x LRM 5, 1x SRM 2</td><td class="num">2/2/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">SHD-2Hb</td><td>2752</td><td>1354</td><td>34</td><td>Skirmisher</td><td class="wpn">2x Medium Laser, 1x LB 10-X AC, 2x Streak SRM 2</td><td class="num">3/3/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-3H</td><td>2752</td><td>1043</td><td>30</td><td>Skirmisher</td><td class="wpn">1x Medium Laser, 1x AC/5, 1x LRM 5, 2x Machine Gun</td><td class="num">2/2/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-3H2</td><td>2775</td><td>1112</td><td>29</td><td>Brawler</td><td class="wpn">3x SRM 4, 2x Small Laser, 1x Medium Laser, 1x AC/5, 2x Vehicular Grenade Launcher, 1x LRM 5, 2x Machine Gun</td><td class="num">3/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">SHD-2D</td><td>2796</td><td>899</td><td>26</td><td>Striker</td><td class="wpn">2x Medium Laser, 1x AC/5, 1x LRM 5, 2x SRM 2</td><td class="num">2/3/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">SHD-2K</td><td>2803</td><td>1147</td><td>30</td><td>Sniper</td><td class="wpn">1x PPC, 1x LRM 5</td><td class="num">1/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">C</td><td>2826</td><td>1309</td><td>30</td><td>Skirmisher</td><td class="wpn">1x ER Medium Laser, 1x LB 5-X AC, 1x LRM 5, 1x Streak SRM 2</td><td class="num">2/2/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">SHD-5M</td><td>3048</td><td>1430</td><td>35</td><td>Missile Boat</td><td class="wpn">1x Medium Laser, 1x Ultra AC/5, 1x LRM 20, 1x Streak SRM 2</td><td class="num">2/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">SHD-2D2</td><td>3049</td><td>1049</td><td>29</td><td>Brawler</td><td class="wpn">2x Medium Laser, 1x AC/5, 1x LRM 5, 2x Streak SRM 2</td><td class="num">3/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-2Ht</td><td>3052</td><td>1453</td><td>37</td><td>Skirmisher</td><td class="wpn">2x Medium Laser, 1x Large Laser, 5x Streak SRM 2</td><td class="num">4/4/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-5S</td><td>3054</td><td>1590</td><td>43</td><td>Scout</td><td class="wpn">1x Medium Pulse Laser, 1x TAG, 1x Large Laser, 4x Medium Laser</td><td class="num">4/4/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">SHD-5D</td><td>3066</td><td>1684</td><td>39</td><td>Skirmisher</td><td class="wpn">2x Medium Laser, 1x Rotary AC/5, 1x Streak SRM 4</td><td class="num">4/4/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-7CS</td><td>3066</td><td>1496</td><td>39</td><td>Missile Boat</td><td class="wpn">2x ER Medium Laser, 1x Ultra AC/5, 1x LRM 15</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-7M</td><td>3066</td><td>1447</td><td>35</td><td>Missile Boat</td><td class="wpn">1x Medium Laser, 1x Light Gauss Rifle, 1x LRM 15, 1x Streak SRM 2</td><td class="num">2/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">SHD-11CS</td><td>3068</td><td>1700</td><td>38</td><td>Missile Boat</td><td class="wpn">2x ER Medium Laser, 1x Snub-Nose PPC, 1x LRM 15</td><td class="num">2/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-5D (Sandy)</td><td>3068</td><td>1517</td><td>31</td><td>Sniper</td><td class="wpn">1x Light PPC, 1x Heavy PPC, 1x TAG</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-9D</td><td>3070</td><td>1313</td><td>37</td><td>Skirmisher</td><td class="wpn">1x Medium Pulse Laser, 2x MML 5, 1x Light AC/5</td><td class="num">3/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-3K</td><td>3075</td><td>1591</td><td>37</td><td>Sniper</td><td class="wpn">1x ER Medium Laser, 1x Heavy PPC, 1x MML 5</td><td class="num">2/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-11CS2</td><td>3076</td><td>1779</td><td>39</td><td>Missile Boat</td><td class="wpn">2x ER Medium Laser, 1x Snub-Nose PPC, 1x LRM 15</td><td class="num">2/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">SHD-12C</td><td>3079</td><td>1574</td><td>36</td><td>Sniper</td><td class="wpn">1x ER Medium Laser, 1x Heavy PPC, 1x MML 7</td><td class="num">3/3/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">SHD-8L</td><td>3079</td><td>1536</td><td>44</td><td>Striker</td><td class="wpn">1x Medium VSP Laser, 1x Plasma Rifle, 1x MML 5</td><td class="num">3/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">SHD-5R</td><td>3087</td><td>1296</td><td>33</td><td>Missile Boat</td><td class="wpn">1x ER Medium Laser, 1x Light AC/5, 5x Thunderbolt 5, 1x Streak SRM 2</td><td class="num">3/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">SHD-4H</td><td>3097</td><td>1569</td><td>33</td><td>Sniper</td><td class="wpn">1x Light PPC, 1x Heavy PPC</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">SHD-7H</td><td>3101</td><td>1394</td><td>30</td><td>Skirmisher</td><td class="wpn">1x ER Medium Laser, 1x LB 10-X AC, 1x Enhanced LRM 5, 1x SRM 2</td><td class="num">2/2/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">SHD-6D</td><td>3141</td><td>1371</td><td>36</td><td>Skirmisher</td><td class="wpn">1x Medium Re-engineered Laser, 1x Large Re-engineered Laser, 1x MML 5, 1x Streak SRM 2 (I-OS)</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the SHD-2H by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Capellan Confederation, Escorpión Imperio, Federated Suns, Free Worlds League (Duchy of Andurien), Free Worlds League (Duchy of Tamarind-Abbey), Free Worlds League (Marik-Stewart Commonwealth), Free Worlds League (Non-Aligned Worlds), Free Worlds League (Oriente Protectorate), Free Worlds League (Regulan Fiefs), Free Worlds League (Rim Commonality), Mercenary, Periphery General, Raven Alliance, Republic of the Sphere</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Free Worlds League (Duchy of Tamarind-Abbey), Free Worlds League (Non-Aligned Worlds), Free Worlds League (Regulan Fiefs), Free Worlds League (Rim Commonality), Mercenary, Periphery General, Raven Alliance</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Mercenary, Periphery General</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Cataphract</h3>
+  <p class="vstats">70 tons &middot; Inner Sphere &middot; 14 variants &middot; BV 1216 to 2322</p>
+  <p>Built partly from Shadow Hawk components when the Capellan Confederation needed a new heavy from whatever its factories could still produce.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Griffin</h3>
+  <p class="vstats">55 tons &middot; Inner Sphere &middot; 24 variants &middot; BV 1024 to 2249</p>
+  <p>The other Dougram-derived medium of the same generation, built for one hard-hitting range band rather than four soft ones.</p>
+</div>
+<div class="fam">
+  <h3>Wolverine</h3>
+  <p class="vstats">55 tons &middot; Inner Sphere &middot; 23 variants &middot; BV 867 to 1925</p>
+  <p>The third of the classic 55-ton trio, and the one most players rate above both the others.</p>
+</div>
+<div class="fam">
+  <h3>Warhammer</h3>
+  <p class="vstats">70 tons &middot; Mixed &middot; 31 variants &middot; BV 1299 to 2772</p>
+  <p>Not a rival in size, but the machine on the actual box cover since the very first release this chassis also shipped in.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Shadow Hawk in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Shadow Hawk variant?</h3>
+                <p>The SHD-2H at BV 1064 is the honest baseline everyone means by the name. The SHD-2Hb Royal beats it in every direction if your era allows it, and the SHD-5M is the one that turns it into a genuine threat once Star League technology is back on the table.</p>
+
+                <h3>Why is the Shadow Hawk considered dangerous to its own pilot?</h3>
+                <p>Its three ammunition-dependent weapons, the autocannon, the LRM launcher and the SRM launcher, each carry their own bin, and on the classic design those bins sit in all three torso locations. A solid hit from nearly any angle risks a sympathetic detonation. SLDF pilots were trained to cover torso breaches with the mech's own hands, and to eject if they couldn't reach the hole in time.</p>
+
+                <h3>Is the Shadow Hawk a good mech?</h3>
+                <p>It's genuinely contested, and I don't think there's a clean answer. It rarely wins a fight outright, and the ammunition problem above is real. But it's rarely the wrong 'Mech to have either, which is why it's stayed in continuous production since 2467. When Sarna's own "Bad 'Mechs" column tried to settle the question, the comment section argued back for months instead.</p>
+
+                <h3>Was the Shadow Hawk in the original BattleTech box set?</h3>
+                <p>Yes. It was one of ten 'Mechs included as playing pieces in the very first release, Battledroids, in 1984, alongside the Warhammer, Marauder, Archer, Crusader and others. All ten later became the Unseen after a rights dispute over their Japanese anime-derived designs.</p>
+
+                <h3>What does the Griffin knockoff comment mean?</h3>
+                <p>It's what Lyran MechWarriors called the Draconis Combine's SHD-2K variant, which strips the Shadow Hawk down to a single PPC, mocking its resemblance to a proper Griffin. The insult didn't stop the 2K from becoming one of the more successful Succession Wars-era redesigns of the chassis.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Shadow Hawk variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The SHD-2H at BV 1064 is the honest baseline everyone means by the name. The SHD-2Hb Royal beats it in every direction if your era allows it, and the SHD-5M is the one that turns it into a genuine threat once Star League technology is back on the table."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Shadow Hawk considered dangerous to its own pilot?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Its three ammunition-dependent weapons, the autocannon, the LRM launcher and the SRM launcher, each carry their own bin, and on the classic design those bins sit in all three torso locations. A solid hit from nearly any angle risks a sympathetic detonation. SLDF pilots were trained to cover torso breaches with the mech's own hands, and to eject if they couldn't reach the hole in time."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Shadow Hawk a good mech?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It's genuinely contested, and I don't think there's a clean answer. It rarely wins a fight outright, and the ammunition problem above is real. But it's rarely the wrong 'Mech to have either, which is why it's stayed in continuous production since 2467. When Sarna's own \"Bad 'Mechs\" column tried to settle the question, the comment section argued back for months instead."}
+    },
+    {
+      "@type": "Question",
+      "name": "Was the Shadow Hawk in the original BattleTech box set?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes. It was one of ten 'Mechs included as playing pieces in the very first release, Battledroids, in 1984, alongside the Warhammer, Marauder, Archer, Crusader and others. All ten later became the Unseen after a rights dispute over their Japanese anime-derived designs."}
+    },
+    {
+      "@type": "Question",
+      "name": "What does the Griffin knockoff comment mean?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It's what Lyran MechWarriors called the Draconis Combine's SHD-2K variant, which strips the Shadow Hawk down to a single PPC, mocking its resemblance to a proper Griffin. The insult didn't stop the 2K from becoming one of the more successful Succession Wars-era redesigns of the chassis."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'shadow-hawk';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
