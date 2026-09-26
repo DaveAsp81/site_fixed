@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Mad Dog configuration ranked. Why Clan Smoke Jaguar named it as a deliberate insult to Clan Wolf and Clan Coyote, why only one of fifteen configurations jumps, and how to fight one.">
+    <meta name="keywords" content="Mad Dog BattleTech, Vulture, best Mad Dog configuration, Mad Dog Prime, OmniMech, Clan Smoke Jaguar, Clan Ghost Bear, BattleTech heavy mech">
+    <title>Mad Dog (Vulture): Every Configuration Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/mad-dog">
+    <meta property="og:title" content="Mad Dog (Vulture): Every Configuration Ranked and How to Play It">
+    <meta property="og:description" content="All 15 Mad Dog configurations ranked, and the inter-Clan insult behind the name.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/mad-dog">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Mad Dog</p>
+
+        <div class="mech-hero">
+            <h1>Mad Dog</h1>
+            <p class="sub">60 tons &middot; Clan OmniMech &middot; 15 configurations &middot; 2963 to 3144</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/mad-dog-schematic.webp" type="image/webp">
+                    <img src="assets/images/mad-dog-schematic.png"
+                         alt="Illustration of a Mad Dog (Vulture) OmniMech firing its shoulder-mounted missile racks in an urban industrial setting"
+                         width="700" height="630" loading="eager" decoding="async">
+                </picture>
+                <figcaption>The shoulder-mounted missile silhouette that made this chassis recognisable, on a machine named as an insult by the Clan that built it.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Clan Smoke Jaguar named this one to insult two other Clans at once, and my caste has never pretended otherwise. Clan Wolf's Timber Wolf and Clan Coyote's Lupus both contributed moulds and design lineage to this chassis, and the Jaguars repaid that contribution by naming the result Mad Dog. It is not subtle, and it was not meant to be.</p>
+                <p>The irony is that the insult did not stop the machine from working. It spread to near every touman in existence within a generation, favoured especially by Clan Ghost Bear, and the Inner Sphere's own nickname for it is a plain physical description rather than a targeting error or a named battle: the reverse-jointed legs, the slumping posture and the raised cockpit read as a bird of prey, and Vulture is what they called it.</p>
+                <p><strong>What it is.</strong> Sixty tons, walk five, run eight, on a 300 extralight engine, with twenty-eight tons of pod space over eight and a half tons of ferro-fibrous armour. Introduced in 2963, and it has been a fire-support fixture in Clan lines ever since.</p>
+                <p><strong>And what almost none of the 15 configurations do.</strong> Exactly one of them carries a jump jet. Not most, the way a Timber Wolf spreads jump capability across several loadouts. One. And that one configuration is also the only one built entirely around weapons that need no ammunition at all, which is not a coincidence worth ignoring.</p>
+            </div>
+            </div>
+        </div>
+
+        <p class="voice-note"><strong>A note on this one.</strong> Clan machines on this site are written from the perspective of a Clan technician rather than the Inner Sphere MechTech who narrates the rest. Same research, same data, different chair.</p>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Sixty tons, walk five, run eight, and twenty-eight tons of that spent on pod space rather than armour or engine. The Prime carries twin large pulse lasers, twin medium pulse lasers and twin LRM 20s, both launchers indirect-capable, for 4/4/4 on the Alpha Strike card: a flat four at every range band. That shoulder-mounted missile silhouette is the reason this chassis is recognisable at a glance.</p>
+            <p><strong>The insult in the name.</strong> Clan Smoke Jaguar built this as a second-generation OmniMech derived from Clan Coyote's Lupus, and it shares tooling with Clan Wolf's Timber Wolf besides. Naming the result Mad Dog, after borrowing so directly from both Clans, was a deliberate slight, and the fact that the machine went on to serve in nearly every touman in existence has not softened the insult with time. It has just made it a very widely repeated one.</p>
+            <p><strong>One jump jet in fifteen configurations.</strong> The S is the only one, and it is not built that way by accident. Twin ER PPCs and three medium pulse lasers draw on no ammunition supply whatsoever, so the single configuration that can reposition under fire is also the single configuration that never has to worry about running dry while doing it. Every other configuration on this page stays on the ground and, in several cases, stays dependent on a magazine.</p>
+            <p><strong>What that trade buys.</strong> Fourteen of fifteen configurations spend the tonnage a jump jet would cost on more pod space instead: more missile tubes, more ballistic weight, more dedicated ammunition. This chassis was built to sit at range and put ordnance downrange, not to manoeuvre for an angle, and the numbers bear that out consistently across a hundred and eighty-one years of refits.</p>
+
+                        <h2>A name chosen to insult its own family tree</h2>
+            <p>Clan Smoke Jaguar designed this as a second-generation OmniMech, built from the bones of Clan Coyote's Lupus and sharing production moulds with Clan Wolf's Timber Wolf. Both of those Clans could reasonably claim some credit for the result. Neither got any. The Jaguars named it Mad Dog specifically as a slight against both, and the choice was deliberate enough that period sources describe it outright as an obtuse insult rather than a coincidence of naming.</p>
+            <p>The Inner Sphere's own name arrived by simple observation rather than any deeper reasoning. The reverse-jointed legs, the slumped stance and the raised, prominent cockpit resemble a carrion bird closely enough that Vulture was the label from first contact onward, and it never needed revising.</p>
+            <p>Production spread quickly and widely. Introduced in 2963, this chassis reached near ubiquity across the Clan touman within a generation, though Clan Ghost Bear in particular favoured it, and later took over manufacture at Bergan Industries after their move into the Inner Sphere. The most recent configuration on this page, dated 3144, comes from that continuing production line.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Mad Dog configurations</strong>. As with every OmniMech on this site, the Trap test finds nothing on armour, frame or engine, since all fifteen share them. The tiers are judgement, not arithmetic.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 15 Mad Dog variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The configurations worth arguing about</h2>
+            <p>All 15 are in the table further down. These are the ones that change what you are actually facing.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>Prime: the signature twin-LRM 20 silhouette</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2351 &middot; PV 42 &middot; Missile Boat &middot; 2963<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 12 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x Large Pulse Laser, 2x Medium Pulse Laser, 2x LRM 20</p>
+  <p>Twin large pulse lasers, twin medium pulse lasers and twin LRM 20s, both launchers on indirect fire. A flat four points of damage at every range band, and the exact silhouette that made this chassis recognisable: shoulders that carry the missiles, not the arms.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>C: twin Gauss, nothing else, cheapest in the chassis</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 1892 &middot; PV 33 &middot; Sniper &middot; 2963<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 12 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x Gauss Rifle</p>
+  <p>Two Gauss rifles, nothing else. Three points of damage at short, medium and long range, dead level, at zero overheat. The cheapest configuration here, and one of the cleanest: no ammunition surprises, no heat surprises, just two guns that always hit for the same number.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>S: the only one that jumps</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2676 &middot; PV 42 &middot; Skirmisher &middot; 3052<br>
+  Walk 5 / Run 8 / Jump 5 &middot; 16 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER PPC, 3x Medium Pulse Laser</p>
+  <p>The only configuration in the entire chassis that carries a jump jet, and it is not a coincidence that it is also the only one built entirely around energy weapons. Twin ER PPCs and three medium pulse lasers need no ammunition at all, which means the one Mad Dog that can reposition is also the one that never has to worry about running dry.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>D: the highest short-range damage here</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2447 &middot; PV 48 &middot; Skirmisher &middot; 3059<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 13 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER Medium Laser, 2x ER Small Laser, 2x ATM 12, 2x Medium Pulse Laser</p>
+  <p>Twin ER mediums, twin ER smalls, twin ATM 12 launchers and twin medium pulse lasers, for eight points of damage at short range, the highest figure in the entire chassis. The ATM launchers let a warrior pick the ammunition to suit the range on the day.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>V: the dedicated artillery platform</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2182 &middot; PV 50 &middot; Missile Boat &middot; 3098<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 13 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER Medium Laser, 2x Medium Pulse Laser, 1x Arrow IV, 1x LRM 20</p>
+  <p>An Arrow IV launcher with two tons of dedicated ammunition, an LRM 20, and pulse and ER medium lasers in each arm for self-defence. A genuine artillery platform, not a front-line combatant, and it should not be fielded as one.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>U: the only one that goes underwater</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">60 tons &middot; BV 2488 &middot; PV 42 &middot; Skirmisher &middot; 3077<br>
+  Walk 5 / Run 8 / Jump 0 &middot; 12 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER Medium Laser, 2x Medium Pulse Laser, 2x LRT 15</p>
+  <p>Underwater myomer, torpedo tubes instead of missile racks, twin ER mediums and twin medium pulse lasers above the waterline. The weakest damage figures in the chassis on dry land, and the only configuration that can fight from a lake bed. The same trade-off this chassis&#x27;s own cousins make with their U configurations.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Fielding one.</strong> Pick the range band before the engagement starts, because fourteen of the fifteen configurations cannot change their mind about it once committed. This is a fire-support chassis first. Let something else hold the front while it puts ordnance downrange.</p>
+            <p><strong>Opposing one.</strong> At 1892 to 2676 Battle Value, close the distance with confidence. Only the S can follow you over terrain a walking machine cannot cross, and every other configuration here is fighting the range band it was built for or nothing at all.</p>
+            <p><strong>What I observe going wrong.</strong> Warriors treat every Clan OmniMech as though it might jump, and spend a turn preparing for a manoeuvre that fourteen out of fifteen Mad Dogs are physically unable to make. Confirm the configuration before you plan around a jump jet that probably is not there.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Mad Dog closes out the pattern this trio of Clan pages has been building.</p>
+            <ul>
+                <li>Only the S configuration carries a jump jet. The engine will hold ground and shoot at range in every other build, which makes this chassis a predictable, honest fire-support threat rather than a mobility puzzle.</li>
+                <li>4 of the 15 configurations are tagged Missile Boat, more than any single role in either the Dire Wolf or the Summoner. Expect the AI to hang back and let the launchers do the work whenever it draws one of these.</li>
+                <li>Field a Mad Dog when you want the AI to sit at range and force your own force to close the distance. That is a genuinely different problem to solve than either of its Clan cousins on this site.</li>
+            </ul>
+
+                        <h2>All 15 configurations</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. Every configuration shares the same engine, frame and armour, so only the pods change.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">A</td><td>2963</td><td>1923</td><td>42</td><td>Skirmisher</td><td class="wpn">1x LB 5-X AC, 1x ER PPC, 6x SRM 6</td><td class="num">5/5/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">B</td><td>2963</td><td>2284</td><td>41</td><td>Skirmisher</td><td class="wpn">2x ER Large Laser, 3x Medium Pulse Laser, 1x LRM 20, 2x Streak SRM 6</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">C</td><td>2963</td><td>1892</td><td>33</td><td>Sniper</td><td class="wpn">2x Gauss Rifle</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">Prime</td><td>2963</td><td>2351</td><td>42</td><td>Missile Boat</td><td class="wpn">2x Large Pulse Laser, 2x Medium Pulse Laser, 2x LRM 20</td><td class="num">4/4/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">DD</td><td>3050</td><td>1970</td><td>41</td><td>Brawler</td><td class="wpn">2x LB 2-X AC, 3x Medium Pulse Laser, 1x LRM 20, 1x Streak SRM 6</td><td class="num">5/5/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">S</td><td>3052</td><td>2676</td><td>42</td><td>Skirmisher</td><td class="wpn">2x ER PPC, 3x Medium Pulse Laser</td><td class="num">4/4/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">D</td><td>3059</td><td>2447</td><td>48</td><td>Skirmisher</td><td class="wpn">2x ER Medium Laser, 2x ER Small Laser, 2x ATM 12, 2x Medium Pulse Laser</td><td class="num">8/6/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">H</td><td>3059</td><td>2097</td><td>48</td><td>Missile Boat</td><td class="wpn">3x Heavy Medium Laser, 1x Heavy Large Laser, 2x LRM 15</td><td class="num">6/6/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">E</td><td>3069</td><td>2031</td><td>33</td><td>Sniper</td><td class="wpn">2x HAG/30</td><td class="num">3/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">F</td><td>3069</td><td>2300</td><td>43</td><td>Skirmisher</td><td class="wpn">2x HAG/20, 4x ER Medium Laser</td><td class="num">6/5/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">U</td><td>3077</td><td>2488</td><td>42</td><td>Skirmisher</td><td class="wpn">2x ER Medium Laser, 2x Medium Pulse Laser, 2x LRT 15</td><td class="num">3/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">G</td><td>3093</td><td>2503</td><td>39</td><td>Brawler</td><td class="wpn">1x ER PPC, 3x ER Medium Pulse Laser, 1x Streak LRM 15, 2x Streak SRM 6</td><td class="num">4/4/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">V</td><td>3098</td><td>2182</td><td>50</td><td>Missile Boat</td><td class="wpn">2x ER Medium Laser, 2x Medium Pulse Laser, 1x Arrow IV, 1x LRM 20</td><td class="num">4/4/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">T</td><td>3142</td><td>2555</td><td>43</td><td>Missile Boat</td><td class="wpn">2x ER Large Laser, 2x ER Medium Laser, 2x LRM 20</td><td class="num">4/4/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">I</td><td>3144</td><td>2042</td><td>33</td><td>Sniper</td><td class="wpn">1x ER PPC, 2x Rotary AC/2</td><td class="num">3/3/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the Prime by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>HW Clan General</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>HW Clan General</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>HW Clan General, IS Clan General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Draconis Combine, HW Clan General, IS Clan General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Draconis Combine, Escorpión Imperio, HW Clan General, IS Clan General, Society, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Clan Diamond Shark, Clan Hell&#x27;s Horses, Clan Jade Falcon, Clan Wolf (in Exile), Draconis Combine, Escorpión Imperio, Mercenary, Rasalhague Dominion, Raven Alliance, Republic of the Sphere, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Clan Hell&#x27;s Horses, Clan Jade Falcon, Clan Sea Fox, Clan Wolf (in Exile), Draconis Combine, Escorpión Imperio, Mercenary, Rasalhague Dominion, Raven Alliance, Republic of the Sphere, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Clan Hell&#x27;s Horses, Clan Jade Falcon, Clan Wolf (in Exile), Escorpión Imperio, Mercenary, Rasalhague Dominion, Raven Alliance, Republic of the Sphere, Scorpion Empire, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Clan Hell&#x27;s Horses, Rasalhague Dominion, Raven Alliance, Scorpion Empire, Star League (Clan Smoke Jaguar), Star League (Clan Wolf)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Mad Cat Mk II</h3>
+  <p class="vstats">90 tons &middot; Clan &middot; 6 variants &middot; BV 2491 to 3168</p>
+  <p>Ninety tons, from Clan Diamond Shark rather than Smoke Jaguar, and a different lineage entirely despite the naming echo.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Catapult</h3>
+  <p class="vstats">65 tons &middot; Inner Sphere &middot; 19 variants &middot; BV 1242 to 1880</p>
+  <p>The Inner Sphere’s own shoulder-launcher missile boat, and the closest thing to a direct silhouette match this chassis has outside the Clans.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Mad Dog in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>Why is the Mad Dog called that?</h3>
+                <p>Clan Smoke Jaguar chose the name deliberately, as a slight against Clan Wolf and Clan Coyote. The chassis borrows production moulds from Clan Wolf's Timber Wolf and descends from Clan Coyote's Lupus, and Mad Dog was picked to mock both contributions rather than credit them.</p>
+
+                <h3>Why is the Mad Dog called the Vulture in the Inner Sphere?</h3>
+                <p>Plain physical resemblance. The reverse-jointed legs, the slumped posture and the raised, prominent cockpit read as a bird of prey on first contact, and the Inner Sphere name stuck without needing any further justification.</p>
+
+                <h3>Does the Mad Dog have jump jets?</h3>
+                <p>Only one of the fifteen configurations, the S, and it is also the only configuration built entirely around weapons that use no ammunition. The other fourteen stay on the ground.</p>
+
+                <h3>What is the best Mad Dog configuration?</h3>
+                <p>The C for a clean, zero-overheat all-rounder with the cheapest price tag in the chassis, the D for the highest short-range damage figure here, and the H for the configuration closest to the chassis's classic reputation. The Prime carries the name recognition but several other configurations outperform it.</p>
+
+                <h3>How do you beat a Mad Dog?</h3>
+                <p>Close the distance. At 1892 to 2676 Battle Value, only one of fifteen configurations can follow you anywhere a walking machine cannot, so forcing a fight inside its preferred range band removes most of what makes the chassis dangerous.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is the Mad Dog called that?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Clan Smoke Jaguar chose the name deliberately, as a slight against Clan Wolf and Clan Coyote. The chassis borrows production moulds from Clan Wolf's Timber Wolf and descends from Clan Coyote's Lupus, and Mad Dog was picked to mock both contributions rather than credit them."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Mad Dog called the Vulture in the Inner Sphere?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Plain physical resemblance. The reverse-jointed legs, the slumped posture and the raised, prominent cockpit read as a bird of prey on first contact, and the Inner Sphere name stuck without needing any further justification."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Mad Dog have jump jets?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Only one of the fifteen configurations, the S, and it is also the only configuration built entirely around weapons that use no ammunition. The other fourteen stay on the ground."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best Mad Dog configuration?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The C for a clean, zero-overheat all-rounder with the cheapest price tag in the chassis, the D for the highest short-range damage figure here, and the H for the configuration closest to the chassis's classic reputation. The Prime carries the name recognition but several other configurations outperform it."}
+    },
+    {
+      "@type": "Question",
+      "name": "How do you beat a Mad Dog?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Close the distance. At 1892 to 2676 Battle Value, only one of fifteen configurations can follow you anywhere a walking machine cannot, so forcing a fight inside its preferred range band removes most of what makes the chassis dangerous."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'mad-dog';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>

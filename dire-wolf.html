@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Dire Wolf configuration ranked. Why Clan Smoke Jaguar built Clan Wolf’s own design first, why zero of the fifteen configurations carry a jump jet, and how to fight one.">
+    <meta name="keywords" content="Dire Wolf BattleTech, Daishi, best Dire Wolf configuration, Dire Wolf Prime, OmniMech, Clan Smoke Jaguar, Clan Wolf, BattleTech assault mech">
+    <title>Dire Wolf (Daishi): Every Configuration Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/dire-wolf">
+    <meta property="og:title" content="Dire Wolf (Daishi): Every Configuration Ranked and How to Play It">
+    <meta property="og:description" content="All 15 Dire Wolf configurations ranked, and why not one of them, across 132 years, carries a jump jet.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/dire-wolf">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Dire Wolf</p>
+
+        <div class="mech-hero">
+            <h1>Dire Wolf</h1>
+            <p class="sub">100 tons &middot; Clan OmniMech &middot; 15 configurations &middot; 3010 to 3142</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/dire-wolf-schematic.webp" type="image/webp">
+                    <img src="assets/images/dire-wolf-schematic.png"
+                         alt="Illustration of a Dire Wolf (Daishi) OmniMech, a heavily armoured hundred-ton assault design with no jump jets"
+                         width="700" height="800" loading="eager" decoding="async">
+                </picture>
+                <figcaption>A hundred tons, walk three, run five, and roughly fifty tons of that spent on whatever the pods are carrying this season.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Clan Wolf's scientist caste conceived it. Clan Smoke Jaguar built it first. My caste does not enjoy telling that story, and I am going to tell it anyway, because it is true and because it explains a great deal about how the touman actually works.</p>
+                <p>The Jaguars heard what Wolf was developing, called it before the design was finished, and won the plans and the production rights in a Trial that is still spoken of as fought dishonourably. Production began on Huntress in 3010, at the Svarstaad Industriplex Delta, for Smoke Jaguar alone. Clan Wolf did not manufacture their own idea until 3019, on Strana Mechty, when Star Colonel Ulric won a Trial of Possession to take back what his caste had designed.</p>
+                <p>The Inner Sphere calls it the Daishi. Mangled Japanese for Great Death, and unlike the Mad Cat's name, nobody in authority chose it. It came up through the Draconis Combine's criminal underworld first, and the warriors adopted it afterward because it kept being accurate.</p>
+                <p><strong>What it is.</strong> A hundred tons. Walk three, run five. A Starfire 300 extralight engine carrying the same speed and the same armour class as an Atlas, and roughly fifty tons of free pod space the Atlas does not get. Where an Inner Sphere assault chassis spends its tonnage once, at the factory, this spends it 15 different ways and keeps spending it into the next century.</p>
+                <p><strong>And what it never got.</strong> Not one of those configurations carries a jump jet. Not the first one built in 3010, not the last one built in 3142. A hundred and thirty-two years of Clan engineering, and every warrior who has ever piloted one has done it without leaving the ground.</p>
+            </div>
+            </div>
+        </div>
+
+        <p class="voice-note"><strong>A note on this one.</strong> Clan machines on this site are written from the perspective of a Clan technician rather than the Inner Sphere MechTech who narrates the rest. Same research, same data, different chair.</p>
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>A hundred tons, walk three, run five, matching an Atlas for speed and for armour class down to the point. State that comparison to an Inner Sphere engineer and there is no argument to have, because the numbers agree. What does not agree is the pod space. An Atlas spends its tonnage once, at the factory, on a fixed loadout it will carry for its whole service life. This spends roughly fifty tons of the same hundred on weapons a technician can swap between Trials.</p>
+            <p>The Prime carries four ER large lasers, twin Ultra AC/5s, four medium pulse lasers and an LRM 10 on twenty-two double heat sinks. On the Alpha Strike card that is 6/6/4 short, medium and long. An AS7-D Atlas manages 5/5/2 on a chassis that cannot change what it is carrying. The Prime is only one of fifteen answers this chassis can give to the same question.</p>
+            <p><strong>The part that costs something.</strong> Fifty tons of free pod space does not arrive without a price, and the price is speed. Walk three is slow even by assault standards, and nothing in fifteen configurations changes it. Every one of them carries the same engine, the same structure, the same armour. What varies is entirely what sits in the pods, which is also why the Trap test on my rating scale finds nothing to flag here. You cannot strictly out-build a Dire Wolf configuration the way you can out-build an Inner Sphere variant. You can only out-manoeuvre one, and at a walking speed of three that is not as difficult as the reputation suggests.</p>
+            <p><strong>Zero jump jets, stated again because it matters.</strong> Every other Clan OmniMech on this site trades some pod space for mobility in at least one configuration. This chassis has never once done that, across a hundred and thirty-two years of production and fifteen separate engineering teams. That is not an oversight repeated fifteen times. It is a design philosophy: the pod space buys firepower, all of it, every time, and the ground it stands on is the only ground it will ever fight from.</p>
+
+                        <h2>A design Clan Wolf did not build first</h2>
+            <p>Clan Wolf's scientist caste designed this as their concept of the ultimate assault OmniMech. Clan Smoke Jaguar heard what was being developed before it was finished, and won the plans and the production rights in a Trial that is, to this day, spoken of as fought dishonourably. Production began at the Svarstaad Industriplex Delta on Huntress in 3010, and for nine years the entire supply belonged to the Jaguars alone.</p>
+            <p>Clan Wolf did not manufacture their own design until 3019, when Star Colonel Ulric won a Trial of Possession on Strana Mechty and brought production back to the caste that had conceived it. Consider that arrangement for a moment. The Clan that fielded it first, in the opening season of the invasion, was not the Clan that built it.</p>
+            <p>Wolcott, 2 October 3050, deserves its own mention, because a configuration on this page is named for it. Sho-sa Hohiro Kurita commanded the Combine's on-world defence, and when the Jaguars attacked, he negotiated terms with Galaxy Commander Dietr Osis before the battle was decided: if the Combine held the world, the Clans would never invade Wolcott again, and would provide OmniMechs and Elemental battle armour besides. The Combine held. The (Hohiro) configuration fielded exclusively by Kurita forces is not a coincidence, and neither is the fact that it carries the best long-range damage in the entire chassis.</p>
+            <p>What followed the invasion is the part my caste finds least comfortable to recount. This machine, designed to be the exclusive property of two Clans, is now fielded by every Clan in the touman and by every Great House of the Inner Sphere besides, ComStar and the Republic included. Salvage, trade and outright capture moved it further and faster than either Wolf or the Jaguars ever intended, and the Dark Age refit built in 3142 proves the design was never allowed to simply age out of relevance.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Dire Wolf configurations</strong>. As with every OmniMech on this site, the Trap test finds nothing here: engine, structure and armour are identical across all fifteen, so nothing can be strictly outperformed the way an Inner Sphere variant can be. The tiers are judgement, not arithmetic.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 2 of the 15 Dire Wolf variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The configurations worth arguing about</h2>
+            <p>All 15 are in the table further down. These are the ones that change what you are actually facing.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>Prime: the one on the cover</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2712 &middot; PV 56 &middot; Juggernaut &middot; 3010<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 22 Clan Double &middot; 300 XL (Clan) Engine<br>
+  4x ER Large Laser, 2x Ultra AC/5, 4x Medium Pulse Laser, 1x LRM 10</p>
+  <p>Four ER large lasers, twin Ultra AC/5s, four medium pulse lasers and an LRM 10. Twenty-two double heat sinks under all of that, and a warrior who fires the whole pattern will feel it. This is the configuration on the original Technical Readout cover, mass-produced from the first season, and the reputation the chassis carries belongs mostly to this loadout.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>A: zero overheat, best early damage</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2855 &middot; PV 59 &middot; Juggernaut &middot; 3010<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 21 Clan Double &middot; 300 XL (Clan) Engine<br>
+  1x Gauss Rifle, 3x Large Pulse Laser, 2x Streak SRM 6, 1x Anti-Missile System</p>
+  <p>A Gauss rifle, three large pulse lasers, twin Streak SRM 6 and an anti-missile system, for zero overheat and the best sustained damage pattern of the early configurations. No heat penalty on the alpha. If a warrior is issued only one Dire Wolf configuration, this is the one that should not disappoint them.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Widowmaker: the best long-range hitter</h3>
+    <span class="tier tier-trap">Trap</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 3041 &middot; PV 59 &middot; Juggernaut &middot; 3050<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 25 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x Large Pulse Laser, 2x ER PPC, 1x Ultra AC/20, 2x ER Medium Laser, 1x ER Small Laser</p>
+  <p>Twin large pulse lasers, twin ER PPCs and an Ultra AC/20, on the highest heat sink count in the chassis. Strong across all three range bands and the name is not an exaggeration, though a warrior choosing between this and the Hohiro should read that entry first. Beaten outright by the (Hohiro), which costs 7 more BV but gives up nothing it carries.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Hohiro: named for a real campaign</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 3048 &middot; PV 61 &middot; Sniper &middot; 3051<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 23 Clan Double &middot; 300 XL (Clan) Engine<br>
+  1x ER PPC, 1x Gauss Rifle, 3x Large Pulse Laser, 1x Streak SRM 6, 1x ER Small Laser</p>
+  <p>An ER PPC, a Gauss rifle, three large pulse lasers and a Streak SRM 6, for zero overheat and the best long-range damage in the entire chassis. Fielded exclusively by the Draconis Combine, which is not a coincidence. Kurita bet Wolcott against a promise of OmniMechs and Elemental armour if his forces won, and they did.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>C: the most expensive, and it shows</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 3610 &middot; PV 64 &middot; Juggernaut &middot; 3054<br>
+  Walk 3 / Run 5 / Jump 3 &middot; 23 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER PPC, 2x ATM 6, 4x Medium Pulse Laser, 1x Streak SRM 4 (OS)</p>
+  <p>Twin ER PPCs, twin ATM 6 launchers and four medium pulse lasers, with an ECM suite and the highest short-range damage in the chassis. The most expensive configuration in Battle Value here, and it is not close. Pay for it and receive exactly what was promised.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>D: the Jihad-era refit that improved it</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 3403 &middot; PV 62 &middot; Juggernaut &middot; 3069<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 15 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x HAG/40, 1x Streak SRM 6, 2x Medium Pulse Laser, 1x ER Small Laser</p>
+  <p>Twin HAG/20s, a Streak SRM 6 and a pair of medium pulse lasers, for nine points of damage at both short and medium range, zero overheat, and flak capability besides. A Jihad-era refit that improved on the original in every practical sense.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>U: the only one that can go underwater</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 3360 &middot; PV 57 &middot; Juggernaut &middot; 3077<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 16 Clan Double &middot; 300 XL (Clan) Engine<br>
+  2x ER PPC, 4x Medium Pulse Laser, 6x SRT 6</p>
+  <p>Underwater myomer joints, torpedo tubes in place of the missile racks, twin ER PPCs and four medium pulse lasers above the waterline. The weakest damage figures in the chassis on dry land, and the only configuration that can fight from a lake bed. Field it for the terrain, not the numbers.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>X: nine weapon systems, one quartermaster’s nightmare</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">100 tons &middot; BV 2645 &middot; PV 57 &middot; Juggernaut &middot; 3060<br>
+  Walk 3 / Run 5 / Jump 0 &middot; 15 Clan Double &middot; 300 XL (Clan) Engine<br>
+  1x Large Pulse Laser, 1x Heavy Medium Laser, 1x Ultra AC/10, 1x LB 5-X AC, 1x LRM 15, 1x SRM 4, 1x ATM 6, 2x ER Micro Laser, 1x Streak SRM 2</p>
+  <p>Nine separate weapon systems on one chassis: a large pulse laser, a heavy medium laser, an Ultra AC/10, an LB 5-X, an LRM 15, an SRM 4, an ATM 6, two ER micro lasers and a Streak SRM 2. The damage figures are acceptable. The ammunition manifest is not. A quartermaster&#x27;s least favourite configuration in the touman.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Fielding one.</strong> You are not manoeuvring for position. At walk three you rarely get to choose the range, so choose the configuration for the range you expect instead. The A and Prime punish a straight fight at any distance. The S and W want the enemy close and make them regret arriving. None of the fifteen wants to run anywhere.</p>
+            <p><strong>Opposing one.</strong> Speed is the entire answer. At 2609 to 3610 Battle Value a Dire Wolf costs enough that you will usually outnumber it, and at walk three it cannot chase what it cannot catch. Stay outside its effective bands, force it to commit to a direction, and bring more than one target down that line. The machine that cannot jump cannot correct a mistake in positioning.</p>
+            <p><strong>What I observe going wrong.</strong> Inner Sphere warriors treat the reputation as the machine and close to a range where the reputation is actually earned. It hits hardest at exactly the distance most pilots instinctively want to fight at. Do not give it that distance for free.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Dire Wolf is close to the opposite of the Timber Wolf, and worth fielding for exactly that reason.</p>
+            <ul>
+                <li>13 of the 15 configurations are tagged Juggernaut. Whichever one the engine draws, expect it to close to its effective band and stay there rather than manoeuvre for an angle.</li>
+                <li>No configuration carries a jump jet, so the AI will never take a rooftop or clear a wall the way a Timber Wolf S might. Terrain that blocks a walk-three, run-five machine blocks it completely.</li>
+                <li>Practically, that means this chassis is a straightforward, honest threat rather than a tactical puzzle. Good for a scenario that wants a hard target without a trick to it.</li>
+            </ul>
+            <p>Put a Dire Wolf on the other side of the table when you want raw pressure. Put a Timber Wolf there when you want to be surprised.</p>
+
+                        <h2>All 15 configurations</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. Every configuration shares the same engine, frame and armour, so only the pods change.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">A</td><td>3010</td><td>2855</td><td>59</td><td>Juggernaut</td><td class="wpn">1x Gauss Rifle, 3x Large Pulse Laser, 2x Streak SRM 6, 1x Anti-Missile System</td><td class="num">7/8/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">B</td><td>3010</td><td>2609</td><td>51</td><td>Sniper</td><td class="wpn">2x ER PPC, 2x Medium Pulse Laser, 1x LB 10-X AC, 4x Ultra AC/2, 1x ER Small Laser</td><td class="num">5/5/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">Prime</td><td>3010</td><td>2712</td><td>56</td><td>Juggernaut</td><td class="wpn">4x ER Large Laser, 2x Ultra AC/5, 4x Medium Pulse Laser, 1x LRM 10</td><td class="num">6/6/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">W</td><td>3049</td><td>2951</td><td>59</td><td>Juggernaut</td><td class="wpn">1x Gauss Rifle, 1x ER Large Laser, 1x LRM 20, 1x Ultra AC/20, 2x Medium Pulse Laser, 1x ER Small Laser</td><td class="num">8/8/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">&#x27;Widowmaker&#x27;</td><td>3050</td><td>3041</td><td>59</td><td>Juggernaut</td><td class="wpn">2x Large Pulse Laser, 2x ER PPC, 1x Ultra AC/20, 2x ER Medium Laser, 1x ER Small Laser</td><td class="num">7/7/6</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by (Hohiro)</span></td></tr>
+<tr><td class="vname">S</td><td>3050</td><td>2985</td><td>58</td><td>Juggernaut</td><td class="wpn">1x Large Pulse Laser, 1x LB 20-X AC, 2x Streak SRM 4, 5x Medium Pulse Laser, 2x Machine Gun</td><td class="num">9/8/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">&#x27;Prometheus&#x27;</td><td>3051</td><td>2900</td><td>55</td><td>Juggernaut</td><td class="wpn">2x ER Large Laser, 1x Ultra AC/20, 3x Large Pulse Laser, 1x SRM 6</td><td class="num">6/6/4</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">(Hohiro)</td><td>3051</td><td>3048</td><td>61</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x Gauss Rifle, 3x Large Pulse Laser, 1x Streak SRM 6, 1x ER Small Laser</td><td class="num">8/8/7</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">C</td><td>3054</td><td>3610</td><td>64</td><td>Juggernaut</td><td class="wpn">2x ER PPC, 2x ATM 6, 4x Medium Pulse Laser, 1x Streak SRM 4 (OS)</td><td class="num">9/8/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">H</td><td>3059</td><td>2992</td><td>56</td><td>Juggernaut</td><td class="wpn">2x Gauss Rifle, 2x Heavy Large Laser, 1x Medium Pulse Laser, 1x Flamer</td><td class="num">7/7/4</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by W</span></td></tr>
+<tr><td class="vname">X</td><td>3060</td><td>2645</td><td>57</td><td>Juggernaut</td><td class="wpn">1x Large Pulse Laser, 1x Heavy Medium Laser, 1x Ultra AC/10, 1x LB 5-X AC, 1x LRM 15, 1x SRM 4, 1x ATM 6, 2x ER Micro Laser, 1x Streak SRM 2</td><td class="num">7/6/5</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">D</td><td>3069</td><td>3403</td><td>62</td><td>Juggernaut</td><td class="wpn">2x HAG/40, 1x Streak SRM 6, 2x Medium Pulse Laser, 1x ER Small Laser</td><td class="num">9/9/5</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">U</td><td>3077</td><td>3360</td><td>57</td><td>Juggernaut</td><td class="wpn">2x ER PPC, 4x Medium Pulse Laser, 6x SRT 6</td><td class="num">4/4/4</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">E</td><td>3103</td><td>2814</td><td>63</td><td>Juggernaut</td><td class="wpn">8x Medium Pulse Laser, 2x LB 10-X AC, 1x Streak LRM 10</td><td class="num">8/8/3</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">T</td><td>3142</td><td>3317</td><td>66</td><td>Juggernaut</td><td class="wpn">2x HAG/20, 4x ER Medium Laser, 4x Medium Pulse Laser, 1x Streak LRM 10</td><td class="num">9/9/4</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the Prime by era, straight off the Master Unit List.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>Clan Smoke Jaguar, Clan Wolf</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>HW Clan General</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>HW Clan General, IS Clan General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>HW Clan General, Inner Sphere General, IS Clan General, Kell Hounds, Mercenary, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, HW Clan General, Inner Sphere General, IS Clan General, Kell Hounds, Mercenary, Society, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Clan Diamond Shark, Clan Wolf, Clan Wolf (in Exile), Draconis Combine, Escorpión Imperio, Mercenary, Raven Alliance, Republic of the Sphere, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Clan Sea Fox, Clan Wolf, Clan Wolf (in Exile), Draconis Combine, Escorpión Imperio, Republic of the Sphere, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Clan Hell&#x27;s Horses, Clan Sea Fox, Clan Wolf, Clan Wolf (in Exile), Escorpión Imperio, Republic of the Sphere, Scorpion Empire, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Clan Hell&#x27;s Horses, Clan Sea Fox, Scorpion Empire, Star League (Clan Smoke Jaguar), Star League (Clan Wolf), Wolf&#x27;s Dragoons</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Related designs</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Mad Cat Mk II</h3>
+  <p class="vstats">90 tons &middot; Clan &middot; 6 variants &middot; BV 2491 to 3168</p>
+  <p>Ninety tons, and Clan Diamond Shark’s answer to the assault bracket rather than a Dire Wolf variant proper.</p>
+</div>
+<div class="fam">
+  <h3>Masakari</h3>
+  <p class="vstats">85 tons &middot; Clan &middot; 12 variants &middot; BV 2320 to 3695</p>
+  <p>Eighty-five tons, Clan Smoke Jaguar’s other signature assault OmniMech, and frequently paired with this one in Jaguar lines. The Inner Sphere knows it as the Warhawk.</p>
+</div>
+</div>
+
+                        <h2>Other machines that do the same job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Atlas</h3>
+  <p class="vstats">100 tons &middot; Mixed &middot; 28 variants &middot; BV 1787 to 2789</p>
+  <p>The Inner Sphere machine this one is measured against on every technical readout. Same speed, same armour class, half the pod space.</p>
+</div>
+<div class="fam">
+  <h3>Marauder</h3>
+  <p class="vstats">75 tons &middot; Inner Sphere &middot; 36 variants &middot; BV 1335 to 2708</p>
+  <p>Slower still, and built two hundred years earlier, but the same instinct: put the guns first and let everything else follow.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Dire Wolf in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>Why is the Dire Wolf called the Daishi?</h3>
+                <p>Daishi is mangled Japanese for "Great Death," and unlike Mad Cat, no Precentor Martial or official channel assigned it. It surfaced through the Draconis Combine's criminal underworld first and spread from there, because warriors kept finding it accurate.</p>
+
+                <h3>Did Clan Wolf or Clan Smoke Jaguar build the Dire Wolf?</h3>
+                <p>Clan Wolf's scientist caste designed it, but Clan Smoke Jaguar won the production rights in a Trial fought before the design was finished, and built the first examples on Huntress starting in 3010. Clan Wolf spent nine years building none of their own design before Star Colonel Ulric reclaimed the rights on Strana Mechty.</p>
+
+                <h3>What is the best Dire Wolf configuration?</h3>
+                <p>The A for a clean, zero-overheat all-rounder, the Widowmaker for the best long-range damage among the early configurations, and the (Hohiro) and D for the best damage-to-heat ratio in the whole chassis. The Prime carries the reputation, but three or four other configurations outperform it on the card.</p>
+
+                <h3>Does the Dire Wolf have jump jets?</h3>
+                <p>No. Not one of the fifteen configurations, across production from 3010 to 3142, carries a jump jet. The entire pod space budget goes to weapons, every time.</p>
+
+                <h3>How do you beat a Dire Wolf?</h3>
+                <p>With speed and numbers together. At 2609 to 3610 Battle Value you can usually field more than one machine against it, and at walk three, run five, it cannot chase down anything that keeps its distance. Force it to commit to a direction and answer from more than one angle.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is the Dire Wolf called the Daishi?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Daishi is mangled Japanese for \"Great Death,\" and unlike Mad Cat, no Precentor Martial or official channel assigned it. It surfaced through the Draconis Combine's criminal underworld first and spread from there, because warriors kept finding it accurate."}
+    },
+    {
+      "@type": "Question",
+      "name": "Did Clan Wolf or Clan Smoke Jaguar build the Dire Wolf?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Clan Wolf's scientist caste designed it, but Clan Smoke Jaguar won the production rights in a Trial fought before the design was finished, and built the first examples on Huntress starting in 3010. Clan Wolf spent nine years building none of their own design before Star Colonel Ulric reclaimed the rights on Strana Mechty."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best Dire Wolf configuration?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The A for a clean, zero-overheat all-rounder, the Widowmaker for the best long-range damage among the early configurations, and the (Hohiro) and D for the best damage-to-heat ratio in the whole chassis. The Prime carries the reputation, but three or four other configurations outperform it on the card."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Dire Wolf have jump jets?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No. Not one of the fifteen configurations, across production from 3010 to 3142, carries a jump jet. The entire pod space budget goes to weapons, every time."}
+    },
+    {
+      "@type": "Question",
+      "name": "How do you beat a Dire Wolf?",
+      "acceptedAnswer": {"@type": "Answer", "text": "With speed and numbers together. At 2609 to 3610 Battle Value you can usually field more than one machine against it, and at walk three, run five, it cannot chase down anything that keeps its distance. Force it to commit to a direction and answer from more than one angle."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'dire-wolf';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
