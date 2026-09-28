@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Griffin variant ranked. The heat maths of the GRF-1N, why jumping and firing the PPC is the mistake, and which later fit is actually worth the Battle Value.">
+    <meta name="keywords" content="Griffin BattleTech, GRF-1N, GRF-3M, GRF-6S, GRF-3N, Griffin C, best Griffin variant, Griffin heat, Griffin IIC">
+    <title>Griffin: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/griffin">
+    <meta property="og:title" content="Griffin: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 24 Griffin variants ranked, and why the jump jets are how you get there, not how you fight.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/griffin">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+<header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Griffin</p>
+
+        <div class="mech-hero">
+            <h1>Griffin</h1>
+            <p class="sub">55 tons &middot; Inner Sphere &middot; 24 variants &middot; 2465 to 3144</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <img src="https://i.ibb.co/JRfrnbh/griffin-rg.png"
+                     alt="Line drawing of a Griffin BattleMech with a particle cannon in the right hand and a missile pod on the left shoulder"
+                     width="480" height="640" loading="eager" decoding="async">
+                <figcaption>PPC in the fist, missiles on the shoulder. Get that silhouette onto a hill, then stop moving.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>Earthwerks put the production Griffin out in 2492, after Maxwell Manufacturing had been folded into the company. It was drawn up as a heavy. The weight classes got rewritten underneath it, and it has been a medium ever since, still doing the job on the original drawing: stand somewhere awkward and hit things that cannot comfortably hit back.</p>
+                <p>There is an earlier machine in the list, the GRF-1A of 2465, and it weighs sixty tons because it is a primitive. Nobody means that one when they say Griffin.</p>
+                <p><strong>What you've got,</strong> on the machine everyone actually fields, is one PPC, one LRM 10, five jump jets and twelve single heat sinks. Walk five, run eight. A standard 275, which matters more than it looks once the later fits start swapping the engine out.</p>
+                <p>The first time I really learned a mech it was one of these, on a ridge in a MechWarrior 2 intro, and the lesson has not moved. The jump jets are how you get there. They are not how you fight once you have arrived.</p>
+                <p><strong>If you're choosing one:</strong> the <strong>GRF-1N</strong> is the Griffin, and it is still the right answer in a Succession Wars game. The <strong>GRF-3M</strong> is the Clan Invasion pick. The <strong>GRF-6S</strong> is the one with the better guns, and the <strong>GRF-3N</strong> is the one that kept the engine. The <strong>Griffin C</strong> is what you buy when the bill has stopped mattering.</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="mech-body">
+
+            <h2>Why it earns its tonnage</h2>
+            <p>The PPC reaches. The LRM 10 reaches too, and it can fire indirectly, which is the IF1 on the Alpha Strike card and the reason a Griffin behind a hill is still working. Five jump jets put fifty-five tons on top of the terrain feature everyone else has to walk around. Nine and a half tons of armour is an honest amount for the weight. None of this is clever. It is why the design outlasted the paperwork that reclassified it.</p>
+            <p>Two tons of LRM ammunition is the only thing on the original that can explode. Everything else is energy and metal. Lose the right arm and the PPC is gone. Lose a side torso on the 1N and the machine is hurt, not dead, because the engine is a standard 275. A lot of the later variants give that second fact away to fit a bigger missile or a lighter power plant. Read the engine line before you fall in love with the guns.</p>
+            <p>The thing the record sheet does not tell you is that the three tricks are not meant to happen on the same turn.</p>
+
+            <div class="heat-callout">
+                <h3>The heat maths on the GRF-1N</h3>
+                <p>Twelve single heat sinks. A PPC is 10 heat. An LRM 10 is 4. Jumping costs 1 heat per hex, minimum 3, and it replaces the walking heat rather than stacking on top of it. The columns below are the change from whatever you started the turn on. Heat does not go below zero.</p>
+                <table class="heat-table">
+                    <thead>
+                        <tr><th>What you did</th><th>Heat in</th><th>Sinks</th><th>Change</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Stand still, both guns</td><td>14</td><td>12</td><td>+2</td></tr>
+                        <tr><td>Walk, both guns</td><td>15</td><td>12</td><td>+3</td></tr>
+                        <tr><td>Run, both guns</td><td>16</td><td>12</td><td>+4</td></tr>
+                        <tr><td>Jump 5, LRM only</td><td>9</td><td>12</td><td>&minus;3</td></tr>
+                        <tr><td>Jump 5, PPC only</td><td>15</td><td>12</td><td>+3</td></tr>
+                        <tr><td>Jump 5, both guns</td><td>19</td><td>12</td><td class="bad">+7</td></tr>
+                    </tbody>
+                </table>
+                <p>The missile is what you fire while you are still moving. The PPC is what you fire when you have arrived. Both, on a full jump, puts you up seven. From a cold start that is already a movement penalty, and it is not yet a gunnery penalty. Do it again and you finish on fourteen. The accurate long-range machine you climbed the hill to be is now the thing missing.</p>
+                <p>Standing and firing both every turn is not free either. It is plus two a turn. You get away with it twice. The third time leaves you on six, and the movement penalty is there the next time you want to leave. The sustainable pattern is boring and correct: both guns when you are cold and planted, PPC only when you are warm, LRM only when you had to jump. The doubles on the later machines buy a lot of this back. They do not repeal it. An ER PPC is 15 heat before you have moved.</p>
+            </div>
+
+            <h2>Is it better than a Shadow Hawk?</h2>
+            <p>Different question from which Griffin, and worth keeping separate. In the 3025 game most people actually play, the three fifty-five tonners that share a lance are not three answers to the same problem.</p>
+            <p>The <a href="/shadow-hawk" style="color:#ff8c00;">Shadow Hawk SHD-2H</a> is BV 1064, damage 2/2/1, jump three. The Wolverine WVR-6R is BV 1101, damage 2/2/1, jump five. The GRF-1N is BV 1272, damage 1/2/2, jump five. You are paying 208 more than the Hawk and 171 more than the Wolverine, and what you are buying is the long bracket, plus a gun that does not need the ammunition the Hawk is terrified of. What you are giving up is a point of short-range damage and, against the Wolverine, the ability to stand in the middle of a fight without a plan.</p>
+            <p>So no, it is not a better general medium. It is a better sniper, and the sniper is the job. If all you wanted was jumping missiles, the Dervish DV-6M does that for BV 1146 at 2/2/2 and gives up the PPC and a point of armour. The Vindicator VND-1R is the smaller, slower version of the same idea, BV 1024 at 2/2/2, with an LRM 5 and a 4/6/4 movement curve. Take the Griffin when the hill, and the reach from it, is the plan. Take the Wolverine when you do not yet know what the plan is.</p>
+
+            <h2>A heavy, reclassified, then everybody's</h2>
+            <p>The primitive GRF-1A is the tell. Sixty tons, a prototype PPC, an LRM 5, jump three, introduced in 2465. The production article in 2492 lost five tons, gained a real PPC and a real LRM 10, and gained two more hexes of jump. Then the weight-class definitions caught up and called the result a medium. The job description never changed. Stand off. Shoot. Leave if the map stops agreeing with you.</p>
+            <p>After that it stopped belonging to anyone. Earthwerks built it on Keystone. Defiance built it on Hesperus II. Kallon built it on Talon. Brigadier built it on Oliver, Victory on Marduk, Vandenberg on Illiushin. The Capellans mostly bought a limited number off the Taurians rather than tooling up themselves, which is as good a picture as any of a design that had already escaped its first factory. By the late Succession Wars a Griffin in a militia lance was not a story. The absence of one was.</p>
+            <p>The Royal, the GRF-2N of 2751, is not the improved sniper people assume a Star League Griffin must be. It swaps the LRM 10 for a pair of SRM 6s, fits an ER PPC, ECM and CASE, and the Alpha Strike card comes out 3/3/1. Better up close, worse at the thing the chassis is for, and 334 Battle Value above the 1N. Production of it did not survive the fall. What the Master Unit List still shows afterwards is leftover machines: ComStar, a scatter of houses early in the war, and the Clans, who kept theirs in second-line formations. You do not bump into a 2N at a militia depot.</p>
+            <p>The Lyran GRF-1S took the PPC out entirely and lived with a large laser, which tells you what Lyran quartermasters thought of the heat. The Helm Core and the Clan Invasion then did what they did to everything else. The GRF-3M put an ER PPC next to an LRM 20 and paid for it with an XL engine. Project Phoenix, the Vicore redesign, produced the GRF-6S, built by Defiance and Kallon and later Victory, and that is the first late Griffin that feels like a finished version of the original idea rather than a refit done in a hurry.</p>
+            <p>Two of them are people. Sparky was Elle Bennett's machine in the Fifth Donegal Guards, the LRM pulled for five medium lasers. Francine was a Griffin brought up to 6S standard and used in the fight to get the Black Widow Company off Royal Pass in 3070, then pushed further into experimental gear. They are in the table because they are real variants. They are not a production plan.</p>
+
+            <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Griffins available in the same era</strong>. Not against the Shadow Hawk, and not against the rest of the game. That second question is the section above.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 0 of the 24 Griffin variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+            <p>Zero, on a list this long, is the interesting result. The variants keep changing the job instead of doing the same job worse. A laser boat with the jets pulled, a stealth armour fit, a C3 node, a sixty-ton primitive. None of those is a strictly worse 1N. They are different machines that happen to share a name.</p>
+            <p>The closest the test came was the GRF-3RG against the GRF-1RG. Same damage bands, same refusal to jump, CASE on the newer one, and forty-six Battle Value between them. Forty-six is more than three percent of 1167, so the old laser boat does not fail. I checked, because I wanted it to.</p>
+
+            <h2>The variants worth arguing about</h2>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-1A: the heavy that didn't last</h3>
+                    <span class="tier tier-situational">Situational</span>
+                </div>
+                <p class="vstats">60 tons &middot; BV 1024 &middot; PV 25 &middot; Sniper &middot; 2465<br>
+                Walk 4 / Run 6 / Jump 3 &middot; 11 Single &middot; 290 Fusion Engine<br>
+                1x Primitive Prototype PPC, 1x LRM 5</p>
+                <p>The prototype, and the only Griffin that isn't fifty-five tons. Primitive components, a prototype PPC, an LRM 5, jump three. Field it when the scenario is the Age of War and the machine is supposed to be obsolete. Fielding it next to a 1N, in any era they share, is how you pay for a history lesson.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-1N: the one on the ridge</h3>
+                    <span class="tier tier-pick">Worth it</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1272 &middot; PV 31 &middot; Sniper &middot; 2492<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 12 Single &middot; 275 Fusion Engine<br>
+                1x PPC, 1x LRM 10</p>
+                <p>The icon, and for once the icon is also the correct buy. One PPC, one LRM 10, jump five, a standard engine, BV 1272. Nothing else in the Succession Wars does this job for less, and the things that do it better show up centuries later and cost more. Learn the heat section before you alpha off a hill. After that it will do what you ask for as long as you ask one thing at a time.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-2N: the Royal, which is not a better sniper</h3>
+                    <span class="tier tier-solid">Solid</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1606 &middot; PV 38 &middot; Skirmisher &middot; 2751<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 11 IS Double &middot; 275 Fusion Engine<br>
+                1x ER PPC, 2x SRM 6</p>
+                <p>Star League Royal. ER PPC, two SRM 6s, ECM, CASE, a point more armour, and the damage bands come out 3/3/1. That last number is the whole review. The long bracket got worse. You paid 334 Battle Value over a 1N to win the fight inside medium range and to carry an ECM suite. Take it when you have one and the map is short. Do not take it instead of a 1N and expect the same lane.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-1S: the Lyran who took the PPC out</h3>
+                    <span class="tier tier-solid">Solid</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1253 &middot; PV 31 &middot; Skirmisher &middot; 2857<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 16 Single &middot; 275 Fusion Engine<br>
+                1x Large Laser, 2x Medium Laser, 1x LRM 5</p>
+                <p>Lyran Commonwealth, and the PPC is gone. A large laser, two mediums, an LRM 5, and sixteen single heat sinks so the machine can actually shoot while it jumps. Damage 2/2/0. It no longer does the Griffin's job. It does a perfectly reasonable medium's job for nineteen points under the 1N, and a Lyran player in a 3025 game is not wrong to prefer it. Everyone else should notice what was removed.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-3M: the invasion answer</h3>
+                    <span class="tier tier-pick">Worth it</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1521 &middot; PV 33 &middot; Sniper &middot; 3049<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 13 IS Double &middot; 275 XL Engine<br>
+                1x ER PPC, 1x Small Laser, 1x LRM 20</p>
+                <p>This is the Griffin people reached for once the Clans were on the map. ER PPC, LRM 20, doubles, and the card goes to 2/3/3. The bill is an XL engine and BV 1521. In Classic that XL is the thing that will kill you: one side torso and the machine is a salvage report. In return you get the long-range profile the 1N was pretending to have. For the Clan Invasion and the Civil War, if you can accept the engine, this is the one.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-6S: Project Phoenix, finished</h3>
+                    <span class="tier tier-pick">Worth it</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1781 &middot; PV 37 &middot; Sniper &middot; 3066<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 10 IS Double &middot; 275 Light Engine<br>
+                2x ER Medium Laser, 1x ER PPC, 1x LRM 15</p>
+                <p>The Vicore redesign, and the first late Griffin that feels designed rather than accumulated. ER PPC, LRM 15, two ER medium lasers, a light engine, damage 2/3/3, a point more armour, BV 1781. The light engine is the sentence to read twice. In Classic it is not an XL: lose a side torso and you are still in the fight. The Alpha Strike card in our database lists its structure at 3, the same figure it gives the XL fits, which understates that difference. Believe the engine type, not the coincidence.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>GRF-3N: the one that kept the engine</h3>
+                    <span class="tier tier-pick">Worth it</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 1560 &middot; PV 34 &middot; Sniper &middot; 3093<br>
+                Walk 5 / Run 8 / Jump 5 &middot; 11 IS Double &middot; 275 Fusion Engine<br>
+                1x ER PPC, 1x Enhanced LRM 10</p>
+                <p>Introduced for the Marik-Stewart Commonwealth and then, on the Master Unit List, everyone else's problem. ER PPC, enhanced LRM 10, CASE II, standard 275, armour 6, structure 5, damage 2/2/2, BV 1560. It gives a damage band back to the 6S and costs 221 less, and it keeps the quality the original had: a side torso is damage, not a kill. From the Republic era on, if you want a Griffin that still behaves like a Griffin when it is losing, this is the one I would sign for.</p>
+            </div>
+
+            <div class="vcard">
+                <div class="vcard-head">
+                    <h3>Griffin C: the bill</h3>
+                    <span class="tier tier-pick">Worth it</span>
+                </div>
+                <p class="vstats">55 tons &middot; BV 2131 &middot; PV 45 &middot; Sniper &middot; 3144<br>
+                Walk 6 / Run 9 / Jump 9 &middot; 11 IS Double &middot; 330 XL Engine<br>
+                1x ER PPC, 1x Streak LRM 10</p>
+                <p>Dark Age, mixed tech, and the MUL lists it as a general refit rather than one house's private toy. Clan ER PPC, Streak LRM 10, jump nine, damage 3/3/3, BV 2131. Nothing else on the chassis matches the card. The engine is an XL again, so the old weakness is back, and you are paying more than a stock Atlas AS7-D for a fifty-five ton frame. Worth it when the force can field it and the alternative is a worse Griffin. The 6S is still the sane purchase.</p>
+            </div>
+
+            <h3>The rest of the list</h3>
+            <p>The GRF-1RG and the GRF-3RG pull the jump jets and turn the chassis into a laser boat, damage 4/3/0, no reach at all. Fine if that was the order. Pointless if you wanted a Griffin. The GRF-1DS is the Combine's LRM 20 fit and it works, XL and all. The GRF-5M is a Free Worlds light Gauss that stays cool and hits gently. The GRF-5K is the Combine machine with jump eight and a light PPC, which is the right variant on a map made of hills and the wrong one when you needed the big gun. None of the three embarrasses the name. All three are Solid.</p>
+            <p>The GRF-5L is Capellan and Canopian stealth. The GRF-6R is the Republic stealth fit with a Thunderbolt missile. The GRF-6CS is ComStar and Word of Blake C3i. The GRF-6S2 carries a C3 slave and a targeting computer. You already know, before you look at the guns, whether your force uses any of that. If it doesn't, you are paying for a hobby. The GRF-4R and the GRF-4N are strikers, faster, and done with the long range. Sparky, Sparky 2.0, Francine, Francine II and the Almstedt are pilots. Sparky 2.0 is the only one of those I would call Solid on the merits. The others are Situational because the story is doing the work the Battle Value isn't.</p>
+
+            <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> Pick the ridge before you need it. At 5/8/5 you can get there, and every hex you jump on the way is heat the PPC wanted. Land, plant, fire both if you are cold. If you have to keep moving, walk, and if you have to jump, fire the LRM and leave the PPC for the turn you stop. Partial cover suits it. The right arm is the gun you cannot afford to gamble. Ammunition is the only explosive on the 1N, so a torso hit is not the religious experience it is on a <a href="/shadow-hawk" style="color:#ff8c00;">Shadow Hawk</a>, but it is still the bin.</p>
+            <p><strong>Fighting one.</strong> Make it jump. A Griffin that is jumping is a Griffin that is not shooting both guns, and if you can force that for two turns in a row the heat does the rest. Get inside the range where your short-band guns out-damage a 1/2/2 card. The PPC lives in the arm. Take the arm and the long gun is gone, and what is left is an LRM 10 with ambitions. Against the XL fits, from the 3M and the 1DS onward, ignore the arm and take a side torso. Against the 1N and the 3N you have to actually kill it. The legs are a serious option on any of them. A Griffin that cannot jump is just a slow PPC with a missile pack, and there are cheaper ways to get that.</p>
+            <p><strong>What I see go wrong.</strong> People jump and alpha every turn, hit the teens, and then explain to the table that the Griffin runs hot. It doesn't. The pilot does. The other mistake is treating every variant as the 1N with different decals. A 4R will walk into your face. A 5L will not show up on the sensors you were relying on. Read the engine and the role before you decide where to stand.</p>
+
+            <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the Griffin does not have one behaviour. The engine reads the role tag on the variant, and this chassis splits almost in half: 10 Skirmishers and 9 Snipers, with 3 Missile Boats and 2 Strikers making up the rest of the 24.</p>
+            <ul>
+                <li>The <strong>GRF-1N</strong>, the <strong>GRF-3M</strong>, the <strong>GRF-6S</strong> and the <strong>GRF-3N</strong> are Snipers. They hold a lane and they do not come and get you.</li>
+                <li>The <strong>GRF-2N</strong> and the laser boats play as Skirmisher, and they will spend the movement the snipers hoard.</li>
+                <li>The <strong>GRF-1DS</strong> and the <strong>GRF-5M</strong> are Missile Boats. They are happy at the back, and the 1DS in particular will try to keep the LRM 20 in arc rather than use the jump jets for anything heroic.</li>
+                <li>The <strong>GRF-4R</strong> and the <strong>GRF-4N</strong> are Strikers. They close.</li>
+            </ul>
+            <p>Swapping a 1N for a 4R does not give you "a Griffin that is a bit different." It changes the shape of the game. The sniper wants you to walk into a firing lane you should have refused. The striker comes and finds you.</p>
+
+            <h2>All 24 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0. Grouped by the era the variant was introduced, not by every era it can still be fielded.</p>
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">GRF-1A</td><td>2465</td><td class="num">1024</td><td class="num">25</td><td>Sniper</td><td class="wpn">1x Primitive Prototype PPC, 1x LRM 5</td><td class="num">1/1/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-1N</td><td>2492</td><td class="num">1272</td><td class="num">31</td><td>Sniper</td><td class="wpn">1x PPC, 1x LRM 10</td><td class="num">1/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Star League</th></tr>
+<tr><td class="vname">GRF-1RG</td><td>2597</td><td class="num">1167</td><td class="num">33</td><td>Skirmisher</td><td class="wpn">1x Large Laser, 3x Medium Laser, 2x Small Laser, 2x Machine Gun</td><td class="num">4/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-2N</td><td>2751</td><td class="num">1606</td><td class="num">38</td><td>Skirmisher</td><td class="wpn">1x ER PPC, 2x SRM 6</td><td class="num">3/3/1</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Succession War</th></tr>
+<tr><td class="vname">GRF-1S</td><td>2857</td><td class="num">1253</td><td class="num">31</td><td>Skirmisher</td><td class="wpn">1x Large Laser, 2x Medium Laser, 1x LRM 5</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War</th></tr>
+<tr><td class="vname">GRF-1E &#x27;Sparky&#x27;</td><td>3035</td><td class="num">1449</td><td class="num">34</td><td>Skirmisher</td><td class="wpn">5x Medium Laser, 1x PPC</td><td class="num">2/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-3RG</td><td>3048</td><td class="num">1213</td><td class="num">33</td><td>Skirmisher</td><td class="wpn">1x Large Pulse Laser, 1x Medium Laser, 2x Medium Pulse Laser, 2x Small Pulse Laser, 2x Machine Gun</td><td class="num">4/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">GRF-1DS</td><td>3049</td><td class="num">1285</td><td class="num">32</td><td>Missile Boat</td><td class="wpn">1x Large Pulse Laser, 1x LRM 20</td><td class="num">2/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">GRF-3M</td><td>3049</td><td class="num">1521</td><td class="num">33</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x Small Laser, 1x LRM 20</td><td class="num">2/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">GRF-1DS (Almstedt)</td><td>&mdash;</td><td class="num">1204</td><td class="num">29</td><td>Skirmisher</td><td class="wpn">1x Large Pulse Laser, 1x LRM 15</td><td class="num">2/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">GRF-5M</td><td>3066</td><td class="num">1224</td><td class="num">29</td><td>Missile Boat</td><td class="wpn">1x Light Gauss Rifle, 1x Small Laser, 1x LRM 10</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">GRF-6S</td><td>3066</td><td class="num">1781</td><td class="num">37</td><td>Sniper</td><td class="wpn">2x ER Medium Laser, 1x ER PPC, 1x LRM 15</td><td class="num">2/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">GRF-6CS</td><td>3067</td><td class="num">1695</td><td class="num">41</td><td>Sniper</td><td class="wpn">2x ER Medium Laser, 1x ER PPC, 1x LRM 15</td><td class="num">3/3/3</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">GRF-5L</td><td>3070</td><td class="num">1742</td><td class="num">44</td><td>Skirmisher</td><td class="wpn">3x Medium Laser, 1x Plasma Rifle, 1x MML 5</td><td class="num">3/3/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-6S (Francine)</td><td>3070</td><td class="num">1778</td><td class="num">36</td><td>Skirmisher</td><td class="wpn">3x ER Medium Laser, 1x Snub-Nose PPC, 1x Small Laser, 1x LRM 15</td><td class="num">2/3/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-5K</td><td>3071</td><td class="num">1390</td><td class="num">40</td><td>Missile Boat</td><td class="wpn">1x Light PPC, 1x LRM 10, 1x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">GRF-6S (Francine II)</td><td>3071</td><td class="num">2249</td><td class="num">33</td><td>Skirmisher</td><td class="wpn">3x ER Medium Laser, 1x Snub-Nose PPC, 1x LRM 15</td><td class="num">2/2/1</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-1E2 &#x27;Sparky 2.0&#x27;</td><td>3074</td><td class="num">1862</td><td class="num">36</td><td>Skirmisher</td><td class="wpn">1x ER PPC, 3x ER Medium Laser, 2x Medium Laser</td><td class="num">3/3/2</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">GRF-4R</td><td>3076</td><td class="num">1412</td><td class="num">39</td><td>Striker</td><td class="wpn">1x Snub-Nose PPC, 1x ER Medium Laser, 1x MML 5</td><td class="num">3/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Early Republic</th></tr>
+<tr><td class="vname">GRF-4N</td><td>3083</td><td class="num">1591</td><td class="num">28</td><td>Striker</td><td class="wpn">1x Plasma Rifle, 3x ER Medium Laser</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-6R</td><td>3085</td><td class="num">1515</td><td class="num">40</td><td>Sniper</td><td class="wpn">1x Rotary AC/2, 1x ER Small Laser, 1x Thunderbolt 10</td><td class="num">2/2/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">GRF-3N</td><td>3093</td><td class="num">1560</td><td class="num">34</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x Enhanced LRM 10</td><td class="num">2/2/2</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">GRF-6S2</td><td>3123</td><td class="num">1870</td><td class="num">36</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x LRM 15, 1x ER Medium Laser</td><td class="num">2/2/2</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">Griffin C</td><td>3144</td><td class="num">2131</td><td class="num">45</td><td>Sniper</td><td class="wpn">1x ER PPC, 1x Streak LRM 10</td><td class="num">3/3/3</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Where and when you can field it</h2>
+            <p>Availability for the GRF-1N, straight off the Master Unit List. It is not a house machine. From the Star League through the early Republic it is filed as Inner Sphere general issue, and after that it retreats to mercenaries, the Periphery, the Raven Alliance and the Scorpion Empire. The Capellans who bought theirs rather than building them are inside "Inner Sphere General" for most of that run, which is why they do not get a line of their own.</p>
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Inner Sphere General, Mercenary, Periphery General, Star League General</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Clan Cloud Cobra, Clan Ice Hellion, Clan Jade Falcon, Inner Sphere General, Mercenary, Periphery General, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>ComStar, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Inner Sphere General, Kell Hounds, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Inner Sphere General, Mercenary, Periphery General, Raven Alliance</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Escorpión Imperio, Mercenary, Periphery General, Raven Alliance</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Escorpión Imperio, Mercenary, Periphery General, Raven Alliance, Scorpion Empire</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Mercenary, Periphery General, Raven Alliance, Scorpion Empire</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Related designs</h2>
+            <div class="fam-grid">
+                <div class="fam">
+                    <h3>Griffin IIC</h3>
+                    <p class="vstats">40 tons &middot; Clan &middot; 8 variants &middot; BV 1106 to 1952</p>
+                    <p>Introduced in 2852. Fifteen tons lighter, and not a Griffin with the number filed off. The Clans kept the jump-and-shoot idea and rebuilt it as a second-line machine. It is a cousin, which is why it is not in the table above.</p>
+                </div>
+            </div>
+
+            <h2>Other machines that do the same job</h2>
+            <div class="fam-grid">
+                <div class="fam">
+                    <h3><a href="/shadow-hawk" style="color:#e8e8e8;">Shadow Hawk</a></h3>
+                    <p class="vstats">55 tons &middot; Inner Sphere &middot; 26 variants &middot; BV 851 to 1779</p>
+                    <p>The lance mate, not the same job. Cheaper, shorter reach, and an ammunition bin in every torso. The comparison is in the section above.</p>
+                </div>
+                <div class="fam">
+                    <h3>Wolverine</h3>
+                    <p class="vstats">55 tons &middot; Inner Sphere &middot; 23 variants &middot; BV 867 to 1925</p>
+                    <p>The other half of the fifty-five ton habit. Jump five, and a machine you can put in the middle of a fight without a plan. Take it when you do not yet know what the Griffin is for.</p>
+                </div>
+                <div class="fam">
+                    <h3>Vindicator</h3>
+                    <p class="vstats">45 tons &middot; Inner Sphere &middot; 12 variants &middot; BV 966 to 1739</p>
+                    <p>The smaller, slower version of the same idea. PPC, a smaller LRM, jump four. The VND-1R does 2/2/2 for BV 1024, and it pays for that with a 4/6 movement curve.</p>
+                </div>
+            </div>
+
+            <h2>Take it to the table</h2>
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Griffin in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+            <h2>Common questions</h2>
+            <div class="faq">
+                <h3>What is the best Griffin variant?</h3>
+                <p>In a Succession Wars or 3025 game, the GRF-1N at BV 1272. In the Clan Invasion, the GRF-3M, if you can live with the XL engine. From the Civil War on, the GRF-6S has the better guns and a light engine, and the GRF-3N is the one that kept a standard engine. The Griffin C is the strongest card on the chassis and it costs BV 2131.</p>
+
+                <h3>Why does the Griffin overheat?</h3>
+                <p>It doesn't, unless you jump and fire both guns together. On the GRF-1N a PPC and an LRM 10 are 14 heat against 12 sinks. A full jump adds another 5. One of those turns puts you up seven. Two of them puts you on fourteen. Fire the LRM while you jump and the PPC once you have stopped, and the machine runs cool.</p>
+
+                <h3>Is the Griffin a good mech for beginners?</h3>
+                <p>Yes, which is why it is the one I still hand to a new pilot. One long-range gun, one missile launcher, jump jets, and a heat problem that is actually a lesson. It teaches bracketing, positioning and the cost of movement without burying any of that under a twelve-weapon record sheet. Read the heat section once before the first game.</p>
+
+                <h3>Is the Griffin better than a Shadow Hawk?</h3>
+                <p>It is a better sniper and a worse general medium. The GRF-1N costs BV 1272 against the SHD-2H at 1064, and it buys a long damage bracket of 2 instead of 1. The Shadow Hawk does more up close and costs less. They belong in the same lance. They are not substitutes.</p>
+
+                <h3>Was the Griffin originally a heavy mech?</h3>
+                <p>Yes. The production model of 2492 was drawn up for a heavy's job and later reclassified as a medium when the weight classes were standardised. The primitive GRF-1A of 2465 really is heavier: sixty tons. Every Griffin after it is fifty-five.</p>
+
+                <h3>What is the Griffin IIC?</h3>
+                <p>A forty-ton Clan machine introduced in 2852, not a variant of the fifty-five ton Griffin. It keeps the general idea, jump jets and a reach weapon, and shares very little else. It has its own eight variants and it is not ranked in the table on this page.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Bushwacker variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The BSW-X1 at BV 1223 and the BSW-S2 are the reliable general purpose picks. The BSW-L1 is the one built on a light engine rather than an XL, so it survives a side torso hit, and the BSW-X4 is the most complete of the late versions."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why did the Bushwacker nearly fail?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Its low, narrow upper torso left too little internal volume, so the fusion engine ended up close enough to the sensor and communication systems to cause electronic interference and system failures. Engineers could not design the problem out and the project was very nearly abandoned."}
+    },
+    {
+      "@type": "Question",
+      "name": "How was the Bushwacker fixed?",
+      "acceptedAnswer": {"@type": "Answer", "text": "With Clan technology. A Federated Commonwealth raid on a Clan Jade Falcon base on Twycross recovered schematics for several Clan designs including the Mad Dog, the Vulture in Inner Sphere parlance, which had the same compressed volume problem and an unusual internal layout that solved it. TharHes adapted that approach and the design went into production in 3053."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Bushwacker any good?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes, as a general purpose medium. It carries something useful at every range, walks five and runs eight, and does not cost much. What it does not have is armour, so it works as a mobile nuisance rather than a brawler."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Gauntlet?",
+      "acceptedAnswer": {"@type": "Answer", "text": "An OmniMech built by Coventry Metal Works from the Bushwacker specifications. TharHes was badly damaged during the Jihad and sold the plans to raise capital to rebuild, and modern Bushwackers now share a frame and various components with the Gauntlet so both firms can keep costs down."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'griffin';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Griffin variant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In a Succession Wars or 3025 game, the GRF-1N at BV 1272. In the Clan Invasion, the GRF-3M, if you can live with the XL engine. From the Civil War on, the GRF-6S has the better guns and a light engine, and the GRF-3N is the one that kept a standard engine. The Griffin C is the strongest card on the chassis and it costs BV 2131."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Griffin overheat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It doesn't, unless you jump and fire both guns together. On the GRF-1N a PPC and an LRM 10 are 14 heat against 12 sinks. A full jump adds another 5. One of those turns puts you up seven. Two of them puts you on fourteen. Fire the LRM while you jump and the PPC once you have stopped, and the machine runs cool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Griffin a good mech for beginners?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, which is why it is the one I still hand to a new pilot. One long-range gun, one missile launcher, jump jets, and a heat problem that is actually a lesson. It teaches bracketing, positioning and the cost of movement without burying any of that under a twelve-weapon record sheet. Read the heat section once before the first game."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Griffin better than a Shadow Hawk?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a better sniper and a worse general medium. The GRF-1N costs BV 1272 against the SHD-2H at 1064, and it buys a long damage bracket of 2 instead of 1. The Shadow Hawk does more up close and costs less. They belong in the same lance. They are not substitutes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was the Griffin originally a heavy mech?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The production model of 2492 was drawn up for a heavy's job and later reclassified as a medium when the weight classes were standardised. The primitive GRF-1A of 2465 really is heavier: sixty tons. Every Griffin after it is fifty-five."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Griffin IIC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A forty-ton Clan machine introduced in 2852, not a variant of the fifty-five ton Griffin. It keeps the general idea, jump jets and a reach weapon, and shares very little else. It has its own eight variants and it is not ranked in the table on this page."
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>
