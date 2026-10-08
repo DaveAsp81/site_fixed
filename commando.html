@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2794K8B9W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T2794K8B9W');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Every Commando variant ranked by a MechTech. The Battle of Nox, the sideways-head art mistake, the &quot;Blazing Inferno&quot; rebuilds, and why the COM-2D recipe outlasted everything that came after it.">
+    <meta name="keywords" content="Commando BattleTech, best Commando variant, COM-2D, Coventry Metal Works, Battle of Nox, Blazing Inferno Commando, BattleTech light mech, BattleTech scout mech">
+    <title>Commando: Every Variant Ranked and How to Play It | BattleTech HQ</title>
+    <link rel="canonical" href="https://battletechhq.com/commando">
+    <meta property="og:title" content="Commando: Every Variant Ranked and How to Play It">
+    <meta property="og:description" content="All 24 Commando variants ranked, and the 2475 battle where this 25-ton scout beat machines nearly double its weight.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://battletechhq.com/commando">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#ff8c00">
+    <style>
+        .mech-hero {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(20,20,20,0.98));
+            border: 2px solid #ff8c00;
+            border-radius: 12px;
+            padding: 36px;
+            margin: 40px 0 30px;
+        }
+        .mech-hero h1 { color: #ff8c00; font-size: 2.2rem; margin: 0 0 6px; }
+        .mech-hero-grid {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .mech-hero-grid .verdict-box { flex: 1; min-width: 300px; }
+        .mech-schematic {
+            flex: 0 0 240px;
+            margin: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px 18px 14px;
+        }
+        .mech-schematic img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-schematic figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            color: #777;
+            margin-top: 14px;
+            border-top: 1px solid #262626;
+            padding-top: 10px;
+        }
+        @media (max-width: 640px) {
+            .mech-schematic { flex: 0 0 100%; max-width: 260px; margin: 0 auto; }
+        }
+        .mech-hero .sub {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+        }
+        .verdict-box {
+            background: rgba(0,0,0,0.35);
+            border-left: 3px solid #ff8c00;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+        }
+        .verdict-box p { color: #ddd; line-height: 1.75; margin: 0 0 12px; }
+        .verdict-box p:last-child { margin-bottom: 0; }
+
+        .breadcrumb {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777;
+            margin: 24px 0 0;
+        }
+        .breadcrumb a { color: #ff8c00; text-decoration: none; }
+
+        .mech-body h2 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin: 48px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .mech-body h3 { color: #e8e8e8; font-size: 1.12rem; margin: 0; }
+        .mech-body p { color: #c8c8c8; line-height: 1.8; margin: 0 0 18px; max-width: 800px; }
+        .mech-body ul { color: #c8c8c8; line-height: 1.8; max-width: 800px; }
+        .mech-body li { margin-bottom: 8px; }
+
+        .heat-callout {
+            background: rgba(176,58,36,0.10);
+            border: 1px solid rgba(176,58,36,0.45);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 26px 0;
+        }
+        .heat-callout h3 { color: #e07a5f; margin-bottom: 14px; }
+        .heat-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.92rem; }
+        .heat-table th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .heat-table td { padding: 8px 10px; border-bottom: 1px solid #222; color: #ccc; }
+        .heat-table td.bad { color: #e07a5f; font-weight: 600; }
+
+        .vcard {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+        }
+        .vcard-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+        .vstats {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .vcard p:last-child { margin-bottom: 0; }
+
+        .tier {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .tier-pick { background: rgba(90,160,90,0.18); border: 1px solid rgba(90,160,90,0.5); color: #7fbf7f; }
+        .tier-solid { background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.45); color: #ff8c00; }
+        .tier-situational { background: rgba(140,140,140,0.15); border: 1px solid rgba(140,140,140,0.4); color: #aaa; }
+        .tier-trap { background: rgba(176,58,36,0.18); border: 1px solid rgba(176,58,36,0.5); color: #e07a5f; }
+
+        .rubric {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin: 20px 0 14px;
+        }
+        .rubric-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .rubric-row:last-child { border-bottom: none; }
+        .rubric-row .tier { flex: 0 0 96px; text-align: center; margin-top: 3px; }
+        .rubric-row p { margin: 0; color: #bbb; font-size: 0.94rem; line-height: 1.65; }
+        .rubric-note {
+            font-size: 0.87rem !important;
+            color: #888 !important;
+            line-height: 1.7 !important;
+            border-left: 2px solid #333;
+            padding-left: 16px;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 22px 0 10px; }        .vtable { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 900px; }
+        .vtable th {
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #999;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background: #0e0e0e;
+        }
+        .vtable td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; color: #bbb; vertical-align: top; }
+        .vtable tr.era-row th {
+            color: #ff8c00;
+            background: rgba(255,140,0,0.07);
+            font-size: 0.75rem;
+            position: static;
+        }
+        .vtable td.vname { color: #e8e8e8; font-weight: 600; white-space: nowrap; }
+        .vtable td.wpn { color: #999; font-size: 0.82rem; }
+        .vtable td.num { font-family: 'Courier New', monospace; white-space: nowrap; }
+        .beaten {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #8a6a5f;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .fam {
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-top: 3px solid #3d7ea6;
+            border-radius: 8px;
+            padding: 20px 22px;
+        }
+        .fam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 22px 0; }
+
+        .tool-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
+        .tool-cta a {
+            display: block;
+            background: rgba(20,20,20,0.98);
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid #ff8c00;
+            border-radius: 8px;
+            padding: 22px 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .tool-cta a:hover { border-color: #ff8c00; background: rgba(255,140,0,0.06); }
+        .tool-cta strong { color: #ff8c00; display: block; margin-bottom: 6px; font-size: 1.05rem; }
+        .tool-cta span { color: #999; font-size: 0.9rem; line-height: 1.6; }
+
+        .faq h3 { color: #ff8c00; font-size: 1.05rem; margin: 26px 0 8px; }
+
+        .srcnote {
+            font-size: 0.82rem;
+            color: #777;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 18px;
+            margin-top: 44px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+        .mech-plate {
+            margin: 28px 0;
+            padding: 0;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mech-plate img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .mech-plate figcaption {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: #777;
+            padding: 12px 18px 14px;
+            border-top: 1px solid #262626;
+        }
+        .voice-note {
+            background: rgba(61,126,166,0.08);
+            border-left: 3px solid #3d7ea6;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
+            margin: 26px 0 0;
+            color: #9db4c4;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            max-width: 820px;
+        }
+        .voice-note strong { color: #bcd4e4; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">BattleTech HQ</a>
+            <button class="nav-toggle" aria-label="Menu">&#9776; MENU</button>
+            <nav>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">Articles</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/mechs">Mechs</a> &rsaquo; Commando</p>
+
+        <div class="mech-hero">
+            <h1>Commando</h1>
+            <p class="sub">25 tons &middot; Inner Sphere &middot; 24 variants &middot; 2463 to 3146</p>
+            <div class="mech-hero-grid">
+            <figure class="mech-schematic">
+                <picture>
+                    <source srcset="assets/images/commando-schematic.webp" type="image/webp">
+                    <img src="assets/images/commando-schematic.png"
+                         alt="Illustration of a Commando BattleMech firing its arm-mounted SRM launcher over a cratered moonscape, the sideways-turned head visible under the helmet-style cockpit"
+                         width="657" height="568" loading="eager" decoding="async">
+                </picture>
+                <figcaption>Twenty-five tons, both arms mounted with short-range missiles, and a head that spent a quarter century drawn facing the wrong way.</figcaption>
+            </figure>
+            <div class="verdict-box">
+                <p>The Battle of Nox, 2475.</p>
+                <p>The first full-scale battle ever fought between BattleMechs, and among the Lyran machines on the field were COM-1A Commandos facing Draconis Combine Gladiators that weighed 55 tons to the Commando's 25.</p>
+                <p><strong>The Lyrans won.</strong></p>
+                <p>Not because the Commando somehow turned into a pocket assault 'Mech. Archon Michael Steiner's force had supporting armour, superior experience and the numbers to exploit it. But the little Commandos were there, twelve years into their service life, fighting machines more than twice their weight and helping hand the Combine a defeat severe enough that the Gladiator never really recovered from it.</p>
+                <p>Andre Barcalow designed the original COM-1A for Coventry Defense Conglomerate, later Coventry Metal Works, and the Lyran Commonwealth Armed Forces took delivery in 2463. It was conceived as a reconnaissance 'Mech from the beginning rather than adapted into the role later, which at that point in BattleMech history was still unusual enough to matter.</p>
+                <p><strong>The large laser did not work out.</strong></p>
+                <p>That is essentially the story of the first few decades. The COM-1A carried a single large laser and nothing else, and the installation caused enough trouble that Coventry kept revisiting the design. The COM-1D of 2480 is the machine caught halfway through that argument: the large laser remained, but an SRM-6 was added alongside it.</p>
+                <p>Then came the COM-2D in 2486. The big laser disappeared. In its place came a medium laser, an SRM-6 and an SRM-4. That settled it.</p>
+                <p>The basic recipe worked so well that the COM-2D became the Commando people mean when they simply say Commando. Nearly six centuries later, it is still turning up on force lists. The Master Unit List continues to carry the 2D deep into later eras, which is extraordinary longevity for a 25-ton machine designed before the Star League existed.</p>
+                <p><strong>Then, in 3015, somebody went back to the large laser.</strong></p>
+                <p>The COM-1B brought it back alongside a medium laser and an SRM-2, removing the SRM-6 from the later missile-heavy arrangement. I find that genuinely funny. Not because it was necessarily a stupid idea. Military procurement does this constantly. A concept gets rejected, circumstances change, somebody digs through the filing cabinet thirty years later and says: "What about this?"</p>
+                <p>The Commando's appearance has its own smaller saga. The original Technical Readout: 3025 artwork showed the 'Mech's head turned to one side. Enough people interpreted the drawing as a straight-on view that the Commando acquired the unofficial appearance of a machine with one eye and a tilted hat. And then it stuck. Official artwork repeated the look until Technical Readout: 3050 finally redrew the head facing forward.</p>
+                <p>There is also Death's Knell, the silver Commando piloted by Captain Bono Duganmare of the Twenty-second Skye Rangers and documented in TRO:3025. Duganmare is canonical. The machine is canonical. Its exact configuration is not. Later games gave Death's Knell a specific hero loadout, but the original source never established one, so it does not get a verdict row below. It still deserves the mention.</p>
+                <p>Two Commando configurations eventually earned actual names rather than simply another letter and number. The COM-7Y2 Blazing Inferno traces back to technicians on Chara III modifying the old COM-2D during the events associated with The Crescent Hawks' Inception. Both missile racks disappeared. In their place went four medium lasers and six small lasers, producing a tiny machine with the tactical philosophy of getting far too close and making the other pilot regret allowing it. The configuration was later canonised in Shrapnel.</p>
+                <p>Then came the Civil War-era COM-7T Blazing Inferno II. Four ER medium lasers. Five ER small lasers. One additional standard small laser. And triple-strength myomer. The laser battery generates the heat. The TSM makes use of it, turning a deliberately hot Commando into something faster and much uglier in a physical fight once the temperature climbs.</p>
+                <p>Six centuries after Andre Barcalow drew up a 25-ton scout with one troublesome large laser, people were still finding new ways to make the same chassis dangerous.</p>
+                <p><strong>That may be the most Commando thing about it.</strong></p>
+                <p><strong>What it is.</strong> Twenty-five tons, walking six and running nine on a standard 150-rated fusion engine in the baseline configuration, with the COM-2D's medium laser and twin SRM racks still the most common thing you will meet. 24 configurations on record, the earliest from 2463, the newest from 3146.</p>
+            </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mech-body">
+
+                        <h2>Why it earns its tonnage</h2>
+            <p>Twenty-five tons is not much to build a 'Mech out of, and the Commando spends almost all of it on one job: being somewhere, seeing something, and getting back out. Walk six, run nine on the standard 150 fusion engine, which was already respectable in 2486 and is still perfectly usable six centuries later.</p>
+            <p>The baseline COM-2D carries a medium laser and two SRM racks, 2/2/0 on the Alpha Strike card, against the COM-7S2's 3/3/0 at the top of the lineup. That gap is smaller than you would expect across 683 years of refits, because this chassis was never trying to out-damage anything. It was trying to not be where the damage lands.</p>
+            <p><strong>What never changed.</strong> 21 of the 24 variants are tagged Striker and keep some form of short-range missile rack right through to the 3140s. Only 3 are tagged pure Scout, and only the <strong>COM-9S</strong> carries any long-range damage at all. This has never been a 'Mech that wants to trade at range.</p>
+
+                        <h2>Six centuries as a working scout</h2>
+            <p>Production never really stopped, it just kept changing hands. Lyran Commonwealth service carried the COM-2D pattern through the Star League era, Kell Hounds and Wolf's Dragoons ran them as mercenaries through the long dry stretch of the Succession Wars, and Periphery General forces are still fielding the pattern into the ilClan era, long after the Great Houses themselves had moved on to newer things.</p>
+            <p>Production spread the same way the Locust's did, more by inertia than ambition. Arcturan Arms, Hope Industrial Works, Marian Arms, Maxell Metals, Peloran Motors, Protectorate Military Industries, Rim Motors, Vandenberg Mechanized Industries and several others all built their own runs of the COM-2D pattern over the centuries, and a Commando built in one factory is, for practical purposes, the same Commando built in any other.</p>
+
+                        <h2>How these are rated</h2>
+            <p>Every verdict below is against <strong>other Commando configurations</strong>, almost always within the same era. Armour and structure genuinely differ by refit on this chassis, there are no pod-swappable OmniMech variants here, so the Trap tier below is doing real work rather than stating the obvious.</p>
+
+            <div class="rubric">
+                <div class="rubric-row">
+                    <span class="tier tier-pick">Worth it</span>
+                    <p>Nothing in its era does the chassis's job better for the money.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-solid">Solid</span>
+                    <p>Does the job competently. Another variant does it better or cheaper, but there is no reason to avoid this one.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-situational">Situational</span>
+                    <p>Only earns its Battle Value if you specifically need what it carries. C3, stealth, a command console, flak, jump jets.</p>
+                </div>
+                <div class="rubric-row">
+                    <span class="tier tier-trap">Trap</span>
+                    <p>Another variant in the same era, at no more than 3 percent above its Battle Value, matches or beats it on every Alpha Strike damage band, on armour, on structure, and carries every special ability it has. Nothing gained, something lost, no dearer.</p>
+                </div>
+            </div>
+            <p class="rubric-note">Only the Trap tier is calculated. It is worked out from the variant data rather than decided by me, which means it is falsifiable: to argue with it you only have to name something the cheaper machine gives up. The other three are my opinion and you should treat them that way. 4 of the 24 Commando variants fail the Trap test. <a href="/rating-scale" style="color:#ff8c00;">The full rating scale is here</a>, including what it deliberately does not measure.</p>
+
+                        <h2>The variants worth arguing about</h2>
+            <p>All 24 are in the table further down. These are the ones that change how you think about the chassis.</p>
+
+            <div class="vcard">
+  <div class="vcard-head">
+    <h3>COM-2D: the recipe that stuck</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">25 tons &middot; BV 541 &middot; PV 17 &middot; Striker &middot; 2486<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 10 Single &middot; 150 Fusion Engine<br>
+  1x Medium Laser, 1x SRM 4, 1x SRM 6</p>
+  <p>The recipe that stuck: one medium laser and two SRM racks sharing 190 rounds, in place of the large laser nobody could make work. It is on the Master Unit List in every single era bracket from the Star League to the ilClan era, eleven for eleven, which no other Commando configuration manages. This is the Commando, full stop, and the one every later refit gets compared to.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Blazing Inferno: the one with a name</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">25 tons &middot; BV 728 &middot; PV 21 &middot; Striker &middot; 3025<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 10 Single &middot; 150 Fusion Engine<br>
+  6x Small Laser, 4x Medium Laser</p>
+  <p>The one with a name. Chara III techs stripped both SRM packs off a 2D and replaced them with six small lasers and four mediums, according to the Crescent Hawks&#x27; Inception. Ten laser-fed heat sinks and a weapons fit that trades reach for a genuinely nasty alpha strike at knife range.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>Blazing Inferno II: the Civil War follow-up</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">25 tons &middot; BV 1018 &middot; PV 26 &middot; Striker &middot; 3062<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 11 IS Double &middot; 150 Fusion Engine<br>
+  5x ER Small Laser, 4x ER Medium Laser, 1x Small Laser</p>
+  <p>The Civil War-era follow-up to the original Blazing Inferno: five ER small lasers, four ER mediums, one more small laser for good measure, and triple-strength myomer to push the alpha even further when things get hot. The most expensive non-mixed-tech Commando in the record, and it is trying to do something none of the others attempt.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>COM-9S: the only one with any range</h3>
+    <span class="tier tier-pick">Worth it</span>
+  </div>
+  <p class="vstats">25 tons &middot; BV 719 &middot; PV 23 &middot; Striker &middot; 3146<br>
+  Walk 7 / Run 11 / Jump 0 &middot; 10 IS Double &middot; 175 XL Engine<br>
+  1x Light PPC, 2x SRM 2 (I-OS), 2x MML 3</p>
+  <p>The only Commando in the entire 24-variant record with any long-range Alpha Strike damage at all, courtesy of a Light PPC. Two improved one-shot SRM 2s and a pair of MML 3s round it out, with CASE II. Everything else on this chart is a knife fighter; this is the one exception.</p>
+</div>
+<div class="vcard">
+  <div class="vcard-head">
+    <h3>COM-7Z2: the dedicated scout</h3>
+    <span class="tier tier-situational">Situational</span>
+  </div>
+  <p class="vstats">25 tons &middot; BV 543 &middot; PV 20 &middot; Scout &middot; 3051<br>
+  Walk 6 / Run 9 / Jump 0 &middot; 10 Single &middot; 150 Fusion Engine<br>
+  2x Small Laser, 1x SRM 6</p>
+  <p>The dedicated scout of the lineup: two small lasers, an SRM 6, a probe and reconnaissance gear, and nothing pretending to be a frontline brawler. Role tag says Scout and means it.</p>
+</div>
+
+                        <h2>On the table</h2>
+            <p><strong>Piloting one.</strong> You are not there to win a firefight. 3 variants are built explicitly as Scouts and the other 21 are Strikers in name only, most of them are still too lightly armoured to stand and trade. Use the speed, use the SRMs at close range where they actually hit, and treat every engagement as optional until you decide otherwise.</p>
+            <p><strong>Opposing one.</strong> At 458 to 1105 Battle Value, the cheap end of this chassis is genuinely cheap, cheaper than a single Locust 1V plus change. Do not assume it is harmless just because the number is small. The COM-7J, COM-7B and COM-7S2 (Freyr) can all jump, and a Commando that jumps into your rear arc with a Streak-fed SRM rack is a worse afternoon than the Battle Value suggests.</p>
+
+                        <h2>Against OpFor Command</h2>
+            <p>If you run solo games with our <a href="/opfor-command" style="color:#ff8c00;">AI opponent</a>, the role tags on this chassis split cleanly and the engine treats them very differently.</p>
+            <ul>
+                <li>3 variants, including the <strong>COM-1A</strong>, <strong>COM-7Z2</strong> and <strong>COM-1AK</strong>, are tagged Scout and get a strongly negative aggression weighting. They will hang back, spot, and avoid a fair fight.</li>
+                <li>The remaining 21 are tagged Striker and will close to short-range missile distance against anything already hurt, rather than sitting back the way a Scout build does.</li>
+                <li>The <strong>COM-7J</strong>, <strong>COM-7B</strong> and <strong>COM-7S2 (Freyr)</strong> jump, which the engine factors into how it repositions them, and a jumping Striker ends up somewhere you were not expecting far more often than a walking one.</li>
+            </ul>
+            <p>Worth knowing because an OpFor lance built entirely from Scout-tagged Commandos plays nothing like one built from the Striker-tagged majority, and both are cheap enough to field in numbers.</p>
+
+                        <h2>All 24 variants</h2>
+            <p>Damage figures are the Alpha Strike short, medium and long values. BV is Battle Value 2.0.</p>
+
+            <div class="table-wrap">
+                <table class="vtable">
+                    <thead>
+                        <tr><th>Variant</th><th>Intro</th><th>BV</th><th>PV</th><th>Role</th><th>Weapons</th><th>S/M/L</th><th>Verdict</th></tr>
+                    </thead>
+                    <tbody>
+<tr class="era-row"><th colspan="8">Age of War</th></tr>
+<tr><td class="vname">COM-1A</td><td>2463</td><td>475</td><td>13</td><td>Scout</td><td class="wpn">1x Large Laser</td><td class="num">1/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">COM-1D</td><td>2480</td><td>558</td><td>17</td><td>Striker</td><td class="wpn">1x Large Laser, 1x SRM 6</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by COM-2D</span></td></tr>
+<tr><td class="vname">COM-2D</td><td>2486</td><td>541</td><td>17</td><td>Striker</td><td class="wpn">1x Medium Laser, 1x SRM 4, 1x SRM 6</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - LosTech</th></tr>
+<tr><td class="vname">COM-1B</td><td>3015</td><td>616</td><td>17</td><td>Striker</td><td class="wpn">1x Medium Laser, 1x Large Laser, 1x SRM 2</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by COM-7X</span></td></tr>
+<tr><td class="vname">COM-7X</td><td>3018</td><td>623</td><td>21</td><td>Striker</td><td class="wpn">3x Medium Laser, 1x SRM 6</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Succession War - Renaissance</th></tr>
+<tr><td class="vname">COM-1C</td><td>3020</td><td>458</td><td>14</td><td>Striker</td><td class="wpn">1x Medium Laser, 1x AC/2</td><td class="num">1/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">COM-7Y</td><td>3022</td><td>684</td><td>24</td><td>Striker</td><td class="wpn">3x Medium Laser, 1x SRM 6</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-3A</td><td>3025</td><td>540</td><td>17</td><td>Striker</td><td class="wpn">1x Medium Laser, 2x SRM 6, 1x Flamer</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-7Y2 &#x27;Blazing Inferno&#x27;</td><td>3025</td><td>728</td><td>21</td><td>Striker</td><td class="wpn">6x Small Laser, 4x Medium Laser</td><td class="num">3/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Clan Invasion</th></tr>
+<tr><td class="vname">COM-5S</td><td>3050</td><td>557</td><td>17</td><td>Striker</td><td class="wpn">1x Medium Laser, 1x Streak SRM 2, 1x SRM 6</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-7Z</td><td>3051</td><td>661</td><td>20</td><td>Striker</td><td class="wpn">2x Medium Laser, 1x SRM 6</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by COM-7A</span></td></tr>
+<tr><td class="vname">COM-7Z2</td><td>3051</td><td>543</td><td>20</td><td>Scout</td><td class="wpn">2x Small Laser, 1x SRM 6</td><td class="num">2/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">COM-7A</td><td>3056</td><td>625</td><td>20</td><td>Striker</td><td class="wpn">1x Medium Laser, 2x SRM 4</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">COM-7J</td><td>3056</td><td>599</td><td>18</td><td>Striker</td><td class="wpn">1x Medium Laser, 2x SRM 4</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-7W</td><td>3056</td><td>608</td><td>17</td><td>Striker</td><td class="wpn">2x Medium Laser, 1x Streak SRM 2, 1x SRM 4</td><td class="num">2/2/0</td><td><span class="tier tier-trap">Trap</span><span class="beaten">beaten by COM-5S</span></td></tr>
+<tr class="era-row"><th colspan="8">Civil War</th></tr>
+<tr><td class="vname">COM-7T &#x27;Blazing Inferno II&#x27;</td><td>3062</td><td>1018</td><td>26</td><td>Striker</td><td class="wpn">5x ER Small Laser, 4x ER Medium Laser, 1x Small Laser</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">COM-7S</td><td>3064</td><td>658</td><td>20</td><td>Striker</td><td class="wpn">2x ER Medium Laser, 2x Streak SRM 2, 1x SRM 4</td><td class="num">3/3/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-4H</td><td>3064</td><td>691</td><td>17</td><td>Striker</td><td class="wpn">2x Medium Laser, 6x Rocket Launcher 15</td><td class="num">2/2/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr class="era-row"><th colspan="8">Jihad</th></tr>
+<tr><td class="vname">COM-7B</td><td>3068</td><td>602</td><td>18</td><td>Striker</td><td class="wpn">1x ER Medium Laser, 2x Flamer, 2x SRM 4</td><td class="num">3/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr><td class="vname">COM-7S2 (Freyr)</td><td>3070</td><td>1105</td><td>26</td><td>Striker</td><td class="wpn">2x ER Medium Laser, 2x Streak SRM 4</td><td class="num">3/3/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr><td class="vname">COM-1AK</td><td>3072</td><td>533</td><td>16</td><td>Scout</td><td class="wpn">2x Medium Laser, 1x Small Laser</td><td class="num">2/1/0</td><td><span class="tier tier-situational">Situational</span></td></tr>
+<tr><td class="vname">COM-2Dr</td><td>3075</td><td>563</td><td>18</td><td>Striker</td><td class="wpn">1x ER Medium Laser, 1x MML 7</td><td class="num">2/2/0</td><td><span class="tier tier-solid">Solid</span></td></tr>
+<tr class="era-row"><th colspan="8">Late Republic</th></tr>
+<tr><td class="vname">COM-8S</td><td>3108</td><td>775</td><td>25</td><td>Striker</td><td class="wpn">2x ER Medium Laser, 2x Streak SRM 2</td><td class="num">2/2/0</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+<tr class="era-row"><th colspan="8">Dark Age</th></tr>
+<tr><td class="vname">COM-9S</td><td>3146</td><td>719</td><td>23</td><td>Striker</td><td class="wpn">1x Light PPC, 2x SRM 2 (I-OS), 2x MML 3</td><td class="num">2/2/1</td><td><span class="tier tier-pick">Worth it</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Where and when you can field it</h2>
+            <p>Availability for the COM-2D by era, straight off the Master Unit List. It appears in all 11 of them, which almost nothing on this site manages.</p>
+
+            <div class="table-wrap">
+                <table class="vtable" style="min-width:600px;">
+                    <thead><tr><th>Era</th><th>Available to</th></tr></thead>
+                    <tbody>
+<tr><td class="vname">Star League (2571 - 2780)</td><td>Lyran Commonwealth</td></tr>
+<tr><td class="vname">Early Succession War (2781 - 2900)</td><td>Circinus Federation, Clan Goliath Scorpion, Clan Smoke Jaguar, Lyran Commonwealth, Mercenary, Star League in Exile</td></tr>
+<tr><td class="vname">Late Succession War - LosTech (2901 - 3019)</td><td>Kell Hounds, Lyran Commonwealth, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Late Succession War - Renaissance (3020 - 3049)</td><td>Free Rasalhague Republic, Kell Hounds, Lyran Commonwealth, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Clan Invasion (3050 - 3061)</td><td>Federated Commonwealth, Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Lyran Commonwealth, Mercenary, Periphery General, Taurian Concordat, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Civil War (3062 - 3067)</td><td>Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Jihad (3068 - 3080)</td><td>Escorpión Imperio, Free Rasalhague Republic, Kell Hounds, Lyran Alliance, Mercenary, Periphery General, Wolf&#x27;s Dragoons</td></tr>
+<tr><td class="vname">Early Republic (3081 - 3100)</td><td>Escorpión Imperio, Lyran Commonwealth, Mercenary, Periphery General</td></tr>
+<tr><td class="vname">Late Republic (3101 - 3130)</td><td>Lyran Commonwealth, Periphery General</td></tr>
+<tr><td class="vname">Dark Age (3131 - 3150)</td><td>Lyran Commonwealth, Periphery General</td></tr>
+<tr><td class="vname">ilClan (3151 - 9999)</td><td>Periphery General</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <h2>Other light machines doing a similar job</h2>
+
+
+            <div class="fam-grid">
+<div class="fam">
+  <h3>Locust</h3>
+  <p class="vstats">20 tons &middot; Inner Sphere &middot; 24 variants &middot; BV 424 to 956</p>
+  <p>The other light everyone owns, and the opposite answer to the same twenty-odd tons: a laser and an apology instead of missiles worth respecting.</p>
+</div>
+<div class="fam">
+  <h3>Wasp</h3>
+  <p class="vstats">20 tons &middot; Inner Sphere &middot; 20 variants &middot; BV 314 to 755</p>
+  <p>A contemporary of the early Commando, built around jump jets rather than missile racks for its mobility.</p>
+</div>
+<div class="fam">
+  <h3>Stinger</h3>
+  <p class="vstats">20 tons &middot; Mixed &middot; 17 variants &middot; BV 341 to 754</p>
+  <p>The Wasp&#x27;s stablemate and frequent partner, same era, same reconnaissance brief, different hardpoints.</p>
+</div>
+</div>
+
+                        <h2>Take it to the table</h2>
+
+
+            <div class="tool-cta">
+                <a href="/lance-builder">
+                    <strong>&#9881; Build a lance around it</strong>
+                    <span>Filter by faction and era, track BV and tonnage live, and print the roster.</span>
+                </a>
+                <a href="/opfor-command">
+                    <strong>&#9876; Fight one solo</strong>
+                    <span>Put a Commando in the opposing force and let the AI drive it.</span>
+                </a>
+            </div>
+
+                        <h2>Common questions</h2>
+
+
+            <div class="faq">
+                <h3>What is the best Commando variant?</h3>
+                <p>For most games the COM-2D is still the reference point, it carries the medium-laser-and-twin-SRM recipe that has stayed in service longer than anything else on this chart. If you want more, the COM-7A gets the same era's loadout cheaper, the COM-8S is the modern networked standard, and the COM-9S is the only one that reaches out to long range at all.</p>
+
+                <h3>Why does the Commando&#x27;s head look odd in some art?</h3>
+                <p>TRO:3025 printed the original artwork with the head turned to one side, and enough readers mistook it for a straight-on view that the "one eye and a tilted hat" look became the chassis's unofficial identity for a quarter century. TRO:3050 finally redrew the head facing forward.</p>
+
+                <h3>Who manufactures the Commando?</h3>
+                <p>Andre Barcalow designed the original for Coventry Defense Conglomerate, later Coventry Metal Works, in 2463 for the Lyran Commonwealth Armed Forces. Later production spread across Arcturan Arms, Hope Industrial Works, Marian Arms, Maxell Metals, Peloran Motors, Protectorate Military Industries, Rim Motors, Vandenberg Mechanized Industries and several others.</p>
+
+                <h3>What is Death&#x27;s Knell?</h3>
+                <p>A silver Commando piloted by Captain Bono Duganmare of the 22nd Skye Rangers, documented in TRO:3025. The captain and the machine are both canonical, but the source never specifies which configuration he actually flew, so it is a piece of history rather than one of the 24 ranked variants.</p>
+
+                <h3>Is the Commando worth taking?</h3>
+                <p>Yes, as a scout and a close-range spoiler, never as a frontline fighter. The cheapest configurations cost less than a Locust and the most expensive, the mixed-tech COM-7S2, costs 1105 against an Atlas at 1897. The question is never whether a Commando beats an Atlas in a straight fight. It is how many of them, and how much information, you get for the Atlas you did not buy.</p>
+            </div>
+
+            <p class="srcnote">Stats on this page are generated directly from our variant database, which is reconciled against the Master Unit List for Battle Value, introduction dates and per-era faction availability. Alpha Strike damage values are the standard card figures. If you spot something wrong, <a href="mailto:DaveAsp81@gmail.com" style="color:#ff8c00;">tell me</a> and I will fix it.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About BattleTech HQ</h4>
+                <p>Home of the <a href="https://www.youtube.com/@DaveAsp81" target="_blank" style="color:#ff8c00;">BattleTech Down Under</a> YouTube channel. Guides, tools, and opinions for the modern MechWarrior.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/lance-builder">Lance Builder</a></li>
+                    <li><a href="/mechs">Mech Guides</a></li>
+                    <li><a href="/guides">All Guides &amp; Articles</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/game-tracker">Game Tracker</a></li>
+                    <li><a href="/opfor-command">OpFor Command</a></li>
+                    <li><a href="/campaign">Campaign Tracker</a></li>
+                    <li><a href="/paint-tool">Paint Tool</a></li>
+                    <li><a href="/articles/battletech-beginner-guide">Beginner Guide</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/affiliate-disclosure">Affiliate Disclosure</a></li>
+                    <li><a href="/image-credits">Image Credits</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://www.sarna.net" target="_blank">Sarna.net &mdash; BattleTech Wiki</a></li>
+                    <li><a href="https://store.catalystgamelabs.com" target="_blank">Catalyst Game Labs</a></li>
+                    <li><a href="https://battletech.com" target="_blank">Official BattleTech</a></li>
+                    <li><a href="https://megamek.games" target="_blank">MegaMek &mdash; Free Digital BT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin-bottom:16px;"><a class="bmc-button" href="https://buymeacoffee.com/daveasp" target="_blank" rel="noopener">&#9749; Buy me a coffee</a></p>
+            <p>&copy; 2026 BattleTech HQ. Unofficial fansite. BattleTech is a registered trademark of Topps Company, Inc.</p>
+            <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases.</p>
+        </div>
+    </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best Commando variant?",
+      "acceptedAnswer": {"@type": "Answer", "text": "For most games the COM-2D is still the reference point, it carries the medium-laser-and-twin-SRM recipe that has stayed in service longer than anything else on this chart. If you want more, the COM-7A gets the same era's loadout cheaper, the COM-8S is the modern networked standard, and the COM-9S is the only one that reaches out to long range at all."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Commando's head look odd in some art?",
+      "acceptedAnswer": {"@type": "Answer", "text": "TRO:3025 printed the original artwork with the head turned to one side, and enough readers mistook it for a straight-on view that the \"one eye and a tilted hat\" look became the chassis's unofficial identity for a quarter century. TRO:3050 finally redrew the head facing forward."}
+    },
+    {
+      "@type": "Question",
+      "name": "Who manufactures the Commando?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Andre Barcalow designed the original for Coventry Defense Conglomerate, later Coventry Metal Works, in 2463 for the Lyran Commonwealth Armed Forces. Later production spread across Arcturan Arms, Hope Industrial Works, Marian Arms, Maxell Metals, Peloran Motors, Protectorate Military Industries, Rim Motors, Vandenberg Mechanized Industries and several others."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is Death's Knell?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A silver Commando piloted by Captain Bono Duganmare of the 22nd Skye Rangers, documented in TRO:3025. The captain and the machine are both canonical, but the source never specifies which configuration he actually flew, so it is a piece of history rather than one of the 24 ranked variants."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Commando worth taking?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes, as a scout and a close-range spoiler, never as a frontline fighter. The cheapest configurations cost less than a Locust and the most expensive, the mixed-tech COM-7S2, costs 1105 against an Atlas at 1897. The question is never whether a Commando beats an Atlas in a straight fight. It is how many of them, and how much information, you get for the Atlas you did not buy."}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Click tracking. Answers the question the pageview count cannot: does a
+   reader of this page go on to use a tool? Fails silently if gtag is absent
+   or blocked, and never interferes with the navigation itself. */
+(function () {
+    var CHASSIS = 'commando';
+    var TOOLS = {
+        'lance-builder': 'lance-builder',
+        'opfor-command': 'opfor-command',
+        'game-tracker': 'game-tracker',
+        'campaign': 'campaign-tracker',
+        'paint-tool': 'paint-tool'
+    };
+
+    /* The site serves clean URLs (/opfor-command) but pages may also link
+       with an extension (opfor-command.html). Reduce both to the slug so the
+       lookup works either way, and tolerate a trailing slash. */
+    function slug(href) {
+        var path = href.split('?')[0].split('#')[0];
+        if (path.charAt(path.length - 1) === '/') {
+            path = path.slice(0, -1);
+        }
+        var last = path.split('/').pop().toLowerCase();
+        if (last.slice(-5) === '.html') {
+            last = last.slice(0, -5);
+        }
+        return last;
+    }
+
+    function send(name, params) {
+        if (typeof gtag !== 'function') return;
+        try { gtag('event', name, params); } catch (err) { /* never block */ }
+    }
+
+    function strip(host) {
+        host = (host || '').toLowerCase();
+        return host.indexOf('www.') === 0 ? host.slice(4) : host;
+    }
+
+    document.addEventListener('click', function (ev) {
+        var el = ev.target;
+        if (!el || typeof el.closest !== 'function') return;
+        var a = el.closest('a');
+        if (!a) return;
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') return;
+
+        var file = slug(href);
+        if (TOOLS[file]) {
+            send('tool_handoff', {
+                tool: TOOLS[file],
+                chassis: CHASSIS,
+                placement: a.closest('.tool-cta') ? 'cta' : 'inline'
+            });
+            return;
+        }
+
+        var lower = href.toLowerCase();
+        if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+            var host = '';
+            try { host = new URL(href, window.location.href).hostname; }
+            catch (err) { host = 'unknown'; }
+            host = strip(host);
+            if (host && host !== strip(window.location.hostname)) {
+                send('outbound_click', { destination: host, chassis: CHASSIS });
+            }
+            return;
+        }
+
+        if (href.indexOf('mailto:') === 0) {
+            send('feedback_click', { chassis: CHASSIS });
+        }
+    }, true);
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navUl = document.querySelector('nav ul');
+    if (toggle && navUl) {
+        toggle.addEventListener('click', function() {
+            navUl.classList.toggle('open');
+        });
+    }
+});
+</script>
+</body>
+</html>
